@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfDataSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <DataSet>
+    <AggregationName>PrefsUGUI_PrefsUGUI</AggregationName>
+    <FileName>PrefsUGUI_PrefsUGUI.xml</FileName>
+    <DirectoryPath>C:\Users\kaoyama\DataStorage\Projects\Private\PrefsUGUI\Assets\..\Saves\</DirectoryPath>
+    <Elements>
+      <DataElement>
+        <Key>hoge/fuga/piyo/testhoge</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;0&lt;/x&gt;
+  &lt;y&gt;0&lt;/y&gt;
+&lt;/Vector2&gt;</Value>
+        <TypeName>UnityEngine.Vector2</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>hoge/fugafuga</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;0&lt;/x&gt;
+  &lt;y&gt;0&lt;/y&gt;
+&lt;/Vector2&gt;</Value>
+        <TypeName>UnityEngine.Vector2</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>piyo</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;0&lt;/x&gt;
+  &lt;y&gt;0&lt;/y&gt;
+&lt;/Vector2&gt;</Value>
+        <TypeName>UnityEngine.Vector2</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>hoge/fuga/piyo/test/hoge</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;0&lt;/x&gt;
+  &lt;y&gt;0&lt;/y&gt;
+&lt;/Vector2&gt;</Value>
+        <TypeName>UnityEngine.Vector2</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>hoge/fuga/fuga</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;0&lt;/x&gt;
+  &lt;y&gt;0&lt;/y&gt;
+&lt;/Vector2&gt;</Value>
+        <TypeName>UnityEngine.Vector2</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>/piyo</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;25.135&lt;/x&gt;
+  &lt;y&gt;4&lt;/y&gt;
+&lt;/Vector2&gt;</Value>
+        <TypeName>UnityEngine.Vector2</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>piyo/nnnn/pppp</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;10&lt;/x&gt;
+  &lt;y&gt;29&lt;/y&gt;
+&lt;/Vector2&gt;</Value>
+        <TypeName>UnityEngine.Vector2</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>/iii</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector2Int xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;74545&lt;/x&gt;
+  &lt;y&gt;125&lt;/y&gt;
+&lt;/Vector2Int&gt;</Value>
+        <TypeName>UnityEngine.Vector2Int</TypeName>
+      </DataElement>
+    </Elements>
+  </DataSet>
+</ArrayOfDataSet>

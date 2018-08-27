@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfDataSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <DataSet>
+    <AggregationName>Test1</AggregationName>
+    <FileName>XmlStorageExample.xml</FileName>
+    <DirectoryPath>Assets\XmlStorage\Example\SaveFiles\</DirectoryPath>
+    <Elements>
+      <DataElement>
+        <Key>integer</Key>
+        <Value xsi:type="xsd:int">11</Value>
+        <TypeName>System.Int32</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>float</Key>
+        <Value xsi:type="xsd:float">1.111</Value>
+        <TypeName>System.Single</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>obj_int</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;anyType xmlns:q1="http://www.w3.org/2001/XMLSchema" d1p1:type="q1:int" xmlns:d1p1="http://www.w3.org/2001/XMLSchema-instance"&gt;10&lt;/anyType&gt;</Value>
+        <TypeName>System.Object</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test1Class</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Test1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;integer&gt;1&lt;/integer&gt;
+  &lt;str&gt;TestString&lt;/str&gt;
+  &lt;list1&gt;
+    &lt;float&gt;0.1&lt;/float&gt;
+    &lt;float&gt;1.1&lt;/float&gt;
+    &lt;float&gt;10.1&lt;/float&gt;
+  &lt;/list1&gt;
+&lt;/Test1&gt;</Value>
+        <TypeName>XmlStorage.Examples.ExampleController+Test1</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test2Class</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Test2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;vec2&gt;
+    &lt;x&gt;1&lt;/x&gt;
+    &lt;y&gt;2&lt;/y&gt;
+  &lt;/vec2&gt;
+  &lt;vec3&gt;
+    &lt;x&gt;1&lt;/x&gt;
+    &lt;y&gt;2&lt;/y&gt;
+    &lt;z&gt;3&lt;/z&gt;
+  &lt;/vec3&gt;
+&lt;/Test2&gt;</Value>
+        <TypeName>XmlStorage.Examples.ExampleController+Test2</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>del_tes2</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;string&gt;del_tes2&lt;/string&gt;</Value>
+        <TypeName>System.String</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>address</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;string&gt;lab-interactive@team-lab.com&lt;/string&gt;</Value>
+        <TypeName>System.String</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>vec2</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;0.1&lt;/x&gt;
+  &lt;y&gt;0.2&lt;/y&gt;
+&lt;/Vector2&gt;</Value>
+        <TypeName>UnityEngine.Vector2</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>vec3</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector3 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;1&lt;/x&gt;
+  &lt;y&gt;2&lt;/y&gt;
+  &lt;z&gt;3&lt;/z&gt;
+&lt;/Vector3&gt;</Value>
+        <TypeName>UnityEngine.Vector3</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>qua</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Quaternion xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;0.127679437&lt;/x&gt;
+  &lt;y&gt;0.144878134&lt;/y&gt;
+  &lt;z&gt;0.239298329&lt;/z&gt;
+  &lt;w&gt;0.9515485&lt;/w&gt;
+  &lt;eulerAngles&gt;
+    &lt;x&gt;9.999999&lt;/x&gt;
+    &lt;y&gt;20.0000019&lt;/y&gt;
+    &lt;z&gt;30.0000019&lt;/z&gt;
+  &lt;/eulerAngles&gt;
+&lt;/Quaternion&gt;</Value>
+        <TypeName>UnityEngine.Quaternion</TypeName>
+      </DataElement>
+    </Elements>
+  </DataSet>
+</ArrayOfDataSet>
