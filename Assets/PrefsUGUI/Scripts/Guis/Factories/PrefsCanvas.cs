@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories
 {
+    using Classes;
     using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
     using Prefs = PrefsUGUI.Prefs;
 
@@ -26,69 +27,59 @@ namespace PrefsUGUI.Guis.Factories
         [SerializeField]
         private GuiPrefabs prefabs = new GuiPrefabs();
 
-        private GuiList guis = null;
+        //private GuiList guis = null;
+        private GuiCreator creator = null;
+        private GuiStruct structs = null;
 
 
         private void Awake()
         {
-            this.guis = new GuiList(this);
+            this.creator = new GuiCreator(this);
+            this.structs = new GuiStruct(this.creator.GetContent(), this.creator);
 
             this.links.Close.onClick.AddListener(this.OnClickedCloseButton);
             this.links.Discard.onClick.AddListener(this.OnClickedDiscardButton);
             this.links.Save.onClick.AddListener(this.OnClickedSaveButton);
+            
+            this.SetButtonActive(true);
         }
         
         public PrefabType AddPrefs<PrefabType>(PrefsBase prefs) where PrefabType : InputGuiBase
         {
-            var hierarchy = prefs.GuiHierarchy.TrimEnd(Prefs.HierarchySeparator);
-            var split = string.IsNullOrEmpty(hierarchy) == true ?
-                new string[0] :
-                hierarchy.Split(Prefs.HierarchySeparator);
-            
-            var previous = TopCategoryName;
-            for(var i = 0; i < split.Length; i++)
-            {
-                var categoryName = split[i];
-                this.guis.GetButton(this.guis.GetCategory(previous, i > 1 ? split[i - 2] : TopCategoryName), categoryName);
-                previous = categoryName;
-            }
+            var category = this.structs.GetCategory(prefs.GuiHierarchy);
+            var gui = this.creator.GetGui<PrefabType>(prefs, category);
 
-            var category = this.guis.GetCategory(previous, split.Length > 1 ? split[split.Length - 2] : TopCategoryName);
-            var gui = Instantiate(this.prefabs.GetGuiPrefab<PrefabType>(), category.Content);
-
-            this.SetGuiListeners(prefs, gui);
-            category.Prefs.Add(prefs, gui);
-            
             return gui;
         }
 
         public void RemovePrefs(PrefsBase prefs)
         {
-            foreach(var pair1 in this.guis.Categories)
-            {
-                var prefsDic = pair1.Value.Prefs;
+            var categories = this.structs.Categories;
 
-                if(prefsDic.ContainsKey(prefs) == true)
+            for(var i = 0; i < categories.Count; i++)
+            {
+                var dic = categories[i].Prefs;
+
+                if(dic.ContainsKey(prefs) == true)
                 {
-                    Destroy(prefsDic[prefs].gameObject);
-                    prefsDic.Remove(prefs);
+                    var gui = dic[prefs].gameObject;
+
+                    dic.Remove(prefs);
+                    Destroy(gui);
 
                     return;
                 }
             }
         }
 
-        private void SetGuiListeners<PrefabType>(PrefsBase prefs, PrefabType gui) where PrefabType : InputGuiBase
+        private void ChangeGUI(GuiStruct.Category previous, string targetCategoryName)
         {
-            gui.OnPressedDefaultButton += () => prefs.ResetDefaultValue();
-            gui.OnValueChanged += () => prefs.ValueAsObject = gui.GetValueObject();
-
-            prefs.OnValueChanged += () => gui.SetValue(prefs.ValueAsObject);
+            this.SetScroll(this.structs.ChangeGUI(previous, targetCategoryName));
         }
-
+        
         private void OnClickedDiscardButton()
         {
-            foreach(var prefs in this.guis.Current.Prefs)
+            foreach(var prefs in this.structs.Current.Prefs)
             {
                 prefs.Key.Reload();
             }
@@ -96,13 +87,33 @@ namespace PrefsUGUI.Guis.Factories
         
         private void OnClickedCloseButton()
         {
-            this.guis.ChangeGUI(this.guis.Current.ParentCategoryName);
+            this.SetScroll(this.structs.ChangeGUI(this.structs.Current.Previous));
         }
 
         private void OnClickedSaveButton()
         {
             Prefs.Save();
             gameObject.SetActive(false);
+        }
+
+        private void SetScroll(GuiStruct.Category category)
+        {
+            this.links.Scroll.content = category.Content;
+            this.SetButtonActive(this.structs.Current.CategoryName == TopCategoryName);
+        }
+
+        private void SetButtonActive(bool isTop)
+        {
+            if(isTop == true)
+            {
+                this.links.Close.gameObject.SetActive(false);
+                this.links.Save.gameObject.SetActive(true);
+            }
+            else
+            {
+                this.links.Close.gameObject.SetActive(true);
+                this.links.Save.gameObject.SetActive(false);
+            }
         }
         
         private void Reset()

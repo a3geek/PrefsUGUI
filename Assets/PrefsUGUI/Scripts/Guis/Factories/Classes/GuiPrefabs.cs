@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace PrefsUGUI.Guis.Factories
+namespace PrefsUGUI.Guis.Factories.Classes
 {
     using Guis.Prefs;
 
@@ -39,17 +39,11 @@ namespace PrefsUGUI.Guis.Factories
     [Serializable]
     public class GuiPrefabs
     {
-        public RectTransform Content
-        {
-            get { return this.contentPrefab; }
-        }
         public GuiButton Button
         {
             get { return this.buttonPrefab; }
         }
 
-        [SerializeField]
-        private RectTransform contentPrefab = null;
         [SerializeField]
         private GuiButton buttonPrefab = null;
         [SerializeField]
@@ -58,7 +52,7 @@ namespace PrefsUGUI.Guis.Factories
             new GuiPrefab(typeof(PrefsGuiBool)), new GuiPrefab(typeof(PrefsGuiColor)), new GuiPrefab(typeof(PrefsGuiColorSlider)),
             new GuiPrefab(typeof(PrefsGuiEnum)), new GuiPrefab(typeof(PrefsGuiNumeric)), new GuiPrefab(typeof(PrefsGuiNumericSlider)),
             new GuiPrefab(typeof(PrefsGuiString)), new GuiPrefab(typeof(PrefsGuiVector2)),
-            new GuiPrefab(typeof(PrefsGuiVector3)), new GuiPrefab(typeof(PrefsGuiVector4))
+            new GuiPrefab(typeof(PrefsGuiVector3)), new GuiPrefab(typeof(PrefsGuiVector4)),
         };
 
 

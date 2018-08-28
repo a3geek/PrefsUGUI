@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PrefsUGUI.Guis.Factories
+namespace PrefsUGUI.Guis.Factories.Classes
 {
     using Utilities;
 

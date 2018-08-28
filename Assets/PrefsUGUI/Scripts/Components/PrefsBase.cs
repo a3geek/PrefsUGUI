@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
+    using Guis.Factories;
+
     public static partial class Prefs
     {
         [Serializable]
@@ -14,7 +16,11 @@ namespace PrefsUGUI
 
             public string SaveKey
             {
-                get { return this.GuiHierarchy + this.Key; }
+                get
+                {
+                    var hierarchy = this.GuiHierarchy == "" ? "" : this.GuiHierarchy.TrimEnd(HierarchySeparator);
+                    return hierarchy + HierarchySeparator + this.Key;
+                }
             }
             public string Key
             {
@@ -22,14 +28,7 @@ namespace PrefsUGUI
             }
             public string GuiHierarchy
             {
-                get
-                {
-                    if(this.guiHierarchy.EndsWith(HierarchySeparator.ToString()) == false)
-                    {
-                        this.guiHierarchy = this.guiHierarchy + HierarchySeparator;
-                    }
-                    return this.guiHierarchy;
-                }
+                get { return this.guiHierarchy; }
             }
             public string GuiLabel
             {

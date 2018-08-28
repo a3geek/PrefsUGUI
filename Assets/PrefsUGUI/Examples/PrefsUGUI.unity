@@ -215,19 +215,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   v1:
-    key: hoge
-    guiHierarchy: hoge/fuga/piyo/test
-    guiLabel: Hoge
+    key: v1
+    guiHierarchy: hoge/fuga/piyo
+    guiLabel: v1
     defaultValue: {x: 0, y: 0}
   v2:
-    key: fuga
-    guiHierarchy: hoge/fuga
-    guiLabel: fuga
-    defaultValue: {x: 0, y: 0}
+    key: v2
+    guiHierarchy: aaa/bbb
+    guiLabel: v2
+    defaultValue: {x: 1, y: 1}
   v3:
-    key: piyo
+    key: v3
+    guiHierarchy: hoge/ppp/aaa
+    guiLabel: v3
+    defaultValue: {x: 2, y: 3}
+  v4:
+    key: v4
+    guiHierarchy: hoge/fuga
+    guiLabel: v4
+    defaultValue: {x: 0, y: 0}
+  v5:
+    key: v5
     guiHierarchy: 
-    guiLabel: Piyo
+    guiLabel: v5
     defaultValue: {x: 0, y: 0}
 --- !u!20 &282840813
 Camera:
