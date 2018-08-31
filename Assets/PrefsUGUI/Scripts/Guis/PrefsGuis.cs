@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace PrefsUGUI.Guis
 {
@@ -18,18 +19,27 @@ namespace PrefsUGUI.Guis
 
         [SerializeField]
         private PrefsCanvas prefsCanvas = null;
+        [SerializeField]
+        private EventSystem eventSystem = null;
 
         private PrefsCanvas canvas = null;
+        private EventSystem system = null;
         private Func<Creator> creatorGetter = null;
-        
-        
+
+
+        private void Awake()
+        {
+            this.system = EventSystem.current;
+        }
+
         private void Update()
         {
-            if(this.prefsCanvas == null)
+            if(this.prefsCanvas == null || this.eventSystem == null)
             {
                 return;
             }
 
+            this.system = this.system ?? Instantiate(this.eventSystem);
             this.canvas = this.canvas ?? this.CreateCanvas();
             this.Create();
         }
