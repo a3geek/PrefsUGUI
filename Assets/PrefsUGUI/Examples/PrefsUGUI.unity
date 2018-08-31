@@ -239,6 +239,61 @@ MonoBehaviour:
     guiHierarchy: 
     guiLabel: v5
     defaultValue: {x: 0, y: 0}
+  b:
+    key: PrefsBool
+    guiHierarchy: Test
+    guiLabel: PrefsBool
+    defaultValue: 1
+  c:
+    key: PrefsColor
+    guiHierarchy: Test
+    guiLabel: PrefsColor
+    defaultValue: {r: 1, g: 0, b: 0, a: 1}
+  cs:
+    key: ColorSlider
+    guiHierarchy: Test
+    guiLabel: ColorSlider
+    defaultValue: {r: 0, g: 0, b: 1, a: 1}
+  f:
+    key: PrefsFloat
+    guiHierarchy: Test
+    guiLabel: PrefsFloat
+    defaultValue: 1
+  fs:
+    key: PrefsFloatSlider
+    guiHierarchy: Test
+    guiLabel: PrefsFloatSlider
+    defaultValue: 5
+  i:
+    key: PrefsInt
+    guiHierarchy: Test
+    guiLabel: PrefsInt
+    defaultValue: 5
+  isl:
+    key: PrefsIntSlider
+    guiHierarchy: Test
+    guiLabel: PrefsIntSlider
+    defaultValue: 5
+  s:
+    key: PrefsString
+    guiHierarchy: Test
+    guiLabel: PrefsString
+    defaultValue: localhost
+  v6:
+    key: PrefsVector3
+    guiHierarchy: Test
+    guiLabel: PrefsVector3
+    defaultValue: {x: 2, y: 4, z: 6}
+  v7:
+    key: PrefsVector3Int
+    guiHierarchy: Test
+    guiLabel: PrefsVector3Int
+    defaultValue: {x: -10, y: -5, z: 0}
+  v8:
+    key: PrefsVector4
+    guiHierarchy: Test
+    guiLabel: PrefsVector4
+    defaultValue: {x: -2, y: 0, z: 2, w: 100}
 --- !u!20 &282840813
 Camera:
   m_ObjectHideFlags: 0

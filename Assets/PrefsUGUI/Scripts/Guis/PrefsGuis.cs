@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace PrefsUGUI.Components
+namespace PrefsUGUI.Guis
 {
-    using Guis;
     using Guis.Factories;
-
-    using Creator = Dictionary<string, Action<Guis.Factories.PrefsCanvas>>;
+    using Creator = Dictionary<string, Action<Factories.PrefsCanvas>>;
 
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
@@ -41,7 +39,7 @@ namespace PrefsUGUI.Components
             this.creatorGetter = this.creatorGetter ?? getter;
         }
 
-        public void RemovePrefs(Prefs.PrefsBase prefs)
+        public void RemovePrefs(PrefsUGUI.Prefs.PrefsBase prefs)
         {
             if(this.canvas == null)
             {

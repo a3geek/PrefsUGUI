@@ -24,15 +24,29 @@ namespace PrefsUGUI.Guis.Prefs
         [SerializeField]
         protected Slider sliderW = null;
 
+        protected bool inited = false;
+
 
         public void OnChangedSlider(float v)
         {
+            if(this.inited == false)
+            {
+                return;
+            }
+
             this.SetValue(new Color(
                 this.sliderX.value, this.sliderY.value,
                 this.sliderZ.value, this.sliderW.value
             ));
 
             this.FireOnValueChanged();
+        }
+
+        public override void Initialize(string label, Color initialValue, Func<Color> defaultGetter)
+        {
+            base.Initialize(label, initialValue, defaultGetter);
+
+            this.inited = true;
         }
 
         protected override void Initialize(string label)

@@ -8,17 +8,17 @@ namespace PrefsUGUI
     using Guis.Prefs;
 
     [Serializable]
-    public class PrefsFloatSlider : Prefs.PrefsParam<float, PrefsGuiNumericSlider>
+    public class PrefsIntSlider : Prefs.PrefsParam<int, PrefsGuiNumericSlider>
     {
-        protected float min = 0f;
-        protected float max = 0f;
+        protected int min = 0;
+        protected int max = 0;
 
 
-        public PrefsFloatSlider(string key, float defaultValue = default(float), string guiHierarchy = "", string guiLabel = "")
+        public PrefsIntSlider(string key, int defaultValue = default(int), string guiHierarchy = "", string guiLabel = "")
             : base(key, defaultValue, guiHierarchy, guiLabel) { }
 
-        public PrefsFloatSlider(string key, float minValue, float maxValue,
-            float defaultValue = default(float), string guiHierarchy = "", string guiLabel = "")
+        public PrefsIntSlider(string key, int minValue, int maxValue,
+            int defaultValue = default(int), string guiHierarchy = "", string guiLabel = "")
             : this(key, defaultValue, guiHierarchy, guiLabel)
         {
             this.min = minValue;
@@ -27,7 +27,7 @@ namespace PrefsUGUI
 
         protected override void OnCreatedGui(PrefsGuiNumericSlider gui)
         {
-            if(this.min == 0f && this.max == 0f)
+            if(this.min == 0 && this.max == 0)
             {
                 gui.Initialize(this.GuiLabel, this.Get(), () => this.DefaultValue);
             }

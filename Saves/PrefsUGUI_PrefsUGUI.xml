@@ -6,69 +6,6 @@
     <DirectoryPath>C:\Users\kaoyama\DataStorage\Projects\Private\PrefsUGUI\Assets\..\Saves\</DirectoryPath>
     <Elements>
       <DataElement>
-        <Key>hoge/fuga/piyo/testhoge</Key>
-        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;x&gt;0&lt;/x&gt;
-  &lt;y&gt;0&lt;/y&gt;
-&lt;/Vector2&gt;</Value>
-        <TypeName>UnityEngine.Vector2</TypeName>
-      </DataElement>
-      <DataElement>
-        <Key>hoge/fugafuga</Key>
-        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;x&gt;0&lt;/x&gt;
-  &lt;y&gt;0&lt;/y&gt;
-&lt;/Vector2&gt;</Value>
-        <TypeName>UnityEngine.Vector2</TypeName>
-      </DataElement>
-      <DataElement>
-        <Key>piyo</Key>
-        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;x&gt;0&lt;/x&gt;
-  &lt;y&gt;0&lt;/y&gt;
-&lt;/Vector2&gt;</Value>
-        <TypeName>UnityEngine.Vector2</TypeName>
-      </DataElement>
-      <DataElement>
-        <Key>hoge/fuga/piyo/test/hoge</Key>
-        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;x&gt;0&lt;/x&gt;
-  &lt;y&gt;0&lt;/y&gt;
-&lt;/Vector2&gt;</Value>
-        <TypeName>UnityEngine.Vector2</TypeName>
-      </DataElement>
-      <DataElement>
-        <Key>hoge/fuga/fuga</Key>
-        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;x&gt;0&lt;/x&gt;
-  &lt;y&gt;0&lt;/y&gt;
-&lt;/Vector2&gt;</Value>
-        <TypeName>UnityEngine.Vector2</TypeName>
-      </DataElement>
-      <DataElement>
-        <Key>/piyo</Key>
-        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;x&gt;0&lt;/x&gt;
-  &lt;y&gt;0&lt;/y&gt;
-&lt;/Vector2&gt;</Value>
-        <TypeName>UnityEngine.Vector2</TypeName>
-      </DataElement>
-      <DataElement>
-        <Key>piyo/nnnn/pppp</Key>
-        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;x&gt;10&lt;/x&gt;
-  &lt;y&gt;29&lt;/y&gt;
-&lt;/Vector2&gt;</Value>
-        <TypeName>UnityEngine.Vector2</TypeName>
-      </DataElement>
-      <DataElement>
         <Key>hoge/fuga/piyo/v1</Key>
         <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
@@ -83,15 +20,6 @@
 &lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;x&gt;1&lt;/x&gt;
   &lt;y&gt;1&lt;/y&gt;
-&lt;/Vector2&gt;</Value>
-        <TypeName>UnityEngine.Vector2</TypeName>
-      </DataElement>
-      <DataElement>
-        <Key>hoge/aaa/bbb/v3</Key>
-        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Vector2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;x&gt;2&lt;/x&gt;
-  &lt;y&gt;3&lt;/y&gt;
 &lt;/Vector2&gt;</Value>
         <TypeName>UnityEngine.Vector2</TypeName>
       </DataElement>
@@ -114,16 +42,7 @@
         <TypeName>UnityEngine.Vector2</TypeName>
       </DataElement>
       <DataElement>
-        <Key>/iii</Key>
-        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Vector2Int xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;x&gt;74545&lt;/x&gt;
-  &lt;y&gt;125&lt;/y&gt;
-&lt;/Vector2Int&gt;</Value>
-        <TypeName>UnityEngine.Vector2Int</TypeName>
-      </DataElement>
-      <DataElement>
-        <Key>/v4</Key>
+        <Key>/v5</Key>
         <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;Vector2Int xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;x&gt;0&lt;/x&gt;
@@ -132,13 +51,88 @@
         <TypeName>UnityEngine.Vector2Int</TypeName>
       </DataElement>
       <DataElement>
-        <Key>/v5</Key>
+        <Key>Test/PrefsBool</Key>
+        <Value xsi:type="xsd:boolean">false</Value>
+        <TypeName>System.Boolean</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test/PrefsColor</Key>
         <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Vector2Int xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;x&gt;15&lt;/x&gt;
-  &lt;y&gt;45&lt;/y&gt;
-&lt;/Vector2Int&gt;</Value>
-        <TypeName>UnityEngine.Vector2Int</TypeName>
+&lt;Color xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;r&gt;1&lt;/r&gt;
+  &lt;g&gt;0&lt;/g&gt;
+  &lt;b&gt;0&lt;/b&gt;
+  &lt;a&gt;1&lt;/a&gt;
+&lt;/Color&gt;</Value>
+        <TypeName>UnityEngine.Color</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test/ColorSlider</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Color xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;r&gt;0&lt;/r&gt;
+  &lt;g&gt;0&lt;/g&gt;
+  &lt;b&gt;1&lt;/b&gt;
+  &lt;a&gt;1&lt;/a&gt;
+&lt;/Color&gt;</Value>
+        <TypeName>UnityEngine.Color</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test/PrefsFloat</Key>
+        <Value xsi:type="xsd:float">1</Value>
+        <TypeName>System.Single</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test/PrefsFloatSlider</Key>
+        <Value xsi:type="xsd:float">6.99962568</Value>
+        <TypeName>System.Single</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test/PrefsInt</Key>
+        <Value xsi:type="xsd:int">5</Value>
+        <TypeName>System.Int32</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test/PrefsIntSlider</Key>
+        <Value xsi:type="xsd:int">5</Value>
+        <TypeName>System.Int32</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test/PrefsString</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;string&gt;localhost&lt;/string&gt;</Value>
+        <TypeName>System.String</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test/PrefsVector3</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector3 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;2&lt;/x&gt;
+  &lt;y&gt;4&lt;/y&gt;
+  &lt;z&gt;6&lt;/z&gt;
+&lt;/Vector3&gt;</Value>
+        <TypeName>UnityEngine.Vector3</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test/PrefsVector3Int</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector3Int xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;-10&lt;/x&gt;
+  &lt;y&gt;-5&lt;/y&gt;
+  &lt;z&gt;0&lt;/z&gt;
+&lt;/Vector3Int&gt;</Value>
+        <TypeName>UnityEngine.Vector3Int</TypeName>
+      </DataElement>
+      <DataElement>
+        <Key>Test/PrefsVector4</Key>
+        <Value xsi:type="xsd:string">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Vector4 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;x&gt;-2&lt;/x&gt;
+  &lt;y&gt;0&lt;/y&gt;
+  &lt;z&gt;2&lt;/z&gt;
+  &lt;w&gt;100&lt;/w&gt;
+&lt;/Vector4&gt;</Value>
+        <TypeName>UnityEngine.Vector4</TypeName>
       </DataElement>
     </Elements>
   </DataSet>

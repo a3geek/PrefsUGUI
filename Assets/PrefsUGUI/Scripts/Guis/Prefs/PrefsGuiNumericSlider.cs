@@ -22,9 +22,16 @@ namespace PrefsUGUI.Guis.Prefs
         [SerializeField]
         protected Slider slider = null;
 
+        protected bool inited = false;
+
 
         public void OnChangedSlider(float v)
         {
+            if(this.inited == false)
+            {
+                return;
+            }
+
             if(this.isDecimalNumber == true)
             {
                 this.SetValue(v);
@@ -51,19 +58,23 @@ namespace PrefsUGUI.Guis.Prefs
         {
             this.InitializeSlider(minValue, maxValue, true);
             base.Initialize(label, initialValue, fdefaultGetter);
+
+            this.inited = true;
         }
 
         public void Initialize(string label, int initialValue, int minValue, int maxValue, Func<int> idefaultGetter)
         {
             this.InitializeSlider(minValue, maxValue, false);
             base.Initialize(label, initialValue, idefaultGetter);
+
+            this.inited = true;
         }
 
         protected virtual void InitializeSlider(float min, float max, bool isDecimal)
         {
             this.slider.wholeNumbers = !isDecimal;
-            this.slider.minValue = min;
-            this.slider.maxValue = max;
+            this.slider.minValue = (min > max ? max : min);
+            this.slider.maxValue = (min < max ? max : min);
         }
 
         protected override void SetFields()

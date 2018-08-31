@@ -8,12 +8,12 @@ namespace PrefsUGUI
     using Guis.Prefs;
 
     [Serializable]
-    public class PrefsFloat : Prefs.PrefsParam<float, PrefsGuiNumeric>
+    public class PrefsVector3 : Prefs.PrefsParam<Vector3, PrefsGuiVector3>
     {
-        public PrefsFloat(string key, float defaultValue = default(float), string guiHierarchy = "", string guiLabel = "")
+        public PrefsVector3(string key, Vector3 defaultValue = default(Vector3), string guiHierarchy = "", string guiLabel = "")
             : base(key, defaultValue, guiHierarchy, guiLabel) { }
 
-        protected override void OnCreatedGui(PrefsGuiNumeric gui)
+        protected override void OnCreatedGui(PrefsGuiVector3 gui)
         {
             gui.Initialize(this.GuiLabel, this.Get(), () => this.DefaultValue);
         }

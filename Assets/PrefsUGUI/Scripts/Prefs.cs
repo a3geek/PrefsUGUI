@@ -6,7 +6,6 @@ using UnityEngine;
 namespace PrefsUGUI
 {
     using XmlStorage;
-    using Components;
     using Guis;
 
     using Creator = Dictionary<string, Action<Guis.Factories.PrefsCanvas>>;
