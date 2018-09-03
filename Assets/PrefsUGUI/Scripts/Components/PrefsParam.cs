@@ -54,6 +54,7 @@ namespace PrefsUGUI
             public PrefsParam(string key, ValType defaultValue = default(ValType), string guiHierarchy = "", string guiLabel = "")
                 : base(key, guiHierarchy, guiLabel)
             {
+                this.value = defaultValue;
                 this.defaultValue = defaultValue;
             }
 
@@ -105,7 +106,7 @@ namespace PrefsUGUI
             {
                 this.got = true;
                 this.value = value;
-
+                
                 if(withEvent == true)
                 {
                     this.FireOnValueChanged();

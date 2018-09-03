@@ -18,8 +18,10 @@ namespace PrefsUGUI
             {
                 get
                 {
-                    var hierarchy = this.GuiHierarchy == "" ? "" : this.GuiHierarchy.TrimEnd(HierarchySeparator);
-                    return hierarchy + HierarchySeparator + this.Key;
+                    var sep = HierarchySeparator;
+                    var hierarchy = this.GuiHierarchy == "" ? "" : this.GuiHierarchy.TrimEnd(sep) + sep;
+
+                    return hierarchy + this.Key;
                 }
             }
             public string Key

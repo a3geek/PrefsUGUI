@@ -14,12 +14,18 @@ namespace PrefsUGUI.Guis.Prefs
         protected Dropdown dropdown = null;
 
         protected int value = 0;
+        protected bool inited = false;
         protected List<string> list = new List<string>();
         protected Func<int> defaultGetter = null;
 
 
         public void OnChangedDropdown(int value)
         {
+            if(this.inited == false)
+            {
+                return;
+            }
+
             this.SetValueInternal(value);
             this.FireOnValueChanged();
         }
@@ -45,6 +51,9 @@ namespace PrefsUGUI.Guis.Prefs
             this.SetValueInternal(0);
             this.SetValueInternal(list);
 
+            this.dropdown.ClearOptions();
+            this.dropdown.AddOptions(this.list);
+
             this.SetFields();
         }
 
@@ -59,6 +68,8 @@ namespace PrefsUGUI.Guis.Prefs
             this.defaultGetter = defaultGetter;
             this.SetLabel(label);
             this.SetValue(list, index);
+
+            this.inited = true;
         }
 
         public override void SetValue(object value)
@@ -69,7 +80,7 @@ namespace PrefsUGUI.Guis.Prefs
             }
             else if(value is int == true)
             {
-                this.SetValue(this.AdjustIndex((int)value));
+                this.SetValue((int)value);
             }
         }
 
@@ -86,9 +97,6 @@ namespace PrefsUGUI.Guis.Prefs
         protected override void SetFields()
         {
             base.SetFields();
-
-            this.dropdown.ClearOptions();
-            this.dropdown.AddOptions(this.list);
             this.dropdown.value = this.value;
         }
 
@@ -113,7 +121,7 @@ namespace PrefsUGUI.Guis.Prefs
 
         protected virtual int AdjustIndex(int index)
         {
-            return Mathf.Min(this.list.Count - 1, Mathf.Max(0, index));
+            return Mathf.Max(0, Mathf.Min(this.list.Count - 1, index));
         }
 
         protected override void Reset()

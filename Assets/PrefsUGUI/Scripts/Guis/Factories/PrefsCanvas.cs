@@ -26,8 +26,7 @@ namespace PrefsUGUI.Guis.Factories
         private GuiLinks links = new GuiLinks();
         [SerializeField]
         private GuiPrefabs prefabs = new GuiPrefabs();
-
-        //private GuiList guis = null;
+        
         private GuiCreator creator = null;
         private GuiStruct structs = null;
 

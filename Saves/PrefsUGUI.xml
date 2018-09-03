@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfDataSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <DataSet>
-    <AggregationName>Default</AggregationName>
-    <FileName>PrefsUGUI.xml</FileName>
-    <DirectoryPath>C:\Users\kaoyama\DataStorage\Projects\Private\PrefsUGUI\Assets\..\Saves\</DirectoryPath>
-    <Elements />
-  </DataSet>
-</ArrayOfDataSet>

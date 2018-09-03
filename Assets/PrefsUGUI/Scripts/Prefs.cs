@@ -16,7 +16,7 @@ namespace PrefsUGUI
         
         public static string AggregationName
         {
-            get { return typeof(Prefs).Namespace + "_" + Application.productName; }
+            get { return typeof(Prefs).Namespace + "-" + Application.productName; }
         }
         public static string FileName
         {
