@@ -17,6 +17,11 @@ namespace PrefsUGUI.Guis
     {
         public const int DefaultExecutionOrder = -32000;
 
+        public bool IsShowing
+        {
+            get { return this.canvas.gameObject.activeSelf; }
+        }
+
         [SerializeField]
         private PrefsCanvas prefsCanvas = null;
         [SerializeField]

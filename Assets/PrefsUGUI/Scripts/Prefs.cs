@@ -16,11 +16,11 @@ namespace PrefsUGUI
         
         public static string AggregationName
         {
-            get { return typeof(Prefs).Namespace + "-" + Application.productName; }
+            get { return Application.productName; }
         }
         public static string FileName
         {
-            get { return typeof(Prefs).Namespace + "_" + Application.productName; }
+            get { return Application.productName; }
         }
 
         private static PrefsGuis PrefsGuis = null;
@@ -61,6 +61,11 @@ namespace PrefsUGUI
         public static void ShowGUI()
         {
             PrefsGuis.ShowGUI();
+        }
+
+        public static bool IsShowing()
+        {
+            return PrefsGuis.IsShowing;
         }
 
         private static void AddPrefs<PrefabType>(PrefsBase prefs, Action<PrefabType> onCreated) where PrefabType : InputGuiBase

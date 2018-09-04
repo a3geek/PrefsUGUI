@@ -14,7 +14,7 @@ namespace PrefsUGUI
     {
         public override object ValueAsObject
         {
-            get { return this.GetInt(this.value); }
+            get { return this.index; }
             set
             {
                 if(value is T == true)
@@ -29,14 +29,13 @@ namespace PrefsUGUI
                     {
                         return;
                     }
-                    Debug.Log(index);
+
                     this.Set(this.values[index]);
                 }
             }
         }
 
         protected int defaultIndex = 0;
-        protected int defaultValueInt = 0;
 
         protected int index = 0;
         protected T[] values = new T[0];
@@ -64,9 +63,8 @@ namespace PrefsUGUI
 
                 i++;
             }
-
+            
             this.defaultIndex = this.index;
-            this.defaultValueInt = this.GetInt(this.defaultValue);
         }
 
         protected override void OnCreatedGui(PrefsGuiEnum gui)
@@ -77,16 +75,12 @@ namespace PrefsUGUI
 
         public override void Reload(bool withEvent = true)
         {
-            var value = Storage.Get(this.ValueType, this.SaveKey, this.defaultValueInt, Prefs.AggregationName);
-            Debug.Log(value);
-            Debug.Log(this.values[this.valueToIndex[value]]);
-            this.SetValueInternal(this.values[this.valueToIndex[value]], withEvent);
-            Debug.Log(this.value);
+            var index = Storage.Get(this.ValueType, this.SaveKey, this.defaultIndex, Prefs.AggregationName);
+            this.SetValueInternal(this.values[index], withEvent);
         }
 
         protected override void SetValueInternal(T value, bool withEvent = true)
         {
-            Debug.Log(value);
             this.index = this.GetIndex(value);
             base.SetValueInternal(value, withEvent);
         }

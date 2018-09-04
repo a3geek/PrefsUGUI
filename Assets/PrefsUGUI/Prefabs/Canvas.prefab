@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 224060096450659162}
   - component: {fileID: 222538677988786570}
   - component: {fileID: 114273114496875006}
-  - component: {fileID: 114266191789969282}
+  - component: {fileID: 114480301625249220}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -499,17 +499,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114266191789969282
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1784484945452616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce432a8068861a8459fe94361f727c3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114273114496875006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -600,6 +589,17 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
+--- !u!114 &114480301625249220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1784484945452616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce432a8068861a8459fe94361f727c3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114499194248145814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -834,8 +834,6 @@ MonoBehaviour:
     save: {fileID: 114400478056270730}
     close: {fileID: 114194925385251700}
   prefabs:
-    contentPrefab: {fileID: 224735029221609646, guid: 08c143638693391429a973e59acd01b8,
-      type: 2}
     buttonPrefab: {fileID: 114174054903132308, guid: a15efa66ad6781b42b470f02e578f1f8,
       type: 2}
     guiPrefabs:

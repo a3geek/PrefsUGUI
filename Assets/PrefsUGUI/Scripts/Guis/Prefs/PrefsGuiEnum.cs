@@ -96,8 +96,12 @@ namespace PrefsUGUI.Guis.Prefs
 
         protected override void SetFields()
         {
+            this.inited = false;
+            
             base.SetFields();
             this.dropdown.value = this.value;
+
+            this.inited = true;
         }
 
         protected virtual void SetValueInternal(int value)
