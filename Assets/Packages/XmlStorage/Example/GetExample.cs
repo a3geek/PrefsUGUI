@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System;
 
 namespace XmlStorage.Examples
 {
@@ -17,6 +18,10 @@ namespace XmlStorage.Examples
             Debug.Log(Storage.HasAggregation("Default"));
             Debug.Log(Storage.HasAggregation("Test1"));
             Debug.Log(Storage.HasAggregation("Test2"));
+            Debug.Log("");
+
+            // 10
+            Debug.Log(Storage.Get(typeof(SetExample), "SetExample", 0));
             Debug.Log("");
 
             /*
@@ -38,6 +43,13 @@ namespace XmlStorage.Examples
              * (0.1, 0.2)
              * (1.0, 2.0, 3.0)
              * (10.0, 20.0, 30.0)
+             * 
+             * 111
+             * 2018
+             * 10
+             * 
+             * "del_test2"
+             * "address"
              */
             Debug.Log("Default Aggregatpion");
             Debug.Log("Directory Path : " + Storage.DirectoryPath);
@@ -65,6 +77,13 @@ namespace XmlStorage.Examples
                  * (0.1, 0.2)
                  * (1.0, 2.0, 3.0)
                  * (10.0, 20.0, 30.0)
+                 * 
+                 * 111
+                 * 2018
+                 * 10
+                 * 
+                 * "del_test2"
+                 * "address"
                  */
                 Debug.Log("Test1 Aggregation");
                 Storage.ChangeAggregation("Test1");
@@ -92,6 +111,13 @@ namespace XmlStorage.Examples
              * (0.1, 0.2)
              * (1.0, 2.0, 3.0)
              * (10.0, 20.0, 30.0)
+             * 
+             * 111
+             * 2018
+             * 10
+             * 
+             * "del_test2"
+             * "address"
              */
             Debug.Log("Test2 Aggregation");
             Storage.ChangeAggregation("Test2");
@@ -145,6 +171,30 @@ namespace XmlStorage.Examples
             Debug.Log(Storage.Get("qua", Quaternion.identity).eulerAngles);
 
             Debug.Log("");
+
+            // List Example
+            int[] intArr = Storage.GetInts();
+            for(var i=0;i< intArr.Length; i++)
+            {
+                Debug.Log(intArr[i]);
+            }
+
+            Debug.Log("");
+
+            string[] string_keys = Storage.GetKeys(typeof(string));
+            for(var i=0; i< string_keys.Length; i++)
+            {
+                Debug.Log(string_keys[i]);
+            }
+
+            Debug.Log("");
+
+            Type[] types = Storage.GetTypes();
+            for (var i = 0; i < types.Length; i++)
+            {
+                Debug.Log(types[i]);
+            }
+
             Debug.Log("");
         }
     }

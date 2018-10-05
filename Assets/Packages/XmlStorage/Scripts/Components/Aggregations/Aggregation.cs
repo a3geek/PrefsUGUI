@@ -122,13 +122,14 @@ namespace XmlStorage.Components.Aggregations
             {
                 var e = list[i];
                 var type = e.ValueType;
+                var saveType = e.SaveType;
 
-                if(this.dictionary.ContainsKey(type) == false)
+                if(this.dictionary.ContainsKey(saveType) == false)
                 {
-                    this.dictionary[type] = new Dictionary<string, object>();
+                    this.dictionary[saveType] = new Dictionary<string, object>();
                 }
 
-                this.dictionary[type][e.Key] = Converter.Deserialize(type, e.Value, this.IsAllTypesSerialize);
+                this.dictionary[saveType][e.Key] = Converter.Deserialize(type, e.Value, this.IsAllTypesSerialize);
             }
         }
 

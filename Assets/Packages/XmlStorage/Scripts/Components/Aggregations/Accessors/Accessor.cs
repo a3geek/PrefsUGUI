@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace XmlStorage.Components.Aggregations.Accessors
 {
@@ -47,6 +48,38 @@ namespace XmlStorage.Components.Aggregations.Accessors
                 defaultValue;
         }
 
+        /// <summary>
+        /// 型と対応するデータ Listを取得する
+        /// </summary>
+        /// <typeparam name="T">データの型</typeparam>
+        /// <param name="type">データの型情報</param>
+        /// <param name="defaultValue">データが存在しなかった時の返り値</param>
+        /// <returns>データ</returns>
+        protected override T[] GetValues<T>(T[] defaultValue, Type type)
+        {
+            return this.HasType(type) == true ? dictionary[type].Values.Cast<T>().ToArray() : new T[0];
+        }
+
+        /// <summary>
+        /// データの型と対応するキーを取得する
+        /// </summary>
+        /// <param name="type">データの型情報</param>
+        /// <returns>データの型と対応するキー</returns>
+        public override string[] GetKeys(Type type)
+        {
+            return this.HasType(type) == true ? this.dictionary[type].Keys.ToArray() : new string[0];
+        }
+
+
+        /// <summary>
+        /// データの型情報を取得する
+        /// </summary>
+        /// <returns>データの型情報</returns>
+        public override Type[] GetTypes()
+        {
+            return dictionary.Keys.ToArray();
+        }
+        
         /// <summary>
         /// セットした全てのデータを消去する
         /// </summary>
