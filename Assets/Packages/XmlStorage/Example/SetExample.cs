@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace XmlStorage.Examples
 {
@@ -33,23 +33,10 @@ namespace XmlStorage.Examples
             Storage.Set(typeof(SetExample), "SetExample", 10);
             this.SetData(1);
 
-            if(Application.isEditor)
-            {
-                Storage.ChangeAggregation("Test1");
-
-                Storage.DirectoryPath =
-                    SceneManager.GetActiveScene().name == "XmlStorage" ?
-                    Path.GetDirectoryName(SceneManager.GetActiveScene().path) + Path.DirectorySeparatorChar + "SaveFiles" :
-                    Application.persistentDataPath;
-
-                Storage.FileName = "XmlStorageExample";
-                this.SetData(11);
-            }
-
             Storage.ChangeAggregation("Test2");
             Storage.FileName = "Test2";
             this.SetData(111);
-            
+
             Storage.Save();
             Debug.Log("Finish");
         }
@@ -85,11 +72,6 @@ namespace XmlStorage.Examples
 
             Storage.SetInt("int1", 2018);
             Storage.SetInt("int2", 10);
-
-
-            List<ExampleController.Test2> test2_list = new List<ExampleController.Test2>()
-            {new ExampleController.Test2(), new ExampleController.Test2()};
-            Storage.Set("Test2Class_list", test2_list);
         }
     }
 }

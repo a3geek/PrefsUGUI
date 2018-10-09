@@ -10,19 +10,19 @@ namespace XmlStorage.Components.Data
     public sealed class DataElement
     {
         /// <summary>データを取り出す時に使うキー</summary>
-        public string Key { get; private set; }
+        public string Key { get; set; }
         /// <summary>保存するデータ</summary>
-        public object Value { get; private set; }
+        public object Value { get; set; }
         /// <summary>データの型のフルネーム</summary>
-        public string TypeName { get; private set; }
+        public string TypeName { get; set; }
         /// <summary>保存型のフルネーム</summary>
-        public string SaveTypeName { get; private set; }
+        public string SaveTypeName { get; set; }
 
         /// <summary>データの型(RO)</summary>
         public Type ValueType { get { return this.GetType(this.TypeName); } }
         /// <summary>保存型</summary>
         public Type SaveType { get { return this.GetType(this.SaveTypeName); } }
-
+        
 
         /// <summary>
         /// コンストラクタ
@@ -37,7 +37,7 @@ namespace XmlStorage.Components.Data
         /// <param name="value">保存するデータ</param>
         /// <param name="type">データの型</param>
         public DataElement(string key, object value, Type type) : this(key, value, type, type) {; }
-        
+
         /// <summary>
         /// コンストラクタ
         /// </summary>

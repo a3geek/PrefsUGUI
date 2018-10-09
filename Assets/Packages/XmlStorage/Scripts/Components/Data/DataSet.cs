@@ -14,19 +14,19 @@ namespace XmlStorage.Components.Data
     public sealed class DataSet
     {
         /// <summary>集団名</summary>
-        public string AggregationName { get; private set; }
+        public string AggregationName { get; set; }
         /// <summary>ファイル名</summary>
-        public string FileName { get; private set; }
+        public string FileName { get; set; }
         /// <summary>フォルダ名</summary>
-        public string DirectoryPath { get; private set; }
+        public string DirectoryPath { get; set; }
         /// <summary>保存するデータ群</summary>
-        public Elements Elements { get; private set; }
+        public Elements Elements { get; set; }
         /// <summary>フルパス</summary>
         public string FullPath
         {
             get { return this.DirectoryPath + this.FileName; }
         }
-
+        
 
         /// <summary>
         /// コンストラクタ

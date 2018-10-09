@@ -1,16 +1,15 @@
-﻿using UnityEngine.SceneManagement;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 namespace XmlStorage.Components.Aggregations
 {
-    using Utilities;
     using Accessors;
-
-    using ExDictionary = Dictionary<Type, Dictionary<string, object>>;
+    using Utilities;
     using Elements = List<Data.DataElement>;
+    using ExDictionary = Dictionary<Type, Dictionary<string, object>>;
 
     /// <summary>
     /// データ群を集団としてまとめて管理する
@@ -18,6 +17,17 @@ namespace XmlStorage.Components.Aggregations
     [Serializable]
     public sealed partial class Aggregation : Accessor
     {
+        /// <summary>集団名</summary>
+        public string AggregationName
+        {
+            get; private set;
+        }
+        /// <summary>全ての型をシリアライズして保存するかどうか</summary>
+        /// <remarks>falseの時は<see cref="Type.IsSerializable"/>によってシリアライズするかどうかを判断する</remarks>
+        public bool IsAllTypesSerialize
+        {
+            get; private set;
+        }
         /// <summary>データ群を保存する時のファイル名</summary>
         public string FileName
         {
@@ -46,11 +56,6 @@ namespace XmlStorage.Components.Aggregations
         {
             get { return this.DirectoryPath + this.FileName; }
         }
-        /// <summary>集団名</summary>
-        public string AggregationName { get; private set; }
-        /// <summary>全ての型をシリアライズして保存するかどうか</summary>
-        /// <remarks>falseの時は<see cref="Type.IsSerializable"/>によってシリアライズするかどうかを判断する</remarks>
-        public bool IsAllTypesSerialize { get; private set; }
 
         /// <summary>データ群</summary>
         protected override ExDictionary dictionary

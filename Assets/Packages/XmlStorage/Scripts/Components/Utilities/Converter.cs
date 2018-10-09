@@ -150,7 +150,7 @@ namespace XmlStorage.Components.Utilities
                 {
                     return value;
                 }
-
+                
                 var serializer = new XmlSerializer(type);
                 return serializer.Deserialize(sr);
             }
