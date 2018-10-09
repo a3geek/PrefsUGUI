@@ -80,7 +80,7 @@ namespace PrefsUGUI.Guis.Prefs
 
         public override object GetValueObject()
         {
-            return this.IsDecimalNumber == true ? this.GetFloatValue() : this.GetIntValue();
+            return this.IsDecimalNumber == true ? (object)this.GetFloatValue() : this.GetIntValue();
         }
         
         protected override bool IsDefaultValue()
