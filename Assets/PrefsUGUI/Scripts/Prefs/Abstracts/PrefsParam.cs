@@ -13,11 +13,13 @@ namespace PrefsUGUI
         [Serializable]
         public abstract class PrefsParam<ValType, GuiType> : PrefsBase where GuiType : InputGuiBase
         {
-            public ValType Value
+            public event Action<GuiType> OnCreatedGui = delegate { };
+
+            public virtual ValType Value
             {
                 get { return this.Get(); }
             }
-            public ValType DefaultValue
+            public virtual ValType DefaultValue
             {
                 get { return this.defaultValue; }
             }
@@ -98,6 +100,7 @@ namespace PrefsUGUI
                 base.Regist();
                 AddPrefs<GuiType>(this, gui =>
                 {
+                    this.OnCreatedGuiInternal(gui);
                     this.OnCreatedGui(gui);
                 });
             }
@@ -113,7 +116,7 @@ namespace PrefsUGUI
                 }
             }
 
-            protected abstract void OnCreatedGui(GuiType gui);
+            protected abstract void OnCreatedGuiInternal(GuiType gui);
         }
     }
 }

@@ -82,16 +82,7 @@ namespace PrefsUGUI.Guis.Prefs
         {
             return this.IsDecimalNumber == true ? this.GetFloatValue() : this.GetIntValue();
         }
-
-        protected virtual void Initialize(string label, bool isDecimalNumber)
-        {
-            this.SetLabel(label);
-
-            this.isDecimalNumber = isDecimalNumber;
-            this.field.contentType = isDecimalNumber == true ?
-                InputField.ContentType.DecimalNumber : InputField.ContentType.IntegerNumber;
-        }
-
+        
         protected override bool IsDefaultValue()
         {
             return this.IsDecimalNumber == true ?
@@ -104,6 +95,20 @@ namespace PrefsUGUI.Guis.Prefs
             base.SetFields();
             this.field.text = this.IsDecimalNumber == true ?
                 this.fvalue.ToString() : this.ivalue.ToString();
+        }
+
+        protected override UnityEvent<string>[] GetInputEvents()
+        {
+            return new UnityEvent<string>[] { this.field.onEndEdit };
+        }
+
+        protected virtual void Initialize(string label, bool isDecimalNumber)
+        {
+            this.SetLabel(label);
+
+            this.isDecimalNumber = isDecimalNumber;
+            this.field.contentType = isDecimalNumber == true ?
+                InputField.ContentType.DecimalNumber : InputField.ContentType.IntegerNumber;
         }
 
         protected virtual void SetValueInternal(float value)

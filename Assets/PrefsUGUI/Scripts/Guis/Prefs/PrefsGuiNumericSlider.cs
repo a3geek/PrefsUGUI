@@ -25,25 +25,13 @@ namespace PrefsUGUI.Guis.Prefs
         protected bool inited = false;
 
 
-        public void OnChangedSlider(float v)
+        protected override void Awake()
         {
-            if(this.inited == false)
-            {
-                return;
-            }
+            base.Awake();
 
-            if(this.isDecimalNumber == true)
-            {
-                this.SetValue(v);
-            }
-            else
-            {
-                this.SetValue((int)v);
-            }
-
-            this.FireOnValueChanged();
+            this.slider.onValueChanged.AddListener(this.OnChangedSlider);
         }
-
+        
         public override void Initialize(string label, float initialValue, Func<float> fdefaultGetter)
         {
             this.Initialize(label, initialValue, -2f * initialValue, 2f * initialValue, fdefaultGetter);
@@ -70,6 +58,12 @@ namespace PrefsUGUI.Guis.Prefs
             this.inited = true;
         }
 
+        protected override void SetFields()
+        {
+            base.SetFields();
+            this.slider.value = this.IsDecimalNumber == true ? this.fvalue : this.ivalue;
+        }
+
         protected virtual void InitializeSlider(float min, float max, bool isDecimal)
         {
             this.slider.wholeNumbers = !isDecimal;
@@ -77,10 +71,23 @@ namespace PrefsUGUI.Guis.Prefs
             this.slider.maxValue = (min < max ? max : min);
         }
 
-        protected override void SetFields()
+        protected virtual void OnChangedSlider(float v)
         {
-            base.SetFields();
-            this.slider.value = this.IsDecimalNumber == true ? this.fvalue : this.ivalue;
+            if(this.inited == false)
+            {
+                return;
+            }
+
+            if(this.isDecimalNumber == true)
+            {
+                this.SetValue(v);
+            }
+            else
+            {
+                this.SetValue(Mathf.RoundToInt(v));
+            }
+
+            this.FireOnValueChanged();
         }
 
         protected override void Reset()

@@ -13,7 +13,7 @@ namespace PrefsUGUI
         public PrefsBool(string key, bool defaultValue = default(bool), string guiHierarchy = "", string guiLabel = "")
             : base(key, defaultValue, guiHierarchy, guiLabel) { }
 
-        protected override void OnCreatedGui(PrefsGuiBool gui)
+        protected override void OnCreatedGuiInternal(PrefsGuiBool gui)
         {
             gui.Initialize(this.GuiLabel, this.Get(), () => this.DefaultValue);
         }

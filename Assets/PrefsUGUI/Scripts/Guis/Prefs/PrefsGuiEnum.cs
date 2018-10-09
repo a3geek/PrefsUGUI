@@ -19,17 +19,13 @@ namespace PrefsUGUI.Guis.Prefs
         protected Func<int> defaultGetter = null;
 
 
-        public void OnChangedDropdown(int value)
+        protected override void Awake()
         {
-            if(this.inited == false)
-            {
-                return;
-            }
+            base.Awake();
 
-            this.SetValueInternal(value);
-            this.FireOnValueChanged();
+            this.dropdown.onValueChanged.AddListener(this.OnChangedDropdown);
         }
-
+        
         public int GetValue()
         {
             return this.value;
@@ -89,6 +85,11 @@ namespace PrefsUGUI.Guis.Prefs
             return this.GetValue();
         }
 
+        protected override UnityEvent<string>[] GetInputEvents()
+        {
+            return new UnityEvent<string>[0];
+        }
+
         protected override bool IsDefaultValue()
         {
             return this.GetValue() == this.defaultGetter();
@@ -102,6 +103,17 @@ namespace PrefsUGUI.Guis.Prefs
             this.dropdown.value = this.value;
 
             this.inited = true;
+        }
+
+        protected virtual void OnChangedDropdown(int value)
+        {
+            if(this.inited == false)
+            {
+                return;
+            }
+
+            this.SetValueInternal(value);
+            this.FireOnValueChanged();
         }
 
         protected virtual void SetValueInternal(int value)

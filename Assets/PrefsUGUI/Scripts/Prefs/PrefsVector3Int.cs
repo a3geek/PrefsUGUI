@@ -13,7 +13,7 @@ namespace PrefsUGUI
         public PrefsVector3Int(string key, Vector3Int defaultValue = default(Vector3Int), string guiHierarchy = "", string guiLabel = "")
             : base(key, defaultValue, guiHierarchy, guiLabel) { }
 
-        protected override void OnCreatedGui(PrefsGuiVector3 gui)
+        protected override void OnCreatedGuiInternal(PrefsGuiVector3 gui)
         {
             gui.Initialize(this.GuiLabel, this.Get(), () => this.DefaultValue);
         }

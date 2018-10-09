@@ -25,7 +25,7 @@ namespace PrefsUGUI
             this.max = maxValue;
         }
 
-        protected override void OnCreatedGui(PrefsGuiNumericSlider gui)
+        protected override void OnCreatedGuiInternal(PrefsGuiNumericSlider gui)
         {
             if(this.min == 0f && this.max == 0f)
             {

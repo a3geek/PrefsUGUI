@@ -13,7 +13,7 @@ namespace PrefsUGUI
         public PrefsString(string key, string defaultValue = "", string guiHierarchy = "", string guiLabel = "")
             : base(key, defaultValue, guiHierarchy, guiLabel) { }
 
-        protected override void OnCreatedGui(PrefsGuiString gui)
+        protected override void OnCreatedGuiInternal(PrefsGuiString gui)
         {
             gui.Initialize(this.GuiLabel, this.Get(), () => this.DefaultValue);
         }

@@ -50,14 +50,19 @@ namespace PrefsUGUI.Examples
         [SerializeField]
         public PrefsEnum<Test1> e1 = new PrefsEnum<Test1>("PrefsEnum1", Test1.Two, "Test");
         
-        private PrefsEnum<Test2> e2 = new PrefsEnum<Test2>("PrefsEnum2");
         private PrefsString s = new PrefsString("PrefsString", "localhost", "Test");
         private PrefsVector3 v6 = new PrefsVector3("PrefsVector3", new Vector3(2f, 4f, 6f), "Test");
         private PrefsVector3Int v7 = new PrefsVector3Int("PrefsVector3Int", new Vector3Int(-10, -5, 0), "Test");
         private PrefsVector4 v8 = new PrefsVector4("PrefsVector4", new Vector4(-2f, 0f, 2f, 100f), "Test");
+        private PrefsEnum<Test2> e2 = new PrefsEnum<Test2>("PrefsEnum2");
 #pragma warning restore 414
 
-        
+
+        private void Awake()
+        {
+            this.e1.OnCreatedGui += gui => gui.BottomMargin = 50f;
+        }
+
         void Update()
         {
             if(Input.GetKeyDown(KeyCode.S))

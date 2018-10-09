@@ -5,8 +5,6 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
-    using Guis.Factories;
-
     public static partial class Prefs
     {
         [Serializable]

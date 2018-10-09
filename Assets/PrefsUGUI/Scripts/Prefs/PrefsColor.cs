@@ -13,7 +13,7 @@ namespace PrefsUGUI
         public PrefsColor(string key, Color defaultValue = default(Color), string guiHierarchy = "", string guiLabel = "")
             : base(key, defaultValue, guiHierarchy, guiLabel) { }
 
-        protected override void OnCreatedGui(PrefsGuiColor gui)
+        protected override void OnCreatedGuiInternal(PrefsGuiColor gui)
         {
             gui.Initialize(this.GuiLabel, this.Get(), () => this.DefaultValue);
         }

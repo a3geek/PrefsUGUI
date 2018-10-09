@@ -20,9 +20,21 @@ namespace PrefsUGUI.Guis
     {
         public event Action OnPressedDefaultButton = delegate { };
         public event Action OnValueChanged = delegate { };
-        
+
+        public virtual float BottomMargin
+        {
+            get { return this.layout.minHeight - this.elements.sizeDelta.y; }
+            set { this.layout.minHeight = this.elements.sizeDelta.y + Mathf.Max(0f, value); }
+        }
+
+        [SerializeField]
+        protected LayoutElement layout = null;
+        [SerializeField]
+        protected RectTransform elements = null;
         [SerializeField]
         protected Text label = null;
+        [SerializeField]
+        protected Button defaultButton = null;
         [SerializeField]
         protected Text defaultButtonText = null;
         [SerializeField]
@@ -30,16 +42,16 @@ namespace PrefsUGUI.Guis
         [SerializeField]
         private Color undefaultColor = Color.red;
 
-        
-        public virtual void OnDefaultButton()
-        {
-            this.OnPressedDefaultButton();
-        }
 
-        public virtual void OnInputValue(string v)
+        protected virtual void Awake()
         {
-            this.SetValueInternal(v);
-            this.OnValueChanged();
+            this.defaultButton.onClick.AddListener(this.OnDefaultButton);
+
+            var events = this.GetInputEvents();
+            for(var i = 0; i < events.Length; i++)
+            {
+                events[i].AddListener(this.OnInputValue);
+            }
         }
         
         public override void SetLabel(string label)
@@ -51,7 +63,18 @@ namespace PrefsUGUI.Guis
         {
             return this.label.text;
         }
-        
+
+        protected virtual void OnDefaultButton()
+        {
+            this.OnPressedDefaultButton();
+        }
+
+        protected virtual void OnInputValue(string v)
+        {
+            this.SetValueInternal(v);
+            this.FireOnValueChanged();
+        }
+
         protected virtual void FireOnValueChanged()
         {
             this.OnValueChanged();
@@ -62,15 +85,17 @@ namespace PrefsUGUI.Guis
             this.defaultButtonText.color = this.IsDefaultValue() == true ? this.defaultColor : this.undefaultColor;
         }
 
+        protected abstract UnityEvent<string>[] GetInputEvents();
         protected abstract bool IsDefaultValue();
         protected abstract void SetValueInternal(string value);
 
         protected virtual void Reset()
         {
+            this.elements = GetComponentInChildren<RectTransform>();
             this.label = GetComponentInChildren<Text>();
 
-            var defaultButton = GetComponentInChildren<Button>();
-            this.defaultButtonText = defaultButton != null ? defaultButton.GetComponentInChildren<Text>() : null;
+            this.defaultButton = GetComponentInChildren<Button>();
+            this.defaultButtonText = this.defaultButton != null ? this.defaultButton.GetComponentInChildren<Text>() : null;
         }
     }
 }

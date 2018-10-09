@@ -50,6 +50,11 @@ namespace PrefsUGUI.Guis.Prefs
             return this.GetValue();
         }
 
+        protected override UnityEvent<string>[] GetInputEvents()
+        {
+            return new UnityEvent<string>[] { this.field.onEndEdit };
+        }
+
         protected override bool IsDefaultValue()
         {
             return this.GetValue() == this.defaultGetter();

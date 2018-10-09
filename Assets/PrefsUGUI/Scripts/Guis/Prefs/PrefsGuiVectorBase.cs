@@ -42,7 +42,20 @@ namespace PrefsUGUI.Guis.Prefs
             
             this.SetLabel(label);
         }
-        
+
+        protected override UnityEvent<string>[] GetInputEvents()
+        {
+            var fields = this.fields;
+            var events = new UnityEvent<string>[this.ElementCount];
+
+            for(var i = 0; i < this.ElementCount; i++)
+            {
+                events[i] = fields[i].onEndEdit;
+            }
+
+            return events;
+        }
+
         protected override void SetFields()
         {
             base.SetFields();

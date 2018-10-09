@@ -17,12 +17,13 @@ namespace PrefsUGUI.Guis.Prefs
         protected Func<bool> defaultGetter = null;
 
 
-        public void OnToggleChanged(bool value)
+        protected override void Awake()
         {
-            this.SetValueInternal(value);
-            this.FireOnValueChanged();
-        }
+            base.Awake();
 
+            this.toggle.onValueChanged.AddListener(this.OnToggleChanged);
+        }
+        
         public bool GetValue()
         {
             return this.value;
@@ -55,6 +56,17 @@ namespace PrefsUGUI.Guis.Prefs
         public override object GetValueObject()
         {
             return this.GetValue();
+        }
+
+        protected override UnityEvent<string>[] GetInputEvents()
+        {
+            return new UnityEvent<string>[0];
+        }
+
+        protected virtual void OnToggleChanged(bool value)
+        {
+            this.SetValueInternal(value);
+            this.FireOnValueChanged();
         }
 
         protected override bool IsDefaultValue()

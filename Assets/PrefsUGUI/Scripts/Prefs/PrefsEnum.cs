@@ -67,7 +67,7 @@ namespace PrefsUGUI
             this.defaultIndex = this.index;
         }
 
-        protected override void OnCreatedGui(PrefsGuiEnum gui)
+        protected override void OnCreatedGuiInternal(PrefsGuiEnum gui)
         {
             var list = this.values.Select(v => v.ToString()).ToList();
             gui.Initialize(this.GuiLabel, list, () => this.defaultIndex, this.GetIndex(this.Get()));

@@ -27,28 +27,24 @@ namespace PrefsUGUI.Guis.Prefs
         protected bool inited = false;
 
 
-        public void OnChangedSlider(float v)
+        protected override void Awake()
         {
-            if(this.inited == false)
+            base.Awake();
+
+            var events = this.GetSliderEvents();
+            for(var i = 0; i < events.Length; i++)
             {
-                return;
+                events[i].AddListener(this.OnChangedSlider);
             }
-
-            this.SetValue(new Color(
-                this.sliderX.value, this.sliderY.value,
-                this.sliderZ.value, this.sliderW.value
-            ));
-
-            this.FireOnValueChanged();
         }
-
+        
         public override void Initialize(string label, Color initialValue, Func<Color> defaultGetter)
         {
             base.Initialize(label, initialValue, defaultGetter);
 
             this.inited = true;
         }
-
+        
         protected override void Initialize(string label)
         {
             base.Initialize(label);
@@ -70,6 +66,34 @@ namespace PrefsUGUI.Guis.Prefs
             {
                 sliders[i].value = this.value[i];
             }
+        }
+
+        protected virtual void OnChangedSlider(float v)
+        {
+            if(this.inited == false)
+            {
+                return;
+            }
+
+            this.SetValue(new Color(
+                this.sliderX.value, this.sliderY.value,
+                this.sliderZ.value, this.sliderW.value
+            ));
+
+            this.FireOnValueChanged();
+        }
+
+        protected virtual UnityEvent<float>[] GetSliderEvents()
+        {
+            var sliders = this.sliders;
+            var events = new UnityEvent<float>[this.ElementCount];
+
+            for(var i = 0; i < this.ElementCount; i++)
+            {
+                events[i] = sliders[i].onValueChanged;
+            }
+
+            return events;
         }
 
         protected override void Reset()
