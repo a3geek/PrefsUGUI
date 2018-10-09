@@ -60,7 +60,7 @@ namespace PrefsUGUI.Examples
 
         private void Awake()
         {
-            this.e1.OnCreatedGui += gui => gui.BottomMargin = 50f;
+            this.e1.BottomMargin = 50f;
         }
 
         void Update()
@@ -68,6 +68,15 @@ namespace PrefsUGUI.Examples
             if(Input.GetKeyDown(KeyCode.S))
             {
                 Prefs.ShowGUI();
+            }
+
+            if(Input.GetKeyDown(KeyCode.A))
+            {
+                this.s.VisibleGUI = !this.s.VisibleGUI;
+            }
+            if(Input.GetKeyDown(KeyCode.N))
+            {
+                this.v6.Set(this.v6.Get() + Vector3.one);
             }
         }
     }

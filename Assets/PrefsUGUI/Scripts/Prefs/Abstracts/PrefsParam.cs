@@ -11,10 +11,8 @@ namespace PrefsUGUI
     public static partial class Prefs
     {
         [Serializable]
-        public abstract class PrefsParam<ValType, GuiType> : PrefsBase where GuiType : InputGuiBase
+        public abstract class PrefsParam<ValType, GuiType> : PrefsGuiConnector<GuiType> where GuiType : InputGuiBase
         {
-            public event Action<GuiType> OnCreatedGui = delegate { };
-
             public virtual ValType Value
             {
                 get { return this.Get(); }
@@ -94,16 +92,6 @@ namespace PrefsUGUI
             {
                 this.SetValueInternal(Storage.Get(this.SaveKey, this.defaultValue, AggregationName), withEvent);
             }
-
-            protected override void Regist()
-            {
-                base.Regist();
-                AddPrefs<GuiType>(this, gui =>
-                {
-                    this.OnCreatedGuiInternal(gui);
-                    this.OnCreatedGui(gui);
-                });
-            }
             
             protected virtual void SetValueInternal(ValType value, bool withEvent = true)
             {
@@ -115,8 +103,6 @@ namespace PrefsUGUI
                     this.FireOnValueChanged();
                 }
             }
-
-            protected abstract void OnCreatedGuiInternal(GuiType gui);
         }
     }
 }

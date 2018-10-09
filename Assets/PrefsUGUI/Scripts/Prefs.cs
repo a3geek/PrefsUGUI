@@ -27,19 +27,12 @@ namespace PrefsUGUI
         private static Creator Creators = new Creator();
         private static Dictionary<string, PrefsBase> Data = new Dictionary<string, PrefsBase>();
 
-
-        static Prefs()
-        {
-            PrefsGuis = null;
-            Creators = new Creator();
-            Data = new Dictionary<string, PrefsBase>();
-        }
-
+        
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
             PrefsGuis = (new GameObject("Prefs GUIs")).AddComponent<PrefsGuis>();
-            PrefsGuis.SetCreatorGetter(() => Creators);
+            PrefsGuis.Initialize(() => Creators);
         }
         
         public static void Save()
@@ -66,6 +59,11 @@ namespace PrefsUGUI
         public static bool IsShowing()
         {
             return PrefsGuis.IsShowing;
+        }
+
+        public static void SetSize(float width, float height)
+        {
+            PrefsGuis.SetSize(width, height);
         }
 
         private static void AddPrefs<PrefabType>(PrefsBase prefs, Action<PrefabType> onCreated) where PrefabType : InputGuiBase

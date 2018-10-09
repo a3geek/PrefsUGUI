@@ -29,31 +29,30 @@ namespace PrefsUGUI.Guis
 
         private PrefsCanvas canvas = null;
         private EventSystem system = null;
-        private Func<Creator> creatorGetter = null;
+        private Func<Creator> creator = null;
 
+        
+        public void Initialize(Func<Creator> creator)
+        {
+            this.creator = creator;
+
+            this.canvas = this.CreateCanvas();
+            this.Create();
+        }
 
         private void Awake()
         {
+            this.Create();
             this.system = EventSystem.current;
         }
 
         private void Update()
         {
-            if(this.prefsCanvas == null || this.eventSystem == null)
-            {
-                return;
-            }
+            this.system = this.system ?? (this.eventSystem == null ? null : Instantiate(this.eventSystem));
 
-            this.system = this.system ?? Instantiate(this.eventSystem);
-            this.canvas = this.canvas ?? this.CreateCanvas();
             this.Create();
         }
-
-        public void SetCreatorGetter(Func<Creator> getter)
-        {
-            this.creatorGetter = this.creatorGetter ?? getter;
-        }
-
+        
         public void RemovePrefs(PrefsUGUI.Prefs.PrefsBase prefs)
         {
             if(this.canvas == null)
@@ -80,12 +79,12 @@ namespace PrefsUGUI.Guis
         
         private void Create()
         {
-            if(this.creatorGetter == null)
+            if(this.creator == null)
             {
                 return;
             }
 
-            var prefs = this.creatorGetter();
+            var prefs = this.creator();
             foreach(var pair in prefs)
             {
                 pair.Value(this.canvas);
