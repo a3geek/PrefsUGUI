@@ -12,11 +12,9 @@ namespace PrefsUGUI.Guis
 
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
-    [DefaultExecutionOrder(DefaultExecutionOrder)]
+    [DefaultExecutionOrder(PrefsUGUI.Prefs.ExecutionOrder)]
     public class PrefsGuis : MonoBehaviour
     {
-        public const int DefaultExecutionOrder = -32000;
-
         public bool IsShowing
         {
             get { return this.canvas.gameObject.activeSelf; }

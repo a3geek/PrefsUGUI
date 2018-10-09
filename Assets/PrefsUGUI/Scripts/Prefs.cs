@@ -12,6 +12,7 @@ namespace PrefsUGUI
 
     public static partial class Prefs
     {
+        public const int ExecutionOrder = -32000;
         public const char HierarchySeparator = '/';
         
         public static string AggregationName

@@ -34,7 +34,7 @@ namespace PrefsUGUI.Examples
         private PrefsVector2Int v5 = new PrefsVector2Int("v5");
 
         [SerializeField]
-        private PrefsBool b = new PrefsBool("PrefsBool", true, "Test");
+        private PrefsBool b = new PrefsBool("PrefsBool", true, "Test", "Prefs " + RichTextColors.Red("Bool"));
         [SerializeField]
         private PrefsColor c = new PrefsColor("PrefsColor", Color.red, "Test");
         [SerializeField]
