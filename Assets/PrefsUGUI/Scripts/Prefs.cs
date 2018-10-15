@@ -28,14 +28,21 @@ namespace PrefsUGUI
         private static Creator Creators = new Creator();
         private static Dictionary<string, PrefsBase> Data = new Dictionary<string, PrefsBase>();
 
-        
+
+        static Prefs()
+        {
+            PrefsGuis = null;
+            Creators = new Creator();
+            Data = new Dictionary<string, PrefsBase>();
+        }
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
             PrefsGuis = (new GameObject("Prefs GUIs")).AddComponent<PrefsGuis>();
             PrefsGuis.Initialize(() => Creators);
         }
-        
+
         public static void Save()
         {
             var current = Storage.CurrentAggregationName;
