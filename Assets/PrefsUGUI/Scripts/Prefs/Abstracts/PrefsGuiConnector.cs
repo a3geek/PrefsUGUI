@@ -14,13 +14,25 @@ namespace PrefsUGUI
         {
             public virtual float BottomMargin
             {
-                get { return this.gui.BottomMargin; }
-                set { this.gui.BottomMargin = value; }
+                get { return this.gui == null ? 0f : this.gui.BottomMargin; }
+                set
+                {
+                    if(this.gui != null)
+                    {
+                        this.gui.BottomMargin = value;
+                    }
+                }
             }
             public virtual bool VisibleGUI
             {
-                get { return this.gui.gameObject.activeSelf; }
-                set { this.gui.gameObject.SetActive(value); }
+                get { return this.gui == null ? false : this.gui.gameObject.activeSelf; }
+                set
+                {
+                    if(this.gui != null)
+                    {
+                        this.gui.gameObject.SetActive(value);
+                    }
+                }
             }
 
             protected GuiType gui = null;
