@@ -17,6 +17,10 @@ namespace PrefsUGUI.Guis.Factories.Classes
         {
             get { return this.panel; }
         }
+        public Text Hierarchy
+        {
+            get { return this.hierarchy; }
+        }
         public ScrollRect Scroll
         {
             get { return this.scrollrect; }
@@ -46,6 +50,8 @@ namespace PrefsUGUI.Guis.Factories.Classes
         private Canvas canvas = null;
         [SerializeField]
         private RectTransform panel = null;
+        [SerializeField]
+        private Text hierarchy = null;
         [SerializeField]
         private ScrollRect scrollrect = null;
         [SerializeField]

@@ -16,12 +16,17 @@ namespace PrefsUGUI.Guis.Factories
     public partial class PrefsCanvas : MonoBehaviour
     {
         public const string TopCategoryName = "";
+        public const string TopHierarchy = "hierarchy...";
         
         public RectTransform Panel
         {
             get { return this.links.Panel; }
         }
-        
+
+        [SerializeField]
+        private Color topHierarchyColor = Color.gray;
+        [SerializeField]
+        private Color untopHierarchyColor = Color.white;
         [SerializeField]
         private GuiLinks links = new GuiLinks();
         [SerializeField]
@@ -37,13 +42,11 @@ namespace PrefsUGUI.Guis.Factories
 
             var topContent = this.creator.GetContent();
             this.structs = new GuiStruct(topContent, this.creator);
-            this.links.Scroll.content = topContent;
+            this.OnChangedGUI(this.structs.Current);
 
             this.links.Close.onClick.AddListener(this.OnClickedCloseButton);
             this.links.Discard.onClick.AddListener(this.OnClickedDiscardButton);
             this.links.Save.onClick.AddListener(this.OnClickedSaveButton);
-            
-            this.SetButtonActive(true);
         }
         
         public PrefabType AddPrefs<PrefabType>(PrefsBase prefs) where PrefabType : InputGuiBase
@@ -74,9 +77,9 @@ namespace PrefsUGUI.Guis.Factories
             }
         }
 
-        private void ChangeGUI(GuiStruct.Category previous, string targetCategoryName)
+        private void ChangeGUI(Category previous, string targetCategoryName)
         {
-            this.SetScroll(this.structs.ChangeGUI(previous, targetCategoryName));
+            this.OnChangedGUI(this.structs.ChangeGUI(previous, targetCategoryName));
         }
         
         private void OnClickedDiscardButton()
@@ -89,7 +92,7 @@ namespace PrefsUGUI.Guis.Factories
         
         private void OnClickedCloseButton()
         {
-            this.SetScroll(this.structs.ChangeGUI(this.structs.Current.Previous));
+            this.OnChangedGUI(this.structs.ChangeGUI(this.structs.Current.Previous));
         }
 
         private void OnClickedSaveButton()
@@ -98,10 +101,32 @@ namespace PrefsUGUI.Guis.Factories
             gameObject.SetActive(false);
         }
 
-        private void SetScroll(GuiStruct.Category category)
+        private void OnChangedGUI(Category category)
         {
             this.links.Scroll.content = category.Content;
-            this.SetButtonActive(this.structs.Current.CategoryName == TopCategoryName);
+
+            var isTop = this.SetHierarchy(category);
+            this.SetButtonActive(isTop);
+        }
+
+        private bool SetHierarchy(Category category)
+        {
+            var hierarchy = category.CategoryName;
+            var previous = category.Previous;
+            while(previous != null)
+            {
+                hierarchy = previous.CategoryName + Prefs.HierarchySeparator + hierarchy;
+                previous = previous.Previous;
+            }
+            var isTop = string.IsNullOrEmpty(hierarchy);
+
+            this.links.Hierarchy.color = isTop == true ? this.topHierarchyColor : this.untopHierarchyColor;
+            this.links.Hierarchy.fontStyle = isTop == true ? FontStyle.Italic : FontStyle.Normal;
+            this.links.Hierarchy.text = isTop == true ? 
+                TopHierarchy :
+                hierarchy.TrimStart(Prefs.HierarchySeparator) + Prefs.HierarchySeparator;
+
+            return isTop;
         }
 
         private void SetButtonActive(bool isTop)

@@ -215,21 +215,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f00f1ac44a51645b3a62679bbcb467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hogefuga:
+  hogeFuga:
     v1:
       key: HogeFuga - v1
-      hierarchy:
-        hierarchy: hoge/fuga/
-        sortOrders: 00000000
       guiLabel: HogeFuga - v1
       defaultValue: {x: 1, y: 1}
     v2:
       key: HogeFuga - v2
-      hierarchy:
-        hierarchy: hoge/fuga/
-        sortOrders: 00000000
       guiLabel: HogeFuga - v2
       defaultValue: {x: 2.5, y: 2.5}
+  hogeFugaPi:
+    v1:
+      key: HogeFugaPi - v1
+      guiLabel: HogeFugaPi - v1
+      defaultValue: {x: 1, y: 0}
+    v2:
+      key: HogeFugaPi - v2
+      guiLabel: HogeFugaPi - v2
+      defaultValue: {x: -1, y: 0}
+  v1:
+    key: v1
+    guiLabel: v1
+    defaultValue: {x: 0, y: 0}
+  v2:
+    key: v2
+    guiLabel: v2
+    defaultValue: {x: 1, y: 1}
+  v3:
+    key: v3
+    guiLabel: v3
+    defaultValue: {x: 2, y: 3}
+  test:
+    b:
+      key: PrefsBool
+      guiLabel: Prefs <color=red>Bool</color>
+      defaultValue: 1
+    c:
+      key: PrefsColor
+      guiLabel: PrefsColor
+      defaultValue: {r: 1, g: 0, b: 0, a: 1}
+    cs:
+      key: ColorSlider
+      guiLabel: ColorSlider
+      defaultValue: {r: 0, g: 0, b: 1, a: 1}
+    f:
+      key: PrefsFloat
+      guiLabel: PrefsFloat
+      defaultValue: 1
+    fs:
+      key: PrefsFloatSlider
+      guiLabel: PrefsFloatSlider
+      defaultValue: 5
+    i:
+      key: PrefsInt
+      guiLabel: PrefsInt
+      defaultValue: 5
+    isl:
+      key: PrefsIntSlider
+      guiLabel: PrefsIntSlider
+      defaultValue: 5
+    v6:
+      key: PrefsVector3
+      guiLabel: PrefsVector3
+      defaultValue: {x: 2, y: 4, z: 6}
+    v7:
+      key: PrefsVector3Int
+      guiLabel: PrefsVector3Int
+      defaultValue: {x: -10, y: -5, z: 0}
+    v8:
+      key: PrefsVector4
+      guiLabel: PrefsVector4
+      defaultValue: {x: -2, y: 0, z: 2, w: 100}
 --- !u!20 &282840813
 Camera:
   m_ObjectHideFlags: 0

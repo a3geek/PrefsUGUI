@@ -7,33 +7,10 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Factories
 {
-    using Utilities;
-    using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
-
     public partial class PrefsCanvas
     {
         private class GuiStruct
         {
-            public class Category
-            {
-                public RectTransform Content = null;
-                public Dictionary<PrefsBase, GuiBase> Prefs = new Dictionary<PrefsBase, GuiBase>();
-
-                public SortedList<GuiButton> Buttons = new SortedList<GuiButton>(
-                    (b1, b2) => string.Compare(b1.GetLabel(), b2.GetLabel())
-                );
-
-                public string CategoryName = "";
-                public List<Category> Nexts = new List<Category>();
-                public Category Previous = null;
-
-
-                public void SetActive(bool active)
-                {
-                    this.Content.gameObject.SetActive(active);
-                }
-            }
-            
             public Category Current { get; private set; }
             public List<Category> Categories
             {

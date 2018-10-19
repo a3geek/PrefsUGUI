@@ -7,10 +7,31 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Factories
 {
+    using Utilities;
     using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
 
     public partial class PrefsCanvas
     {
+        private class Category
+        {
+            public RectTransform Content = null;
+            public Dictionary<PrefsBase, GuiBase> Prefs = new Dictionary<PrefsBase, GuiBase>();
+
+            public SortedList<GuiButton> Buttons = new SortedList<GuiButton>(
+                (b1, b2) => string.Compare(b1.GetLabel(), b2.GetLabel())
+            );
+
+            public string CategoryName = "";
+            public List<Category> Nexts = new List<Category>();
+            public Category Previous = null;
+
+
+            public void SetActive(bool active)
+            {
+                this.Content.gameObject.SetActive(active);
+            }
+        }
+
         private class GuiCreator
         {
             private PrefsCanvas canvas = null;
@@ -30,7 +51,7 @@ namespace PrefsUGUI.Guis.Factories
                 return content;
             }
             
-            public PrefabType GetGui<PrefabType>(PrefsBase prefs, GuiStruct.Category category) where PrefabType : InputGuiBase
+            public PrefabType GetGui<PrefabType>(PrefsBase prefs, Category category) where PrefabType : InputGuiBase
             {
                 var gui = Instantiate(this.canvas.prefabs.GetGuiPrefab<PrefabType>(), category.Content);
 
@@ -40,7 +61,7 @@ namespace PrefsUGUI.Guis.Factories
                 return gui;
             }
 
-            public GuiButton GetButton(GuiStruct.Category category, string label, string targetCategoryName, int sortOrder)
+            public GuiButton GetButton(Category category, string label, string targetCategoryName, int sortOrder)
             {
                 var button = Instantiate(this.canvas.prefabs.Button, category.Content);
                 button.Initialize(label, () => this.canvas.ChangeGUI(category, targetCategoryName));
