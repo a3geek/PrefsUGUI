@@ -34,7 +34,10 @@ namespace PrefsUGUI.Guis.Factories
         private void Awake()
         {
             this.creator = new GuiCreator(this);
-            this.structs = new GuiStruct(this.creator.GetContent(), this.creator);
+
+            var topContent = this.creator.GetContent();
+            this.structs = new GuiStruct(topContent, this.creator);
+            this.links.Scroll.content = topContent;
 
             this.links.Close.onClick.AddListener(this.OnClickedCloseButton);
             this.links.Discard.onClick.AddListener(this.OnClickedDiscardButton);

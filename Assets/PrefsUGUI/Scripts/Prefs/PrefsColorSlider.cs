@@ -10,8 +10,8 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsColorSlider : Prefs.PrefsParam<Color, PrefsGuiColorSlider>
     {
-        public PrefsColorSlider(string key, Color defaultValue = default(Color), string guiHierarchy = "", string guiLabel = "")
-            : base(key, defaultValue, guiHierarchy, guiLabel) { }
+        public PrefsColorSlider(string key, Color defaultValue = default(Color), GuiHierarchy hierarchy = null, string guiLabel = "")
+            : base(key, defaultValue, hierarchy, guiLabel) { }
 
         protected override void OnCreatedGuiInternal(PrefsGuiColorSlider gui)
         {

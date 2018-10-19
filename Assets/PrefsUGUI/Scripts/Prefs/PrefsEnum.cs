@@ -42,8 +42,8 @@ namespace PrefsUGUI
         protected Dictionary<int, int> valueToIndex = new Dictionary<int, int>();
         
 
-        public PrefsEnum(string key, T defaultValue = default(T), string guiHierarchy = "", string guiLabel = "")
-            : base(key, defaultValue, guiHierarchy, guiLabel)
+        public PrefsEnum(string key, T defaultValue = default(T), GuiHierarchy hierarchy = null, string guiLabel = "")
+            : base(key, defaultValue, hierarchy, guiLabel)
         {
             var type = typeof(T);
             if(type.IsEnum == false)

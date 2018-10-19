@@ -14,12 +14,12 @@ namespace PrefsUGUI
         protected int max = 0;
 
 
-        public PrefsIntSlider(string key, int defaultValue = default(int), string guiHierarchy = "", string guiLabel = "")
-            : base(key, defaultValue, guiHierarchy, guiLabel) { }
+        public PrefsIntSlider(string key, int defaultValue = default(int), GuiHierarchy hierarchy = null, string guiLabel = "")
+            : base(key, defaultValue, hierarchy, guiLabel) { }
 
         public PrefsIntSlider(string key, int minValue, int maxValue,
-            int defaultValue = default(int), string guiHierarchy = "", string guiLabel = "")
-            : this(key, defaultValue, guiHierarchy, guiLabel)
+            int defaultValue = default(int), GuiHierarchy hierarchy = null, string guiLabel = "")
+            : this(key, defaultValue, hierarchy, guiLabel)
         {
             this.min = minValue;
             this.max = maxValue;

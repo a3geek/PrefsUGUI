@@ -10,8 +10,8 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsBool : Prefs.PrefsParam<bool, PrefsGuiBool>
     {
-        public PrefsBool(string key, bool defaultValue = default(bool), string guiHierarchy = "", string guiLabel = "")
-            : base(key, defaultValue, guiHierarchy, guiLabel) { }
+        public PrefsBool(string key, bool defaultValue = default(bool), GuiHierarchy hierarchy = null, string guiLabel = "")
+            : base(key, defaultValue, hierarchy, guiLabel) { }
 
         protected override void OnCreatedGuiInternal(PrefsGuiBool gui)
         {

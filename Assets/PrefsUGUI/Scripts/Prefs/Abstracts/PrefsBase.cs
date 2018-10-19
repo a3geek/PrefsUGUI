@@ -14,43 +14,37 @@ namespace PrefsUGUI
 
             public string SaveKey
             {
-                get
-                {
-                    var sep = HierarchySeparator;
-                    var hierarchy = this.GuiHierarchy == "" ? "" : this.GuiHierarchy.TrimEnd(sep) + sep;
-
-                    return hierarchy + this.Key;
-                }
+                get { return (this.GuiHierarchy == null ? "" : this.GuiHierarchy.Hierarchy) + this.key; }
             }
             public string Key
             {
                 get { return this.key; }
             }
-            public string GuiHierarchy
+            public GuiHierarchy GuiHierarchy
             {
-                get { return this.guiHierarchy; }
+                get { return this.hierarchy; }
             }
             public string GuiLabel
             {
                 get { return this.guiLabel; }
             }
 
-            public abstract object ValueAsObject { get; set; }
-            public abstract object DefaultValueAsObject { get; }
             public abstract Type ValueType { get; }
+            public abstract object DefaultValueAsObject { get; }
+            public abstract object ValueAsObject { get; set; }
 
             [SerializeField]
             protected string key = "";
             [SerializeField]
-            protected string guiHierarchy = "";
-            [SerializeField]
             protected string guiLabel = "";
 
+            protected GuiHierarchy hierarchy = null;
 
-            public PrefsBase(string key, string guiHierarchy = "", string guiLabel = "")
+
+            public PrefsBase(string key, GuiHierarchy hierarchy = null, string guiLabel = "")
             {
                 this.key = key;
-                this.guiHierarchy = guiHierarchy;
+                this.hierarchy = hierarchy;
                 this.guiLabel = string.IsNullOrEmpty(guiLabel) == true ? key : guiLabel;
 
                 this.Regist();

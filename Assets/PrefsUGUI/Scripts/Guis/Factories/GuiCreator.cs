@@ -40,12 +40,14 @@ namespace PrefsUGUI.Guis.Factories
                 return gui;
             }
 
-            public GuiButton GetButton(GuiStruct.Category category, string label, string targetCategoryName)
+            public GuiButton GetButton(GuiStruct.Category category, string label, string targetCategoryName, int sortOrder)
             {
                 var button = Instantiate(this.canvas.prefabs.Button, category.Content);
                 button.Initialize(label, () => this.canvas.ChangeGUI(category, targetCategoryName));
 
-                category.Buttons.Add(button);
+                var index = category.Buttons.Add(button, sortOrder);
+                button.transform.SetSiblingIndex(index);
+                
                 return button;
             }
 

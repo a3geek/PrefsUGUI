@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Factories
 {
+    using Utilities;
     using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
 
     public partial class PrefsCanvas
@@ -17,7 +18,10 @@ namespace PrefsUGUI.Guis.Factories
             {
                 public RectTransform Content = null;
                 public Dictionary<PrefsBase, GuiBase> Prefs = new Dictionary<PrefsBase, GuiBase>();
-                public List<GuiButton> Buttons = new List<GuiButton>();
+
+                public SortedList<GuiButton> Buttons = new SortedList<GuiButton>(
+                    (b1, b2) => string.Compare(b1.GetLabel(), b2.GetLabel())
+                );
 
                 public string CategoryName = "";
                 public List<Category> Nexts = new List<Category>();
@@ -35,9 +39,7 @@ namespace PrefsUGUI.Guis.Factories
             {
                 get { return this.categories; }
             }
-
-            private readonly char separator = PrefsUGUI.Prefs.HierarchySeparator;
-
+            
             private GuiCreator creator = null;
             private Category top = null;
             private List<Category> categories = new List<Category>();
@@ -56,34 +58,26 @@ namespace PrefsUGUI.Guis.Factories
 
                 this.ChangeGUI(this.top);
             }
-
-            public GuiStruct(RectTransform topContent, GuiCreator creator, char separator) : this(topContent, creator)
-            {
-                this.separator = separator;
-            }
             
-            public Category GetCategory(string hierarchy)
+            public Category GetCategory(GuiHierarchy hierarchy)
             {
-                hierarchy = hierarchy.TrimEnd(separator);
-                if(string.IsNullOrEmpty(hierarchy) == true)
+                if(hierarchy == null)
                 {
                     return this.top;
                 }
 
-                var split = hierarchy.Split(separator);
                 var previous = this.top;
+                var parents = hierarchy.Parents;
                 
-                for(var i = 0; i < split.Length; i++)
+                for(var i = 0; i < parents.Count; i++)
                 {
-                    var name = split[i];
-                    this.GetButton(previous, name, name);
-
-                    previous = this.GetCategory(previous, name);
+                    previous = this.GetCategory(previous, parents[i]);
                 }
+                previous = this.GetCategory(previous, hierarchy);
 
                 return previous;
             }
-
+            
             public Category ChangeGUI(Category previous, string targetCategoryName)
             {
                 var cat = (previous == null || targetCategoryName == TopCategoryName) ?
@@ -103,6 +97,21 @@ namespace PrefsUGUI.Guis.Factories
                 this.Current.SetActive(true);
 
                 return this.Current;
+            }
+
+            private Category GetCategory(Category previous, GuiHierarchy hierarchy)
+            {
+                var split = hierarchy.SplitHierarchy;
+
+                for(var i = 0; i < split.Length; i++)
+                {
+                    var name = split[i];
+                    this.GetButton(previous, name, name, hierarchy.GetSortOrder(i));
+
+                    previous = this.GetCategory(previous, name);
+                }
+
+                return previous;
             }
 
             private Category GetCategory(Category category, string categoryName)
@@ -139,7 +148,7 @@ namespace PrefsUGUI.Guis.Factories
                 return null;
             }
             
-            private GuiButton GetButton(Category category, string label, string targetCategoryName)
+            private GuiButton GetButton(Category category, string label, string targetCategoryName, int sortOrder)
             {
                 foreach(var b in category.Buttons)
                 {
@@ -149,7 +158,7 @@ namespace PrefsUGUI.Guis.Factories
                     }
                 }
                 
-                return this.creator.GetButton(category, label, targetCategoryName);
+                return this.creator.GetButton(category, label, targetCategoryName, sortOrder);
             }
         }
     }

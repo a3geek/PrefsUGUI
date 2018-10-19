@@ -38,8 +38,8 @@ namespace PrefsUGUI
             protected GuiType gui = null;
 
 
-            public PrefsGuiConnector(string key, string guiHierarchy = "", string guiLabel = "")
-                : base(key, guiHierarchy, guiLabel)
+            public PrefsGuiConnector(string key, GuiHierarchy hierarchy = null, string guiLabel = "")
+                : base(key, hierarchy, guiLabel)
             {
                 ;
             }
