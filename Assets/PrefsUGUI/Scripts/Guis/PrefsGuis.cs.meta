@@ -4,10 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - prefsCanvas: {fileID: 114725242622083018, guid: 8405a20cf6c799048b4e0cf9ec3bce1b,
-      type: 2}
-  - eventSystem: {fileID: 114878988391101584, guid: fffc46b307ac75440a4f5b453db713ed,
-      type: 2}
+  - prefsCanvas: {instanceID: 0}
+  - eventSystem: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

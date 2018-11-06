@@ -39,7 +39,18 @@ namespace PrefsUGUI
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
-            PrefsGuis = (new GameObject("Prefs GUIs")).AddComponent<PrefsGuis>();
+            PrefsGuis = UnityEngine.Object.FindObjectOfType<PrefsGuis>();
+            if(PrefsGuis == null)
+            {
+                var prefab = (GameObject)Resources.Load(PrefsGuis.PrefsGuisPrefabName, typeof(GameObject));
+                if(prefab == null)
+                {
+                    return;
+                }
+
+                PrefsGuis = UnityEngine.Object.Instantiate(prefab).GetComponent<PrefsGuis>();
+            }
+
             PrefsGuis.Initialize(() => Creators);
         }
 

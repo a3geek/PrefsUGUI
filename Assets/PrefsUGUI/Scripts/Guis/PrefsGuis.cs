@@ -15,9 +15,15 @@ namespace PrefsUGUI.Guis
     [DefaultExecutionOrder(PrefsUGUI.Prefs.ExecutionOrder)]
     public class PrefsGuis : MonoBehaviour
     {
+        public const string PrefsGuisPrefabName = "PrefsGuis";
+
         public bool IsShowing
         {
             get { return this.canvas.gameObject.activeSelf; }
+        }
+        public PrefsCanvas Canvas
+        {
+            get { return this.prefsCanvas; }
         }
 
         [SerializeField]

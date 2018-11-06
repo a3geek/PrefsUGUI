@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 114673343419335908}
   - component: {fileID: 114725242622083018}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: PrefsCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1080,6 +1080,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be5793654a0fcc74bbc7fca488b86f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  topHierarchyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  untopHierarchyColor: {r: 1, g: 1, b: 1, a: 1}
   links:
     canvas: {fileID: 223394934412300484}
     panel: {fileID: 224060096450659162}
