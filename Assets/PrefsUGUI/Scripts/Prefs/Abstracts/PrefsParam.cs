@@ -103,6 +103,11 @@ namespace PrefsUGUI
                     this.FireOnValueChanged();
                 }
             }
+
+            public static implicit operator ValType(PrefsParam<ValType, GuiType> prefs)
+            {
+                return prefs.Get();
+            }
         }
     }
 }
