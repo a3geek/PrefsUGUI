@@ -17,22 +17,18 @@ namespace XmlStorage.Components.Data
         public string AggregationName { get; set; }
         /// <summary>ファイル名</summary>
         public string FileName { get; set; }
-        /// <summary>フォルダ名</summary>
-        public string DirectoryPath { get; set; }
         /// <summary>保存するデータ群</summary>
         public Elements Elements { get; set; }
+
         /// <summary>フルパス</summary>
-        public string FullPath
-        {
-            get { return this.DirectoryPath + this.FileName; }
-        }
-        
+        public string FullPath => Storage.DirectoryPath + this.FileName;
+
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <remarks>シリアライズするのにデフォルトコンストラクタが必要</remarks>
-        public DataSet() : this("", "", "", "", null) {; }
+        public DataSet() : this("", "", null) {; }
 
         /// <summary>
         /// コンストラクタ
@@ -42,11 +38,10 @@ namespace XmlStorage.Components.Data
         /// <param name="extension">拡張子</param>
         /// <param name="directoryPath">フォルダ名</param>
         /// <param name="elements">保存するデータ群</param>
-        public DataSet(string aggregationName, string fileName, string extension, string directoryPath, Elements elements)
+        public DataSet(string aggregationName, string fileName, Elements elements)
         {
             this.AggregationName = aggregationName;
-            this.FileName = FileUtils.AdjustAsFileName(fileName, extension);
-            this.DirectoryPath = FileUtils.AdjustAsDirectoryPath(directoryPath);
+            this.FileName = FileUtils.AdjustAsFileName(fileName, Consts.Extension);
             this.Elements = (elements ?? new Elements());
         }
     }

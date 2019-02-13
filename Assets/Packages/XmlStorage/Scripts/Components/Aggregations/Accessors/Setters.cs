@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace XmlStorage.Components.Aggregations.Accessors
 {
@@ -12,9 +11,7 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="key">セットするデータのキー</param>
         /// <param name="value">セットするデータ</param>
         public void Set<T>(string key, T value)
-        {
-            this.SetValue(key, value, typeof(T));
-        }
+            => this.SetValue(key, value, typeof(T));
 
         /// <summary>
         /// 任意の型のデータとキーをセットする
@@ -24,9 +21,7 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="key">セットするデータのキー</param>
         /// <param name="value">セットするデータ</param>
         public void Set<T>(Type type, string key, T value)
-        {
-            this.SetValue(key, value, type);
-        }
+            => this.SetValue(key, value, type);
 
         /// <summary>
         /// float型のデータとキーをセットする
@@ -34,9 +29,7 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="key">セットするデータのキー</param>
         /// <param name="value">セットするデータ</param>
         public void SetFloat(string key, float value)
-        {
-            this.SetValue(key, value, typeof(float));
-        }
+            => this.SetValue(key, value, typeof(float));
 
         /// <summary>
         /// int型のデータとキーをセットする
@@ -44,9 +37,7 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="key">セットするデータのキー</param>
         /// <param name="value">セットするデータ</param>
         public void SetInt(string key, int value)
-        {
-            this.SetValue(key, value, typeof(int));
-        }
+            => this.SetValue(key, value, typeof(int));
 
         /// <summary>
         /// string型のデータとキーをセットする
@@ -54,9 +45,7 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="key">セットするデータのキー</param>
         /// <param name="value">セットするデータ</param>
         public void SetString(string key, string value)
-        {
-            this.SetValue(key, value, typeof(string));
-        }
+            => this.SetValue(key, value, typeof(string));
 
         /// <summary>
         /// bool型のデータとキーをセットする
@@ -64,9 +53,7 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="key">セットするデータのキー</param>
         /// <param name="value">セットするデータ</param>
         public void SetBool(string key, bool value)
-        {
-            this.SetValue(key, value, typeof(bool));
-        }
+            => this.SetValue(key, value, typeof(bool));
 
         /// <summary>
         /// データとキーを内部的にセットする

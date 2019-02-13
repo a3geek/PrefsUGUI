@@ -15,140 +15,117 @@ namespace XmlStorage.Examples
         /// </summary>
         public void Execute()
         {
-            Debug.Log(Storage.HasAggregation("Default"));
+            /*
+             * true
+             * true
+             * false
+             */
+            Debug.Log(Storage.HasAggregation(Storage.DefaultAggregationName));
             Debug.Log(Storage.HasAggregation("Test1"));
             Debug.Log(Storage.HasAggregation("Test2"));
             Debug.Log("");
 
-            // 10
+            /*
+             * 10
+             * 10
+             * 15
+             * 20
+             * 1.12345
+             */
             Debug.Log(Storage.Get(typeof(SetExample), "SetExample", 0));
+            Debug.Log(Storage.GetInt("integer1"));
+            Debug.Log(Storage.GetInt("integer2"));
+            Debug.Log(Storage.GetInt("integer3"));
+            Debug.Log(Storage.GetFloat("float"));
+            Debug.Log("");
             Debug.Log("");
 
             /*
-             * 1
-             * 1.111
-             * XmlStorage.Examples.ExampleController+Test
-             * "TestString"
-             * 0.1f
-             * 10.1f
-             * 
-             * 0
-             * ""
-             * 
-             * 0
-             * "del_tes2"
-             * 
-             * "lab-interactive@team-lab.com"
+             * c:/......
+             * Test2.xml
+             */
+            Storage.ChangeAggregation("Test1");
+            Debug.Log("Directory Path : " + Storage.DirectoryPath);
+            Debug.Log("File Name : " + Storage.CurrentAggregation.FileName);
+
+            /*
+             * XmlStorage.Examples.ExampleController+Test1
+             * 1 _ TestString _ 0.1 _ 1.1 _ 10.1 _ 1.0
+             * XmlStorage.Examples.ExampleController+Test2
+             * (1.0, 2.0)
+             * (1.0, 2.0, 3.0)
+             * (1.0, 2.0, 3.0, 4.0)
              * 
              * (0.1, 0.2)
              * (1.0, 2.0, 3.0)
              * (10.0, 20.0, 30.0)
-             * 
-             * 111
-             * 2018
-             * 10
-             * 
-             * "del_test2"
-             * "address"
              */
-            Debug.Log("Default Aggregatpion");
-            Debug.Log("Directory Path : " + Storage.DirectoryPath);
-            Debug.Log("File Name : " + Storage.FileName);
-            this.GetData();
+            var test1 = Storage.Get<ExampleController.Test1>("test1");
+            var test2 = Storage.Get<ExampleController.Test2>("test2");
+            Debug.Log(test1);
+            test1?.Log();
+
+            Debug.Log(test2);
+            test2?.Log();
+
+            Debug.Log("");
+            Debug.Log(Storage.Get<Vector2>("vec2"));
+            Debug.Log(Storage.Get<Vector3>("vec3"));
+            Debug.Log(Storage.Get<Quaternion>("qua").eulerAngles);
+
+
+            Debug.Log("");
+            Debug.Log("");
+            Storage.DirectoryPath = ExampleController.SecondaryFolder;
+            Storage.Load();
 
             /*
-             * 111
-             * 1.111
-             * XmlStorage.Examples.ExampleController+Test
-             * "TestString"
-             * 0.1f
-             * 10.1f
-             * 
+             * c:/......
+             * XmlStorage.xml
+             */
+            Debug.Log("Directory Path : " + Storage.DirectoryPath);
+            Debug.Log("File Name : " + Storage.CurrentAggregation.FileName);
+
+            /*
+             * true
+             * false
+             */
+            Debug.Log(Storage.HasAggregation(Storage.DefaultAggregationName));
+            Debug.Log(Storage.HasAggregation("Test1"));
+            Debug.Log("");
+
+            /*
+             * 100
+             * 10.12345
              * 0
              * ""
-             * 
              * 0
-             * "del_tes2"
-             * 
-             * "lab-interactive@team-lab.com"
-             * 
-             * (0.1, 0.2)
-             * (1.0, 2.0, 3.0)
-             * (10.0, 20.0, 30.0)
-             * 
-             * 111
-             * 2018
-             * 10
-             * 
              * "del_test2"
-             * "address"
              */
-            Debug.Log("Test2 Aggregation");
-            Storage.ChangeAggregation("Test2");
-            Debug.Log("Directory Path : " + Storage.DirectoryPath);
-            Debug.Log("File Name : " + Storage.FileName);
-            this.GetData();
-        }
+            Debug.Log(Storage.GetInt("integer"));
+            Debug.Log(Storage.GetFloat("float"));
+            Debug.Log(Storage.GetInt("del_test1"));
+            Debug.Log(Storage.GetString("del_test1"));
+            Debug.Log(Storage.GetInt("del_test2"));
+            Debug.Log(Storage.GetString("del_test2"));
 
-        /// <summary>
-        /// <see cref="Storage"/>から値を取得してログに出力する
-        /// </summary>
-        private void GetData()
-        {
-            Debug.Log(Storage.GetInt("integer", 0));
-            Debug.Log(Storage.GetFloat("float", 0f));
-
-            Debug.Log(Storage.Get(typeof(object), "obj_int", 0));
-            Debug.Log(Storage.Get<object>("obj_int"));
-            Debug.Log(Storage.Get(typeof(int), "obj_int", 0));
-            Debug.Log(Storage.Get<int>("obj_int"));
 
             Debug.Log("");
-
-            Debug.Log(Storage.Get<ExampleController.Test1>("Test1Class"));
-            Debug.Log(Storage.Get<ExampleController.Test1>("Test1Class").str);
-            Debug.Log(Storage.Get<ExampleController.Test1>("Test1Class").list1.First());
-            Debug.Log(Storage.Get<ExampleController.Test1>("Test1Class").list1.Last());
-
-            Debug.Log(Storage.Get<ExampleController.Test2>("Test2Class", null));
-            Debug.Log(Storage.Get<ExampleController.Test2>("Test2Class", null).vec2);
-            Debug.Log(Storage.Get<ExampleController.Test2>("Test2Class", null).vec3);
-
             Debug.Log("");
+            Storage.DirectoryPath = Storage.DefaultSaveDirectory;
+            Storage.Load();
 
-            Debug.Log(Storage.GetInt("del_tes1"));
-            Debug.Log(Storage.GetString("del_tes1"));
-
-            Debug.Log("");
-
-            Debug.Log(Storage.GetInt("del_tes2"));
-            Debug.Log(Storage.GetString("del_tes2"));
-
-            Debug.Log("");
-
-            Debug.Log(Storage.Get<string>("address"));
-
-            Debug.Log("");
-
-            Debug.Log(Storage.Get("vec2", Vector2.zero));
-            Debug.Log(Storage.Get("vec3", Vector3.zero));
-            Debug.Log(Storage.Get("qua", Quaternion.identity).eulerAngles);
-
-            Debug.Log("");
-
-            // List Example
-            var intArr = Storage.GetInts();
-            for(var i = 0; i < intArr.Length; i++)
+            var ints = Storage.GetInts();
+            for(var i = 0; i < ints.Length; i++)
             {
-                Debug.Log(intArr[i]);
+                Debug.Log(ints[i]);
             }
-
             Debug.Log("");
 
-            var string_keys = Storage.GetKeys(typeof(string));
-            for(var i = 0; i < string_keys.Length; i++)
+            var keys = Storage.GetKeys(typeof(int));
+            for(var i = 0; i < keys.Length; i++)
             {
-                Debug.Log(string_keys[i]);
+                Debug.Log(keys[i]);
             }
 
             Debug.Log("");
@@ -158,9 +135,6 @@ namespace XmlStorage.Examples
             {
                 Debug.Log(types[i]);
             }
-
-            Debug.Log("");
-            Debug.Log("");
         }
     }
 }

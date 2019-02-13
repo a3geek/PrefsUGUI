@@ -29,7 +29,7 @@ namespace XmlStorage
         /// <returns>消去に成功したかどうか</returns>
         public static bool DeleteAggregation(string aggregationName)
         {
-            if(aggregationName == Consts.DefaultAggregationName)
+            if(aggregationName == DefaultAggregationName)
             {
                 return false;
             }
@@ -43,9 +43,7 @@ namespace XmlStorage
         /// <param name="aggregationName">集団名</param>
         /// <returns>存在するかどうか</returns>
         public static bool HasAggregation(string aggregationName)
-        {
-            return (string.IsNullOrEmpty(aggregationName) == true ? false : Aggregations.ContainsKey(aggregationName));
-        }
+            => string.IsNullOrEmpty(aggregationName) == true ? false : Aggregations.ContainsKey(aggregationName);
 
         /// <summary>
         /// セットした全てのデータを消去する
@@ -53,9 +51,7 @@ namespace XmlStorage
         /// <remarks><paramref name="aggregationName"/>がnullの時は、<see cref="CurrentAggregationName"/>が使われる</remarks>
         /// <param name="aggregationName">データが所属する集団名</param>
         public static void DeleteAll(string aggregationName = null)
-        {
-            Action(aggregationName, agg => agg.DeleteAll());
-        }
+            => Action(aggregationName, agg => agg.DeleteAll());
 
         /// <summary>
         /// キーと一致するデータを全て消去する
@@ -65,9 +61,7 @@ namespace XmlStorage
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>消去に成功したかどうか</returns>
         public static bool DeleteKey(string key, string aggregationName = null)
-        {
-            return Func(aggregationName, agg => agg.DeleteKey(key));
-        }
+            => Func(aggregationName, agg => agg.DeleteKey(key));
 
         /// <summary>
         /// キーと型に一致するデータを消去する
@@ -78,9 +72,7 @@ namespace XmlStorage
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>消去に成功したかどうか</returns>
         public static bool DeleteKey(string key, Type type, string aggregationName = null)
-        {
-            return Func(aggregationName, agg => agg.DeleteKey(key, type));
-        }
+            => Func(aggregationName, agg => agg.DeleteKey(key, type));
 
         /// <summary>
         /// キーと一致するデータが一つでも存在するかどうかを検索する
@@ -90,9 +82,7 @@ namespace XmlStorage
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>存在するかどうか</returns>
         public static bool HasKey(string key, string aggregationName = null)
-        {
-            return Func(aggregationName, agg => agg.HasKey(key));
-        }
+            => Func(aggregationName, agg => agg.HasKey(key));
 
         /// <summary>
         /// キーと型に一致するデータが存在するかどうかを検索する
@@ -103,8 +93,6 @@ namespace XmlStorage
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>存在するかどうか</returns>
         public static bool HasKey(string key, Type type, string aggregationName = null)
-        {
-            return Func(aggregationName, agg => agg.HasKey(key, type));
-        }
+            => Func(aggregationName, agg => agg.HasKey(key, type));
     }
 }

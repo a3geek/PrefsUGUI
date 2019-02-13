@@ -8,6 +8,7 @@ namespace PrefsUGUI
     using XmlStorage;
     using Guis;
 
+    using XmlStorageConsts = XmlStorage.Components.Consts;
     using Creator = Dictionary<string, Action<Guis.Factories.PrefsCanvas>>;
 
     public static partial class Prefs
@@ -59,7 +60,7 @@ namespace PrefsUGUI
             var current = Storage.CurrentAggregationName;
 
             Storage.ChangeAggregation(AggregationName);
-            Storage.FileName = FileName + Storage.Extension;
+            Storage.CurrentAggregation.FileName = FileName + XmlStorageConsts.Extension;
 
             foreach(var pair in Data)
             {

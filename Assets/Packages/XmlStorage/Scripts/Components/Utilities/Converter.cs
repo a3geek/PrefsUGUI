@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using System.IO;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace XmlStorage.Components.Utilities
 {
@@ -10,8 +10,8 @@ namespace XmlStorage.Components.Utilities
     using Aggregations;
 
     using Elements = List<Data.DataElement>;
-    using SerializeType = List<Data.DataSet>;
     using ExDictionary = Dictionary<Type, Dictionary<string, object>>;
+    using SerializeType = List<Data.DataSet>;
 
     public static class Converter
     {
@@ -30,7 +30,7 @@ namespace XmlStorage.Components.Utilities
             foreach(var agg in aggregations.Values)
             {
                 var dataset = new DataSet(
-                    agg.AggregationName, agg.FileName, agg.Extension, agg.DirectoryPath, agg.GetDataAsDataElements(encode)
+                    agg.AggregationName, agg.FileName, agg.GetDataAsDataElements(encode)
                 );
 
                 if(dic.ContainsKey(agg.FullPath) == false)
@@ -52,10 +52,10 @@ namespace XmlStorage.Components.Utilities
         public static Dictionary<string, Aggregation> DataSetsToAggregations(SerializeType sets)
         {
             var dic = new Dictionary<string, Aggregation>();
-            
+
             foreach(var set in sets)
             {
-                dic[set.AggregationName] = new Aggregation(set.Elements, set.AggregationName, set.FullPath);
+                dic[set.AggregationName] = new Aggregation(set.Elements, set.AggregationName, set.FileName);
             }
 
             return dic;
@@ -99,7 +99,7 @@ namespace XmlStorage.Components.Utilities
             {
                 return new DataElement(key, value, type, saveType);
             }
-            
+
             using(var sw = new FileUtils.EncodedStringWriter(encode))
             {
                 var serializer = new XmlSerializer(type);
@@ -150,7 +150,7 @@ namespace XmlStorage.Components.Utilities
                 {
                     return value;
                 }
-                
+
                 var serializer = new XmlSerializer(type);
                 return serializer.Deserialize(sr);
             }

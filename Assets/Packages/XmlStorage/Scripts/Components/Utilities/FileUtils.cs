@@ -13,13 +13,7 @@ namespace XmlStorage.Components.Utilities
             /// <summary>
             /// 保存する時のエンコード
             /// </summary>
-            public override Encoding Encoding
-            {
-                get
-                {
-                    return this.encode;
-                }
-            }
+            public override Encoding Encoding => this.encode;
 
             /// <summary>
             /// 保存する時のエンコード
@@ -38,7 +32,7 @@ namespace XmlStorage.Components.Utilities
             /// <param name="encode">保存する時のエンコード</param>
             public EncodedStringWriter(Encoding encode) : this()
             {
-                this.encode = (encode ?? this.encode);
+                this.encode = encode ?? this.encode;
             }
         }
 
@@ -49,11 +43,9 @@ namespace XmlStorage.Components.Utilities
         /// <param name="defaultValue">ファイル名として問題がある時に返すデフォルト値</param>
         /// <returns>ファイル名</returns>
         public static string AdjustAsFileName(string fileName, string extension, string defaultValue = null)
-        {
-            return string.IsNullOrEmpty(fileName) == true ?
+            => string.IsNullOrEmpty(fileName) == true ?
                 defaultValue :
                 (fileName.EndsWith(extension) ? fileName : fileName + extension);
-        }
 
         /// <summary>
         /// 拡張子として調整する
@@ -62,11 +54,9 @@ namespace XmlStorage.Components.Utilities
         /// <param name="defaultValue">拡張子として問題がある時に返すデフォルト値</param>
         /// <returns>拡張子</returns>
         public static string AdjustAsExtension(string extension, string defaultValue = null)
-        {
-            return string.IsNullOrEmpty(extension) == true ?
+            => string.IsNullOrEmpty(extension) == true ?
                 defaultValue :
                 (extension.StartsWith(Consts.Period) ? extension : Consts.Period + extension);
-        }
 
         /// <summary>
         /// フォルダパスとして調整する
@@ -74,7 +64,7 @@ namespace XmlStorage.Components.Utilities
         /// <param name="directoryPath">調節するフォルダパス</param>
         /// <param name="defaultValue">フォルダパスとして問題がある時に返すデフォルト値</param>
         /// <returns>フォルダパス</returns>
-        public static string AdjustAsDirectoryPath(string directoryPath, string defaultValue = null)
+        public static string AdjustAsDirectoryPath(string directoryPath, string defaultValue = null, bool creatable = true)
         {
             if(string.IsNullOrEmpty(directoryPath))
             {
@@ -83,12 +73,12 @@ namespace XmlStorage.Components.Utilities
 
             directoryPath = ChangeSeparatorChar(directoryPath);
 
-            if(Directory.Exists(directoryPath) == false)
+            if(Directory.Exists(directoryPath) == false && creatable == true)
             {
                 Directory.CreateDirectory(directoryPath);
             }
 
-            return (directoryPath.EndsWith(Consts.Separator.ToString()) ? directoryPath : directoryPath + Consts.Separator);
+            return directoryPath.EndsWith(Consts.Separator.ToString()) ? directoryPath : directoryPath + Consts.Separator;
         }
 
         /// <summary>

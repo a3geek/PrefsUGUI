@@ -26,7 +26,7 @@ namespace XmlStorage.Components.Aggregations.Accessors
             {
                 this.dictionary[type] = new Dictionary<string, object>();
             }
-            
+
             this.dictionary[type][key] = value;
         }
 
@@ -56,9 +56,7 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="defaultValue">データが存在しなかった時の返り値</param>
         /// <returns>データ</returns>
         protected override T[] GetValues<T>(T[] defaultValue, Type type)
-        {
-            return this.HasType(type) == true ? dictionary[type].Values.Cast<T>().ToArray() : new T[0];
-        }
+            => this.HasType(type) == true ? dictionary[type].Values.Cast<T>().ToArray() : new T[0];
 
         /// <summary>
         /// データの型と対応するキーを取得する
@@ -66,27 +64,18 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="type">データの型情報</param>
         /// <returns>データの型と対応するキー</returns>
         public override string[] GetKeys(Type type)
-        {
-            return this.HasType(type) == true ? this.dictionary[type].Keys.ToArray() : new string[0];
-        }
-
+            => this.HasType(type) == true ? this.dictionary[type].Keys.ToArray() : new string[0];
 
         /// <summary>
         /// データの型情報を取得する
         /// </summary>
         /// <returns>データの型情報</returns>
-        public override Type[] GetTypes()
-        {
-            return dictionary.Keys.ToArray();
-        }
-        
+        public override Type[] GetTypes() => dictionary.Keys.ToArray();
+
         /// <summary>
         /// セットした全てのデータを消去する
         /// </summary>
-        public void DeleteAll()
-        {
-            this.dictionary.Clear();
-        }
+        public void DeleteAll() => this.dictionary.Clear();
 
         /// <summary>
         /// キーと一致するデータを全て消去する
@@ -112,9 +101,7 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="type">消去するデータの型</param>
         /// <returns>消去に成功したかどうか</returns>
         public bool DeleteKey(string key, Type type)
-        {
-            return this.HasType(type) == false ? false : this.dictionary[type].Remove(key);
-        }
+            => this.HasType(type) == false ? false : this.dictionary[type].Remove(key);
 
         /// <summary>
         /// キーと一致するデータが一つでも存在するかどうかを検索する
@@ -141,9 +128,7 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="type">検索するデータの型</param>
         /// <returns>存在するかどうか</returns>
         public bool HasKey(string key, Type type)
-        {
-            return this.HasType(type) && this.dictionary[type].ContainsKey(key);
-        }
+            => this.HasType(type) && this.dictionary[type].ContainsKey(key);
 
         /// <summary>
         /// 型がデータとして存在するかどうかを検索する
@@ -151,8 +136,6 @@ namespace XmlStorage.Components.Aggregations.Accessors
         /// <param name="type">検索する型</param>
         /// <returns>存在するかどうか</returns>
         public bool HasType(Type type)
-        {
-            return this.dictionary.ContainsKey(type);
-        }
+            => this.dictionary.ContainsKey(type);
     }
 }

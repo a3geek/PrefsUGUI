@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using System.IO;
-using System.Text;
+using System.Xml.Serialization;
 
 namespace XmlStorage
 {
     using Components;
     using Components.Aggregations;
     using Components.Utilities;
+
     using SerializeType = List<Components.Data.DataSet>;
 
     /// <summary>
@@ -16,64 +16,50 @@ namespace XmlStorage
     /// </summary>
     public static partial class Storage
     {
-        /// <summary><see cref="CurrentAggregation"/>がデータ群を保存する時のファイル名</summary>
-        public static string FileName
-        {
-            set { CurrentAggregation.FileName = value; }
-            get { return CurrentAggregation.FileName; }
-        }
-        /// <summary><see cref="CurrentAggregation"/>がデータ群を保存する時のファイル拡張子</summary>
-        public static string Extension
-        {
-            set { CurrentAggregation.Extension = value; }
-            get { return CurrentAggregation.Extension; }
-        }
         /// <summary><see cref="CurrentAggregation"/>がデータ群を保存するファイルを置くフォルダ</summary>
         public static string DirectoryPath
         {
-            set { CurrentAggregation.DirectoryPath = value; }
-            get { return CurrentAggregation.DirectoryPath; }
-        }
-        /// <summary><see cref="CurrentAggregation"/>がデータ群を保存する時のファイル名(拡張子なし)</summary>
-        public static string FileNameWithoutExtension
-        {
-            get { return CurrentAggregation.FileNameWithoutExtension; }
-        }
-        /// <summary><see cref="CurrentAggregation"/>がデータ群を保存する時のフルパス</summary>
-        public static string FullPath
-        {
-            get { return CurrentAggregation.FullPath; }
+            set { Folder = FileUtils.AdjustAsDirectoryPath(value, Folder, false); }
+            get { return Folder; }
         }
         /// <summary>現在選択されている集団名</summary>
         public static string CurrentAggregationName
         {
             get; private set;
         }
-        /// <summary>データを保存している各ファイルの保存先を保存しているファイルのフルパス</summary>
-        public static string FilePathStoragesFullPath
-        {
-            get { return FilePathStorage.FullPath; }
-        }
-        
-
+        /// <summary>デフォルトの集団名</summary>
+        public static string DefaultAggregationName => Consts.DefaultAggregationName;
+        /// <summary>デフォルトの保存ディレクトリのフルパス</summary>
+        public static string DefaultSaveDirectory => Consts.DefaultSaveDirectory;
         /// <summary>現在選択されている集団</summary>
-        private static Aggregation CurrentAggregation
-        {
-            get { return Aggregations[CurrentAggregationName]; }
-        }
+        public static Aggregation CurrentAggregation => Aggregations[CurrentAggregationName];
+
         /// <summary>集団群</summary>
-        private static Dictionary<string, Aggregation> Aggregations = new Dictionary<string, Aggregation>();
-        /// <summary>全保存ファイルの管理</summary>
-        private static FilePathStorage FilePathStorage = new FilePathStorage();
+        private static Dictionary<string, Aggregation> Aggregations
+        {
+            set { Aggs = value; }
+            get
+            {
+                if(Aggs == null)
+                {
+                    Load();
+                }
+                return Aggs;
+            }
+        }
+
+        /// <summary>集団群</summary>
+        private static Dictionary<string, Aggregation> Aggs = null;
+        /// <summary>保存するファイルを格納するフォルダ</summary>
+        private static string Folder = DefaultSaveDirectory;
 
 
         /// <summary>静的コンストラクタ</summary>
         static Storage()
         {
-            Aggregations = Load();
-            CurrentAggregationName = Consts.DefaultAggregationName;
+            CurrentAggregationName = DefaultAggregationName;
         }
-        
+
         /// <summary>
         /// セットしたデータ群をXML形式でファイルに保存する
         /// </summary>
@@ -81,7 +67,6 @@ namespace XmlStorage
         public static void Save()
         {
             var dic = Converter.AggregationsToDictionary(Aggregations, Consts.Encode);
-            FilePathStorage.ClearFilePaths();
 
             foreach(var pair in dic)
             {
@@ -90,49 +75,42 @@ namespace XmlStorage
                     var serializer = new XmlSerializer(typeof(SerializeType));
                     serializer.Serialize(sw, pair.Value);
                 }
-
-                FilePathStorage.AddFilePath(pair.Key);
             }
-
-            FilePathStorage.Save();
         }
 
         /// <summary>
         /// 保存したファイルから情報を読み込む
         /// </summary>
         /// <returns>読み込んだ情報</returns>
-        private static Dictionary<string, Aggregation> Load()
+        public static void Load()
         {
             var aggs = new Dictionary<string, Aggregation>()
             {
-                { Consts.DefaultAggregationName, new Aggregation(null, Consts.DefaultAggregationName) }
+                [DefaultAggregationName] = new Aggregation(null, DefaultAggregationName)
             };
 
-            var flag = false;
-            foreach(var path in FilePathStorage.Load())
+            foreach(var path in SearchFiles())
             {
-                flag |= Converter.Deserialize(path, Consts.Encode, ref aggs);
+                Converter.Deserialize(path, Consts.Encode, ref aggs);
             }
 
-            if(flag == false)
-            {
-                foreach(var path in SearchFiles())
-                {
-                    Converter.Deserialize(path, Consts.Encode, ref aggs);
-                }
-            }
-            
-            return aggs;
+            Aggregations = aggs;
+            CurrentAggregationName = DefaultAggregationName;
         }
-        
+
         /// <summary>
-        /// デフォルトの保存先フォルダに指定の拡張子のファイルがないか検索する
+        /// <see cref="DirectoryPath"/>に指定の拡張子のファイルがないか検索する
         /// </summary>
         /// <returns>検索結果</returns>
         private static string[] SearchFiles()
         {
+            if(Directory.Exists(DirectoryPath) == false)
+            {
+                Directory.CreateDirectory(DirectoryPath);
+            }
+
             return Directory.GetFiles(
-                Consts.DefaultSaveDirectory, Consts.ExtensionSearchPattern, SearchOption.AllDirectories
+                DirectoryPath, Consts.ExtensionSearchPattern, SearchOption.AllDirectories
             );
         }
 

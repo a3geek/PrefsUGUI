@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace XmlStorage.Examples
 {
@@ -14,7 +13,6 @@ namespace XmlStorage.Examples
         /// <summary>インスタンスの保存テスト</summary>
         [SerializeField]
         private ExampleController.Test1 test1 = new ExampleController.Test1();
-
         /// <summary>インスタンスの保存テスト</summary>
         private ExampleController.Test2 test2 = new ExampleController.Test2();
         /// <summary><see cref="Vector2"/>の保存テスト</summary>
@@ -30,48 +28,45 @@ namespace XmlStorage.Examples
         /// </summary>
         public void Execute()
         {
+            this.test1.ff = 10f;
+            this.test2.vec4 *= 10f;
+
             Storage.Set(typeof(SetExample), "SetExample", 10);
-            this.SetData(1);
+            Storage.SetInt("integer1", 10);
+            Storage.SetInt("integer2", 15);
+            Storage.SetInt("integer3", 20);
+            Storage.SetFloat("float", 1.12345f);
 
-            Storage.ChangeAggregation("Test2");
-            Storage.FileName = "Test2";
-            this.SetData(111);
-
-            Storage.Save();
-            Debug.Log("Finish");
-        }
-
-        /// <summary>
-        /// <see cref="Storage"/>に値をセットする
-        /// </summary>
-        /// <param name="value"><see cref="int"/>型の保存テスト</param>
-        private void SetData(int value)
-        {
-            Storage.SetInt("integer", value);
-            Storage.SetFloat("float", 1.111f);
-
-            Storage.Set(typeof(object), "obj_int", 10);
-
-            Storage.Set("Test1Class", this.test1);
-            Storage.Set("Test2Class", this.test2);
-
-            Storage.SetInt("del_tes1", 2);
-            Storage.SetString("del_tes1", "del_tes1");
-            Storage.DeleteKey("del_tes1");
-
-            Storage.SetInt("del_tes2", 5);
-            Storage.SetString("del_tes2", "del_tes2");
-            Storage.DeleteKey("del_tes2", typeof(int));
-
-            var address = "lab-interactive@team-lab.com";
-            Storage.SetString("address", address);
-
+            Storage.ChangeAggregation("Test1");
+            Storage.CurrentAggregation.FileName = "Test1";
+            Storage.Set("test1", this.test1);
+            Storage.Set("test2", this.test2);
             Storage.Set("vec2", this.vec2);
             Storage.Set("vec3", this.vec3);
             Storage.Set("qua", this.quaternion);
 
-            Storage.SetInt("int1", 2018);
-            Storage.SetInt("int2", 10);
+            Storage.Save();
+
+            // Save to oher folder.
+            Storage.DirectoryPath = ExampleController.SecondaryFolder;   
+            Storage.Load();
+
+            // meaninglessness.
+            Storage.ChangeAggregation(Storage.DefaultAggregationName);
+
+            Storage.SetInt("integer", 100);
+            Storage.SetFloat("float", 10.12345f);
+
+            Storage.SetInt("del_test1", 2);
+            Storage.SetString("del_test1", "del_test1");
+            Storage.DeleteKey("del_test1");
+
+            Storage.SetInt("del_test2", 5);
+            Storage.SetString("del_test2", "del_test2");
+            Storage.DeleteKey("del_test2", typeof(int));
+
+            Storage.Save();
+            Debug.Log("Finish");
         }
     }
 }

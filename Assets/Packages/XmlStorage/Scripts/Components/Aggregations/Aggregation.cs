@@ -8,6 +8,7 @@ namespace XmlStorage.Components.Aggregations
 {
     using Accessors;
     using Utilities;
+
     using Elements = List<Data.DataElement>;
     using ExDictionary = Dictionary<Type, Dictionary<string, object>>;
 
@@ -32,43 +33,18 @@ namespace XmlStorage.Components.Aggregations
         public string FileName
         {
             get { return this.fileName; }
-            set { this.fileName = FileUtils.AdjustAsFileName(value, this.extension, this.fileName); }
-        }
-        /// <summary>データ群を保存する時のファイルの拡張子</summary>
-        public string Extension
-        {
-            get { return this.extension; }
-            set { this.extension = FileUtils.AdjustAsExtension(value, this.extension); }
-        }
-        /// <summary>データ群を保存するファイルを格納するフォルダ</summary>
-        public string DirectoryPath
-        {
-            get { return this.directoryPath; }
-            set { this.directoryPath = FileUtils.AdjustAsDirectoryPath(value, this.directoryPath); }
+            set { this.fileName = FileUtils.AdjustAsFileName(value, Consts.Extension, this.fileName); }
         }
         /// <summary>データ群を保存する時のファイル名(拡張子なし)</summary>
-        public string FileNameWithoutExtension
-        {
-            get { return this.FileName.TrimEnd(this.Extension.ToCharArray()); }
-        }
+        public string FileNameWithoutExtension => this.FileName.TrimEnd(Consts.Extension.ToCharArray());
         /// <summary>データ群を保存する時のフルパス</summary>
-        public string FullPath
-        {
-            get { return this.DirectoryPath + this.FileName; }
-        }
+        public string FullPath => Storage.DirectoryPath + this.FileName;
 
         /// <summary>データ群</summary>
-        protected override ExDictionary dictionary
-        {
-            get { return this.dic; }
-        }
+        protected override ExDictionary dictionary => this.dic;
 
         /// <summary>保存する時のファイル名</summary>
-        private string fileName = SceneManager.GetActiveScene().name + Consts.DefaultExtension;
-        /// <summary>保存する時のファイルの拡張子</summary>
-        private string extension = Consts.DefaultExtension;
-        /// <summary>保存するファイルを格納するフォルダ</summary>
-        private string directoryPath = Consts.DefaultSaveDirectory;
+        private string fileName = SceneManager.GetActiveScene().name + Consts.Extension;
         /// <summary>データ群</summary>
         private ExDictionary dic = new ExDictionary();
 
@@ -87,9 +63,9 @@ namespace XmlStorage.Components.Aggregations
         /// </summary>
         /// <param name="elements">初期データ群</param>
         /// <param name="aggregationName">集団名</param>
-        /// <param name="fullPath">保存ファイルのフルパス</param>
+        /// <param name="fileName">保存ファイルのフルパス</param>
         /// <param name="isAllTypesSerialize">全ての型をシリアライズして保存するかどうか</param>
-        public Aggregation(Elements elements, string aggregationName, string fullPath, bool isAllTypesSerialize = false)
+        public Aggregation(Elements elements, string aggregationName, string fileName, bool isAllTypesSerialize = false)
         {
             this.IsAllTypesSerialize = isAllTypesSerialize;
 
@@ -99,11 +75,9 @@ namespace XmlStorage.Components.Aggregations
             }
             this.AggregationName = (string.IsNullOrEmpty(aggregationName) ? Guid.NewGuid().ToString() : aggregationName);
 
-            if(string.IsNullOrEmpty(fullPath) == false)
+            if(string.IsNullOrEmpty(fileName) == false)
             {
-                this.Extension = Path.GetExtension(fullPath);
-                this.FileName = Path.GetFileName(fullPath);
-                this.DirectoryPath = Path.GetDirectoryName(fullPath);
+                this.FileName = Path.GetFileName(fileName);
             }
         }
 
@@ -129,6 +103,10 @@ namespace XmlStorage.Components.Aggregations
                 var type = e.ValueType;
                 var saveType = e.SaveType;
 
+                if(e.ValueType == null || saveType == null)
+                {
+                    continue;
+                }
                 if(this.dictionary.ContainsKey(saveType) == false)
                 {
                     this.dictionary[saveType] = new Dictionary<string, object>();
@@ -145,8 +123,6 @@ namespace XmlStorage.Components.Aggregations
         /// <param name="encode">シリアライズ時のエンコード</param>
         /// <returns>情報群</returns>
         public Elements GetDataAsDataElements(Encoding encode = null)
-        {
-            return Converter.ExDicToDataElements(this.dictionary, encode, this.IsAllTypesSerialize);
-        }
+            => Converter.ExDicToDataElements(this.dictionary, encode, this.IsAllTypesSerialize);
     }
 }
