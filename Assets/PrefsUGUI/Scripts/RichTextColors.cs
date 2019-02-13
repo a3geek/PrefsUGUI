@@ -1,15 +1,19 @@
 ﻿namespace PrefsUGUI
 {
-    /*
-     * Ref: https://docs.unity3d.com/Manual/StyledText.html
-     */
+    /// <summary>
+    /// Simplified wrapper for Unitys rich text.
+    /// </summary>
+    /// <remarks>Reference: https://docs.unity3d.com/Manual/StyledText.html </remarks>
     public static class RichTextColors
     {
+        /// <summary>Top of color tag</summary>
         public const string ColorTop = @"<color=";
+        /// <summary>Tops last of color tag</summary>
         public const string TopLast = @">";
+        /// <summary>Bottom of color tag</summary>
         public const string ColorBottom = @"</color>";
 
-
+        
         public static string Aqua(string text) => Get("aqua", text);
 
         public static string Black(string text) => Get("black", text);
@@ -54,6 +58,7 @@
 
         public static string Yellow(string text) => Get("yellow", text);
 
+        /// <summary>Get the specific color snippets string.</summary>
         private static string Get(string color, string text) => ColorTop + color + TopLast + text + ColorBottom;
     }
 }

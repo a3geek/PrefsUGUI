@@ -73,7 +73,7 @@ namespace PrefsUGUI.Guis
             this.canvas.gameObject.SetActive(true);
         }
 
-        public void SetSize(float width, float height)
+        public void SetCanvasSize(float width, float height)
         {
             var delta = this.canvas.Panel.sizeDelta;
             this.canvas.Panel.sizeDelta = new Vector2(

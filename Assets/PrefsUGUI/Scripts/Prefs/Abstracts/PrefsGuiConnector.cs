@@ -61,9 +61,9 @@ namespace PrefsUGUI
                 this.gui?.SetLabel(this.GuiLabel);
             }
 
-            protected override void Regist()
+            protected override void Register()
             {
-                base.Regist();
+                base.Register();
                 AddPrefs<GuiType>(this, gui =>
                 {
                     this.gui = gui;

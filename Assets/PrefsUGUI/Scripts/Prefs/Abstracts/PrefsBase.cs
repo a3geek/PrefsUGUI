@@ -35,15 +35,15 @@ namespace PrefsUGUI
                 this.hierarchy = hierarchy;
                 this.guiLabel = string.IsNullOrEmpty(guiLabel) == true ? key.ToLabelable() : guiLabel;
 
-                this.Regist();
+                this.Register();
             }
 
             public abstract void ResetDefaultValue();
             public abstract void Reload(bool withEvent = true);
 
-            protected virtual void Regist()
+            protected virtual void Register()
             {
-                Data[this.SaveKey] = this;
+                PrefsInstances.Add(this);
             }
 
             protected virtual void FireOnValueChanged()
