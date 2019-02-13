@@ -12,6 +12,9 @@ namespace PrefsUGUI
         [Serializable]
         public abstract class PrefsGuiConnector<GuiType> : PrefsBase where GuiType : InputGuiBase
         {
+            public override string GuiLabel => this.guiLabelPrefix + this.guiLabel + this.guiLabelSufix;
+            public virtual string GuiLabelWithoutAffix => this.guiLabel;
+
             public virtual float BottomMargin
             {
                 get { return this.gui == null ? 0f : this.gui.BottomMargin; }
@@ -34,6 +37,29 @@ namespace PrefsUGUI
                     }
                 }
             }
+            public string GuiLabelPrefix
+            {
+                get { return this.guiLabelPrefix; }
+                set
+                {
+                    this.guiLabelPrefix = value ?? "";
+                    this.UpdateLabel();
+                }
+            }
+            public string GuiLabelSufix
+            {
+                get { return this.guiLabelSufix; }
+                set
+                {
+                    this.guiLabelSufix = value ?? "";
+                    this.UpdateLabel();
+                }
+            }
+
+            [SerializeField]
+            protected string guiLabelPrefix = "";
+            [SerializeField]
+            protected string guiLabelSufix = "";
 
             protected GuiType gui = null;
 
@@ -42,6 +68,11 @@ namespace PrefsUGUI
                 : base(key, hierarchy, guiLabel)
             {
                 ;
+            }
+
+            protected virtual void UpdateLabel()
+            {
+                this.gui?.SetLabel(this.GuiLabel);
             }
 
             protected override void Regist()

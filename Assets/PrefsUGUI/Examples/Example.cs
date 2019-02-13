@@ -146,10 +146,14 @@ namespace PrefsUGUI.Examples
         private void Awake()
         {
             this.test.e1.BottomMargin = 50f;
+            this.test.e1.GuiLabelPrefix = RichTextColors.Blue(" ~ ");
+            this.test.e1.GuiLabelSufix = RichTextColors.Red(" ~ ");
         }
 
         void Update()
         {
+            transform.position = this.test.v6;
+
             if(Input.GetKeyDown(KeyCode.S))
             {
                 Prefs.ShowGUI();

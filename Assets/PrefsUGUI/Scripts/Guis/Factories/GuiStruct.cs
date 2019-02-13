@@ -12,14 +12,10 @@ namespace PrefsUGUI.Guis.Factories
         private class GuiStruct
         {
             public Category Current { get; private set; }
-            public List<Category> Categories
-            {
-                get { return this.categories; }
-            }
-            
+            public List<Category> Categories { get; } = new List<Category>();
+
             private GuiCreator creator = null;
             private Category top = null;
-            private List<Category> categories = new List<Category>();
 
 
             public GuiStruct(RectTransform topContent, GuiCreator creator)
@@ -31,7 +27,7 @@ namespace PrefsUGUI.Guis.Factories
                 };
 
                 this.creator = creator;
-                this.categories.Add(this.top);
+                this.Categories.Add(this.top);
 
                 this.ChangeGUI(this.top);
             }
@@ -106,7 +102,7 @@ namespace PrefsUGUI.Guis.Factories
                     Previous = category
                 };
 
-                this.categories.Add(cat);
+                this.Categories.Add(cat);
                 category.Nexts.Add(cat);
 
                 return cat;

@@ -218,20 +218,20 @@ MonoBehaviour:
   hogeFuga:
     v1:
       key: HogeFuga - v1
-      guiLabel: HogeFuga - v1
+      guiLabel: Hoge Fuga - v1
       defaultValue: {x: 1, y: 1}
     v2:
       key: HogeFuga - v2
-      guiLabel: HogeFuga - v2
+      guiLabel: Hoge Fuga - v2
       defaultValue: {x: 2.5, y: 2.5}
   hogeFugaPi:
     v1:
       key: HogeFugaPi - v1
-      guiLabel: HogeFugaPi - v1
+      guiLabel: Hoge Fuga Pi - v1
       defaultValue: {x: 1, y: 0}
     v2:
       key: HogeFugaPi - v2
-      guiLabel: HogeFugaPi - v2
+      guiLabel: Hoge Fuga Pi - v2
       defaultValue: {x: -1, y: 0}
   v1:
     key: v1
@@ -252,39 +252,39 @@ MonoBehaviour:
       defaultValue: 1
     c:
       key: PrefsColor
-      guiLabel: PrefsColor
+      guiLabel: Prefs Color
       defaultValue: {r: 1, g: 0, b: 0, a: 1}
     cs:
       key: ColorSlider
-      guiLabel: ColorSlider
+      guiLabel: Color Slider
       defaultValue: {r: 0, g: 0, b: 1, a: 1}
     f:
       key: PrefsFloat
-      guiLabel: PrefsFloat
+      guiLabel: Prefs Float
       defaultValue: 1
     fs:
       key: PrefsFloatSlider
-      guiLabel: PrefsFloatSlider
+      guiLabel: Prefs Float Slider
       defaultValue: 5
     i:
       key: PrefsInt
-      guiLabel: PrefsInt
+      guiLabel: Prefs Int
       defaultValue: 5
     isl:
       key: PrefsIntSlider
-      guiLabel: PrefsIntSlider
+      guiLabel: Prefs Int Slider
       defaultValue: 5
     v6:
       key: PrefsVector3
-      guiLabel: PrefsVector3
+      guiLabel: Prefs Vector3
       defaultValue: {x: 2, y: 4, z: 6}
     v7:
       key: PrefsVector3Int
-      guiLabel: PrefsVector3Int
+      guiLabel: Prefs Vector3 Int
       defaultValue: {x: -10, y: -5, z: 0}
     v8:
       key: PrefsVector4
-      guiLabel: PrefsVector4
+      guiLabel: Prefs Vector4
       defaultValue: {x: -2, y: 0, z: 2, w: 100}
 --- !u!20 &282840813
 Camera:

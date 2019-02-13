@@ -20,5 +20,17 @@ namespace PrefsUGUI.Utilities
                 float.TryParse(str, out value) == true ? value : defaultValue
             );
         }
+
+        public static string ToLabelable(this string str)
+        {
+            var label = "";
+            for(var i = 0; i < str.Length; i++)
+            {
+                var c = str[i];
+                label += (i > 0 && char.IsUpper(c) == true ? " " : "") + c.ToString();
+            }
+
+            return label;
+        }
     }
 }

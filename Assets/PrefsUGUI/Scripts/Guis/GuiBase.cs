@@ -95,7 +95,7 @@ namespace PrefsUGUI.Guis
             this.label = GetComponentInChildren<Text>();
 
             this.defaultButton = GetComponentInChildren<Button>();
-            this.defaultButtonText = this.defaultButton != null ? this.defaultButton.GetComponentInChildren<Text>() : null;
+            this.defaultButtonText = this.defaultButton?.GetComponentInChildren<Text>();
         }
     }
 }

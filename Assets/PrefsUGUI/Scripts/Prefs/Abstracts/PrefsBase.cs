@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
+    using Utilities;
+
     public static partial class Prefs
     {
         [Serializable]
@@ -12,23 +14,11 @@ namespace PrefsUGUI
         {
             public virtual event Action OnValueChanged = delegate { };
 
-            public string SaveKey
-            {
-                get { return (this.GuiHierarchy == null ? "" : this.GuiHierarchy.Hierarchy) + this.key; }
-            }
-            public string Key
-            {
-                get { return this.key; }
-            }
-            public GuiHierarchy GuiHierarchy
-            {
-                get { return this.hierarchy; }
-            }
-            public string GuiLabel
-            {
-                get { return this.guiLabel; }
-            }
-
+            public virtual string SaveKey => (this.GuiHierarchy == null ? "" : this.GuiHierarchy.Hierarchy) + this.key;
+            public virtual string Key => this.key;
+            public virtual GuiHierarchy GuiHierarchy => this.hierarchy;
+            public virtual string GuiLabel => this.guiLabel;
+            
             public abstract Type ValueType { get; }
             public abstract object DefaultValueAsObject { get; }
             public abstract object ValueAsObject { get; set; }
@@ -45,14 +35,14 @@ namespace PrefsUGUI
             {
                 this.key = key;
                 this.hierarchy = hierarchy;
-                this.guiLabel = string.IsNullOrEmpty(guiLabel) == true ? key : guiLabel;
+                this.guiLabel = string.IsNullOrEmpty(guiLabel) == true ? key.ToLabelable() : guiLabel;
 
                 this.Regist();
             }
 
             public abstract void ResetDefaultValue();
             public abstract void Reload(bool withEvent = true);
-
+            
             protected virtual void Regist()
             {
                 Data[this.SaveKey] = this;
