@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -10,10 +8,7 @@ namespace PrefsUGUI.Guis.Prefs
     [AddComponentMenu("")]
     public class PrefsGuiNumeric : InputGuiBase
     {
-        public virtual bool IsDecimalNumber
-        {
-            get { return this.isDecimalNumber; }
-        }
+        public virtual bool IsDecimalNumber => this.isDecimalNumber;
 
         [SerializeField]
         protected bool isDecimalNumber = true;
@@ -26,15 +21,9 @@ namespace PrefsUGUI.Guis.Prefs
         protected Func<int> idefaultGetter = null;
 
 
-        public virtual float GetFloatValue()
-        {
-            return this.fvalue;
-        }
+        public virtual float GetFloatValue() => this.fvalue;
 
-        public virtual int GetIntValue()
-        {
-            return this.ivalue;
-        }
+        public virtual int GetIntValue() => this.ivalue;
 
         public virtual void SetValue(int value)
         {
@@ -79,10 +68,8 @@ namespace PrefsUGUI.Guis.Prefs
         }
 
         public override object GetValueObject()
-        {
-            return this.IsDecimalNumber == true ? (object)this.GetFloatValue() : this.GetIntValue();
-        }
-        
+            => this.IsDecimalNumber == true ? (object)this.GetFloatValue() : this.GetIntValue();
+
         protected override bool IsDefaultValue()
         {
             return this.IsDecimalNumber == true ?
@@ -97,10 +84,7 @@ namespace PrefsUGUI.Guis.Prefs
                 this.fvalue.ToString() : this.ivalue.ToString();
         }
 
-        protected override UnityEvent<string>[] GetInputEvents()
-        {
-            return new UnityEvent<string>[] { this.field.onEndEdit };
-        }
+        protected override UnityEvent<string>[] GetInputEvents() => new UnityEvent<string>[] { this.field.onEndEdit };
 
         protected virtual void Initialize(string label, bool isDecimalNumber)
         {
@@ -111,15 +95,9 @@ namespace PrefsUGUI.Guis.Prefs
                 InputField.ContentType.DecimalNumber : InputField.ContentType.IntegerNumber;
         }
 
-        protected virtual void SetValueInternal(float value)
-        {
-            this.fvalue = value;
-        }
+        protected virtual void SetValueInternal(float value) => this.fvalue = value;
 
-        protected virtual void SetValueInternal(int value)
-        {
-            this.ivalue = value;
-        }
+        protected virtual void SetValueInternal(int value) => this.ivalue = value;
 
         protected override void SetValueInternal(string value)
         {

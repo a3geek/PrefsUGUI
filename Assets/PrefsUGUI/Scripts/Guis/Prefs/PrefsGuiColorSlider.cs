@@ -1,19 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
     [AddComponentMenu("")]
     public class PrefsGuiColorSlider : PrefsGuiColor
     {
-        protected Slider[] sliders
-        {
-            get { return new Slider[] { this.sliderX, this.sliderY, this.sliderZ, this.sliderW }; }
-        }
+        protected Slider[] sliders => new Slider[] { this.sliderX, this.sliderY, this.sliderZ, this.sliderW };
 
         [SerializeField]
         protected Slider sliderX = null;
@@ -37,18 +32,17 @@ namespace PrefsUGUI.Guis.Prefs
                 events[i].AddListener(this.OnChangedSlider);
             }
         }
-        
+
         public override void Initialize(string label, Color initialValue, Func<Color> defaultGetter)
         {
             base.Initialize(label, initialValue, defaultGetter);
-
             this.inited = true;
         }
-        
+
         protected override void Initialize(string label)
         {
             base.Initialize(label);
-            
+
             var sliders = this.sliders;
             for(var i = 0; i < this.ElementCount; i++)
             {

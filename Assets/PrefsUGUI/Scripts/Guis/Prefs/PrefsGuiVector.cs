@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
+﻿using System;
 
 namespace PrefsUGUI.Guis.Prefs
 {
@@ -12,10 +7,7 @@ namespace PrefsUGUI.Guis.Prefs
         protected Func<T1> defaultGetter = null;
 
 
-        public virtual T1 GetValue()
-        {
-            return this.value;
-        }
+        public virtual T1 GetValue() => this.value;
 
         public virtual void SetValue(T1 value)
         {
@@ -41,14 +33,8 @@ namespace PrefsUGUI.Guis.Prefs
             this.SetValue(initialValue);
         }
 
-        protected override bool IsDefaultValue()
-        {
-            return this.GetValue().Equals(this.defaultGetter());
-        }
+        protected override bool IsDefaultValue() => this.GetValue().Equals(this.defaultGetter());
 
-        public override object GetValueObject()
-        {
-            return this.GetValue();
-        }
+        public override object GetValueObject() => this.GetValue();
     }
 }

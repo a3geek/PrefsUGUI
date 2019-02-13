@@ -1,24 +1,17 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
-
-namespace PrefsUGUI.Utilities
+﻿namespace PrefsUGUI.Utilities
 {
-    public static class ExtendsString
+    public static class StringExtensions
     {
         public static int ToInt(this string str, int defaultValue = default(int))
         {
-            var value = 0;
-            return string.IsNullOrEmpty(str) == true ? 0 : (
-                int.TryParse(str, out value) == true ? value : defaultValue
-            );
+            var v = 0;
+            return int.TryParse(str, out v) == true ? v : defaultValue;
         }
 
         public static float ToFloat(this string str, float defaultValue = default(float))
         {
-            var value = 0f;
-            return string.IsNullOrEmpty(str) == true ? 0 : (
-                float.TryParse(str, out value) == true ? value : defaultValue
-            );
+            var v = 0f;
+            return float.TryParse(str, out v) == true ? v : defaultValue;
         }
 
         public static string ToLabelable(this string str)

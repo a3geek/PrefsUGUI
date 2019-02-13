@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PrefsUGUI
@@ -18,7 +16,7 @@ namespace PrefsUGUI
             public virtual string Key => this.key;
             public virtual GuiHierarchy GuiHierarchy => this.hierarchy;
             public virtual string GuiLabel => this.guiLabel;
-            
+
             public abstract Type ValueType { get; }
             public abstract object DefaultValueAsObject { get; }
             public abstract object ValueAsObject { get; set; }
@@ -42,7 +40,7 @@ namespace PrefsUGUI
 
             public abstract void ResetDefaultValue();
             public abstract void Reload(bool withEvent = true);
-            
+
             protected virtual void Regist()
             {
                 Data[this.SaveKey] = this;

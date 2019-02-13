@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Factories
 {
@@ -35,7 +31,7 @@ namespace PrefsUGUI.Guis.Factories
         private class GuiCreator
         {
             private PrefsCanvas canvas = null;
-            
+
 
             public GuiCreator(PrefsCanvas canvas)
             {
@@ -50,7 +46,7 @@ namespace PrefsUGUI.Guis.Factories
 
                 return content;
             }
-            
+
             public PrefabType GetGui<PrefabType>(PrefsBase prefs, Category category) where PrefabType : InputGuiBase
             {
                 var gui = Instantiate(this.canvas.prefabs.GetGuiPrefab<PrefabType>(), category.Content);
@@ -68,7 +64,7 @@ namespace PrefsUGUI.Guis.Factories
 
                 var index = category.Buttons.Add(button, sortOrder);
                 button.transform.SetSiblingIndex(index);
-                
+
                 return button;
             }
 

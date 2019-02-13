@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -12,6 +10,7 @@ namespace PrefsUGUI.Guis
     {
         public abstract void SetLabel(string label);
         public abstract void SetValue(object value);
+
         public abstract string GetLabel();
         public abstract object GetValueObject();
     }
@@ -20,12 +19,6 @@ namespace PrefsUGUI.Guis
     {
         public event Action OnPressedDefaultButton = delegate { };
         public event Action OnValueChanged = delegate { };
-
-        public virtual float BottomMargin
-        {
-            get { return this.layout.minHeight - this.elements.sizeDelta.y; }
-            set { this.layout.minHeight = this.elements.sizeDelta.y + Mathf.Max(0f, value); }
-        }
 
         [SerializeField]
         protected LayoutElement layout = null;
@@ -53,21 +46,17 @@ namespace PrefsUGUI.Guis
                 events[i].AddListener(this.OnInputValue);
             }
         }
-        
-        public override void SetLabel(string label)
-        {
-            this.label.text = label;
-        }
 
-        public override string GetLabel()
-        {
-            return this.label.text;
-        }
+        public override void SetLabel(string label) => this.label.text = label;
 
-        protected virtual void OnDefaultButton()
-        {
-            this.OnPressedDefaultButton();
-        }
+        public override string GetLabel() => this.label.text;
+
+        public virtual void SetBottomMargin(float value)
+            => this.layout.minHeight = this.elements.sizeDelta.y + Mathf.Max(0f, value);
+
+        public virtual float GetBottomMargin() => this.layout.minHeight - this.elements.sizeDelta.y;
+
+        protected virtual void OnDefaultButton() => this.OnPressedDefaultButton();
 
         protected virtual void OnInputValue(string v)
         {
@@ -75,15 +64,10 @@ namespace PrefsUGUI.Guis
             this.FireOnValueChanged();
         }
 
-        protected virtual void FireOnValueChanged()
-        {
-            this.OnValueChanged();
-        }
+        protected virtual void FireOnValueChanged() => this.OnValueChanged();
 
         protected virtual void SetFields()
-        {
-            this.defaultButtonText.color = this.IsDefaultValue() == true ? this.defaultColor : this.undefaultColor;
-        }
+            => this.defaultButtonText.color = this.IsDefaultValue() == true ? this.defaultColor : this.undefaultColor;
 
         protected abstract UnityEvent<string>[] GetInputEvents();
         protected abstract bool IsDefaultValue();

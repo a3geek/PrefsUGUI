@@ -1,25 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 namespace PrefsUGUI.Guis.Prefs
 {
     using Type = InputField.ContentType;
 
-    public abstract class PrefsGuiVectorCombi<Vec, VecInt> : PrefsGuiVectorBase<Vec> where Vec : struct where VecInt : struct
+    public abstract class PrefsGuiVectorCombination<Vec, VecInt> : PrefsGuiVectorBase<Vec> where Vec : struct where VecInt : struct
     {
-        public virtual bool IsDecimalNumber
-        {
-            get { return this.isDecimalNumber; }
-        }
-
-        protected override Type ContentType
-        {
-            get { return this.IsDecimalNumber == true ? Type.DecimalNumber : Type.IntegerNumber; }
-        }
+        public virtual bool IsDecimalNumber => this.isDecimalNumber;
+        protected override Type ContentType => this.IsDecimalNumber == true ? Type.DecimalNumber : Type.IntegerNumber;
 
         [SerializeField]
         protected bool isDecimalNumber = true;
@@ -29,15 +19,9 @@ namespace PrefsUGUI.Guis.Prefs
         protected Func<VecInt> vecIntDefaultGetter = null;
 
 
-        public virtual Vec GetFloatValue()
-        {
-            return this.value;
-        }
+        public virtual Vec GetFloatValue() => this.value;
 
-        public virtual VecInt GetIntValue()
-        {
-            return this.valueInt;
-        }
+        public virtual VecInt GetIntValue() => this.valueInt;
 
         public virtual void SetValue(Vec value)
         {
@@ -92,26 +76,16 @@ namespace PrefsUGUI.Guis.Prefs
         }
 
         public override object GetValueObject()
-        {
-            return this.IsDecimalNumber == true ? (object)this.GetFloatValue() : this.GetIntValue();
-        }
+            => this.IsDecimalNumber == true ? (object)this.GetFloatValue() : this.GetIntValue();
 
-        protected virtual void SetValueInternal(Vec value)
-        {
-            this.value = value;
-        }
+        protected virtual void SetValueInternal(Vec value) => this.value = value;
 
-        protected virtual void SetValueInternal(VecInt value)
-        {
-            this.valueInt = value;
-        }
+        protected virtual void SetValueInternal(VecInt value) => this.valueInt = value;
 
         protected override bool IsDefaultValue()
-        {
-            return this.IsDecimalNumber == true ?
+            => this.IsDecimalNumber == true ?
                 this.GetFloatValue().Equals(this.vecDefaultGetter()) :
                 this.GetIntValue().Equals(this.vecIntDefaultGetter());
-        }
 
         protected override void SetValueInternal(string value)
         {

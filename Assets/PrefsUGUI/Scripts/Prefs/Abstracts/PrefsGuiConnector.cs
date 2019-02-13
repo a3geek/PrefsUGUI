@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PrefsUGUI
@@ -17,25 +15,13 @@ namespace PrefsUGUI
 
             public virtual float BottomMargin
             {
-                get { return this.gui == null ? 0f : this.gui.BottomMargin; }
-                set
-                {
-                    if(this.gui != null)
-                    {
-                        this.gui.BottomMargin = value;
-                    }
-                }
+                get { return this.gui == null ? 0f : this.gui.GetBottomMargin(); }
+                set { this.gui?.SetBottomMargin(value); }
             }
             public virtual bool VisibleGUI
             {
                 get { return this.gui == null ? false : this.gui.gameObject.activeSelf; }
-                set
-                {
-                    if(this.gui != null)
-                    {
-                        this.gui.gameObject.SetActive(value);
-                    }
-                }
+                set { this.gui?.gameObject.SetActive(value); }
             }
             public string GuiLabelPrefix
             {

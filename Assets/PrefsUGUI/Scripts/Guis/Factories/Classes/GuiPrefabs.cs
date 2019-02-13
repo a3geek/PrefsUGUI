@@ -8,18 +8,9 @@ namespace PrefsUGUI.Guis.Factories.Classes
     [Serializable]
     public class GuiPrefab
     {
-        public Type Type
-        {
-            get { return this.type; }
-        }
-        public string Key
-        {
-            get { return this.key; }
-        }
-        public InputGuiBase Prefab
-        {
-            get { return this.prefab; }
-        }
+        public Type Type => this.type;
+        public string Key => this.key;
+        public InputGuiBase Prefab => this.prefab;
 
         [SerializeField]
         private string key = "";
@@ -39,10 +30,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
     [Serializable]
     public class GuiPrefabs
     {
-        public GuiButton Button
-        {
-            get { return this.buttonPrefab; }
-        }
+        public GuiButton Button => this.buttonPrefab;
 
         [SerializeField]
         private GuiButton buttonPrefab = null;

@@ -4,29 +4,29 @@ using UnityEngine.EventSystems;
 namespace PrefsUGUI.Utilities
 {
     /// <summary>
-    /// uGUIをカーソルでドラッグ出来るようにする
+    /// Allow uGUI to be dragged with the cursor.
     /// </summary>
-    [DisallowMultipleComponent]
     [AddComponentMenu("")]
+    [DisallowMultipleComponent]
     public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
-        /// <summary>カーソルの座標</summary>
+        /// <summary>Position of cursor.</summary>
         private Vector2 position = Vector2.zero;
 
 
         /// <summary>
-        /// ドラッグ開始
+        /// Start Move
         /// </summary>
-        /// <param name="pointerEventData">ドラッグ情報</param>
+        /// <param name="pointerEventData">Drag information</param>
         public void OnBeginDrag(PointerEventData pointerEventData)
         {
             this.position = pointerEventData.position;
         }
 
         /// <summary>
-        /// ドラッグ中
+        /// Dragging
         /// </summary>
-        /// <param name="pointerEventData">ドラッグ情報</param>
+        /// <param name="pointerEventData">Drag information</param>
         public void OnDrag(PointerEventData pointerEventData)
         {
             var d = pointerEventData.position - this.position;

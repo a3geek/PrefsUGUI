@@ -1,9 +1,8 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
@@ -22,19 +21,12 @@ namespace PrefsUGUI.Guis.Prefs
         protected override void Awake()
         {
             base.Awake();
-
             this.dropdown.onValueChanged.AddListener(this.OnChangedDropdown);
         }
-        
-        public int GetValue()
-        {
-            return this.value;
-        }
 
-        public string GetOption()
-        {
-            return this.list[this.value];
-        }
+        public int GetValue() => this.value;
+
+        public string GetOption() => this.list[this.value];
 
         public void SetValue(int value)
         {
@@ -58,7 +50,7 @@ namespace PrefsUGUI.Guis.Prefs
             this.SetValue(value);
             this.SetValue(index);
         }
-        
+
         public void Initialize(string label, List<string> list, Func<int> defaultGetter, int index = 0)
         {
             this.defaultGetter = defaultGetter;
@@ -80,25 +72,16 @@ namespace PrefsUGUI.Guis.Prefs
             }
         }
 
-        public override object GetValueObject()
-        {
-            return this.GetValue();
-        }
+        public override object GetValueObject() => this.GetValue();
 
-        protected override UnityEvent<string>[] GetInputEvents()
-        {
-            return new UnityEvent<string>[0];
-        }
+        protected override UnityEvent<string>[] GetInputEvents() => new UnityEvent<string>[0];
 
-        protected override bool IsDefaultValue()
-        {
-            return this.GetValue() == this.defaultGetter();
-        }
+        protected override bool IsDefaultValue() => this.GetValue() == this.defaultGetter();
 
         protected override void SetFields()
         {
             this.inited = false;
-            
+
             base.SetFields();
             this.dropdown.value = this.value;
 
@@ -116,15 +99,9 @@ namespace PrefsUGUI.Guis.Prefs
             this.FireOnValueChanged();
         }
 
-        protected virtual void SetValueInternal(int value)
-        {
-            this.value = this.AdjustIndex(value);
-        }
+        protected virtual void SetValueInternal(int value) => this.value = this.AdjustIndex(value);
 
-        protected virtual void SetValueInternal(List<string> value)
-        {
-            this.list = value;
-        }
+        protected virtual void SetValueInternal(List<string> value) => this.list = value;
 
         protected override void SetValueInternal(string value)
         {
@@ -135,10 +112,7 @@ namespace PrefsUGUI.Guis.Prefs
             }
         }
 
-        protected virtual int AdjustIndex(int index)
-        {
-            return Mathf.Max(0, Mathf.Min(this.list.Count - 1, index));
-        }
+        protected virtual int AdjustIndex(int index) => Mathf.Max(0, Mathf.Min(this.list.Count - 1, index));
 
         protected override void Reset()
         {

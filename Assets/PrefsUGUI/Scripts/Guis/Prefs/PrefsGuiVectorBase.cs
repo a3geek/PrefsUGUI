@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
@@ -13,10 +10,7 @@ namespace PrefsUGUI.Guis.Prefs
     {
         public const string ZeroString = "0";
 
-        protected virtual InputField[] fields
-        {
-            get { return new InputField[] { this.fieldX, this.fieldY, this.fieldZ, this.fieldW }; }
-        }
+        protected virtual InputField[] fields => new InputField[] { this.fieldX, this.fieldY, this.fieldZ, this.fieldW };
         protected abstract int ElementCount { get; }
         protected abstract InputField.ContentType ContentType { get; }
 
@@ -31,7 +25,7 @@ namespace PrefsUGUI.Guis.Prefs
 
         protected T1 value = default(T1);
 
-        
+
         protected virtual void Initialize(string label)
         {
             var fields = this.fields;
@@ -39,7 +33,7 @@ namespace PrefsUGUI.Guis.Prefs
             {
                 fields[i].contentType = this.ContentType;
             }
-            
+
             this.SetLabel(label);
         }
 
@@ -66,7 +60,7 @@ namespace PrefsUGUI.Guis.Prefs
                 fields[i].text = this.GetElement(i);
             }
         }
-        
+
         protected virtual Vector3Int GetVector3Int(Vector3Int defaultValue = default(Vector3Int))
         {
             return new Vector3Int(
@@ -85,7 +79,7 @@ namespace PrefsUGUI.Guis.Prefs
 
         protected virtual string GetText(InputField field)
         {
-            if(field != null && field.text == "")
+            if(field != null && string.IsNullOrEmpty(field.text) == true)
             {
                 field.text = ZeroString;
             }

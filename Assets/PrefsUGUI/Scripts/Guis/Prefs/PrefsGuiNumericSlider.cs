@@ -1,23 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 namespace PrefsUGUI.Guis.Prefs
 {
     [AddComponentMenu("")]
     public class PrefsGuiNumericSlider : PrefsGuiNumeric
     {
-        public float MinValue
-        {
-            get { return this.slider.minValue; }
-        }
-        public float MaxValue
-        {
-            get { return this.slider.maxValue; }
-        }
+        public float MinValue => this.slider.minValue;
+        public float MaxValue => this.slider.maxValue;
 
         [SerializeField]
         protected Slider slider = null;
@@ -28,20 +19,15 @@ namespace PrefsUGUI.Guis.Prefs
         protected override void Awake()
         {
             base.Awake();
-
             this.slider.onValueChanged.AddListener(this.OnChangedSlider);
         }
-        
+
         public override void Initialize(string label, float initialValue, Func<float> fdefaultGetter)
-        {
-            this.Initialize(label, initialValue, -2f * initialValue, 2f * initialValue, fdefaultGetter);
-        }
+            => this.Initialize(label, initialValue, -2f * initialValue, 2f * initialValue, fdefaultGetter);
 
         public override void Initialize(string label, int initialValue, Func<int> idefaultGetter)
-        {
-            this.Initialize(label, initialValue, -2 * initialValue, 2 * initialValue, idefaultGetter);
-        }
-        
+            => this.Initialize(label, initialValue, -2 * initialValue, 2 * initialValue, idefaultGetter);
+
         public void Initialize(string label, float initialValue, float minValue, float maxValue, Func<float> fdefaultGetter)
         {
             this.InitializeSlider(minValue, maxValue, true);

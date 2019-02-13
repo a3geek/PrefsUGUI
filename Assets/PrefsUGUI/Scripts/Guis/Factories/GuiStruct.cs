@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Factories
 {
@@ -31,7 +27,7 @@ namespace PrefsUGUI.Guis.Factories
 
                 this.ChangeGUI(this.top);
             }
-            
+
             public Category GetCategory(GuiHierarchy hierarchy)
             {
                 if(hierarchy == null)
@@ -41,7 +37,7 @@ namespace PrefsUGUI.Guis.Factories
 
                 var previous = this.top;
                 var parents = hierarchy.Parents;
-                
+
                 for(var i = 0; i < parents.Count; i++)
                 {
                     previous = this.GetCategory(previous, parents[i]);
@@ -50,12 +46,12 @@ namespace PrefsUGUI.Guis.Factories
 
                 return previous;
             }
-            
+
             public Category ChangeGUI(Category previous, string targetCategoryName)
             {
                 var cat = (previous == null || targetCategoryName == TopCategoryName) ?
                     this.top : this.FindNextCategory(previous, targetCategoryName);
-                
+
                 return this.ChangeGUI(cat);
             }
 
@@ -120,7 +116,7 @@ namespace PrefsUGUI.Guis.Factories
 
                 return null;
             }
-            
+
             private GuiButton GetButton(Category category, string label, string targetCategoryName, int sortOrder)
             {
                 foreach(var b in category.Buttons)
@@ -130,7 +126,7 @@ namespace PrefsUGUI.Guis.Factories
                         return b;
                     }
                 }
-                
+
                 return this.creator.GetButton(category, label, targetCategoryName, sortOrder);
             }
         }

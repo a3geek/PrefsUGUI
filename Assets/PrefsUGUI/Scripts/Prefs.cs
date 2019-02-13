@@ -1,29 +1,21 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 
 namespace PrefsUGUI
 {
-    using XmlStorage;
     using Guis;
+    using XmlStorage;
 
-    using XmlStorageConsts = XmlStorage.Components.Consts;
     using Creator = Dictionary<string, Action<Guis.Factories.PrefsCanvas>>;
+    using XmlStorageConsts = XmlStorage.Components.Consts;
 
     public static partial class Prefs
     {
-        public const int ExecutionOrder = -30000;
         public const char HierarchySeparator = '/';
-        
-        public static string AggregationName
-        {
-            get { return Application.productName; }
-        }
-        public static string FileName
-        {
-            get { return Application.productName; }
-        }
+
+        public static string AggregationName => Application.productName;
+        public static string FileName => Application.productName;
 
         private static PrefsGuis PrefsGuis = null;
         private static Creator Creators = new Creator();
@@ -71,34 +63,15 @@ namespace PrefsUGUI
             Storage.Save();
         }
 
-        public static void ShowGUI()
-        {
-            PrefsGuis.ShowGUI();
-        }
+        public static void ShowGUI() => PrefsGuis?.ShowGUI();
 
-        public static bool IsShowing()
-        {
-            return PrefsGuis.IsShowing;
-        }
+        public static bool IsShowing() => PrefsGuis == null ? false : PrefsGuis.IsShowing;
 
-        public static void SetSize(float width, float height)
-        {
-            PrefsGuis.SetSize(width, height);
-        }
+        public static void SetSize(float width, float height) => PrefsGuis.SetSize(width, height);
 
         private static void AddPrefs<PrefabType>(PrefsBase prefs, Action<PrefabType> onCreated) where PrefabType : InputGuiBase
-        {
-            Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<PrefabType>(prefs));
-        }
+            => Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<PrefabType>(prefs));
 
-        private static void RemovePrefs(PrefsBase prefs)
-        {
-            if(PrefsGuis == null)
-            {
-                return;
-            }
-
-            PrefsGuis.RemovePrefs(prefs);
-        }
+        private static void RemovePrefs(PrefsBase prefs) => PrefsGuis?.RemovePrefs(prefs);
     }
 }

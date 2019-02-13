@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
@@ -20,14 +18,10 @@ namespace PrefsUGUI.Guis.Prefs
         protected override void Awake()
         {
             base.Awake();
-
             this.toggle.onValueChanged.AddListener(this.OnToggleChanged);
         }
-        
-        public bool GetValue()
-        {
-            return this.value;
-        }
+
+        public bool GetValue() => this.value;
 
         public void SetValue(bool value)
         {
@@ -42,7 +36,7 @@ namespace PrefsUGUI.Guis.Prefs
             this.SetLabel(label);
             this.SetValue(initialValue);
         }
-        
+
         public override void SetValue(object value)
         {
             if(value is bool == false)
@@ -69,10 +63,7 @@ namespace PrefsUGUI.Guis.Prefs
             this.FireOnValueChanged();
         }
 
-        protected override bool IsDefaultValue()
-        {
-            return this.GetValue() == this.defaultGetter();
-        }
+        protected override bool IsDefaultValue() => this.GetValue() == this.defaultGetter();
 
         protected override void SetFields()
         {
@@ -80,15 +71,9 @@ namespace PrefsUGUI.Guis.Prefs
             this.toggle.isOn = this.value;
         }
 
-        protected virtual void SetValueInternal(bool value)
-        {
-            this.value = value;
-        }
+        protected virtual void SetValueInternal(bool value) => this.value = value;
 
-        protected override void SetValueInternal(string value)
-        {
-            bool.TryParse(value, out this.value);
-        }
+        protected override void SetValueInternal(string value) => bool.TryParse(value, out this.value);
 
         protected override void Reset()
         {

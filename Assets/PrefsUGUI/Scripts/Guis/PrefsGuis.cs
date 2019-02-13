@@ -12,9 +12,10 @@ namespace PrefsUGUI.Guis
 
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
-    [DefaultExecutionOrder(PrefsUGUI.Prefs.ExecutionOrder)]
+    [DefaultExecutionOrder(ExecutionOrder)]
     public class PrefsGuis : MonoBehaviour
     {
+        public const int ExecutionOrder = -30000;
         public const string PrefsGuisPrefabName = "PrefsGuis";
 
         public bool IsShowing

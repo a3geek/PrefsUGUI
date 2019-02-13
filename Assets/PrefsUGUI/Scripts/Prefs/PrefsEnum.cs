@@ -1,8 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using UnityEngine;
 
 namespace PrefsUGUI
 {
@@ -40,7 +38,7 @@ namespace PrefsUGUI
         protected int index = 0;
         protected T[] values = new T[0];
         protected Dictionary<int, int> valueToIndex = new Dictionary<int, int>();
-        
+
 
         public PrefsEnum(string key, T defaultValue = default(T), GuiHierarchy hierarchy = null, string guiLabel = "")
             : base(key, defaultValue, hierarchy, guiLabel)
@@ -63,7 +61,7 @@ namespace PrefsUGUI
 
                 i++;
             }
-            
+
             this.defaultIndex = this.index;
         }
 
@@ -85,14 +83,8 @@ namespace PrefsUGUI
             base.SetValueInternal(value, withEvent);
         }
 
-        protected int GetIndex(T value)
-        {
-            return this.valueToIndex[this.GetInt(value)];
-        }
+        protected int GetIndex(T value) => this.valueToIndex[this.GetInt(value)];
 
-        protected int GetInt(T value)
-        {
-            return Convert.ToInt32(value);
-        }
+        protected int GetInt(T value) => Convert.ToInt32(value);
     }
 }

@@ -1,32 +1,20 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 
 namespace PrefsUGUI
 {
+    using static Prefs;
+
     [Serializable]
     public sealed class GuiHierarchy
     {
         public const int DefaultSortOrder = 0;
-        
-        public string[] SplitHierarchy
-        {
-            get { return this.Hierarchy.TrimEnd(Prefs.HierarchySeparator).Split(Prefs.HierarchySeparator); }
-        }
-        
-        public string Hierarchy
-        {
-            get { return this.hierarchy; }
-        }
-        public int[] SortOrders
-        {
-            get { return this.sortOrders; }
-        }
-        public GuiHierarchy Parent
-        {
-            get { return this.parent; }
-        }
+
+        public string[] SplitHierarchy => this.Hierarchy.TrimEnd(HierarchySeparator).Split(HierarchySeparator);
+        public string Hierarchy => this.hierarchy;
+        public int[] SortOrders => this.sortOrders;
+        public GuiHierarchy Parent => this.parent;
         public List<GuiHierarchy> Parents
         {
             get
@@ -51,27 +39,25 @@ namespace PrefsUGUI
         [SerializeField]
         private GuiHierarchy parent = null;
 
-        
+
         public GuiHierarchy(string hierarchy, int sortOrder = DefaultSortOrder, GuiHierarchy parent = null)
             : this(hierarchy, new int[] { sortOrder }, parent)
-        {; }
+        {
+            ;
+        }
 
         public GuiHierarchy(string hierarchy, int[] sortOrders, GuiHierarchy parent = null)
         {
             this.parent = parent;
             this.sortOrders = (sortOrders == null || sortOrders.Length <= 0) ? new int[] { DefaultSortOrder } : sortOrders;
 
-            if(string.IsNullOrEmpty(hierarchy) == false)
-            {
-                this.hierarchy = hierarchy.TrimEnd(Prefs.HierarchySeparator) + Prefs.HierarchySeparator;
-                this.hierarchy = this.hierarchy.TrimStart(Prefs.HierarchySeparator);
-            }
+            this.hierarchy = (hierarchy.TrimEnd(HierarchySeparator) + HierarchySeparator).TrimStart(HierarchySeparator);
         }
 
         public int GetSortOrder(int index)
         {
             var orders = this.SortOrders;
-            return orders.Length > index ? orders[index] :
+            return index >= 0 && index < orders.Length ? orders[index] :
                 (orders.Length == 1 ? orders[0] : DefaultSortOrder);
         }
     }

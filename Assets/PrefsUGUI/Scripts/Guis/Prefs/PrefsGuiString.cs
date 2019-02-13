@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
@@ -17,17 +15,14 @@ namespace PrefsUGUI.Guis.Prefs
         protected Func<string> defaultGetter = null;
 
 
-        public string GetValue()
-        {
-            return this.value;
-        }
+        public string GetValue() => this.value;
 
         public void SetValue(string value)
         {
             this.SetValueInternal(value);
             this.SetFields();
         }
-        
+
         public override void SetValue(object value)
         {
             if(value is string == false)
@@ -45,20 +40,11 @@ namespace PrefsUGUI.Guis.Prefs
             this.SetValue(initialValue);
         }
 
-        public override object GetValueObject()
-        {
-            return this.GetValue();
-        }
+        public override object GetValueObject() => this.GetValue();
 
-        protected override UnityEvent<string>[] GetInputEvents()
-        {
-            return new UnityEvent<string>[] { this.field.onEndEdit };
-        }
+        protected override UnityEvent<string>[] GetInputEvents() => new UnityEvent<string>[] { this.field.onEndEdit };
 
-        protected override bool IsDefaultValue()
-        {
-            return this.GetValue() == this.defaultGetter();
-        }
+        protected override bool IsDefaultValue() => this.GetValue() == this.defaultGetter();
 
         protected override void SetFields()
         {
@@ -66,10 +52,7 @@ namespace PrefsUGUI.Guis.Prefs
             this.field.text = this.value;
         }
 
-        protected override void SetValueInternal(string value)
-        {
-            this.value = value;
-        }
+        protected override void SetValueInternal(string value) => this.value = value;
 
         protected override void Reset()
         {

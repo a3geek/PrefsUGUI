@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 namespace PrefsUGUI.Guis.Prefs
 {
@@ -29,16 +25,10 @@ namespace PrefsUGUI.Guis.Prefs
             this.preview.color = this.value;
         }
 
-        protected override string GetElement(int index)
-        {
-            return this.value[index].ToString();
-        }
+        protected override string GetElement(int index) => this.value[index].ToString();
 
-        protected override void SetValueInternal(string value)
-        {
-            this.SetValue(this.GetVector4(this.value));
-        }
-        
+        protected override void SetValueInternal(string value) => this.SetValue(this.GetVector4(this.value));
+
         protected override void Reset()
         {
             base.Reset();

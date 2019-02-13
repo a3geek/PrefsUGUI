@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories
 {
     using Classes;
-    using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
     using Prefs = PrefsUGUI.Prefs;
+    using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
 
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
@@ -16,8 +12,8 @@ namespace PrefsUGUI.Guis.Factories
     public partial class PrefsCanvas : MonoBehaviour
     {
         public const string TopCategoryName = "";
-        public const string TopHierarchy = "hierarchy...";
-        
+        public const string TopHierarchyText = "hierarchy...";
+
         public RectTransform Panel
         {
             get { return this.links.Panel; }
@@ -31,7 +27,7 @@ namespace PrefsUGUI.Guis.Factories
         private GuiLinks links = new GuiLinks();
         [SerializeField]
         private GuiPrefabs prefabs = new GuiPrefabs();
-        
+
         private GuiCreator creator = null;
         private GuiStruct structs = null;
 
@@ -48,7 +44,7 @@ namespace PrefsUGUI.Guis.Factories
             this.links.Discard.onClick.AddListener(this.OnClickedDiscardButton);
             this.links.Save.onClick.AddListener(this.OnClickedSaveButton);
         }
-        
+
         public PrefabType AddPrefs<PrefabType>(PrefsBase prefs) where PrefabType : InputGuiBase
         {
             var category = this.structs.GetCategory(prefs.GuiHierarchy);
@@ -78,10 +74,8 @@ namespace PrefsUGUI.Guis.Factories
         }
 
         private void ChangeGUI(Category previous, string targetCategoryName)
-        {
-            this.OnChangedGUI(this.structs.ChangeGUI(previous, targetCategoryName));
-        }
-        
+            => this.OnChangedGUI(this.structs.ChangeGUI(previous, targetCategoryName));
+
         private void OnClickedDiscardButton()
         {
             foreach(var prefs in this.structs.Current.Prefs)
@@ -89,11 +83,8 @@ namespace PrefsUGUI.Guis.Factories
                 prefs.Key.Reload();
             }
         }
-        
-        private void OnClickedCloseButton()
-        {
-            this.OnChangedGUI(this.structs.ChangeGUI(this.structs.Current.Previous));
-        }
+
+        private void OnClickedCloseButton() => this.OnChangedGUI(this.structs.ChangeGUI(this.structs.Current.Previous));
 
         private void OnClickedSaveButton()
         {
@@ -122,8 +113,8 @@ namespace PrefsUGUI.Guis.Factories
 
             this.links.Hierarchy.color = isTop == true ? this.topHierarchyColor : this.untopHierarchyColor;
             this.links.Hierarchy.fontStyle = isTop == true ? FontStyle.Italic : FontStyle.Normal;
-            this.links.Hierarchy.text = isTop == true ? 
-                TopHierarchy :
+            this.links.Hierarchy.text = isTop == true ?
+                TopHierarchyText :
                 hierarchy.TrimStart(Prefs.HierarchySeparator) + Prefs.HierarchySeparator;
 
             return isTop;
@@ -142,10 +133,7 @@ namespace PrefsUGUI.Guis.Factories
                 this.links.Save.gameObject.SetActive(false);
             }
         }
-        
-        private void Reset()
-        {
-            this.links.Reset(gameObject);
-        }
+
+        private void Reset() => this.links.Reset(gameObject);
     }
 }

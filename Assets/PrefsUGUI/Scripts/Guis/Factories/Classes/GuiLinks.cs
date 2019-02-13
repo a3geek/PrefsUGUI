@@ -7,44 +7,17 @@ namespace PrefsUGUI.Guis.Factories.Classes
     using Utilities;
 
     [Serializable]
-    public class GuiLinks
+    public sealed class GuiLinks
     {
-        public Canvas Canvas
-        {
-            get { return this.canvas; }
-        }
-        public RectTransform Panel
-        {
-            get { return this.panel; }
-        }
-        public Text Hierarchy
-        {
-            get { return this.hierarchy; }
-        }
-        public ScrollRect Scroll
-        {
-            get { return this.scrollrect; }
-        }
-        public RectTransform Viewport
-        {
-            get { return this.viewport; }
-        }
-        public RectTransform Content
-        {
-            get { return this.content; }
-        }
-        public Button Save
-        {
-            get { return this.save; }
-        }
-        public Button Close
-        {
-            get { return this.close; }
-        }
-        public Button Discard
-        {
-            get { return this.discard; }
-        }
+        public Canvas Canvas => this.canvas;
+        public RectTransform Panel => this.panel;
+        public Text Hierarchy => this.hierarchy;
+        public ScrollRect Scroll => this.scrollrect;
+        public RectTransform Viewport => this.viewport;
+        public RectTransform Content => this.content;
+        public Button Save => this.save;
+        public Button Close => this.close;
+        public Button Discard => this.discard;
 
         [SerializeField]
         private Canvas canvas = null;

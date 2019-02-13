@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PrefsUGUI
@@ -13,14 +11,8 @@ namespace PrefsUGUI
         [Serializable]
         public abstract class PrefsParam<ValType, GuiType> : PrefsGuiConnector<GuiType> where GuiType : InputGuiBase
         {
-            public virtual ValType Value
-            {
-                get { return this.Get(); }
-            }
-            public virtual ValType DefaultValue
-            {
-                get { return this.defaultValue; }
-            }
+            public virtual ValType Value => this.Get();
+            public virtual ValType DefaultValue => this.defaultValue;
 
             public override object ValueAsObject
             {
@@ -62,7 +54,7 @@ namespace PrefsUGUI
             {
                 RemovePrefs(this);
             }
-            
+
             public ValType Get()
             {
                 if(this.got == false)
@@ -75,11 +67,6 @@ namespace PrefsUGUI
 
             public void Set(ValType value)
             {
-                if(this.got == false)
-                {
-                    this.Get();
-                }
-
                 this.SetValueInternal(value);
             }
 
@@ -92,12 +79,12 @@ namespace PrefsUGUI
             {
                 this.SetValueInternal(Storage.Get(this.SaveKey, this.defaultValue, AggregationName), withEvent);
             }
-            
+
             protected virtual void SetValueInternal(ValType value, bool withEvent = true)
             {
                 this.got = true;
                 this.value = value;
-                
+
                 if(withEvent == true)
                 {
                     this.FireOnValueChanged();

@@ -13,18 +13,9 @@ namespace PrefsUGUI.Utilities
             get { return this.items[index]; }
         }
 
-        public int Count
-        {
-            get { return this.items.Count; }
-        }
-        public ReadOnlyCollection<T> Items
-        {
-            get { return this.items.AsReadOnly(); }
-        }
-        public ReadOnlyCollection<int> Orders
-        {
-            get { return this.orders.AsReadOnly(); }
-        }
+        public int Count => this.items.Count;
+        public ReadOnlyCollection<T> Items => this.items.AsReadOnly();
+        public ReadOnlyCollection<int> Orders => this.orders.AsReadOnly();
 
         private List<T> items = new List<T>();
         private List<int> orders = new List<int>();
@@ -35,15 +26,14 @@ namespace PrefsUGUI.Utilities
         {
             this.sorter = equalSorter ?? ((e1, e2) => 0);
         }
-        
+
         public int Add(T item, int order)
         {
             for(var i = 0; i < this.orders.Count; i++)
             {
-                var e = this.items[i];
-
                 if(this.orders[i] == order)
                 {
+                    var e = this.items[i];
                     var sorted = this.sorter(e, item);
 
                     this.items[i] = sorted <= 0 ? e : item;

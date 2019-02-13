@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis
 {
@@ -35,15 +32,9 @@ namespace PrefsUGUI.Guis
             this.button.onClick.AddListener(this.callback);
         }
 
-        public override void SetLabel(string label)
-        {
-            this.label.text = label;
-        }
+        public override void SetLabel(string label) => this.label.text = label;
 
-        public override string GetLabel()
-        {
-            return this.label.text;
-        }
+        public override string GetLabel() => this.label.text;
 
         public override void SetValue(object value)
         {
@@ -55,10 +46,7 @@ namespace PrefsUGUI.Guis
             this.SetValue((UnityAction)value);
         }
 
-        public override object GetValueObject()
-        {
-            return this.callback;
-        }
+        public override object GetValueObject() => this.callback;
 
         protected virtual void Reset()
         {
