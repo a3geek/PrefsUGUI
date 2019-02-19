@@ -3,6 +3,7 @@
 namespace PrefsUGUI.Guis.Factories
 {
     using Classes;
+    using Guis.Prefs;
     using Prefs = PrefsUGUI.Prefs;
     using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
 
@@ -45,7 +46,7 @@ namespace PrefsUGUI.Guis.Factories
             this.links.Save.onClick.AddListener(this.OnClickedSaveButton);
         }
 
-        public PrefabType AddPrefs<PrefabType>(PrefsBase prefs) where PrefabType : InputGuiBase
+        public PrefabType AddPrefs<PrefabType>(PrefsBase prefs) where PrefabType : PrefsGuiBase
         {
             var category = this.structs.GetCategory(prefs.GuiHierarchy);
             var gui = this.creator.GetGui<PrefabType>(prefs, category);

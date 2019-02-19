@@ -4,24 +4,26 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis
 {
+    using Prefs;
+
     [AddComponentMenu("")]
-    public class GuiButton : GuiBase
+    public class GuiButton : PrefsGuiBase
     {
         [SerializeField]
         protected Button button = null;
-        [SerializeField]
-        protected Text label = null;
 
         protected UnityAction callback = null;
 
 
-        public void Initialize(string label, UnityAction callback)
+        public virtual void Initialize(string label, UnityAction callback)
         {
             this.SetLabel(label);
+
+            this.button.onClick.AddListener(() => this.FireOnValueChanged());
             this.SetValue(callback);
         }
 
-        public void SetValue(UnityAction callback)
+        public virtual void SetValue(UnityAction callback)
         {
             if(this.callback != null)
             {
@@ -31,11 +33,7 @@ namespace PrefsUGUI.Guis
             this.callback = callback;
             this.button.onClick.AddListener(this.callback);
         }
-
-        public override void SetLabel(string label) => this.label.text = label;
-
-        public override string GetLabel() => this.label.text;
-
+        
         public override void SetValue(object value)
         {
             if(value is UnityAction == false)
@@ -48,10 +46,10 @@ namespace PrefsUGUI.Guis
 
         public override object GetValueObject() => this.callback;
 
-        protected virtual void Reset()
+        protected override void Reset()
         {
+            base.Reset();
             this.button = GetComponentInChildren<Button>();
-            this.label = GetComponentInChildren<Text>();
         }
     }
 }

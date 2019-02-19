@@ -5,6 +5,7 @@ using UnityEngine;
 namespace PrefsUGUI
 {
     using Guis;
+    using Guis.Prefs;
     using XmlStorage;
 
     using Creator = Dictionary<string, Action<Guis.Factories.PrefsCanvas>>;
@@ -79,7 +80,7 @@ namespace PrefsUGUI
                 var p = PrefsInstances[i];
                 Storage.Set(p.ValueType, p.SaveKey, p.ValueAsObject, AggregationName);
             }
-            
+
             Storage.ChangeAggregation(current);
             Storage.Save();
         }
@@ -108,7 +109,7 @@ namespace PrefsUGUI
         /// <typeparam name="PrefabType"></typeparam>
         /// <param name="prefs">Prefs mamber for register.</param>
         /// <param name="onCreated">Callback action when created GUI.</param>
-        private static void AddPrefs<PrefabType>(PrefsBase prefs, Action<PrefabType> onCreated) where PrefabType : InputGuiBase
+        private static void AddPrefs<PrefabType>(PrefsBase prefs, Action<PrefabType> onCreated) where PrefabType : PrefsGuiBase
             => Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<PrefabType>(prefs));
 
         /// <summary>

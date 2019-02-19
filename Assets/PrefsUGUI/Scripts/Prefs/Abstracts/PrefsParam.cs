@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
-    using Guis;
+    using Guis.Prefs;
     using XmlStorage;
 
     public static partial class Prefs
     {
         [Serializable]
-        public abstract class PrefsParam<ValType, GuiType> : PrefsGuiConnector<GuiType> where GuiType : InputGuiBase
+        public abstract class PrefsParam<ValType, GuiType> : PrefsGuiConnector<GuiType> where GuiType : PrefsGuiBase
         {
             public virtual ValType Value => this.Get();
             public virtual ValType DefaultValue => this.defaultValue;
@@ -49,12 +49,7 @@ namespace PrefsUGUI
                 this.value = defaultValue;
                 this.defaultValue = defaultValue;
             }
-
-            ~PrefsParam()
-            {
-                RemovePrefs(this);
-            }
-
+            
             public ValType Get()
             {
                 if(this.got == false)

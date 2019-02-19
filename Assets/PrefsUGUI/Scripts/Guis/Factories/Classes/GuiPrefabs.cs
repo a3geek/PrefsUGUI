@@ -8,15 +8,15 @@ namespace PrefsUGUI.Guis.Factories.Classes
     [Serializable]
     public class GuiPrefab
     {
-        public Type Type => this.type;
+        public Type Type => this.type ?? Type.GetType(this.key);
         public string Key => this.key;
-        public InputGuiBase Prefab => this.prefab;
+        public PrefsGuiBase Prefab => this.prefab;
 
         [SerializeField]
         private string key = "";
         [SerializeField]
-        private InputGuiBase prefab = null;
-        [SerializeField, HideInInspector]
+        private PrefsGuiBase prefab = null;
+        [SerializeField]
         private Type type = null;
 
 
@@ -37,14 +37,16 @@ namespace PrefsUGUI.Guis.Factories.Classes
         [SerializeField]
         private GuiPrefab[] guiPrefabs = new GuiPrefab[]
         {
-            new GuiPrefab(typeof(PrefsGuiBool)), new GuiPrefab(typeof(PrefsGuiColor)), new GuiPrefab(typeof(PrefsGuiColorSlider)),
-            new GuiPrefab(typeof(PrefsGuiEnum)), new GuiPrefab(typeof(PrefsGuiNumeric)), new GuiPrefab(typeof(PrefsGuiNumericSlider)),
+            new GuiPrefab(typeof(PrefsGuiBool)), new GuiPrefab(typeof(PrefsGuiColor)),
+            new GuiPrefab(typeof(PrefsGuiColorSlider)), new GuiPrefab(typeof(PrefsGuiEnum)),
+            new GuiPrefab(typeof(PrefsGuiNumeric)), new GuiPrefab(typeof(PrefsGuiNumericSlider)),
             new GuiPrefab(typeof(PrefsGuiString)), new GuiPrefab(typeof(PrefsGuiVector2)),
             new GuiPrefab(typeof(PrefsGuiVector3)), new GuiPrefab(typeof(PrefsGuiVector4)),
+            new GuiPrefab(typeof(GuiButton))
         };
 
 
-        public PrefabType GetGuiPrefab<PrefabType>() where PrefabType : InputGuiBase
+        public PrefabType GetGuiPrefab<PrefabType>() where PrefabType : PrefsGuiBase
         {
             for(var i = 0; i < this.guiPrefabs.Length; i++)
             {

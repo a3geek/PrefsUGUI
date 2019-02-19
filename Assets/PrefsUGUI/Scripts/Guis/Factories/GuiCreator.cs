@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories
 {
+    using Guis.Prefs;
     using Utilities;
     using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
 
@@ -11,7 +12,7 @@ namespace PrefsUGUI.Guis.Factories
         private class Category
         {
             public RectTransform Content = null;
-            public Dictionary<PrefsBase, GuiBase> Prefs = new Dictionary<PrefsBase, GuiBase>();
+            public Dictionary<PrefsBase, PrefsGuiBase> Prefs = new Dictionary<PrefsBase, PrefsGuiBase>();
 
             public SortedList<GuiButton> Buttons = new SortedList<GuiButton>(
                 (b1, b2) => string.Compare(b1.GetLabel(), b2.GetLabel())
@@ -47,7 +48,7 @@ namespace PrefsUGUI.Guis.Factories
                 return content;
             }
 
-            public PrefabType GetGui<PrefabType>(PrefsBase prefs, Category category) where PrefabType : InputGuiBase
+            public PrefabType GetGui<PrefabType>(PrefsBase prefs, Category category) where PrefabType : PrefsGuiBase
             {
                 var gui = Instantiate(this.canvas.prefabs.GetGuiPrefab<PrefabType>(), category.Content);
 
@@ -68,11 +69,9 @@ namespace PrefsUGUI.Guis.Factories
                 return button;
             }
 
-            private void SetGuiListeners<PrefabType>(PrefsBase prefs, PrefabType gui) where PrefabType : InputGuiBase
+            private void SetGuiListeners<PrefabType>(PrefsBase prefs, PrefabType gui) where PrefabType : PrefsGuiBase
             {
-                gui.OnPressedDefaultButton += () => prefs.ResetDefaultValue();
-                gui.OnValueChanged += () => prefs.ValueAsObject = gui.GetValueObject();
-
+                gui.SetGuiListeners(prefs);
                 prefs.OnValueChanged += () => gui.SetValue(prefs.ValueAsObject);
             }
         }

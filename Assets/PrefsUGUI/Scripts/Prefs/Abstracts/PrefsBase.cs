@@ -37,7 +37,7 @@ namespace PrefsUGUI
 
                 this.Register();
             }
-
+            
             public abstract void ResetDefaultValue();
             public abstract void Reload(bool withEvent = true);
 

@@ -3,29 +3,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace PrefsUGUI.Guis
+namespace PrefsUGUI.Guis.Prefs
 {
-    [DisallowMultipleComponent]
-    public abstract class GuiBase : MonoBehaviour
-    {
-        public abstract void SetLabel(string label);
-        public abstract void SetValue(object value);
+    using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
 
-        public abstract string GetLabel();
-        public abstract object GetValueObject();
-    }
-
-    public abstract class InputGuiBase : GuiBase
+    public abstract class InputGuiBase : PrefsGuiBase
     {
         public event Action OnPressedDefaultButton = delegate { };
-        public event Action OnValueChanged = delegate { };
 
-        [SerializeField]
-        protected LayoutElement layout = null;
-        [SerializeField]
-        protected RectTransform elements = null;
-        [SerializeField]
-        protected Text label = null;
         [SerializeField]
         protected Button defaultButton = null;
         [SerializeField]
@@ -47,14 +32,13 @@ namespace PrefsUGUI.Guis
             }
         }
 
-        public override void SetLabel(string label) => this.label.text = label;
+        public override void SetGuiListeners(PrefsBase prefs, bool withoutInitialize = false)
+        {
+            base.SetGuiListeners(prefs, withoutInitialize);
 
-        public override string GetLabel() => this.label.text;
-
-        public virtual void SetBottomMargin(float value)
-            => this.layout.minHeight = this.elements.sizeDelta.y + Mathf.Max(0f, value);
-
-        public virtual float GetBottomMargin() => this.layout.minHeight - this.elements.sizeDelta.y;
+            this.OnPressedDefaultButton = withoutInitialize == false ? this.OnPressedDefaultButton : delegate { };
+            this.OnPressedDefaultButton += () => prefs.ResetDefaultValue();
+        }
 
         protected virtual void OnDefaultButton() => this.OnPressedDefaultButton();
 
@@ -64,8 +48,6 @@ namespace PrefsUGUI.Guis
             this.FireOnValueChanged();
         }
 
-        protected virtual void FireOnValueChanged() => this.OnValueChanged();
-
         protected virtual void SetFields()
             => this.defaultButtonText.color = this.IsDefaultValue() == true ? this.defaultColor : this.undefaultColor;
 
@@ -73,11 +55,9 @@ namespace PrefsUGUI.Guis
         protected abstract bool IsDefaultValue();
         protected abstract void SetValueInternal(string value);
 
-        protected virtual void Reset()
+        protected override void Reset()
         {
-            this.elements = GetComponentInChildren<RectTransform>();
-            this.label = GetComponentInChildren<Text>();
-
+            base.Reset();
             this.defaultButton = GetComponentInChildren<Button>();
             this.defaultButtonText = this.defaultButton?.GetComponentInChildren<Text>();
         }

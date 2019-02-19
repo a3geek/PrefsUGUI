@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
-    using Guis;
+    using Guis.Prefs;
 
     public static partial class Prefs
     {
         [Serializable]
-        public abstract class PrefsGuiConnector<GuiType> : PrefsBase where GuiType : InputGuiBase
+        public abstract class PrefsGuiConnector<GuiType> : PrefsBase where GuiType : PrefsGuiBase
         {
             public override string GuiLabel => this.guiLabelPrefix + this.guiLabel + this.guiLabelSufix;
             public virtual string GuiLabelWithoutAffix => this.guiLabel;
@@ -54,6 +54,11 @@ namespace PrefsUGUI
                 : base(key, hierarchy, guiLabel)
             {
                 ;
+            }
+            
+            ~PrefsGuiConnector()
+            {
+                RemovePrefs(this);
             }
 
             protected virtual void UpdateLabel()
