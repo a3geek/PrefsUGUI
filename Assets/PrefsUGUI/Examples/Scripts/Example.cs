@@ -6,19 +6,11 @@ using UnityEngine;
 
 namespace PrefsUGUI.Examples
 {
+    using static Structs;
+
     [AddComponentMenu("")]
     public class Example : MonoBehaviour
     {
-        public static readonly GuiHierarchy HierarchyHoge = new GuiHierarchy("hoge/", 1);
-        public static readonly GuiHierarchy HierarchyHogeFuga = new GuiHierarchy("fuga/", 1, HierarchyHoge);
-        public static readonly GuiHierarchy HierarchyTest = new GuiHierarchy("Test", 0);
-
-        [Serializable]
-        public enum Test1
-        {
-            One = 1, Two, Three
-        }
-
         [Serializable]
         private enum Test2
         {
@@ -104,7 +96,7 @@ namespace PrefsUGUI.Examples
         }
         private HogePppCcc hogePppCcc = new HogePppCcc();
         #endregion
-        
+
         [SerializeField]
         private PrefsVector2 v1 = new PrefsVector2("v1", Vector2.zero);
         [SerializeField]
