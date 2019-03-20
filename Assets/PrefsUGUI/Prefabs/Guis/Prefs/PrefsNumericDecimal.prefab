@@ -144,9 +144,9 @@ GameObject:
   m_Component:
   - component: {fileID: 224797738452171042}
   - component: {fileID: 114306767596962604}
-  - component: {fileID: 114197382078859500}
+  - component: {fileID: 114528740947436940}
   m_Layer: 5
-  m_Name: PrefsNumeric
+  m_Name: PrefsNumericDecimal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,26 +192,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
---- !u!114 &114197382078859500
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1899454047021828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb8aac1d8ca27f43bc9232481103515, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layout: {fileID: 114306767596962604}
-  elements: {fileID: 224950996992734782}
-  label: {fileID: 114235905709306136}
-  defaultButton: {fileID: 114423661345304378}
-  defaultButtonText: {fileID: 114216899864940568}
-  defaultColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  undefaultColor: {r: 1, g: 0, b: 0, a: 1}
-  isDecimalNumber: 1
-  field: {fileID: 114718512881068050}
 --- !u!114 &114214144192885216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -417,6 +397,25 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Enter text...
+--- !u!114 &114528740947436940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1899454047021828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe86c95662886545816a4f3a163d790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layout: {fileID: 114306767596962604}
+  elements: {fileID: 224797738452171042}
+  label: {fileID: 114235905709306136}
+  defaultButton: {fileID: 114423661345304378}
+  defaultButtonText: {fileID: 114216899864940568}
+  defaultColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  undefaultColor: {r: 1, g: 0, b: 0, a: 1}
+  field: {fileID: 114718512881068050}
 --- !u!114 &114639358052829646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -624,7 +623,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -730, y: 0}
-  m_SizeDelta: {x: 178, y: 40}
+  m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224453181330397738
 RectTransform:
@@ -717,7 +716,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -415}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224950996992734782

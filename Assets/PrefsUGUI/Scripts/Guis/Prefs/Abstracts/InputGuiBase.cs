@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
+    using Prefs = PrefsUGUI.Prefs;
     using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
 
     public abstract class InputGuiBase : PrefsGuiBase
     {
         public event Action OnPressedDefaultButton = delegate { };
 
+        [SerializeField]
+        protected Text label = null;
         [SerializeField]
         protected Button defaultButton = null;
         [SerializeField]
@@ -22,42 +25,34 @@ namespace PrefsUGUI.Guis.Prefs
 
 
         protected virtual void Awake()
+            => this.defaultButton.onClick.AddListener(this.OnDefaultButton);
+
+        public virtual void SetLabel(string label)
+            => this.label.text = label;
+
+        public virtual string GetLabel()
+            => this.label.text;
+
+        protected override void SetListener(PrefsBase prefs, bool withoutInitialize = true)
         {
-            this.defaultButton.onClick.AddListener(this.OnDefaultButton);
+            base.SetListener(prefs, withoutInitialize);
 
-            var events = this.GetInputEvents();
-            for(var i = 0; i < events.Length; i++)
-            {
-                events[i].AddListener(this.OnInputValue);
-            }
-        }
-
-        public override void SetGuiListeners(PrefsBase prefs, bool withoutInitialize = false)
-        {
-            base.SetGuiListeners(prefs, withoutInitialize);
-
-            this.OnPressedDefaultButton = withoutInitialize == false ? this.OnPressedDefaultButton : delegate { };
+            this.OnPressedDefaultButton = withoutInitialize == true ? this.OnPressedDefaultButton : delegate { };
             this.OnPressedDefaultButton += () => prefs.ResetDefaultValue();
         }
 
-        protected virtual void OnDefaultButton() => this.OnPressedDefaultButton();
-
-        protected virtual void OnInputValue(string v)
-        {
-            this.SetValueInternal(v);
-            this.FireOnValueChanged();
-        }
+        protected virtual void OnDefaultButton()
+            => this.OnPressedDefaultButton();
 
         protected virtual void SetFields()
             => this.defaultButtonText.color = this.IsDefaultValue() == true ? this.defaultColor : this.undefaultColor;
 
-        protected abstract UnityEvent<string>[] GetInputEvents();
         protected abstract bool IsDefaultValue();
-        protected abstract void SetValueInternal(string value);
 
         protected override void Reset()
         {
             base.Reset();
+            this.label = GetComponentInChildren<Text>();
             this.defaultButton = GetComponentInChildren<Button>();
             this.defaultButtonText = this.defaultButton?.GetComponentInChildren<Text>();
         }

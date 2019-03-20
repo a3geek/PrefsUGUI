@@ -503,7 +503,6 @@ MonoBehaviour:
   fieldY: {fileID: 114803369584030808}
   fieldZ: {fileID: 0}
   fieldW: {fileID: 0}
-  isDecimalNumber: 1
 --- !u!114 &114437944395963228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1251,7 +1250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -580}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224886834102990802

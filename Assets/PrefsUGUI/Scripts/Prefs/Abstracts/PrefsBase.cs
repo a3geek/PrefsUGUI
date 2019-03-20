@@ -19,7 +19,7 @@ namespace PrefsUGUI
 
             public abstract Type ValueType { get; }
             public abstract object DefaultValueAsObject { get; }
-            public abstract object ValueAsObject { get; set; }
+            public abstract object ValueAsObject { get; }
 
             [SerializeField]
             protected string key = "";
@@ -37,7 +37,12 @@ namespace PrefsUGUI
 
                 this.Register();
             }
-            
+
+            ~PrefsBase()
+            {
+                RemovePrefs(this);
+            }
+
             public abstract void ResetDefaultValue();
             public abstract void Reload(bool withEvent = true);
 

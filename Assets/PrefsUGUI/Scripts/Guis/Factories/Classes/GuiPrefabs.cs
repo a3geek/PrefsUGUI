@@ -39,9 +39,11 @@ namespace PrefsUGUI.Guis.Factories.Classes
         {
             new GuiPrefab(typeof(PrefsGuiBool)), new GuiPrefab(typeof(PrefsGuiColor)),
             new GuiPrefab(typeof(PrefsGuiColorSlider)), new GuiPrefab(typeof(PrefsGuiEnum)),
-            new GuiPrefab(typeof(PrefsGuiNumeric)), new GuiPrefab(typeof(PrefsGuiNumericSlider)),
+            new GuiPrefab(typeof(PrefsGuiNumericDecimal)), new GuiPrefab(typeof(PrefsGuiNumericInteger)),
+            new GuiPrefab(typeof(PrefsGuiNumericSliderDecimal)), new GuiPrefab(typeof(PrefsGuiNumericSliderInteger)),
             new GuiPrefab(typeof(PrefsGuiString)), new GuiPrefab(typeof(PrefsGuiVector2)),
-            new GuiPrefab(typeof(PrefsGuiVector3)), new GuiPrefab(typeof(PrefsGuiVector4)),
+            new GuiPrefab(typeof(PrefsGuiVector2Int)), new GuiPrefab(typeof(PrefsGuiVector3)),
+            new GuiPrefab(typeof(PrefsGuiVector3Int)), new GuiPrefab(typeof(PrefsGuiVector4)),
             new GuiPrefab(typeof(GuiButton))
         };
 

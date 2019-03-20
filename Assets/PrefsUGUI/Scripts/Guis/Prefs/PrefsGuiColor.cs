@@ -4,16 +4,10 @@ using UnityEngine.UI;
 namespace PrefsUGUI.Guis.Prefs
 {
     [AddComponentMenu("")]
-    public class PrefsGuiColor : PrefsGuiVector<Color>
+    public class PrefsGuiColor : PrefsGuiVectorBase<Color>
     {
-        protected override int ElementCount
-        {
-            get { return 4; }
-        }
-        protected override InputField.ContentType ContentType
-        {
-            get { return InputField.ContentType.DecimalNumber; }
-        }
+        protected override int ElementCount => 4;
+        protected override InputField.ContentType ContentType => InputField.ContentType.DecimalNumber;
 
         [SerializeField]
         protected RawImage preview = null;
@@ -22,12 +16,17 @@ namespace PrefsUGUI.Guis.Prefs
         protected override void SetFields()
         {
             base.SetFields();
-            this.preview.color = this.value;
+            this.preview.color = this.GetValue();
         }
 
-        protected override string GetElement(int index) => this.value[index].ToString();
+        protected override string GetElement(int index)
+            => this.value[index].ToString();
 
-        protected override void SetValueInternal(string value) => this.SetValue(this.GetVector4(this.value));
+        protected override void SetValueInternal(string value)
+            => this.SetValueInternal(this.GetVector4FromField());
+
+        protected override bool IsDefaultValue()
+            => this.GetValue() == this.defaultGetter();
 
         protected override void Reset()
         {

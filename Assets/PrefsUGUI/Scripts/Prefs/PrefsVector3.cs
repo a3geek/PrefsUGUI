@@ -6,7 +6,7 @@ namespace PrefsUGUI
     using Guis.Prefs;
 
     [Serializable]
-    public class PrefsVector3 : Prefs.PrefsParam<Vector3, PrefsGuiVector3>
+    public class PrefsVector3 : Prefs.PrefsExtends<Vector3, PrefsGuiVector3>
     {
         public PrefsVector3(string key, Vector3 defaultValue = default(Vector3), GuiHierarchy hierarchy = null, string guiLabel = "")
             : base(key, defaultValue, hierarchy, guiLabel) { }

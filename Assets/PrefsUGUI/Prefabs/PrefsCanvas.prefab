@@ -1035,7 +1035,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224919547792127788}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1108,11 +1108,17 @@ MonoBehaviour:
     - key: PrefsGuiEnum
       prefab: {fileID: 114197912285529006, guid: a5d5ffeadaa98814d896f26642d7c8b5,
         type: 2}
-    - key: PrefsGuiNumeric
-      prefab: {fileID: 114197382078859500, guid: d4e1e805f3bb2d84081b033c7f4a1676,
+    - key: PrefsGuiNumericDecimal
+      prefab: {fileID: 114528740947436940, guid: d4e1e805f3bb2d84081b033c7f4a1676,
         type: 2}
-    - key: PrefsGuiNumericSlider
-      prefab: {fileID: 114497646345078908, guid: 7183933936d666d48b0cedf7b96060bc,
+    - key: PrefsGuiNumericInteger
+      prefab: {fileID: 114980692133129528, guid: 19ede43413eb24e41b30a31589408401,
+        type: 2}
+    - key: PrefsGuiNumericSliderDecimal
+      prefab: {fileID: 114190008020698152, guid: 7183933936d666d48b0cedf7b96060bc,
+        type: 2}
+    - key: PrefsGuiNumericSliderInteger
+      prefab: {fileID: 114838242517192136, guid: 77c6e819119400941ab8a138588bdf9a,
         type: 2}
     - key: PrefsGuiString
       prefab: {fileID: 114860318047597516, guid: 5e079881dbfd2624da12272d40764b70,
@@ -1120,8 +1126,14 @@ MonoBehaviour:
     - key: PrefsGuiVector2
       prefab: {fileID: 114423034815468980, guid: 08b134b2a66194b4daa16fa942dc773c,
         type: 2}
+    - key: PrefsGuiVector2Int
+      prefab: {fileID: 114606381850297302, guid: e097baa398c0db74b89e5ce46818e4c3,
+        type: 2}
     - key: PrefsGuiVector3
       prefab: {fileID: 114067175487308992, guid: 09a3fca986ffeb042aff99bd0a425c3a,
+        type: 2}
+    - key: PrefsGuiVector3Int
+      prefab: {fileID: 114170023707539648, guid: 0852f042bcb6e1d4cbaab16def458036,
         type: 2}
     - key: PrefsGuiVector4
       prefab: {fileID: 114459291038590326, guid: 644c64d084286164a9b4ab3fa51fa776,
@@ -1408,7 +1420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00002814585}
+  m_AnchoredPosition: {x: 0, y: 0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224272806547782088

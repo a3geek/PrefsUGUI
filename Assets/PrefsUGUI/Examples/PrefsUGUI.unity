@@ -219,117 +219,107 @@ MonoBehaviour:
     v1:
       key: HogeFuga - v1
       guiLabel: Hoge Fuga - v1
+      defaultValue: {x: 1, y: 1}
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: {x: 1, y: 1}
     v2:
       key: HogeFuga - v2
       guiLabel: Hoge Fuga - v2
+      defaultValue: {x: 2.5, y: 2.5}
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: {x: 2.5, y: 2.5}
   hogeFugaPi:
     v1:
       key: HogeFugaPi - v1
       guiLabel: Hoge Fuga Pi - v1
+      defaultValue: {x: 1, y: 0}
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: {x: 1, y: 0}
     v2:
       key: HogeFugaPi - v2
       guiLabel: Hoge Fuga Pi - v2
+      defaultValue: {x: -1, y: 0}
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: {x: -1, y: 0}
   v1:
     key: v1
     guiLabel: v1
+    defaultValue: {x: 0, y: 0}
     guiLabelPrefix: 
     guiLabelSufix: 
-    defaultValue: {x: 0, y: 0}
   v2:
     key: v2
     guiLabel: v2
+    defaultValue: {x: 1, y: 1}
     guiLabelPrefix: 
     guiLabelSufix: 
-    defaultValue: {x: 1, y: 1}
   v3:
     key: v3
     guiLabel: v3
+    defaultValue: {x: 2, y: 3}
     guiLabelPrefix: 
     guiLabelSufix: 
-    defaultValue: {x: 2, y: 3}
   test:
     b:
       key: PrefsBool
       guiLabel: Prefs <color=red>Bool</color>
+      defaultValue: 1
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: 1
     c:
       key: PrefsColor
       guiLabel: Prefs Color
+      defaultValue: {r: 1, g: 0, b: 0, a: 1}
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: {r: 1, g: 0, b: 0, a: 1}
     cs:
       key: ColorSlider
       guiLabel: Color Slider
+      defaultValue: {r: 0, g: 0, b: 1, a: 1}
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: {r: 0, g: 0, b: 1, a: 1}
     f:
       key: PrefsFloat
       guiLabel: Prefs Float
+      defaultValue: 1
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: 1
     fs:
       key: PrefsFloatSlider
       guiLabel: Prefs Float Slider
+      defaultValue: 5
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: 5
     i:
       key: PrefsInt
       guiLabel: Prefs Int
+      defaultValue: 5
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: 5
     isl:
       key: PrefsIntSlider
       guiLabel: Prefs Int Slider
+      defaultValue: 5
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: 5
     v6:
       key: PrefsVector3
       guiLabel: Prefs Vector3
-      guiLabelPrefix: 
-      guiLabelSufix: 
       defaultValue: {x: 2, y: 4, z: 6}
-    b1:
-      key: Click1
-      guiLabel: Click1
-      guiLabelPrefix: 
-      guiLabelSufix: 
-    b2:
-      key: Click2
-      guiLabel: Click2
       guiLabelPrefix: 
       guiLabelSufix: 
     v7:
       key: PrefsVector3Int
       guiLabel: Prefs Vector3 Int
+      defaultValue: {x: -10, y: -5, z: 0}
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: {x: -10, y: -5, z: 0}
     v8:
       key: PrefsVector4
       guiLabel: Prefs Vector4
+      defaultValue: {x: -2, y: 0, z: 2, w: 100}
       guiLabelPrefix: 
       guiLabelSufix: 
-      defaultValue: {x: -2, y: 0, z: 2, w: 100}
 --- !u!20 &282840813
 Camera:
   m_ObjectHideFlags: 0

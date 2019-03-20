@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -6,7 +7,7 @@ namespace PrefsUGUI.Guis.Prefs
 {
     using Utilities;
 
-    public abstract class PrefsGuiVectorBase<T1> : InputGuiBase where T1 : struct
+    public abstract class PrefsGuiVectorBase<T1> : TextInputGuiBase<T1> where T1 : struct
     {
         public const string ZeroString = "0";
 
@@ -23,18 +24,19 @@ namespace PrefsUGUI.Guis.Prefs
         [SerializeField]
         protected InputField fieldW = null;
 
-        protected T1 value = default(T1);
 
-
-        protected virtual void Initialize(string label)
+        public virtual void Initialize(string label, T1 initialValue, Func<T1> defaultGetter)
         {
+            this.SetLabel(label);
+
             var fields = this.fields;
             for(var i = 0; i < this.ElementCount; i++)
             {
                 fields[i].contentType = this.ContentType;
             }
 
-            this.SetLabel(label);
+            this.defaultGetter = defaultGetter;
+            this.SetValue(initialValue);
         }
 
         protected override UnityEvent<string>[] GetInputEvents()
@@ -61,7 +63,7 @@ namespace PrefsUGUI.Guis.Prefs
             }
         }
 
-        protected virtual Vector3Int GetVector3Int(Vector3Int defaultValue = default(Vector3Int))
+        protected virtual Vector3Int GetVector3IntFromField(Vector3Int defaultValue = default(Vector3Int))
         {
             return new Vector3Int(
                 this.GetText(fieldX).ToInt(defaultValue.x), this.GetText(fieldY).ToInt(defaultValue.y),
@@ -69,7 +71,7 @@ namespace PrefsUGUI.Guis.Prefs
             );
         }
 
-        protected virtual Vector4 GetVector4(Vector4 defaultValue = default(Vector4))
+        protected virtual Vector4 GetVector4FromField(Vector4 defaultValue = default(Vector4))
         {
             return new Vector4(
                 this.GetText(fieldX).ToFloat(defaultValue.x), this.GetText(fieldY).ToFloat(defaultValue.y),

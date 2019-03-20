@@ -4,41 +4,38 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
+    using Prefs = PrefsUGUI.Prefs;
     using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
 
-    public abstract class PrefsGuiBase : GuiBase
+    [DisallowMultipleComponent]
+    public abstract class PrefsGuiBase : MonoBehaviour
     {
         public event Action OnValueChanged = delegate { };
 
-        [SerializeField]
-        protected Text label = null;
         [SerializeField]
         protected LayoutElement layout = null;
         [SerializeField]
         protected RectTransform elements = null;
 
 
-        public override void SetLabel(string label) => this.label.text = label;
-
-        public override string GetLabel() => this.label.text;
-
         public virtual void SetBottomMargin(float value)
             => this.layout.minHeight = this.elements.sizeDelta.y + Mathf.Max(0f, value);
 
-        public virtual float GetBottomMargin() => this.layout.minHeight - this.elements.sizeDelta.y;
+        public virtual float GetBottomMargin()
+            => this.layout.minHeight - this.elements.sizeDelta.y;
 
-        public virtual void SetGuiListeners(PrefsBase prefs, bool withoutInitialize = false)
-        {
-            this.OnValueChanged = withoutInitialize == false ? this.OnValueChanged : delegate { };
-            this.OnValueChanged += () => prefs.ValueAsObject = this.GetValueObject();
-        }
+        protected virtual void FireOnValueChanged()
+            => this.OnValueChanged();
 
-        protected virtual void FireOnValueChanged() => this.OnValueChanged();
+        protected virtual void SetListener(PrefsBase prefs, bool withoutInitialize = true)
+            => this.OnValueChanged = withoutInitialize == true ? this.OnValueChanged : delegate { };
+
+        public abstract object GetValueObject();
 
         protected virtual void Reset()
         {
+            this.layout = GetComponentInChildren<LayoutElement>();
             this.elements = GetComponentInChildren<RectTransform>();
-            this.label = GetComponentInChildren<Text>();
         }
     }
 }

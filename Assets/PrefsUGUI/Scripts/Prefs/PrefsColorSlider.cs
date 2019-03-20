@@ -6,7 +6,7 @@ namespace PrefsUGUI
     using Guis.Prefs;
 
     [Serializable]
-    public class PrefsColorSlider : Prefs.PrefsParam<Color, PrefsGuiColorSlider>
+    public class PrefsColorSlider : Prefs.PrefsExtends<Color, PrefsGuiColorSlider>
     {
         public PrefsColorSlider(string key, Color defaultValue = default(Color), GuiHierarchy hierarchy = null, string guiLabel = "")
             : base(key, defaultValue, hierarchy, guiLabel) { }

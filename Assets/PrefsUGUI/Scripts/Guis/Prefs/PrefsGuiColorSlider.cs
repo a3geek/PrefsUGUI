@@ -6,99 +6,41 @@ using UnityEngine.UI;
 namespace PrefsUGUI.Guis.Prefs
 {
     [AddComponentMenu("")]
-    public class PrefsGuiColorSlider : PrefsGuiColor
+    public class PrefsGuiColorSlider : PrefsGuiVectorSliderBase<Color>
     {
-        protected Slider[] sliders => new Slider[] { this.sliderX, this.sliderY, this.sliderZ, this.sliderW };
+        protected override int ElementCount => 4;
+        protected override bool IsDecimalNumber => true;
+        protected override InputField.ContentType ContentType => InputField.ContentType.DecimalNumber;
 
         [SerializeField]
-        protected Slider sliderX = null;
-        [SerializeField]
-        protected Slider sliderY = null;
-        [SerializeField]
-        protected Slider sliderZ = null;
-        [SerializeField]
-        protected Slider sliderW = null;
+        protected RawImage preview = null;
 
-        protected bool inited = false;
-
-
-        protected override void Awake()
-        {
-            base.Awake();
-
-            var events = this.GetSliderEvents();
-            for(var i = 0; i < events.Length; i++)
-            {
-                events[i].AddListener(this.OnChangedSlider);
-            }
-        }
-
-        public override void Initialize(string label, Color initialValue, Func<Color> defaultGetter)
-        {
-            base.Initialize(label, initialValue, defaultGetter);
-            this.inited = true;
-        }
-
-        protected override void Initialize(string label)
-        {
-            base.Initialize(label);
-
-            var sliders = this.sliders;
-            for(var i = 0; i < this.ElementCount; i++)
-            {
-                sliders[i].minValue = 0f;
-                sliders[i].maxValue = 1f;
-            }
-        }
 
         protected override void SetFields()
         {
             base.SetFields();
-
-            var sliders = this.sliders;
-            for(var i = 0; i < this.ElementCount; i++)
-            {
-                sliders[i].value = this.value[i];
-            }
+            this.preview.color = this.GetValue();
         }
 
-        protected virtual void OnChangedSlider(float v)
-        {
-            if(this.inited == false)
-            {
-                return;
-            }
+        protected override string GetElement(int index)
+            => this.value[index].ToString();
 
-            this.SetValue(new Color(
-                this.sliderX.value, this.sliderY.value,
-                this.sliderZ.value, this.sliderW.value
-            ));
+        protected override float GetElementAsFloat(int index)
+            => this.value[index];
 
-            this.FireOnValueChanged();
-        }
+        protected override Color GetValueFromSlider()
+            => new Color(this.sliderX.value, this.sliderY.value, this.sliderZ.value, this.sliderW.value);
 
-        protected virtual UnityEvent<float>[] GetSliderEvents()
-        {
-            var sliders = this.sliders;
-            var events = new UnityEvent<float>[this.ElementCount];
+        protected override void SetValueInternal(string value)
+            => this.SetValueInternal(this.GetVector4FromField());
 
-            for(var i = 0; i < this.ElementCount; i++)
-            {
-                events[i] = sliders[i].onValueChanged;
-            }
-
-            return events;
-        }
+        protected override bool IsDefaultValue()
+            => this.GetValue() == this.defaultGetter();
 
         protected override void Reset()
         {
             base.Reset();
-
-            var sliders = GetComponentsInChildren<Slider>();
-            this.sliderX = sliders.Length >= 1 ? sliders[0] : this.sliderX;
-            this.sliderY = sliders.Length >= 2 ? sliders[1] : this.sliderY;
-            this.sliderZ = sliders.Length >= 3 ? sliders[2] : this.sliderZ;
-            this.sliderW = sliders.Length >= 4 ? sliders[3] : this.sliderW;
+            this.preview = GetComponentInChildren<RawImage>();
         }
     }
 }

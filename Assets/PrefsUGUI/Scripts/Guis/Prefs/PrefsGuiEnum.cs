@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
+    /*
+     * valueに保存するのはenumの整数値.
+     */
     [AddComponentMenu("")]
-    public class PrefsGuiEnum : InputGuiBase
+    public class PrefsGuiEnum : InputGuiValueBase<int>
     {
         [SerializeField]
         protected Dropdown dropdown = null;
 
-        protected int value = 0;
         protected bool inited = false;
-        protected List<string> list = new List<string>();
-        protected Func<int> defaultGetter = null;
+        protected Dictionary<int, int> indexToValue = new Dictionary<int, int>();
 
 
         protected override void Awake()
@@ -24,95 +26,76 @@ namespace PrefsUGUI.Guis.Prefs
             this.dropdown.onValueChanged.AddListener(this.OnChangedDropdown);
         }
 
-        public int GetValue() => this.value;
-
-        public string GetOption() => this.list[this.value];
-
-        public void SetValue(int value)
+        public void Initialize<T>(string label, Type type, int initialValue, Func<T, int> converter, Func<int> defaultGetter)
         {
-            this.SetValueInternal(value);
-            this.SetFields();
-        }
-
-        public void SetValue(List<string> list)
-        {
-            this.SetValueInternal(0);
-            this.SetValueInternal(list);
-
-            this.dropdown.ClearOptions();
-            this.dropdown.AddOptions(this.list);
-
-            this.SetFields();
-        }
-
-        public void SetValue(List<string> value, int index)
-        {
-            this.SetValue(value);
-            this.SetValue(index);
-        }
-
-        public void Initialize(string label, List<string> list, Func<int> defaultGetter, int index = 0)
-        {
-            this.defaultGetter = defaultGetter;
             this.SetLabel(label);
-            this.SetValue(list, index);
+
+            this.defaultGetter = defaultGetter;
+            this.Refresh(type, initialValue, converter);
 
             this.inited = true;
         }
 
-        public override void SetValue(object value)
+        protected virtual void Refresh<T>(Type type, int initialValue, Func<T, int> converter)
         {
-            if(value is List<string> == true)
+            if(type.IsEnum == false)
             {
-                this.SetValue((List<string>)value);
+                return;
             }
-            else if(value is int == true)
+
+            var options = new List<string>();
+            var values = Enum.GetValues(type).Cast<T>().OrderBy(e => e);
+            var iniVal = 0;
+            var i = 0;
+
+            foreach(var e in values)
             {
-                this.SetValue((int)value);
+                var ei = converter(e);
+
+                this.indexToValue[i++] = ei;
+                options.Add(e.ToString());
+
+                if(ei == initialValue)
+                {
+                    iniVal = ei;
+                }
             }
+
+            this.dropdown.ClearOptions();
+            this.dropdown.AddOptions(options);
+
+            this.SetValue(iniVal);
         }
-
-        public override object GetValueObject() => this.GetValue();
-
-        protected override UnityEvent<string>[] GetInputEvents() => new UnityEvent<string>[0];
-
-        protected override bool IsDefaultValue() => this.GetValue() == this.defaultGetter();
 
         protected override void SetFields()
         {
             this.inited = false;
-
             base.SetFields();
-            this.dropdown.value = this.value;
+
+            foreach(var pair in this.indexToValue)
+            {
+                if(pair.Value == this.value)
+                {
+                    this.dropdown.value = pair.Key; // list index.
+                }
+            }
 
             this.inited = true;
         }
 
-        protected virtual void OnChangedDropdown(int value)
+        protected override bool IsDefaultValue()
+            => this.value == this.defaultGetter();
+
+        protected virtual void OnChangedDropdown(int index)
         {
             if(this.inited == false)
             {
                 return;
             }
 
-            this.SetValueInternal(value);
+            this.SetValueInternal(this.indexToValue[index]);
             this.FireOnValueChanged();
         }
-
-        protected virtual void SetValueInternal(int value) => this.value = this.AdjustIndex(value);
-
-        protected virtual void SetValueInternal(List<string> value) => this.list = value;
-
-        protected override void SetValueInternal(string value)
-        {
-            var index = 0;
-            if(int.TryParse(value, out index) == true)
-            {
-                this.SetValueInternal(index);
-            }
-        }
-
-        protected virtual int AdjustIndex(int index) => Mathf.Max(0, Mathf.Min(this.list.Count - 1, index));
 
         protected override void Reset()
         {

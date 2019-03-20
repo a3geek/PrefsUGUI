@@ -43,6 +43,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
         {
             this.canvas = obj.GetComponent<Canvas>();
             this.scrollrect = obj.GetComponentInChildren<ScrollRect>();
+            this.hierarchy = obj.GetComponentInChildren<Text>();
 
             var dra = obj.GetComponentInChildren<Draggable>();
             this.panel = dra != null ? (RectTransform)dra.transform : null;

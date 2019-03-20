@@ -5,6 +5,8 @@ namespace PrefsUGUI.Guis.Factories
 {
     using Guis.Prefs;
     using Utilities;
+
+    using Prefs = PrefsUGUI.Prefs;
     using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
 
     public partial class PrefsCanvas
@@ -48,7 +50,7 @@ namespace PrefsUGUI.Guis.Factories
                 return content;
             }
 
-            public PrefabType GetGui<PrefabType>(PrefsBase prefs, Category category) where PrefabType : PrefsGuiBase
+            public PrefabType GetGui<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs, Category category) where PrefabType : InputGuiValueBase<ValType>
             {
                 var gui = Instantiate(this.canvas.prefabs.GetGuiPrefab<PrefabType>(), category.Content);
 
@@ -69,10 +71,10 @@ namespace PrefsUGUI.Guis.Factories
                 return button;
             }
 
-            private void SetGuiListeners<PrefabType>(PrefsBase prefs, PrefabType gui) where PrefabType : PrefsGuiBase
+            private void SetGuiListeners<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs, PrefabType gui) where PrefabType : InputGuiValueBase<ValType>
             {
                 gui.SetGuiListeners(prefs);
-                prefs.OnValueChanged += () => gui.SetValue(prefs.ValueAsObject);
+                prefs.OnValueChanged += () => gui.SetValue(prefs.Value);
             }
         }
     }

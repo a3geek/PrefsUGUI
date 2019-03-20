@@ -109,8 +109,8 @@ namespace PrefsUGUI
         /// <typeparam name="PrefabType"></typeparam>
         /// <param name="prefs">Prefs mamber for register.</param>
         /// <param name="onCreated">Callback action when created GUI.</param>
-        private static void AddPrefs<PrefabType>(PrefsBase prefs, Action<PrefabType> onCreated) where PrefabType : PrefsGuiBase
-            => Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<PrefabType>(prefs));
+        private static void AddPrefs<ValType, PrefabType>(PrefsValueBase<ValType> prefs, Action<PrefabType> onCreated) where PrefabType : InputGuiValueBase<ValType>
+            => Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<ValType, PrefabType>(prefs));
 
         /// <summary>
         /// Remove registered information.

@@ -6,13 +6,10 @@ using UnityEngine.UI;
 namespace PrefsUGUI.Guis.Prefs
 {
     [AddComponentMenu("")]
-    public class PrefsGuiBool : InputGuiBase
+    public class PrefsGuiBool : InputGuiValueBase<bool>
     {
         [SerializeField]
         protected Toggle toggle = null;
-
-        protected bool value = true;
-        protected Func<bool> defaultGetter = null;
 
 
         protected override void Awake()
@@ -21,40 +18,12 @@ namespace PrefsUGUI.Guis.Prefs
             this.toggle.onValueChanged.AddListener(this.OnToggleChanged);
         }
 
-        public bool GetValue() => this.value;
-
-        public void SetValue(bool value)
-        {
-            this.SetValueInternal(value);
-            this.SetFields();
-        }
-
-        public void Initialize(string label, bool initialValue, Func<bool> defaultGetter)
+        public virtual void Initialize(string label, bool initialValue, Func<bool> defaultGetter)
         {
             this.defaultGetter = defaultGetter;
 
             this.SetLabel(label);
             this.SetValue(initialValue);
-        }
-
-        public override void SetValue(object value)
-        {
-            if(value is bool == false)
-            {
-                return;
-            }
-
-            this.SetValue((bool)value);
-        }
-
-        public override object GetValueObject()
-        {
-            return this.GetValue();
-        }
-
-        protected override UnityEvent<string>[] GetInputEvents()
-        {
-            return new UnityEvent<string>[0];
         }
 
         protected virtual void OnToggleChanged(bool value)
@@ -63,17 +32,13 @@ namespace PrefsUGUI.Guis.Prefs
             this.FireOnValueChanged();
         }
 
-        protected override bool IsDefaultValue() => this.GetValue() == this.defaultGetter();
-
         protected override void SetFields()
         {
             base.SetFields();
-            this.toggle.isOn = this.value;
+            this.toggle.isOn = this.GetValue();
         }
 
-        protected virtual void SetValueInternal(bool value) => this.value = value;
-
-        protected override void SetValueInternal(string value) => bool.TryParse(value, out this.value);
+        protected override bool IsDefaultValue() => this.GetValue() == this.defaultGetter();
 
         protected override void Reset()
         {

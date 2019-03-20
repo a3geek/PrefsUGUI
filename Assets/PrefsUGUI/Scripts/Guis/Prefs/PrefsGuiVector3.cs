@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
     [AddComponentMenu("")]
-    public class PrefsGuiVector3 : PrefsGuiVectorCombination<Vector3, Vector3Int>
+    public class PrefsGuiVector3 : PrefsGuiVectorBase<Vector3>
     {
         protected override int ElementCount => 3;
+        protected override InputField.ContentType ContentType => InputField.ContentType.DecimalNumber;
 
 
         protected override string GetElement(int index)
-            => this.IsDecimalNumber == true ? this.value[index].ToString() : this.valueInt[index].ToString();
+            => this.value[index].ToString();
 
-        protected override Vector3 Vector4ToVec(Vector4 vec4) => new Vector3(vec4.x, vec4.y, vec4.z);
+        protected override bool IsDefaultValue()
+            => this.GetValue() == this.defaultGetter();
 
-        protected override Vector3Int Vector3IntToVecInt(Vector3Int vec3) => vec3;
-
-        protected override Vector4 VecToVector4() => new Vector4(this.value.x, this.value.y, this.value.z, 0f);
-
-        protected override Vector3Int VecIntToVecotr3Int() => this.valueInt;
+        protected override void SetValueInternal(string value)
+        {
+            var v4 = this.GetVector4FromField();
+            this.SetValueInternal(new Vector3(v4.x, v4.y, v4.z));
+        }
     }
 }

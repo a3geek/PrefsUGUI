@@ -119,10 +119,10 @@ namespace PrefsUGUI.Examples
             public PrefsIntSlider isl = new PrefsIntSlider("PrefsIntSlider", -10, 10, 5, HierarchyTest);
             public PrefsVector3 v6 = new PrefsVector3("PrefsVector3", new Vector3(2f, 4f, 6f), HierarchyTest);
             public PrefsEnum<Test1> e1 = new PrefsEnum<Test1>("PrefsEnum1", Test1.Two, HierarchyTest);
-            public PrefsButton b1 = new PrefsButton("Click1", null, HierarchyTest);
-            public PrefsButton b2 = new PrefsButton("Click2", () => Debug.Log("B2 : DefaultAction"), HierarchyTest);
+            //public PrefsButton b1 = new PrefsButton("Click1", null, HierarchyTest);
+            //public PrefsButton b2 = new PrefsButton("Click2", () => Debug.Log("B2 : DefaultAction"), HierarchyTest);
 
-            private PrefsButton b3 = new PrefsButton("Click3", () => Debug.Log("B3 : DefaultAction"), HierarchyTest);
+            //private PrefsButton b3 = new PrefsButton("Click3", () => Debug.Log("B3 : DefaultAction"), HierarchyTest);
             private PrefsString s = new PrefsString("PrefsString", "localhost", HierarchyTest);
 
             [SerializeField]
@@ -135,10 +135,10 @@ namespace PrefsUGUI.Examples
 
             public Test()
             {
-                this.b1.OnClicked = this.Click1;
-                this.b1.OnValueChanged += () => Debug.Log("B1 : OnValueChanged");
+                //this.b1.OnClicked = this.Click1;
+                //this.b1.OnValueChanged += () => Debug.Log("B1 : OnValueChanged");
 
-                this.b3.OnClicked = () => Debug.Log("B3 : OnClicked");
+                //this.b3.OnClicked = () => Debug.Log("B3 : OnClicked");
             }
 
             private void Click1()
@@ -154,7 +154,7 @@ namespace PrefsUGUI.Examples
 
         private void Awake()
         {
-            this.test.b2.BottomMargin = 50f;
+            //this.test.b2.BottomMargin = 50f;
 
             this.test.e1.BottomMargin = 50f;
             this.test.e1.GuiLabelPrefix = RichTextColors.Blue(" ~ ");

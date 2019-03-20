@@ -5,7 +5,7 @@ namespace PrefsUGUI
     using Guis.Prefs;
 
     [Serializable]
-    public class PrefsIntSlider : Prefs.PrefsParam<int, PrefsGuiNumericSlider>
+    public class PrefsIntSlider : Prefs.PrefsExtends<int, PrefsGuiNumericSliderInteger>
     {
         protected int min = 0;
         protected int max = 0;
@@ -22,7 +22,7 @@ namespace PrefsUGUI
             this.max = maxValue;
         }
 
-        protected override void OnCreatedGuiInternal(PrefsGuiNumericSlider gui)
+        protected override void OnCreatedGuiInternal(PrefsGuiNumericSliderInteger gui)
         {
             if(this.min == 0 && this.max == 0)
             {

@@ -1615,11 +1615,11 @@ MonoBehaviour:
   fieldY: {fileID: 114549956744329488}
   fieldZ: {fileID: 114796497307240232}
   fieldW: {fileID: 114240767267917694}
-  preview: {fileID: 114092998363035778}
   sliderX: {fileID: 114458618654285352}
   sliderY: {fileID: 114756490962328520}
   sliderZ: {fileID: 114673139647290012}
   sliderW: {fileID: 114191702511891410}
+  preview: {fileID: 114092998363035778}
 --- !u!114 &114549956744329488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2909,7 +2909,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -245}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1000, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224235235927268032
