@@ -27,5 +27,10 @@ namespace PrefsUGUI
             gui.Initialize(this.GuiLabel, this.Get());
             this.OnValueChanged += () => gui.SetValue(this.Get());
         }
+
+        protected override void Register()
+        {
+            ;
+        }
     }
 }
