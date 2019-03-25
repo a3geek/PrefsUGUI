@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PrefsUGUI
 {
     using static Prefs;
-    
+
     /// <summary>
     /// Hierarchy preset for GUI.
     /// </summary>

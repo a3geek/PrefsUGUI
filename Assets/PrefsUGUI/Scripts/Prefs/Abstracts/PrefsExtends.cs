@@ -1,10 +1,8 @@
 ﻿using System;
-using UnityEngine;
 
 namespace PrefsUGUI
 {
     using Guis.Prefs;
-    using XmlStorage;
 
     public static partial class Prefs
     {

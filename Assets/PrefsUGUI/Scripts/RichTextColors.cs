@@ -13,7 +13,7 @@
         /// <summary>Bottom of color tag</summary>
         public const string ColorBottom = @"</color>";
 
-        
+
         public static string Aqua(string text) => Get("aqua", text);
 
         public static string Black(string text) => Get("black", text);

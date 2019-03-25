@@ -1,8 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
-
-namespace PrefsUGUI.Guis.Prefs
+﻿namespace PrefsUGUI.Guis.Prefs
 {
     public class PrefsGuiNumericSliderDecimal : PrefsGuiNumericSliderBase<float>
     {

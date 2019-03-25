@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -36,7 +34,7 @@ namespace PrefsUGUI.Guis
         private EventSystem system = null;
         private Func<Creator> creator = null;
 
-        
+
         public void Initialize(Func<Creator> creator)
         {
             this.creator = creator;
@@ -57,7 +55,7 @@ namespace PrefsUGUI.Guis
 
             this.Create();
         }
-        
+
         public void RemovePrefs(PrefsUGUI.Prefs.PrefsBase prefs)
         {
             if(this.canvas == null)
@@ -81,7 +79,7 @@ namespace PrefsUGUI.Guis
                 height <= 0f ? delta.y : height
             );
         }
-        
+
         private void Create()
         {
             if(this.creator == null)

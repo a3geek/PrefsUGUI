@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PrefsUGUI
 {
     using Guis.Prefs;
-    using XmlStorage;
 
     [Serializable]
     public class PrefsEnum<T> : Prefs.PrefsExtends<int, PrefsGuiEnum> where T : struct
