@@ -29,7 +29,7 @@ namespace PrefsUGUI
 
         protected override void OnCreatedGuiInternal(PrefsGuiEnum gui)
             => gui.Initialize<T>(
-                this.GuiLabel, this.EnumType, this.defaultValue, v => Convert.ToInt32(v), () => this.DefaultValue
+                this.GuiLabel, this.EnumType, this.Get(), v => Convert.ToInt32(v), () => this.DefaultValue
             );
     }
 }
