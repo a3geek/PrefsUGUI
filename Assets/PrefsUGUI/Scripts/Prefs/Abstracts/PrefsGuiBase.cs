@@ -16,7 +16,12 @@ namespace PrefsUGUI
             public virtual float BottomMargin
             {
                 get { return this.gui == null ? 0f : this.gui.GetBottomMargin(); }
-                set { this.gui?.SetBottomMargin(value); }
+                set { this.gui?.SetBottomMargin(Mathf.Max(0f, value)); }
+            }
+            public virtual float TopMargin
+            {
+                get { return this.gui == null ? 0f : this.gui.GetTopMargin(); }
+                set { this.gui?.SetTopMargin(Mathf.Max(0f, value)); }
             }
             public virtual bool VisibleGUI
             {

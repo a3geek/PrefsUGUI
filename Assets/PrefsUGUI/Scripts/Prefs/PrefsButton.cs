@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Events;
 
 namespace PrefsUGUI
 {
     using Guis;
-    using Guis.Prefs;
 
     [Serializable]
     public class PrefsButton : Prefs.PrefsGuiBase<UnityAction, GuiButton>

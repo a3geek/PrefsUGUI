@@ -21,10 +21,22 @@ namespace PrefsUGUI.Guis.Prefs
 
 
         public virtual void SetBottomMargin(float value)
-            => this.layout.minHeight = this.elements.sizeDelta.y + Mathf.Max(0f, value);
+            => this.layout.minHeight += value;
 
         public virtual float GetBottomMargin()
-            => this.layout.minHeight - this.elements.sizeDelta.y;
+            => this.layout.minHeight - (this.elements.sizeDelta.y + this.GetTopMargin());
+
+        public virtual void SetTopMargin(float value)
+        {
+            var pos = this.elements.anchoredPosition;
+            pos.y = -value;
+
+            this.elements.anchoredPosition = pos;
+            this.layout.minHeight += value;
+        }
+
+        public virtual float GetTopMargin()
+            => -this.elements.anchoredPosition.y;
 
         protected virtual void FireOnValueChanged()
             => this.OnValueChanged();

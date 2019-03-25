@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace PrefsUGUI.Examples
 {
     using static Structs;
-
-    using Random = UnityEngine.Random;
 
     [AddComponentMenu("")]
     public partial class Example : MonoBehaviour
@@ -26,7 +21,9 @@ namespace PrefsUGUI.Examples
             public PrefsInt prefsInt = new PrefsInt("PrefsInt", 3, HierarchyTest1);
             public PrefsIntSlider prefsIntSlider = new PrefsIntSlider("PrefsIntSlider", 0, 10, 2, HierarchyTest1);
             public PrefsButton prefsButton1 = new PrefsButton("Click1", null, HierarchyTest1);
-            public PrefsButton prefsButton2 = new PrefsButton("SwitchClick1", null, HierarchyTest1);
+
+            [SerializeField]
+            private PrefsButton prefsButton2 = new PrefsButton("SwitchClick1", null, HierarchyTest1);
 
 
             public Test1()
@@ -52,7 +49,7 @@ namespace PrefsUGUI.Examples
             public PrefsString prefsString = new PrefsString("PrefsString", "Example", HierarchyTest2);
             public PrefsVector2 prefsVector2 = new PrefsVector2("PrefsVector2", Vector2.one, HierarchyTest2);
             public PrefsVector2Int prefsVector2Int = new PrefsVector2Int("PrefsVector2Int", Vector2Int.right, HierarchyTest2);
-            private PrefsButton prefsButton3
+            public PrefsButton prefsButton3
                 = new PrefsButton("PrefsButton3", () => Debug.Log(nameof(prefsButton3) + " : Clicked"), HierarchyTest2);
 
             [SerializeField]
@@ -91,6 +88,11 @@ namespace PrefsUGUI.Examples
 
         private void Awake()
         {
+            this.test2.prefsString.TopMargin = 50f;
+
+            this.test2.prefsButton3.TopMargin = 30f;
+            this.test2.prefsButton3.BottomMargin = 25f;
+
             this.test1.prefsIntSlider.BottomMargin = 50f;
             this.test1.prefsIntSlider.GuiLabelSufix = RichTextColors.Blue(" ~ ");
             this.test1.prefsIntSlider.GuiLabelPrefix = RichTextColors.Red(" ~ ");
