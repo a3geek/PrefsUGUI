@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PrefsUGUI.Examples
 {
     using static Structs;
+
+    using Random = UnityEngine.Random;
 
     [AddComponentMenu("")]
     public partial class Example : MonoBehaviour
@@ -22,19 +25,26 @@ namespace PrefsUGUI.Examples
             public PrefsFloatSlider prefsFloatSlider = new PrefsFloatSlider("PrefsFloatSlider", 0f, 10f, 5f, HierarchyTest1);
             public PrefsInt prefsInt = new PrefsInt("PrefsInt", 3, HierarchyTest1);
             public PrefsIntSlider prefsIntSlider = new PrefsIntSlider("PrefsIntSlider", 0, 10, 2, HierarchyTest1);
-            //public PrefsButton b1 = new PrefsButton("Click1", null, HierarchyTest);
+            public PrefsButton prefsButton1 = new PrefsButton("Click1", null, HierarchyTest1);
+            public PrefsButton prefsButton2 = new PrefsButton("SwitchClick1", null, HierarchyTest1);
 
 
             public Test1()
             {
-                //this.b1.OnClicked = this.Click1;
-                //this.b1.OnValueChanged += () => Debug.Log("B1 : OnValueChanged");
+                this.prefsButton1.OnClicked = this.Click1;
+                this.prefsButton1.OnValueChanged += () => Debug.Log(nameof(this.prefsButton1) + " : OnValueChanged");
+
+                var counter = 0;
+                this.prefsButton2.OnClicked += () => Debug.Log(nameof(this.prefsButton2) + " : Clicked");
+                this.prefsButton2.OnClicked += ()
+                    => this.prefsButton1.OnClicked = ++counter % 2 == 0 ? (UnityAction)this.Click1 : this.Click2;
             }
 
-            //private void Click1()
-            //{
-            //    Debug.Log("B1 : OnClicked");
-            //}
+            private void Click1()
+                => Debug.Log(nameof(this.prefsButton1) + " : Click1");
+
+            private void Click2()
+                => Debug.Log(nameof(this.prefsButton1) + " : Click2");
         }
         [Serializable]
         private class Test2
@@ -42,7 +52,8 @@ namespace PrefsUGUI.Examples
             public PrefsString prefsString = new PrefsString("PrefsString", "Example", HierarchyTest2);
             public PrefsVector2 prefsVector2 = new PrefsVector2("PrefsVector2", Vector2.one, HierarchyTest2);
             public PrefsVector2Int prefsVector2Int = new PrefsVector2Int("PrefsVector2Int", Vector2Int.right, HierarchyTest2);
-            //private PrefsButton b3 = new PrefsButton("Click3", () => Debug.Log("B3 : DefaultAction"), HierarchyTest);
+            private PrefsButton prefsButton3
+                = new PrefsButton("PrefsButton3", () => Debug.Log(nameof(prefsButton3) + " : Clicked"), HierarchyTest2);
 
             [SerializeField]
             private PrefsVector3 prefsVector3 = new PrefsVector3("PrefsVector3", Vector3.down, HierarchyTest2);
@@ -54,7 +65,7 @@ namespace PrefsUGUI.Examples
 
             public Test2()
             {
-                //this.b3.OnClicked = () => Debug.Log("B3 : OnClicked");
+                this.prefsButton3.OnClicked += () => Debug.Log(nameof(this.prefsButton3) + " : Clicked2");
             }
         }
         [Serializable]

@@ -5,15 +5,12 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    using Prefs = PrefsUGUI.Prefs;
     using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
 
     public abstract class InputGuiBase : PrefsGuiBase
     {
         public event Action OnPressedDefaultButton = delegate { };
 
-        [SerializeField]
-        protected Text label = null;
         [SerializeField]
         protected Button defaultButton = null;
         [SerializeField]
@@ -26,12 +23,6 @@ namespace PrefsUGUI.Guis.Prefs
 
         protected virtual void Awake()
             => this.defaultButton.onClick.AddListener(this.OnDefaultButton);
-
-        public virtual void SetLabel(string label)
-            => this.label.text = label;
-
-        public virtual string GetLabel()
-            => this.label.text;
 
         protected override void SetListener(PrefsBase prefs, bool withoutInitialize = true)
         {
@@ -52,7 +43,6 @@ namespace PrefsUGUI.Guis.Prefs
         protected override void Reset()
         {
             base.Reset();
-            this.label = GetComponentInChildren<Text>();
             this.defaultButton = GetComponentInChildren<Button>();
             this.defaultButtonText = this.defaultButton?.GetComponentInChildren<Text>();
         }

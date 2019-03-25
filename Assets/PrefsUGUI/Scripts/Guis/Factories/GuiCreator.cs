@@ -50,6 +50,17 @@ namespace PrefsUGUI.Guis.Factories
                 return content;
             }
 
+            public GuiButton GetButton(Category category, string label, string targetCategoryName, int sortOrder)
+            {
+                var button = Instantiate(this.canvas.prefabs.Button, category.Content);
+                button.Initialize(label, () => this.canvas.ChangeGUI(category, targetCategoryName));
+
+                var index = category.Buttons.Add(button, sortOrder);
+                button.transform.SetSiblingIndex(index);
+
+                return button;
+            }
+
             public PrefabType GetGui<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs, Category category) where PrefabType : InputGuiValueBase<ValType>
             {
                 var gui = Instantiate(this.canvas.prefabs.GetGuiPrefab<PrefabType>(), category.Content);
@@ -60,15 +71,12 @@ namespace PrefsUGUI.Guis.Factories
                 return gui;
             }
 
-            public GuiButton GetButton(Category category, string label, string targetCategoryName, int sortOrder)
+            public PrefabType GetGui<PrefabType>(PrefsBase prefs, Category category) where PrefabType : PrefsGuiBase
             {
-                var button = Instantiate(this.canvas.prefabs.Button, category.Content);
-                button.Initialize(label, () => this.canvas.ChangeGUI(category, targetCategoryName));
+                var gui = Instantiate(this.canvas.prefabs.GetGuiPrefab<PrefabType>(), category.Content);
+                category.Prefs.Add(prefs, gui);
 
-                var index = category.Buttons.Add(button, sortOrder);
-                button.transform.SetSiblingIndex(index);
-
-                return button;
+                return gui;
             }
 
             private void SetGuiListeners<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs, PrefabType gui) where PrefabType : InputGuiValueBase<ValType>

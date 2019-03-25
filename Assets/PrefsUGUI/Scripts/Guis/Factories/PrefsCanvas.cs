@@ -55,6 +55,14 @@ namespace PrefsUGUI.Guis.Factories
             return gui;
         }
 
+        public PrefabType AddPrefs<PrefabType>(PrefsBase prefs) where PrefabType : PrefsGuiBase
+        {
+            var category = this.structs.GetCategory(prefs.GuiHierarchy);
+            var gui = this.creator.GetGui<PrefabType>(prefs, category);
+
+            return gui;
+        }
+
         public void RemovePrefs(PrefsBase prefs)
         {
             var categories = this.structs.Categories;

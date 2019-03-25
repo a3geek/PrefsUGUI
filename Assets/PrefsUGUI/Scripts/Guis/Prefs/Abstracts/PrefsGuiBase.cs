@@ -13,6 +13,8 @@ namespace PrefsUGUI.Guis.Prefs
         public event Action OnValueChanged = delegate { };
 
         [SerializeField]
+        protected Text label = null;
+        [SerializeField]
         protected LayoutElement layout = null;
         [SerializeField]
         protected RectTransform elements = null;
@@ -27,6 +29,12 @@ namespace PrefsUGUI.Guis.Prefs
         protected virtual void FireOnValueChanged()
             => this.OnValueChanged();
 
+        public virtual void SetLabel(string label)
+            => this.label.text = label;
+
+        public virtual string GetLabel()
+            => this.label.text;
+
         protected virtual void SetListener(PrefsBase prefs, bool withoutInitialize = true)
             => this.OnValueChanged = withoutInitialize == true ? this.OnValueChanged : delegate { };
 
@@ -36,6 +44,7 @@ namespace PrefsUGUI.Guis.Prefs
         {
             this.layout = GetComponentInChildren<LayoutElement>();
             this.elements = GetComponentInChildren<RectTransform>();
+            this.label = GetComponentInChildren<Text>();
         }
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
+    using Prefs = PrefsUGUI.Prefs;
+
     public abstract class InputGuiValueBase<ValType> : InputGuiBase
     {
         protected ValType value = default(ValType);
@@ -20,7 +22,7 @@ namespace PrefsUGUI.Guis.Prefs
             this.SetFields();
         }
 
-        public virtual void SetGuiListeners(PrefsUGUI.Prefs.PrefsValueBase<ValType> prefs, bool withoutInitialize = true)
+        public virtual void SetGuiListeners(Prefs.PrefsValueBase<ValType> prefs, bool withoutInitialize = true)
         {
             this.SetListener(prefs, withoutInitialize);
             this.OnValueChanged += () => prefs.Set(this.GetValue());

@@ -11,8 +11,6 @@ namespace PrefsUGUI.Guis
     {
         [SerializeField]
         protected Button button = null;
-        [SerializeField]
-        protected Text label = null;
 
         protected UnityAction callback = null;
 
@@ -21,15 +19,9 @@ namespace PrefsUGUI.Guis
         {
             this.SetLabel(label);
 
-            this.button.onClick.AddListener(() => this.FireOnValueChanged());
+            this.button.onClick.AddListener(this.FireOnValueChanged);
             this.SetValue(callback);
         }
-
-        public virtual void SetLabel(string label)
-            => this.label.text = label;
-
-        public virtual string GetLabel()
-            => this.label.text;
 
         public virtual void SetValue(UnityAction callback)
         {
@@ -49,7 +41,6 @@ namespace PrefsUGUI.Guis
         {
             base.Reset();
             this.button = GetComponentInChildren<Button>();
-            this.label = GetComponentInChildren<Text>();
         }
     }
 }
