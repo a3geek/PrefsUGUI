@@ -9,162 +9,84 @@ namespace PrefsUGUI.Examples
     using static Structs;
 
     [AddComponentMenu("")]
-    public class Example : MonoBehaviour
+    public partial class Example : MonoBehaviour
     {
+#pragma warning disable 0414
         [Serializable]
-        private enum Test2
+        private class Test1
         {
-            A = -1, B = 3, C = 4
-        }
-
-#pragma warning disable 414
-        #region "Hoge/Fuga"
-        [Serializable]
-        private class HogeFuga
-        {
-            public PrefsVector2 v1 = new PrefsVector2("HogeFuga - v1", Vector2.one, HierarchyHogeFuga);
-            public PrefsVector2 v2 = new PrefsVector2("HogeFuga - v2", Vector2.one * 2.5f, HierarchyHogeFuga);
-        }
-        [SerializeField]
-        private HogeFuga hogeFuga = new HogeFuga();
-        #endregion
-
-        #region "Hoge/Fuga/Pi/"
-        [Serializable]
-        private class HogeFugaPi
-        {
-            public static readonly GuiHierarchy Hierarchy = new GuiHierarchy("pi/", 1, HierarchyHogeFuga);
-
-            public PrefsVector2 v1 = new PrefsVector2("HogeFugaPi - v1", Vector2.right, Hierarchy);
-            public PrefsVector2 v2 = new PrefsVector2("HogeFugaPi - v2", Vector2.left, Hierarchy);
-        }
-        [SerializeField]
-        private HogeFugaPi hogeFugaPi = new HogeFugaPi();
-        #endregion
-
-        #region "Hoge/Fuga/Piyo/"
-        private class HogeFugaPiyo
-        {
-            public static readonly GuiHierarchy Hierarchy = new GuiHierarchy("piyo/", 2, HierarchyHogeFuga);
-
-            public PrefsVector2 v1 = new PrefsVector2("HogeFugaPiyo - v1", new Vector2(10f, 20f), Hierarchy);
-            public PrefsVector3 v2 = new PrefsVector3("HogeFugaPiyo - v2", new Vector3(1f, 2f, 3f), Hierarchy);
-        }
-        private HogeFugaPiyo hogeFugaPiyo = new HogeFugaPiyo();
-        #endregion
-
-        #region "Hoge/Fuga/Piyo2/"
-        private class HogeFugaPiyo2
-        {
-            public static readonly GuiHierarchy Hierarchy = new GuiHierarchy("piyo2/", -3, HierarchyHogeFuga);
-
-            public PrefsVector3 v1 = new PrefsVector3("HogeFugaPiyo2 - v1", new Vector3(-1f, -1.5f, -2f), Hierarchy);
-            public PrefsVector3Int v2 = new PrefsVector3Int("HogeFugaPiyo2 - v2", new Vector3Int(1, 2, 3), Hierarchy);
-        }
-        private HogeFugaPiyo2 hogeFugaPiyo2 = new HogeFugaPiyo2();
-        #endregion
-
-        #region "Hoge/Ppp/Aaa/"
-        private class HogePppAaa
-        {
-            public static readonly GuiHierarchy Hierarchy = new GuiHierarchy("ppp/aaa/", new int[] { 2, -2 }, HierarchyHoge);
-
-            public PrefsVector2Int v1 = new PrefsVector2Int("HogePppAaa - v1", Vector2Int.one, Hierarchy);
-            public PrefsVector4 v2 = new PrefsVector4("HogePppAaa - v2", new Vector4(-1f, 0f, 1f, 2f), Hierarchy);
-        }
-        private HogePppAaa hogePppAaa = new HogePppAaa();
-        #endregion
-
-        #region "Hoge/Ppp/Bbb/"
-        private class HogePppBbb
-        {
-            public static readonly GuiHierarchy Hierarchy = new GuiHierarchy("ppp/bbb/", new int[] { -2, 2 }, HierarchyHoge);
-
-            public PrefsVector2Int v1 = new PrefsVector2Int("HogePppBbb - v1", Vector2Int.one, Hierarchy);
-            public PrefsVector4 v2 = new PrefsVector4("HogePppBbb - v2", new Vector4(-1f, 0f, 1f, 2f), Hierarchy);
-        }
-        private HogePppBbb hogePppBbb = new HogePppBbb();
-        #endregion
-
-        #region "Hoge/Ppp/Ccc/"
-        private class HogePppCcc
-        {
-            public static readonly GuiHierarchy Hierarchy = new GuiHierarchy("ppp/ccc/", new int[] { 0, -5 }, HierarchyHoge);
-
-            public PrefsVector2Int v1 = new PrefsVector2Int("HogePppCcc - v1", Vector2Int.one, Hierarchy);
-            public PrefsVector4 v2 = new PrefsVector4("HogePppCcc - v2", new Vector4(-1f, 0f, 1f, 2f), Hierarchy);
-        }
-        private HogePppCcc hogePppCcc = new HogePppCcc();
-        #endregion
-
-        [SerializeField]
-        private PrefsVector2 v1 = new PrefsVector2("v1", Vector2.zero);
-        [SerializeField]
-        private PrefsVector2 v2 = new PrefsVector2("v2", Vector2.one);
-        [SerializeField]
-        private PrefsVector2 v3 = new PrefsVector2("v3", new Vector2(2f, 3f));
-        private PrefsVector2 v4 = new PrefsVector2("v4", Vector2.zero);
-        private PrefsVector2Int v5 = new PrefsVector2Int("v5");
-
-        #region "Test/"
-        [Serializable]
-        private class Test
-        {
-            public PrefsBool b = new PrefsBool("PrefsBool", true, HierarchyTest, "Prefs " + RichTextColors.Red("Bool"));
-            public PrefsColor c = new PrefsColor("PrefsColor", Color.red, HierarchyTest);
-            public PrefsColorSlider cs = new PrefsColorSlider("ColorSlider", Color.blue, HierarchyTest);
-            public PrefsFloat f = new PrefsFloat("PrefsFloat", 1f, HierarchyTest);
-            public PrefsFloatSlider fs = new PrefsFloatSlider("PrefsFloatSlider", 0f, 10f, 5f, HierarchyTest);
-            public PrefsInt i = new PrefsInt("PrefsInt", 5, HierarchyTest);
-            public PrefsIntSlider isl = new PrefsIntSlider("PrefsIntSlider", -10, 10, 5, HierarchyTest);
-            public PrefsVector3 v6 = new PrefsVector3("PrefsVector3", new Vector3(2f, 4f, 6f), HierarchyTest);
-            public PrefsEnum<Test1> e1 = new PrefsEnum<Test1>("PrefsEnum1", Test1.Two, HierarchyTest);
+            public PrefsBool prefsBool = new PrefsBool("PrefsBool", true, HierarchyTest1, "Prefs " + RichTextColors.Red("Bool"));
+            public PrefsColor prefsColor = new PrefsColor("PrefsColor", Color.red, HierarchyTest1);
+            public PrefsColorSlider prefsColorSlider = new PrefsColorSlider("PrefsColorSlider", Color.blue, HierarchyTest1);
+            public PrefsFloat prefsFloat = new PrefsFloat("PrefsFloat", 0.12345f, HierarchyTest1);
+            public PrefsFloatSlider prefsFloatSlider = new PrefsFloatSlider("PrefsFloatSlider", 0f, 10f, 5f, HierarchyTest1);
+            public PrefsInt prefsInt = new PrefsInt("PrefsInt", 3, HierarchyTest1);
+            public PrefsIntSlider prefsIntSlider = new PrefsIntSlider("PrefsIntSlider", 0, 10, 2, HierarchyTest1);
             //public PrefsButton b1 = new PrefsButton("Click1", null, HierarchyTest);
-            //public PrefsButton b2 = new PrefsButton("Click2", () => Debug.Log("B2 : DefaultAction"), HierarchyTest);
-
-            //private PrefsButton b3 = new PrefsButton("Click3", () => Debug.Log("B3 : DefaultAction"), HierarchyTest);
-            private PrefsString s = new PrefsString("PrefsString", "localhost", HierarchyTest);
-
-            [SerializeField]
-            private PrefsVector3Int v7 = new PrefsVector3Int("PrefsVector3Int", new Vector3Int(-10, -5, 0), HierarchyTest);
-            [SerializeField]
-            private PrefsVector4 v8 = new PrefsVector4("PrefsVector4", new Vector4(-2f, 0f, 2f, 100f), HierarchyTest);
-            [SerializeField]
-            private PrefsEnum<Test2> e2 = new PrefsEnum<Test2>("PrefsEnum2", Test2.A, HierarchyTest);
 
 
-            public Test()
+            public Test1()
             {
                 //this.b1.OnClicked = this.Click1;
                 //this.b1.OnValueChanged += () => Debug.Log("B1 : OnValueChanged");
+            }
 
+            //private void Click1()
+            //{
+            //    Debug.Log("B1 : OnClicked");
+            //}
+        }
+        [Serializable]
+        private class Test2
+        {
+            public PrefsString prefsString = new PrefsString("PrefsString", "Example", HierarchyTest2);
+            public PrefsVector2 prefsVector2 = new PrefsVector2("PrefsVector2", Vector2.one, HierarchyTest2);
+            public PrefsVector2Int prefsVector2Int = new PrefsVector2Int("PrefsVector2Int", Vector2Int.right, HierarchyTest2);
+            //private PrefsButton b3 = new PrefsButton("Click3", () => Debug.Log("B3 : DefaultAction"), HierarchyTest);
+
+            [SerializeField]
+            private PrefsVector3 prefsVector3 = new PrefsVector3("PrefsVector3", Vector3.down, HierarchyTest2);
+            [SerializeField]
+            private PrefsVector3Int prefsVector3Int = new PrefsVector3Int("PrefsVector3Int", Vector3Int.left, HierarchyTest2);
+            [SerializeField]
+            private PrefsVector4 prefsVector4 = new PrefsVector4("PrefsVector4", new Vector4(0.1f, 0.2f, 0.3f, 0.4f), HierarchyTest2);
+
+
+            public Test2()
+            {
                 //this.b3.OnClicked = () => Debug.Log("B3 : OnClicked");
             }
-
-            private void Click1()
-            {
-                Debug.Log("B1 : OnClicked");
-            }
         }
+        [Serializable]
+        public class Test2Ex1
+        {
+            public PrefsFloatSlider prefsFloatSlider = new PrefsFloatSlider("PrefsFloatSlider2", 10f, HierarchyTest2Ex1);
+            public PrefsIntSlider prefsIntSlider = new PrefsIntSlider("PrefsIntSlider2", 20, HierarchyTest2Ex1);
+        }
+
+        public Test2Ex1 test2Ex1 = new Test2Ex1();
+
         [SerializeField]
-        private Test test = new Test();
-        #endregion
-#pragma warning restore 414
+        private Test1 test1 = new Test1();
+        [SerializeField]
+        private Test2 test2 = new Test2();
+
+        [SerializeField]
+        private PrefsEnum<TestEnum1> prefsEnum1 = new PrefsEnum<TestEnum1>("PrefsEnum1", TestEnum1.Three, HierarchyTest2Ex2);
+        [SerializeField]
+        private PrefsEnum<TestEnum2> prefsEnum2 = new PrefsEnum<TestEnum2>("PrefsEnum2", TestEnum2.A, HierarchyTest2Ex2);
+#pragma warning restore 0414
 
 
         private void Awake()
         {
-            //this.test.b2.BottomMargin = 50f;
-
-            this.test.e1.BottomMargin = 50f;
-            this.test.e1.GuiLabelPrefix = RichTextColors.Blue(" ~ ");
-            this.test.e1.GuiLabelSufix = RichTextColors.Red(" ~ ");
+            this.test1.prefsIntSlider.BottomMargin = 50f;
+            this.test1.prefsIntSlider.GuiLabelSufix = RichTextColors.Blue(" ~ ");
+            this.test1.prefsIntSlider.GuiLabelPrefix = RichTextColors.Red(" ~ ");
         }
 
         void Update()
         {
-            transform.position = this.test.v6;
-
             if(Input.GetKeyDown(KeyCode.S))
             {
                 Prefs.ShowGUI();
@@ -172,11 +94,11 @@ namespace PrefsUGUI.Examples
 
             if(Input.GetKeyDown(KeyCode.A))
             {
-                this.test.e1.VisibleGUI = !this.test.e1.VisibleGUI;
+                this.test1.prefsInt.VisibleGUI = !this.test1.prefsInt.VisibleGUI;
             }
             if(Input.GetKeyDown(KeyCode.N))
             {
-                this.test.v6.Set(this.test.v6.Get() + Vector3.one);
+                this.test2.prefsVector2.Set(this.test2.prefsVector2 + Vector2.one);
             }
         }
     }

@@ -16,6 +16,12 @@ namespace PrefsUGUI.Guis.Prefs
         protected RawImage preview = null;
 
 
+        public override void Initialize(string label, Color initialValue, Func<Color> defaultGetter)
+        {
+            this.SetValueInternal(initialValue);
+            this.Initialize(label, initialValue, 0f, 1f, defaultGetter);
+        }
+
         protected override void SetFields()
         {
             base.SetFields();

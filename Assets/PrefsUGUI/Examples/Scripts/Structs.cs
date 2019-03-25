@@ -8,14 +8,24 @@ namespace PrefsUGUI.Examples
 {
     public static class Structs
     {
-        public static readonly GuiHierarchy HierarchyHoge = new GuiHierarchy("hoge/", 1);
-        public static readonly GuiHierarchy HierarchyHogeFuga = new GuiHierarchy("fuga/", 1, HierarchyHoge);
-        public static readonly GuiHierarchy HierarchyTest = new GuiHierarchy("Test", 0);
+        public static readonly GuiHierarchy HierarchyTest1 = new GuiHierarchy("Test1", 1);
+        public static readonly GuiHierarchy HierarchyTest2 = new GuiHierarchy("Test2", 0);
+        public static readonly GuiHierarchy HierarchyTest2Ex1 = new GuiHierarchy("Ex1", 0, HierarchyTest2);
+        public static readonly GuiHierarchy HierarchyTest2Ex2 = new GuiHierarchy("Ex2", 0, HierarchyTest2);
     }
 
     [Serializable]
-    public enum Test1
+    public enum TestEnum1
     {
-        One = 1, Two, Three
+        One = 0, Two, Three
+    }
+
+    public partial class Example
+    {
+        [Serializable]
+        private enum TestEnum2
+        {
+            A = -1, B = 0, C = 4
+        }
     }
 }

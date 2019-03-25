@@ -64,6 +64,7 @@ namespace PrefsUGUI.Guis.Prefs
 
         protected override void SetFields()
         {
+            this.inited = false;
             base.SetFields();
 
             var sliders = this.sliders;
@@ -71,6 +72,8 @@ namespace PrefsUGUI.Guis.Prefs
             {
                 sliders[i].value = this.GetElementAsFloat(i);
             }
+
+            this.inited = true;
         }
 
         protected virtual void OnChangedSlider(float v)
