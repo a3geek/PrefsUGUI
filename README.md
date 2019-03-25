@@ -14,6 +14,8 @@ PrefsGUI is a so useful library. But, PrefsGUI is using the OnGUI system, So I h
 
 By uGUI system, I can solve those problems like easy.
 
+![PrefsUGUI](./Documents/PrefsUGUI.gif)
+
 ## Usage
 Sample code
 ```` csharp
