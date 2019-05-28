@@ -55,7 +55,7 @@ namespace PrefsUGUI.Guis.Prefs
         protected virtual void Reset()
         {
             this.layout = GetComponentInChildren<LayoutElement>();
-            this.elements = GetComponentInChildren<RectTransform>();
+            this.elements = GetComponentInChildren<CanvasRenderer>()?.GetComponent<RectTransform>();
             this.label = GetComponentInChildren<Text>();
         }
     }

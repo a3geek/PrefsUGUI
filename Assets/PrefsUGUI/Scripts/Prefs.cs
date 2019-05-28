@@ -78,6 +78,11 @@ namespace PrefsUGUI
             for(var i = 0; i < PrefsInstances.Count; i++)
             {
                 var p = PrefsInstances[i];
+                if(p.Unsave == true)
+                {
+                    continue;
+                }
+
                 Storage.Set(p.ValueType, p.SaveKey, p.ValueAsObject, AggregationName);
             }
 

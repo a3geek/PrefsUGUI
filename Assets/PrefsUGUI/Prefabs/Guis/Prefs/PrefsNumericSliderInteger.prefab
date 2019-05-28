@@ -668,9 +668,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 647caedc11ae61a48b9f1180f6145d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layout: {fileID: 114016665417148556}
-  elements: {fileID: 224885595123547246}
   label: {fileID: 114173962399483910}
+  layout: {fileID: 114016665417148556}
+  elements: {fileID: 224573408146303202}
   defaultButton: {fileID: 114917964853048156}
   defaultButtonText: {fileID: 114666934259740136}
   defaultColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}

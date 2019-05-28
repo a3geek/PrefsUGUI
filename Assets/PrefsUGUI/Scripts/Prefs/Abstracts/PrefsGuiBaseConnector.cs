@@ -8,7 +8,7 @@ namespace PrefsUGUI
     public static partial class Prefs
     {
         [Serializable]
-        public abstract class PrefsGuiBase<ValType, GuiType> : PrefsValueBase<ValType> where GuiType : PrefsGuiBase
+        public abstract class PrefsGuiBaseConnector<ValType, GuiType> : PrefsValueBase<ValType> where GuiType : PrefsGuiBase
         {
             public override string GuiLabel => this.guiLabelPrefix + this.guiLabel + this.guiLabelSufix;
             public virtual string GuiLabelWithoutAffix => this.guiLabel;
@@ -55,14 +55,13 @@ namespace PrefsUGUI
             protected GuiType gui = null;
 
 
-            public PrefsGuiBase(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = "")
+            public PrefsGuiBaseConnector(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = "")
                 : base(key, defaultValue, hierarchy, guiLabel)
             {
             }
 
-            protected override void Register()
+            protected override void AfterRegist()
             {
-                base.Register();
                 AddPrefs<GuiType>(this, gui =>
                 {
                     this.gui = gui;

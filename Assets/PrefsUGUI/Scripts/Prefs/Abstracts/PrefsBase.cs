@@ -17,6 +17,8 @@ namespace PrefsUGUI
             public virtual GuiHierarchy GuiHierarchy => this.hierarchy;
             public virtual string GuiLabel => this.guiLabel;
 
+            public virtual bool Unsave { get; set; }
+
             public abstract Type ValueType { get; }
             public abstract object DefaultValueAsObject { get; }
             public abstract object ValueAsObject { get; }
@@ -35,7 +37,8 @@ namespace PrefsUGUI
                 this.hierarchy = hierarchy;
                 this.guiLabel = string.IsNullOrEmpty(guiLabel) == true ? key.ToLabelable() : guiLabel;
 
-                this.Register();
+                this.Unsave = false;
+                this.Regist();
             }
 
             ~PrefsBase()
@@ -46,15 +49,19 @@ namespace PrefsUGUI
             public abstract void ResetDefaultValue();
             public abstract void Reload(bool withEvent = true);
 
-            protected virtual void Register()
+
+            protected virtual void Regist()
             {
                 PrefsInstances.Add(this);
+                this.AfterRegist();
             }
 
             protected virtual void FireOnValueChanged()
             {
                 this.OnValueChanged();
             }
+
+            protected abstract void AfterRegist();
         }
     }
 }
