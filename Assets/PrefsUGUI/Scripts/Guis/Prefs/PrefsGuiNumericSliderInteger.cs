@@ -2,6 +2,7 @@
 
 namespace PrefsUGUI.Guis.Prefs
 {
+    [AddComponentMenu("")]
     public class PrefsGuiNumericSliderInteger : PrefsGuiNumericSliderBase<int>
     {
         protected override bool IsDecimalNumber => false;

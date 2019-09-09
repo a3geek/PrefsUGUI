@@ -1,5 +1,8 @@
-﻿namespace PrefsUGUI.Guis.Prefs
+﻿using UnityEngine;
+
+namespace PrefsUGUI.Guis.Prefs
 {
+    [AddComponentMenu("")]
     public class PrefsGuiNumericSliderDecimal : PrefsGuiNumericSliderBase<float>
     {
         protected override bool IsDecimalNumber => true;
