@@ -8,7 +8,7 @@ namespace PrefsUGUI
     public static partial class Prefs
     {
         [Serializable]
-        public abstract class PrefsBase
+        public abstract class PrefsBase : IDisposable
         {
             public virtual event Action OnValueChanged = delegate { };
 
@@ -42,6 +42,11 @@ namespace PrefsUGUI
             }
 
             ~PrefsBase()
+            {
+                this.Dispose();
+            }
+
+            public void Dispose()
             {
                 RemovePrefs(this);
             }

@@ -22,7 +22,6 @@ namespace PrefsUGUI.Examples
         [SerializeField]
         private PrefsEnum<TestEnum2> prefsEnum2 = new PrefsEnum<TestEnum2>("PrefsEnum2", TestEnum2.A, HierarchyTest2Ex2);
 
-        [SerializeField]
         private PrefsRect prefsRect = new PrefsRect("PrefsRect", new Rect(0.25f, 0.5f, 1f, 2f));
 #pragma warning restore 0414
 
