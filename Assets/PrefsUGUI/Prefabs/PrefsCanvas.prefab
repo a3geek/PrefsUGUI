@@ -1138,6 +1138,9 @@ MonoBehaviour:
     - key: PrefsGuiVector4
       prefab: {fileID: 114459291038590326, guid: 644c64d084286164a9b4ab3fa51fa776,
         type: 2}
+    - key: PrefsGuiRect
+      prefab: {fileID: 114297598981283736, guid: 75845da7f46e1834ca906a08c41bfc2a,
+        type: 2}
     - key: GuiButton
       prefab: {fileID: 114174054903132308, guid: a15efa66ad6781b42b470f02e578f1f8,
         type: 2}

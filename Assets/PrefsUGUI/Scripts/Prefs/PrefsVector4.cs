@@ -12,8 +12,6 @@ namespace PrefsUGUI
             : base(key, defaultValue, hierarchy, guiLabel) { }
 
         protected override void OnCreatedGuiInternal(PrefsGuiVector4 gui)
-        {
-            gui.Initialize(this.GuiLabel, this.Get(), () => this.DefaultValue);
-        }
+            => gui.Initialize(this.GuiLabel, this.Get(), () => this.DefaultValue);
     }
 }

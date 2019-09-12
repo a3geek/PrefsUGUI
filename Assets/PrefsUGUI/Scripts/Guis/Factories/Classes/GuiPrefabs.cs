@@ -44,6 +44,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             new GuiPrefab(typeof(PrefsGuiString)), new GuiPrefab(typeof(PrefsGuiVector2)),
             new GuiPrefab(typeof(PrefsGuiVector2Int)), new GuiPrefab(typeof(PrefsGuiVector3)),
             new GuiPrefab(typeof(PrefsGuiVector3Int)), new GuiPrefab(typeof(PrefsGuiVector4)),
+            new GuiPrefab(typeof(PrefsGuiRect)),
             new GuiPrefab(typeof(GuiButton)), new GuiPrefab(typeof(PrefsGuiLabel))
         };
 
