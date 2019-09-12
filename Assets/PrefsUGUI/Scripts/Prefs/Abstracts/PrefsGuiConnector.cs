@@ -15,13 +15,7 @@ namespace PrefsUGUI
             }
 
             protected override void AfterRegist()
-            {
-                AddPrefs<ValType, GuiType>(this, gui =>
-                {
-                    this.gui = gui;
-                    this.OnCreatedGuiInternal(gui);
-                });
-            }
+                => AddPrefs<ValType, GuiType>(this, gui => this.ExecuteOnCreatedGui(gui));
         }
     }
 }

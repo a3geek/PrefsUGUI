@@ -63,13 +63,13 @@ namespace PrefsUGUI
             }
 
             protected override void AfterRegist()
+                => AddPrefs<GuiType>(this, gui => this.ExecuteOnCreatedGui(gui));
+
+            protected void ExecuteOnCreatedGui(GuiType gui)
             {
-                AddPrefs<GuiType>(this, gui =>
-                {
-                    this.gui = gui;
-                    this.OnCreatedGuiInternal(gui);
-                    this.OnCreatedGui();
-                });
+                this.gui = gui;
+                this.OnCreatedGuiInternal(gui);
+                this.OnCreatedGui();
             }
 
             protected abstract void OnCreatedGuiInternal(GuiType gui);
