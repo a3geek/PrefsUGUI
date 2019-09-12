@@ -10,6 +10,8 @@ namespace PrefsUGUI
         [Serializable]
         public abstract class PrefsGuiBaseConnector<ValType, GuiType> : PrefsValueBase<ValType> where GuiType : PrefsGuiBase
         {
+            public event Action OnCreatedGui = delegate { };
+
             public override string GuiLabel => this.guiLabelPrefix + this.guiLabel + this.guiLabelSufix;
             public virtual string GuiLabelWithoutAffix => this.guiLabel;
 
@@ -66,6 +68,7 @@ namespace PrefsUGUI
                 {
                     this.gui = gui;
                     this.OnCreatedGuiInternal(gui);
+                    this.OnCreatedGui();
                 });
             }
 
