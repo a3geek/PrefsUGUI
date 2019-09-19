@@ -14,7 +14,7 @@ namespace PrefsUGUI
             set { this.Value = value; }
         }
 
-        public PrefsButton(string key, UnityAction action, GuiHierarchy hierarchy = null, string guiLabel = "")
+        public PrefsButton(string key, UnityAction action, GuiHierarchy hierarchy = null, string guiLabel = null)
             : base(key, action ?? delegate { }, hierarchy, guiLabel)
         {
         }

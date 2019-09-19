@@ -11,11 +11,11 @@ namespace PrefsUGUI
         protected int max = 0;
 
 
-        public PrefsIntSlider(string key, int defaultValue = default(int), GuiHierarchy hierarchy = null, string guiLabel = "")
+        public PrefsIntSlider(string key, int defaultValue = default(int), GuiHierarchy hierarchy = null, string guiLabel = null)
             : base(key, defaultValue, hierarchy, guiLabel) { }
 
         public PrefsIntSlider(string key, int minValue, int maxValue,
-            int defaultValue = default(int), GuiHierarchy hierarchy = null, string guiLabel = "")
+            int defaultValue = default(int), GuiHierarchy hierarchy = null, string guiLabel = null)
             : this(key, defaultValue, hierarchy, guiLabel)
         {
             this.min = minValue;

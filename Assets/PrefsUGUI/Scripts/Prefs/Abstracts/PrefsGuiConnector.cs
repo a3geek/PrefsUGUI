@@ -9,7 +9,7 @@ namespace PrefsUGUI
         [Serializable]
         public abstract class PrefsGuiConnector<ValType, GuiType> : PrefsGuiBaseConnector<ValType, GuiType> where GuiType : InputGuiValueBase<ValType>
         {
-            public PrefsGuiConnector(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = "")
+            public PrefsGuiConnector(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = null)
                 : base(key, defaultValue, hierarchy, guiLabel)
             {
             }

@@ -7,7 +7,7 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsFloat : Prefs.PrefsExtends<float, PrefsGuiNumericDecimal>
     {
-        public PrefsFloat(string key, float defaultValue = default(float), GuiHierarchy hierarchy = null, string guiLabel = "")
+        public PrefsFloat(string key, float defaultValue = default(float), GuiHierarchy hierarchy = null, string guiLabel = null)
             : base(key, defaultValue, hierarchy, guiLabel) { }
 
         protected override void OnCreatedGuiInternal(PrefsGuiNumericDecimal gui)

@@ -28,7 +28,7 @@ namespace PrefsUGUI
             protected ValType value = default(ValType);
 
 
-            public PrefsValueBase(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = "")
+            public PrefsValueBase(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = null)
                 : base(key, hierarchy, guiLabel)
             {
                 this.value = defaultValue;

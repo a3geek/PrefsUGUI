@@ -8,7 +8,7 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsVector3 : Prefs.PrefsExtends<Vector3, PrefsGuiVector3>
     {
-        public PrefsVector3(string key, Vector3 defaultValue = default(Vector3), GuiHierarchy hierarchy = null, string guiLabel = "")
+        public PrefsVector3(string key, Vector3 defaultValue = default(Vector3), GuiHierarchy hierarchy = null, string guiLabel = null)
             : base(key, defaultValue, hierarchy, guiLabel) { }
 
         protected override void OnCreatedGuiInternal(PrefsGuiVector3 gui)

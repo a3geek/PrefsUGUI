@@ -8,7 +8,7 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsRect : Prefs.PrefsExtends<Rect, PrefsGuiRect>
     {
-        public PrefsRect(string key, Rect defaultValue = default(Rect), GuiHierarchy hierarchy = null, string guiLabel = "")
+        public PrefsRect(string key, Rect defaultValue = default(Rect), GuiHierarchy hierarchy = null, string guiLabel = null)
             : base(key, defaultValue, hierarchy, guiLabel) { }
 
         protected override void OnCreatedGuiInternal(PrefsGuiRect gui)

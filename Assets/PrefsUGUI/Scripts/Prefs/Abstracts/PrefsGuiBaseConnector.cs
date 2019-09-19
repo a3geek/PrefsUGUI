@@ -57,7 +57,7 @@ namespace PrefsUGUI
             protected GuiType gui = null;
 
 
-            public PrefsGuiBaseConnector(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = "")
+            public PrefsGuiBaseConnector(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = null)
                 : base(key, defaultValue, hierarchy, guiLabel)
             {
             }

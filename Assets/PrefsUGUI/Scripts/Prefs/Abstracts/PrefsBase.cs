@@ -31,11 +31,11 @@ namespace PrefsUGUI
             protected GuiHierarchy hierarchy = null;
 
 
-            public PrefsBase(string key, GuiHierarchy hierarchy = null, string guiLabel = "")
+            public PrefsBase(string key, GuiHierarchy hierarchy = null, string guiLabel = null)
             {
                 this.key = key;
                 this.hierarchy = hierarchy;
-                this.guiLabel = string.IsNullOrEmpty(guiLabel) == true ? key.ToLabelable() : guiLabel;
+                this.guiLabel = guiLabel ?? key.ToLabelable();
 
                 this.Unsave = false;
                 this.Regist();

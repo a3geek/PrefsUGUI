@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -71,6 +72,38 @@ namespace PrefsUGUI.Examples
         {
             public PrefsFloatSlider PrefsFloatSlider = new PrefsFloatSlider("PrefsFloatSlider2", 10f, HierarchyTest2Ex1);
             public PrefsIntSlider PrefsIntSlider = new PrefsIntSlider("PrefsIntSlider2", 20, HierarchyTest2Ex1);
+
+            private List<GuiHierarchy> Hierarchies = new List<GuiHierarchy>();
+            private List<PrefsInt> prefsInts = new List<PrefsInt>();
+
+
+            public void AddHierarchy()
+            {
+                var hierarchy = new GuiHierarchy(
+                    "Hierarchy" + this.Hierarchies.Count, this.Hierarchies.Count, HierarchyTest2Ex1
+                );
+                var prefsInt = new PrefsInt(
+                    "PrefsInt" + this.prefsInts.Count, this.prefsInts.Count, hierarchy
+                );
+
+                this.Hierarchies.Add(hierarchy);
+                this.prefsInts.Add(prefsInt);
+            }
+
+            public void RemoveHierarchy()
+            {
+                var idx = this.Hierarchies.Count - 1;
+                if(idx < 0)
+                {
+                    return;
+                }
+
+                this.prefsInts[idx].Dispose();
+                this.prefsInts.RemoveAt(idx);
+
+                this.Hierarchies[idx].Dispose();
+                this.Hierarchies.RemoveAt(idx);
+            }
         }
 
         [Serializable]

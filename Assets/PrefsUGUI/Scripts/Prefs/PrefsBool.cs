@@ -7,7 +7,7 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsBool : Prefs.PrefsExtends<bool, PrefsGuiBool>
     {
-        public PrefsBool(string key, bool defaultValue = default(bool), GuiHierarchy hierarchy = null, string guiLabel = "")
+        public PrefsBool(string key, bool defaultValue = default(bool), GuiHierarchy hierarchy = null, string guiLabel = null)
             : base(key, defaultValue, hierarchy, guiLabel) { }
 
         protected override void OnCreatedGuiInternal(PrefsGuiBool gui)

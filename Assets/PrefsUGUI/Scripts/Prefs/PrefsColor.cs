@@ -8,7 +8,7 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsColor : Prefs.PrefsExtends<Color, PrefsGuiColor>
     {
-        public PrefsColor(string key, Color defaultValue = default(Color), GuiHierarchy hierarchy = null, string guiLabel = "")
+        public PrefsColor(string key, Color defaultValue = default(Color), GuiHierarchy hierarchy = null, string guiLabel = null)
             : base(key, defaultValue, hierarchy, guiLabel) { }
 
         protected override void OnCreatedGuiInternal(PrefsGuiColor gui)
