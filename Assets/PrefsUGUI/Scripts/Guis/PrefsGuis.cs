@@ -57,7 +57,14 @@ namespace PrefsUGUI.Guis
         }
 
         public void RemovePrefs(PrefsUGUI.Prefs.PrefsBase prefs)
-            => this.canvas?.RemovePrefs(prefs);
+        {
+            if(this.canvas == null)
+            {
+                return;
+            }
+
+            this.canvas.RemovePrefs(prefs);
+        }
 
         public void RemoveCategory(GuiHierarchy hierarchy)
             => this.canvas?.RemoveCategory(hierarchy);
