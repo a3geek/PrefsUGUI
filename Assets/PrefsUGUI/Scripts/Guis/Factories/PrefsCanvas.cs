@@ -83,6 +83,9 @@ namespace PrefsUGUI.Guis.Factories
             }
         }
 
+        public void RemoveCategory(GuiHierarchy hierarchy)
+            => this.structs.RemoveCategory(hierarchy);
+
         private void ChangeGUI(Category previous, string targetCategoryName)
             => this.OnChangedGUI(this.structs.ChangeGUI(previous, targetCategoryName));
 

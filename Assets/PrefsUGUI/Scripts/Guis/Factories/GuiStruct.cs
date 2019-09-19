@@ -47,6 +47,46 @@ namespace PrefsUGUI.Guis.Factories
                 return previous;
             }
 
+            public void RemoveCategory(GuiHierarchy hierarchy)
+            {
+                if(hierarchy == null)
+                {
+                    return;
+                }
+
+                var previous = this.top;
+                var parents = hierarchy.Parents;
+                var split = hierarchy.SplitHierarchy;
+
+                for(var i = 0; i < parents.Count; i++)
+                {
+                    previous = this.GetCategory(previous, parents[i]);
+                }
+
+                var idx = split.Length - 1;
+                var button = this.GetButton(previous, split[idx], split[idx], hierarchy.GetSortOrder(idx));
+                var next = this.GetCategory(previous, split[idx]);
+
+                previous.Buttons.Remove(button);
+                previous.Nexts.Remove(next);
+
+                Destroy(button.gameObject);
+                Destroy(next.Content.gameObject);
+            }
+
+            private GuiButton GetButton(Category category, string label)
+            {
+                foreach(var b in category.Buttons)
+                {
+                    if(b.GetLabel() == label)
+                    {
+                        return b;
+                    }
+                }
+
+                return null;
+            }
+
             public Category ChangeGUI(Category previous, string targetCategoryName)
             {
                 var cat = (previous == null || targetCategoryName == TopCategoryName) ?

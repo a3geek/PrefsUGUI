@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace PrefsUGUI.Examples
 {
@@ -25,6 +26,38 @@ namespace PrefsUGUI.Examples
         private PrefsRect prefsRect = new PrefsRect("PrefsRect", new Rect(0.25f, 0.5f, 1f, 2f));
 #pragma warning restore 0414
 
+        private List<GuiHierarchy> Hierarchies = null;
+        private List<PrefsInt> prefsInts = null;
+
+
+        public void AddHierarchy()
+        {
+            var hierarchy = new GuiHierarchy(
+                "Hierarchy" + this.Hierarchies.Count, this.Hierarchies.Count, HierarchyTest2Ex1
+            );
+            var prefsInt = new PrefsInt(
+                "PrefsInt" + this.prefsInts.Count, this.prefsInts.Count, hierarchy
+            );
+
+            this.Hierarchies.Add(hierarchy);
+            this.prefsInts.Add(prefsInt);
+        }
+
+        public void RemoveHierarchy()
+        {
+            var idx = this.Hierarchies.Count - 1;
+            if(idx < 0)
+            {
+                return;
+            }
+
+            this.prefsInts[idx].Dispose();
+            this.prefsInts.RemoveAt(idx);
+
+            this.Hierarchies[idx].Dispose();
+            this.Hierarchies.RemoveAt(idx);
+        }
+
 
         private void Awake()
         {
@@ -40,6 +73,11 @@ namespace PrefsUGUI.Examples
 
             this.test3.PrefsLabel1.TopMargin = 20f;
             this.test3.PrefsLabel1.BottomMargin = 20f;
+
+            this.prefsRect.TopMargin = 15f;
+
+            this.Hierarchies = new List<GuiHierarchy>();
+            this.prefsInts = new List<PrefsInt>();
         }
 
         void Update()
@@ -56,6 +94,15 @@ namespace PrefsUGUI.Examples
             if(Input.GetKeyDown(KeyCode.N))
             {
                 this.test2.PrefsVector2.Set(this.test2.PrefsVector2 + Vector2.one);
+            }
+
+            if(Input.GetKeyDown(KeyCode.Y))
+            {
+                this.AddHierarchy();
+            }
+            if(Input.GetKeyDown(KeyCode.U))
+            {
+                this.RemoveHierarchy();
             }
         }
     }

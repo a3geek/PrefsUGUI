@@ -10,7 +10,7 @@ namespace PrefsUGUI
     /// Hierarchy preset for GUI.
     /// </summary>
     [Serializable]
-    public sealed class GuiHierarchy
+    public sealed class GuiHierarchy : IDisposable
     {
         /// <summary>Default sort order for GUI hierarchy.</summary>
         public const int DefaultSortOrder = 0;
@@ -87,6 +87,11 @@ namespace PrefsUGUI
             var orders = this.SortOrders;
             return index >= 0 && index < orders.Length ? orders[index] :
                 (orders.Length == 1 ? orders[0] : DefaultSortOrder);
+        }
+
+        public void Dispose()
+        {
+            RemoveGuiHierarchy(this);
         }
     }
 }

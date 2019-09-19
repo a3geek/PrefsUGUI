@@ -106,7 +106,11 @@ namespace PrefsUGUI
         /// </summary>
         /// <param name="width">Width of new canvas size.</param>
         /// <param name="height">Height of new canvas size.</param>
-        public static void SetCanvasSize(float width, float height) => PrefsGuis.SetCanvasSize(width, height);
+        public static void SetCanvasSize(float width, float height)
+            => PrefsGuis.SetCanvasSize(width, height);
+
+        public static void RemoveGuiHierarchy(GuiHierarchy hierarchy)
+            => PrefsGuis?.RemoveCategory(hierarchy);
 
         private static void AddPrefs<ValType, PrefabType>(PrefsValueBase<ValType> prefs, Action<PrefabType> onCreated) where PrefabType : InputGuiValueBase<ValType>
             => Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<ValType, PrefabType>(prefs));
@@ -124,6 +128,7 @@ namespace PrefsUGUI
         /// Remove registered information.
         /// </summary>
         /// <param name="prefs">Prefs member for remove.</param>
-        private static void RemovePrefs(PrefsBase prefs) => PrefsGuis?.RemovePrefs(prefs);
+        private static void RemovePrefs(PrefsBase prefs)
+            => PrefsGuis?.RemovePrefs(prefs);
     }
 }
