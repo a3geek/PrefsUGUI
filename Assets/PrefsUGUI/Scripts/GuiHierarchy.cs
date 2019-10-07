@@ -10,7 +10,7 @@ namespace PrefsUGUI
     /// Hierarchy preset for GUI.
     /// </summary>
     [Serializable]
-    public sealed class GuiHierarchy
+    public sealed class GuiHierarchy : IDisposable
     {
         /// <summary>Default sort order for GUI hierarchy.</summary>
         public const int DefaultSortOrder = 0;
