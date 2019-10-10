@@ -408,7 +408,7 @@ MonoBehaviour:
   label: {fileID: 114564804106989774}
   layout: {fileID: 114632353071013550}
   elements: {fileID: 224588794717040836}
-  text: {fileID: 114564804106989774}
+  text: {fileID: 114063686456068408}
   rawImage: {fileID: 114464706193406868}
 --- !u!114 &114867693962695412
 MonoBehaviour:
