@@ -1147,6 +1147,9 @@ MonoBehaviour:
     - key: PrefsGuiLabel
       prefab: {fileID: 114390116732711480, guid: 1e1ca0b8eeedc604581a9743e958c359,
         type: 2}
+    - key: PrefsGuiImageLabel
+      prefab: {fileID: 114738236854438500, guid: 2bdce11f31a54e641838985d763d817f,
+        type: 2}
 --- !u!114 &114727951694102646
 MonoBehaviour:
   m_ObjectHideFlags: 1
