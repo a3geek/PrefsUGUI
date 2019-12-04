@@ -16,8 +16,9 @@ namespace PrefsUGUI
         }
 
 
-        public PrefsImageLabel(string key, string text, GuiHierarchy hierarchy = null, string guiLabel = null)
-            : base(key, text ?? "", hierarchy, guiLabel)
+        public PrefsImageLabel(string key, string text, GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBaseConnector<string, PrefsGuiImageLabel>> onCreatedGui = null)
+            : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui)
         {
         }
 

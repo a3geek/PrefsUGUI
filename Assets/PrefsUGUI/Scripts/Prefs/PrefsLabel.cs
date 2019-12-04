@@ -7,8 +7,9 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsLabel : Prefs.PrefsGuiBaseConnector<string, PrefsGuiLabel>
     {
-        public PrefsLabel(string key, string text, GuiHierarchy hierarchy = null, string guiLabel = null)
-            : base(key, text ?? "", hierarchy, guiLabel)
+        public PrefsLabel(string key, string text, GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBaseConnector<string, PrefsGuiLabel>> onCreatedGui = null)
+            : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui)
         {
         }
 

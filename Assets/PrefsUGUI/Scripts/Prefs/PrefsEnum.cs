@@ -11,8 +11,9 @@ namespace PrefsUGUI
 
         protected Type enumType = null;
 
-        public PrefsEnum(string key, T defaultValue = default(T), GuiHierarchy hierarchy = null, string guiLabel = null)
-            : base(key, 0, hierarchy, guiLabel)
+        public PrefsEnum(string key, T defaultValue = default(T), GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBaseConnector<int, PrefsGuiEnum>> onCreatedGui = null)
+            : base(key, 0, hierarchy, guiLabel, onCreatedGui)
         {
             var type = typeof(T);
             if(type.IsEnum == false)

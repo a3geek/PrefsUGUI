@@ -7,8 +7,9 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsString : Prefs.PrefsExtends<string, PrefsGuiString>
     {
-        public PrefsString(string key, string defaultValue = "", GuiHierarchy hierarchy = null, string guiLabel = null)
-            : base(key, defaultValue, hierarchy, guiLabel) { }
+        public PrefsString(string key, string defaultValue = "", GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBaseConnector<string, PrefsGuiString>> onCreatedGui = null)
+            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui) { }
 
         protected override void OnCreatedGuiInternal(PrefsGuiString gui)
         {

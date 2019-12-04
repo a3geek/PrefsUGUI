@@ -9,8 +9,9 @@ namespace PrefsUGUI
         [Serializable]
         public abstract class PrefsExtends<ValType, GuiType> : PrefsGuiConnector<ValType, GuiType> where GuiType : InputGuiValueBase<ValType>
         {
-            public PrefsExtends(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = null)
-                : base(key, defaultValue, hierarchy, guiLabel)
+            public PrefsExtends(string key, ValType defaultValue = default(ValType),
+                GuiHierarchy hierarchy = null, string guiLabel = null, Action<PrefsGuiBaseConnector<ValType, GuiType>> onCreatedGui = null)
+                : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui)
             {
                 ;
             }

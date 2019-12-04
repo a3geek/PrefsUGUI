@@ -11,8 +11,9 @@ namespace PrefsUGUI
         protected int max = 0;
 
 
-        public PrefsIntSlider(string key, int defaultValue = default(int), GuiHierarchy hierarchy = null, string guiLabel = null)
-            : base(key, defaultValue, hierarchy, guiLabel) { }
+        public PrefsIntSlider(string key, int defaultValue = default(int), GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBaseConnector<int, PrefsGuiNumericSliderInteger>> onCreatedGui = null)
+            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui) { }
 
         public PrefsIntSlider(string key, int minValue, int maxValue,
             int defaultValue = default(int), GuiHierarchy hierarchy = null, string guiLabel = null)

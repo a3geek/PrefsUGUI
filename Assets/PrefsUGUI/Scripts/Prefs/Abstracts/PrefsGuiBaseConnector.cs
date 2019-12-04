@@ -55,11 +55,14 @@ namespace PrefsUGUI
             protected string guiLabelSufix = "";
 
             protected GuiType gui = null;
+            protected Action<PrefsGuiBaseConnector<ValType, GuiType>> onCreatedGui = null;
 
 
-            public PrefsGuiBaseConnector(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = null)
+            public PrefsGuiBaseConnector(string key, ValType defaultValue = default(ValType),
+                GuiHierarchy hierarchy = null, string guiLabel = null, Action<PrefsGuiBaseConnector<ValType, GuiType>> onCreatedGui = null)
                 : base(key, defaultValue, hierarchy, guiLabel)
             {
+                this.onCreatedGui = onCreatedGui;
             }
 
             protected override void AfterRegist()
@@ -69,6 +72,8 @@ namespace PrefsUGUI
             {
                 this.gui = gui;
                 this.OnCreatedGuiInternal(gui);
+                this.onCreatedGui?.Invoke(this);
+
                 this.OnCreatedGui();
             }
 
