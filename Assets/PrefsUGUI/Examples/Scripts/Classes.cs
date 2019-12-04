@@ -47,6 +47,8 @@ namespace PrefsUGUI.Examples
         [Serializable]
         private class Test2
         {
+            public IReadOnlyPrefs<string> ReadOnlyPrefsString => this.PrefsString;
+
             public PrefsString PrefsString = new PrefsString("PrefsString", "Example", HierarchyTest2);
             public PrefsVector2 PrefsVector2 = new PrefsVector2("PrefsVector2", Vector2.one, HierarchyTest2);
             public PrefsVector2Int PrefsVector2Int = new PrefsVector2Int("PrefsVector2Int", Vector2Int.right, HierarchyTest2);

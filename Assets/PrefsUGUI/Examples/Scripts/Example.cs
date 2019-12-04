@@ -54,6 +54,7 @@ namespace PrefsUGUI.Examples
         private void Start()
         {
             Debug.Log(this.Label.Get());
+            this.test2.ReadOnlyPrefsString.OnValueChanged += () => Debug.Log(this.test2.ReadOnlyPrefsString.Get());
         }
 
         private void Update()
