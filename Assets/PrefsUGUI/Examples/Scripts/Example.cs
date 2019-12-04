@@ -7,6 +7,8 @@ namespace PrefsUGUI.Examples
     [AddComponentMenu("")]
     public partial class Example : MonoBehaviour
     {
+        public IReadOnlyPrefs<string> Label => this.label;
+
 #pragma warning disable 0414
         public Test2Ex1 Test2Ex = new Test2Ex1();
 
@@ -45,7 +47,12 @@ namespace PrefsUGUI.Examples
             this.prefsRect.TopMargin = 15f;
         }
 
-        void Update()
+        private void Start()
+        {
+            Debug.Log(this.Label.Get());
+        }
+
+        private void Update()
         {
             if(Input.GetKeyDown(KeyCode.S))
             {

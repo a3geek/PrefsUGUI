@@ -8,7 +8,7 @@ namespace PrefsUGUI
     public static partial class Prefs
     {
         [Serializable]
-        public abstract class PrefsGuiBaseConnector<ValType, GuiType> : PrefsValueBase<ValType> where GuiType : PrefsGuiBase
+        public abstract class PrefsGuiBaseConnector<ValType, GuiType> : PrefsValueBase<ValType>, IReadOnlyPrefs<ValType> where GuiType : PrefsGuiBase
         {
             public event Action OnCreatedGui = delegate { };
 
@@ -30,7 +30,7 @@ namespace PrefsUGUI
                 get { return this.gui == null ? false : this.gui.gameObject.activeSelf; }
                 set { this.gui?.gameObject.SetActive(value); }
             }
-            public string GuiLabelPrefix
+            public virtual string GuiLabelPrefix
             {
                 get { return this.guiLabelPrefix; }
                 set
@@ -39,7 +39,7 @@ namespace PrefsUGUI
                     this.UpdateLabel();
                 }
             }
-            public string GuiLabelSufix
+            public virtual string GuiLabelSufix
             {
                 get { return this.guiLabelSufix; }
                 set
