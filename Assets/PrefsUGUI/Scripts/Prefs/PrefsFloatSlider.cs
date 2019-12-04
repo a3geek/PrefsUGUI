@@ -16,8 +16,9 @@ namespace PrefsUGUI
             : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui) { }
 
         public PrefsFloatSlider(string key, float minValue, float maxValue,
-            float defaultValue = default(float), GuiHierarchy hierarchy = null, string guiLabel = null)
-            : this(key, defaultValue, hierarchy, guiLabel)
+            float defaultValue = default(float), GuiHierarchy hierarchy = null, string guiLabel = null,
+            Action<Prefs.PrefsGuiBaseConnector<float, PrefsGuiNumericSliderDecimal>> onCreatedGui = null)
+            : this(key, defaultValue, hierarchy, guiLabel, onCreatedGui)
         {
             this.min = minValue;
             this.max = maxValue;
