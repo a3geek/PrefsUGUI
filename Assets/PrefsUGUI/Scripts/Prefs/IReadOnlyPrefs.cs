@@ -2,7 +2,7 @@
 
 namespace PrefsUGUI
 {
-    public interface IReadOnlyPrefs<ValType>
+    public interface IReadOnlyPrefs<ValType> : IDisposable
     {
         #region "PrefsBase"
         event Action OnValueChanged;
