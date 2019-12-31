@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace PrefsUGUI
@@ -24,22 +26,8 @@ namespace PrefsUGUI
         /// <summary>Parent in GUI.</summary>
         public GuiHierarchy Parent => this.parent;
         /// <summary>All Parents in GUI to the root.</summary>
-        public List<GuiHierarchy> Parents
-        {
-            get
-            {
-                var parents = new List<GuiHierarchy>();
-                var parent = this.Parent;
-
-                while(parent != null)
-                {
-                    parents.Insert(0, parent);
-                    parent = parent.Parent;
-                }
-
-                return parents;
-            }
-        }
+        public IReadOnlyList<GuiHierarchy> Parents { get; }
+        public string FullHierarchy { get; }
 
         /// <summary>Hierarchy of GUI.</summary>
         [SerializeField]
@@ -76,6 +64,8 @@ namespace PrefsUGUI
             this.sortOrders = (sortOrders == null || sortOrders.Length <= 0) ? new int[] { DefaultSortOrder } : sortOrders;
 
             this.hierarchy = (hierarchy.TrimEnd(HierarchySeparator) + HierarchySeparator).TrimStart(HierarchySeparator);
+            this.Parents = this.GetParents();
+            this.FullHierarchy = this.GetFullHierarchy();
         }
 
         /// <summary>
@@ -93,6 +83,31 @@ namespace PrefsUGUI
         public void Dispose()
         {
             RemoveGuiHierarchy(this);
+        }
+
+        private List<GuiHierarchy> GetParents()
+        {
+            var parents = new List<GuiHierarchy>();
+            var parent = this.Parent;
+
+            while(parent != null)
+            {
+                parents.Insert(0, parent);
+                parent = parent.Parent;
+            }
+
+            return parents;
+        }
+
+        private string GetFullHierarchy()
+        {
+            var hierarchy = "";
+            foreach(var parent in this.Parents)
+            {
+                hierarchy += parent.Hierarchy;
+            }
+
+            return hierarchy + this.Hierarchy;
         }
     }
 }

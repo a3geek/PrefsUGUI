@@ -23,6 +23,8 @@ using PrefsUGUI;
 
 public class Example : MonoBehaviour
 {
+    public IReadOnlyPrefs<float> value = new PrefsFloat("value", 10f);  // Read Only Interface.
+
     private PrefsVector2 vec2 = new PrefsVector2("vec2");
 }
 ````
@@ -32,6 +34,8 @@ If you want to view more details, Let's check Example codes.
 ## Behaviour
 - Using the [XmlStorage](https://github.com/a3geek/XmlStorage) library for saving and loading data.
 <br />
+
+- A save key is generate by combine with full hierarchy path and SaveKey parameter.
 
 - I generate and use a dedicated Canvas.
 <br />
@@ -50,8 +54,11 @@ If you want to view more details, Let's check Example codes.
 - PrefsEnum
 - PrefsFloat
 - PrefsFloatSlider
+- PrefsImageLabel
 - PrefsInt
 - PrefsIntSlider
+- PrefsLabel
+- PrefsRect
 - PrefsString
 - PrefsVector2
 - PrefsVector2Int

@@ -12,7 +12,7 @@ namespace PrefsUGUI
         {
             public virtual event Action OnValueChanged = delegate { };
 
-            public virtual string SaveKey => (this.GuiHierarchy == null ? "" : this.GuiHierarchy.Hierarchy) + this.key;
+            public virtual string SaveKey => (this.GuiHierarchy == null ? "" : this.GuiHierarchy.FullHierarchy) + this.key;
             public virtual string Key => this.key;
             public virtual GuiHierarchy GuiHierarchy => this.hierarchy;
             public virtual string GuiLabel => this.guiLabel;
@@ -27,6 +27,8 @@ namespace PrefsUGUI
             protected string key = "";
             [SerializeField]
             protected string guiLabel = "";
+
+            public virtual string OldSaveKey => (this.GuiHierarchy == null ? "" : this.GuiHierarchy.Hierarchy) + this.key;
 
             protected GuiHierarchy hierarchy = null;
 

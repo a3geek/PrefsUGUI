@@ -52,7 +52,12 @@ namespace PrefsUGUI
                 => this.Set(this.DefaultValue);
 
             public override void Reload(bool withEvent = true)
-                => this.SetValueInternal(Storage.Get(this.SaveKey, this.defaultValue, AggregationName), withEvent);
+            // 互換性のために古いセーブキーでもLOADだけはする.
+            => this.SetValueInternal(Storage.Get(
+                    (Storage.HasKey(this.SaveKey, typeof(ValType), AggregationName) == true ? this.SaveKey : this.OldSaveKey),
+                    this.DefaultValue, AggregationName), withEvent
+                );
+            //=> this.SetValueInternal(Storage.Get(this.SaveKey, this.defaultValue, AggregationName), withEvent);
 
             protected virtual void SetValueInternal(ValType value, bool withEvent = true)
             {
