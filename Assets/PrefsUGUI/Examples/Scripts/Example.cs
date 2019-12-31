@@ -35,8 +35,8 @@ namespace PrefsUGUI.Examples
 
         private void Awake()
         {
-            Debug.Log(Structs.HierarchyTest1.FullHierarchy);
-            Debug.Log(Structs.HierarchyTest2Ex2.FullHierarchy);
+            Debug.Log(HierarchyTest1.FullHierarchy);
+            Debug.Log(HierarchyTest2Ex2.FullHierarchy);
 
             this.test2.PrefsString.TopMargin = 50f;
             this.test2.PrefsString.BottomMargin = 50f;

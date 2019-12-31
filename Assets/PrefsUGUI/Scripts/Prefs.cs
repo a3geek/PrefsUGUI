@@ -21,9 +21,11 @@ namespace PrefsUGUI
 
         /// <summary>Aggregation name for saving.</summary>
         /// <remarks>For defailts, refer to XmlStorage</remarks>
-        public static string AggregationName => Application.productName;
+        public static string AggregationName { get; private set; } = "";
         /// <summary>File name for saving.</summary>
-        public static string FileName => Application.productName;
+        public static string FileName { get; private set; } = "";
+        //public static string AggregationName => Application.productName;
+        //public static string FileName => Application.productName;
 
         /// <summary>Reference to <see cref="PrefsGuis"/> component.</summary>
         private static PrefsGuis PrefsGuis = null;
@@ -61,6 +63,10 @@ namespace PrefsUGUI
 
                 PrefsGuis = UnityEngine.Object.Instantiate(prefab).GetComponent<PrefsGuis>();
             }
+
+            var parameters = UnityEngine.Object.FindObjectOfType<PrefsParameters>();
+            AggregationName = parameters?.AggregationName ?? PrefsParameters.DefaultNameGetter();
+            FileName = parameters?.FileName ?? PrefsParameters.DefaultNameGetter();
 
             PrefsGuis.Initialize(() => Creators);
         }

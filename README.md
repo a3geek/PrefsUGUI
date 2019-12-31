@@ -37,6 +37,8 @@ If you want to view more details, Let's check Example codes.
 
 - A save key is generate by combine with full hierarchy path and SaveKey parameter.
 
+- If you attached PrefsParameters component to any GameObject, you can edit AggregationName and FileName for change XmlStorage information that used by PrefsUGUI.
+
 - I generate and use a dedicated Canvas.
 <br />
 
