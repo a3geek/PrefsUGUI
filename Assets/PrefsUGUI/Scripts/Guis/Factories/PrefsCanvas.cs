@@ -40,7 +40,7 @@ namespace PrefsUGUI.Guis.Factories
 
             var topContent = this.creator.GetContent();
             this.structs = new GuiStruct(topContent, this.creator);
-            this.OnChangedGUI(this.structs.Current);
+            this.OnGuiChanged(this.structs.Current);
 
             this.links.Close.onClick.AddListener(this.OnClickedCloseButton);
             this.links.Discard.onClick.AddListener(this.OnClickedDiscardButton);
@@ -87,7 +87,7 @@ namespace PrefsUGUI.Guis.Factories
             => this.structs.RemoveCategory(hierarchy);
 
         private void ChangeGUI(Category previous, string targetCategoryName)
-            => this.OnChangedGUI(this.structs.ChangeGUI(previous, targetCategoryName));
+            => this.OnGuiChanged(this.structs.ChangeGUI(previous, targetCategoryName));
 
         private void OnClickedDiscardButton()
         {
@@ -97,7 +97,7 @@ namespace PrefsUGUI.Guis.Factories
             }
         }
 
-        private void OnClickedCloseButton() => this.OnChangedGUI(this.structs.ChangeGUI(this.structs.Current.Previous));
+        private void OnClickedCloseButton() => this.OnGuiChanged(this.structs.ChangeGUI(this.structs.Current.Previous));
 
         private void OnClickedSaveButton()
         {
@@ -105,7 +105,7 @@ namespace PrefsUGUI.Guis.Factories
             gameObject.SetActive(false);
         }
 
-        private void OnChangedGUI(Category category)
+        private void OnGuiChanged(Category category)
         {
             this.links.Scroll.content = category.Content;
 

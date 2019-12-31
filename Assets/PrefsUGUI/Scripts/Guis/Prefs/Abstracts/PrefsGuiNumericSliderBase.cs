@@ -19,7 +19,7 @@ namespace PrefsUGUI.Guis.Prefs
         protected override void Awake()
         {
             base.Awake();
-            this.slider.onValueChanged.AddListener(this.OnChangedSlider);
+            this.slider.onValueChanged.AddListener(this.OnSliderChanged);
         }
 
         public override void Initialize(string label, ValType initialValue, Func<ValType> defaultGetter)
@@ -51,7 +51,7 @@ namespace PrefsUGUI.Guis.Prefs
             this.slider.maxValue = (min < max ? max : min);
         }
 
-        protected virtual void OnChangedSlider(float v)
+        protected virtual void OnSliderChanged(float v)
         {
             if(this.inited == false)
             {

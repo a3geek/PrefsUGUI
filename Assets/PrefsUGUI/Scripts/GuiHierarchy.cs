@@ -51,6 +51,7 @@ namespace PrefsUGUI
         [SerializeField]
         private GuiHierarchy parent = null;
 
+
         /// <summary>
         /// Constructor
         /// </summary>

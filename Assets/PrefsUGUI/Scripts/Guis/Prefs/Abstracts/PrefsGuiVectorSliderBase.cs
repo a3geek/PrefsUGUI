@@ -31,7 +31,7 @@ namespace PrefsUGUI.Guis.Prefs
             var events = this.GetSliderEvents();
             for(var i = 0; i < events.Length; i++)
             {
-                events[i].AddListener(this.OnChangedSlider);
+                events[i].AddListener(this.OnSliderChanged);
             }
         }
 
@@ -76,7 +76,7 @@ namespace PrefsUGUI.Guis.Prefs
             this.inited = true;
         }
 
-        protected virtual void OnChangedSlider(float v)
+        protected virtual void OnSliderChanged(float v)
         {
             if(this.inited == false)
             {

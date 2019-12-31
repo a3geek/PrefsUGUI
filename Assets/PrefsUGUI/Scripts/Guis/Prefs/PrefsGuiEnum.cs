@@ -22,7 +22,7 @@ namespace PrefsUGUI.Guis.Prefs
         protected override void Awake()
         {
             base.Awake();
-            this.dropdown.onValueChanged.AddListener(this.OnChangedDropdown);
+            this.dropdown.onValueChanged.AddListener(this.OnDropdownChanged);
         }
 
         public void Initialize<T>(string label, Type type, int initialValue, Func<T, int> converter, Func<int> defaultGetter)
@@ -85,7 +85,7 @@ namespace PrefsUGUI.Guis.Prefs
         protected override bool IsDefaultValue()
             => this.value == this.defaultGetter();
 
-        protected virtual void OnChangedDropdown(int index)
+        protected virtual void OnDropdownChanged(int index)
         {
             if(this.inited == false)
             {
