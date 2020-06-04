@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -86,7 +87,7 @@ namespace XmlStorage.Examples
         void Awake()
         {
             SecondaryFolder =
-                Application.dataPath + XmlStorageConsts.Separator + XmlStorageConsts.BackDirectory + XmlStorageConsts.Separator + "Saves2" + XmlStorageConsts.Separator;
+                Directory.GetCurrentDirectory() + XmlStorageConsts.Separator + "Saves2" + XmlStorageConsts.Separator;
 
             if(this.set == null)
             {
@@ -111,3 +112,4 @@ namespace XmlStorage.Examples
         }
     }
 }
+

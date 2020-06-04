@@ -18,8 +18,6 @@ namespace XmlStorage.Systems
         public static readonly char Slash = '/';
         /// <summary>ピリオド</summary>
         public static readonly string Period = @".";
-        /// <summary>パスにおいて、ディレクトリを一つ戻る</summary>
-        public static readonly string BackDirectory = @"..";
 
         /// <summary>ファイルに保存する時のエンコード情報</summary>
         public static readonly UTF8Encoding Encode = new UTF8Encoding(false);
@@ -37,8 +35,7 @@ namespace XmlStorage.Systems
         /// <summary>デフォルトの保存ディレクトリのフルパス</summary>
         public static readonly string DefaultSaveDirectory
             = FileUtils.AdjustAsDirectoryPath(
-                Directory.GetCurrentDirectory() + Separator + BackDirectory + Separator + DefaultSubDirectoryName
-                //Application.dataPath + Separator + BackDirectory + Separator + DefaultSubDirectoryName
+                Directory.GetCurrentDirectory() + Separator + DefaultSubDirectoryName
             );
     }
 }
