@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace XmlStorage.Components.Utilities
+namespace XmlStorage.Systems.Utilities
 {
     public static class FileUtils
     {
@@ -24,7 +24,7 @@ namespace XmlStorage.Components.Utilities
             /// <summary>
             /// コンストラクタ
             /// </summary>
-            public EncodedStringWriter() : base() {; }
+            public EncodedStringWriter() : base() { }
 
             /// <summary>
             /// コンストラクタ
@@ -35,6 +35,7 @@ namespace XmlStorage.Components.Utilities
                 this.encode = encode ?? this.encode;
             }
         }
+
 
         /// <summary>
         /// ファイル名として調整する
@@ -56,7 +57,7 @@ namespace XmlStorage.Components.Utilities
         public static string AdjustAsExtension(string extension, string defaultValue = null)
             => string.IsNullOrEmpty(extension) == true ?
                 defaultValue :
-                (extension.StartsWith(Consts.Period) ? extension : Consts.Period + extension);
+                (extension.StartsWith(XmlStorageConsts.Period) ? extension : XmlStorageConsts.Period + extension);
 
         /// <summary>
         /// フォルダパスとして調整する
@@ -78,7 +79,7 @@ namespace XmlStorage.Components.Utilities
                 Directory.CreateDirectory(directoryPath);
             }
 
-            return directoryPath.EndsWith(Consts.Separator.ToString()) ? directoryPath : directoryPath + Consts.Separator;
+            return directoryPath.EndsWith(XmlStorageConsts.Separator.ToString()) ? directoryPath : directoryPath + XmlStorageConsts.Separator;
         }
 
         /// <summary>
@@ -93,8 +94,8 @@ namespace XmlStorage.Components.Utilities
                 return null;
             }
 
-            path = path.Replace(Consts.DoubleBackSlash, Consts.Slash);
-            return path.Replace(Consts.Slash, Consts.Separator);
+            path = path.Replace(XmlStorageConsts.DoubleBackSlash, XmlStorageConsts.Slash);
+            return path.Replace(XmlStorageConsts.Slash, XmlStorageConsts.Separator);
         }
     }
 }

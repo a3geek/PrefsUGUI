@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XmlStorage.Components.Aggregations.Accessors
+namespace XmlStorage.Systems.Aggregations.Accessors
 {
     public abstract class Setters
     {

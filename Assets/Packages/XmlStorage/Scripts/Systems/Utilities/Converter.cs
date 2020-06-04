@@ -4,11 +4,10 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace XmlStorage.Components.Utilities
+namespace XmlStorage.Systems.Utilities
 {
-    using Data;
     using Aggregations;
-
+    using Data;
     using Elements = List<Data.DataElement>;
     using ExDictionary = Dictionary<Type, Dictionary<string, object>>;
     using SerializeType = List<Data.DataSet>;
@@ -163,8 +162,6 @@ namespace XmlStorage.Components.Utilities
         /// <param name="type">型情報</param>
         /// <returns>シリアライズするかどうか</returns>
         public static bool IsNeedSerialization(Type type)
-        {
-            return (type.IsClass == true || type.IsSerializable == false);
-        }
+            => type.IsClass == true || type.IsSerializable == false;
     }
 }

@@ -2,11 +2,11 @@
 using System.Text;
 using UnityEngine;
 
-namespace XmlStorage.Components
+namespace XmlStorage.Systems
 {
     using Utilities;
 
-    public static class Consts
+    public static class XmlStorageConsts
     {
         /// <summary>パスの区切り文字</summary>
         public static readonly char Separator = Path.DirectorySeparatorChar;
@@ -37,7 +37,8 @@ namespace XmlStorage.Components
         /// <summary>デフォルトの保存ディレクトリのフルパス</summary>
         public static readonly string DefaultSaveDirectory
             = FileUtils.AdjustAsDirectoryPath(
-                Application.dataPath + Separator + BackDirectory + Separator + DefaultSubDirectoryName
+                Directory.GetCurrentDirectory() + Separator + BackDirectory + Separator + DefaultSubDirectoryName
+                //Application.dataPath + Separator + BackDirectory + Separator + DefaultSubDirectoryName
             );
     }
 }

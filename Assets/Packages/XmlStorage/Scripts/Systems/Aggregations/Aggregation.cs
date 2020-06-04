@@ -4,11 +4,10 @@ using System.IO;
 using System.Text;
 using UnityEngine.SceneManagement;
 
-namespace XmlStorage.Components.Aggregations
+namespace XmlStorage.Systems.Aggregations
 {
     using Accessors;
     using Utilities;
-
     using Elements = List<Data.DataElement>;
     using ExDictionary = Dictionary<Type, Dictionary<string, object>>;
 
@@ -18,33 +17,27 @@ namespace XmlStorage.Components.Aggregations
     [Serializable]
     public sealed partial class Aggregation : Accessor
     {
+        /// <summary>データ群を保存する時のファイル名(拡張子なし)</summary>
+        public string FileNameWithoutExtension => this.FileName.TrimEnd(XmlStorageConsts.Extension.ToCharArray());
+        /// <summary>データ群を保存する時のフルパス</summary>
+        public string FullPath => Storage.DirectoryPath + this.FileName;
         /// <summary>集団名</summary>
-        public string AggregationName
-        {
-            get; private set;
-        }
+        public string AggregationName { get; private set; } = "";
         /// <summary>全ての型をシリアライズして保存するかどうか</summary>
         /// <remarks>falseの時は<see cref="Type.IsSerializable"/>によってシリアライズするかどうかを判断する</remarks>
-        public bool IsAllTypesSerialize
-        {
-            get; private set;
-        }
+        public bool IsAllTypesSerialize { get; private set; } = false;
         /// <summary>データ群を保存する時のファイル名</summary>
         public string FileName
         {
-            get { return this.fileName; }
-            set { this.fileName = FileUtils.AdjustAsFileName(value, Consts.Extension, this.fileName); }
+            get => this.fileName;
+            set => this.fileName = FileUtils.AdjustAsFileName(value, XmlStorageConsts.Extension, this.fileName);
         }
-        /// <summary>データ群を保存する時のファイル名(拡張子なし)</summary>
-        public string FileNameWithoutExtension => this.FileName.TrimEnd(Consts.Extension.ToCharArray());
-        /// <summary>データ群を保存する時のフルパス</summary>
-        public string FullPath => Storage.DirectoryPath + this.FileName;
 
         /// <summary>データ群</summary>
         protected override ExDictionary dictionary => this.dic;
 
         /// <summary>保存する時のファイル名</summary>
-        private string fileName = SceneManager.GetActiveScene().name + Consts.Extension;
+        private string fileName = nameof(XmlStorage) + XmlStorageConsts.Extension;
         /// <summary>データ群</summary>
         private ExDictionary dic = new ExDictionary();
 
@@ -56,7 +49,7 @@ namespace XmlStorage.Components.Aggregations
         /// <param name="aggregationName">集団名</param>
         /// <param name="isAllTypesSerialize">全ての型をシリアライズして保存するかどうか</param>
         public Aggregation(Elements elements, string aggregationName, bool isAllTypesSerialize = false)
-            : this(elements, aggregationName, "", isAllTypesSerialize) {; }
+            : this(elements, aggregationName, "", isAllTypesSerialize) { }
 
         /// <summary>
         /// コンストラクタ

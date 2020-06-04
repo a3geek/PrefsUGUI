@@ -2,8 +2,7 @@
 
 namespace XmlStorage
 {
-    using Components;
-    using Components.Aggregations;
+    using Systems.Aggregations;
 
     public static partial class Storage
     {
@@ -28,14 +27,7 @@ namespace XmlStorage
         /// <param name="aggregationName">集団名</param>
         /// <returns>消去に成功したかどうか</returns>
         public static bool DeleteAggregation(string aggregationName)
-        {
-            if(aggregationName == DefaultAggregationName)
-            {
-                return false;
-            }
-
-            return Aggregations.Remove(aggregationName);
-        }
+            => aggregationName != DefaultAggregationName && Aggregations.Remove(aggregationName);
 
         /// <summary>
         /// 集団が存在するかどうか
@@ -43,7 +35,7 @@ namespace XmlStorage
         /// <param name="aggregationName">集団名</param>
         /// <returns>存在するかどうか</returns>
         public static bool HasAggregation(string aggregationName)
-            => string.IsNullOrEmpty(aggregationName) == true ? false : Aggregations.ContainsKey(aggregationName);
+            => string.IsNullOrEmpty(aggregationName) != true && Aggregations.ContainsKey(aggregationName);
 
         /// <summary>
         /// セットした全てのデータを消去する

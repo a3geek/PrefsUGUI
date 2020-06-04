@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace XmlStorage.Components.Data
+namespace XmlStorage.Systems.Data
 {
     using Utilities;
-
     using Elements = List<DataElement>;
 
     /// <summary>
@@ -13,22 +12,21 @@ namespace XmlStorage.Components.Data
     [Serializable]
     public sealed class DataSet
     {
-        /// <summary>集団名</summary>
-        public string AggregationName { get; set; }
-        /// <summary>ファイル名</summary>
-        public string FileName { get; set; }
-        /// <summary>保存するデータ群</summary>
-        public Elements Elements { get; set; }
-
         /// <summary>フルパス</summary>
         public string FullPath => Storage.DirectoryPath + this.FileName;
+        /// <summary>集団名</summary>
+        public string AggregationName { get; set; } = "";
+        /// <summary>ファイル名</summary>
+        public string FileName { get; set; } = "";
+        /// <summary>保存するデータ群</summary>
+        public Elements Elements { get; set; } = new Elements();
 
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <remarks>シリアライズするのにデフォルトコンストラクタが必要</remarks>
-        public DataSet() : this("", "", null) {; }
+        public DataSet() { }
 
         /// <summary>
         /// コンストラクタ
@@ -41,7 +39,7 @@ namespace XmlStorage.Components.Data
         public DataSet(string aggregationName, string fileName, Elements elements)
         {
             this.AggregationName = aggregationName;
-            this.FileName = FileUtils.AdjustAsFileName(fileName, Consts.Extension);
+            this.FileName = FileUtils.AdjustAsFileName(fileName, XmlStorageConsts.Extension);
             this.Elements = (elements ?? new Elements());
         }
     }

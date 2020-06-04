@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace XmlStorage.Examples
 {
-    using Components;
+    using Systems;
 
     /// <summary>
     /// サンプル用コントローラー
@@ -86,15 +86,15 @@ namespace XmlStorage.Examples
         void Awake()
         {
             SecondaryFolder =
-                Application.dataPath + Consts.Separator + Consts.BackDirectory + Consts.Separator + "Saves2" + Consts.Separator;
+                Application.dataPath + XmlStorageConsts.Separator + XmlStorageConsts.BackDirectory + XmlStorageConsts.Separator + "Saves2" + XmlStorageConsts.Separator;
 
             if(this.set == null)
             {
-                this.set = GetComponentInChildren<SetExample>();
+                this.set = this.GetComponentInChildren<SetExample>();
             }
             if(this.get == null)
             {
-                this.get = GetComponentInChildren<GetExample>();
+                this.get = this.GetComponentInChildren<GetExample>();
             }
         }
 

@@ -7,9 +7,8 @@ namespace PrefsUGUI
     using Guis;
     using Guis.Prefs;
     using XmlStorage;
-
     using Creator = Dictionary<string, Action<Guis.Factories.PrefsCanvas>>;
-    using XmlStorageConsts = XmlStorage.Components.Consts;
+    using XmlStorageConsts = XmlStorage.Systems.XmlStorageConsts;
 
     /// <summary>
     /// Central part of PrefsUGUI.

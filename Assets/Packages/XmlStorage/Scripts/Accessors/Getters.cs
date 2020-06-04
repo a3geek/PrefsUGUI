@@ -14,7 +14,7 @@ namespace XmlStorage
         /// <param name="defaultValue">キーに対応するデータが存在しなかった時の返り値</param>
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>キーに対応するデータ</returns>
-        public static T Get<T>(string key, T defaultValue = default(T), string aggregationName = null)
+        public static T Get<T>(string key, T defaultValue = default, string aggregationName = null)
             => Func(aggregationName, agg => agg.Get(key, defaultValue));
 
         /// /// <summary>
@@ -27,7 +27,7 @@ namespace XmlStorage
         /// <param name="defaultValue">キーに対応するデータが存在しなかった時の返り値</param>
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>キーに対応するデータ</returns>
-        public static T Get<T>(Type type, string key, T defaultValue = default(T), string aggregationName = null)
+        public static T Get<T>(Type type, string key, T defaultValue = default, string aggregationName = null)
             => Func(aggregationName, agg => agg.Get(type, key, defaultValue));
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace XmlStorage
         /// <param name="defaultValue">キーに対応するデータが存在しなかった時の返り値</param>
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>キーに対応するデータ</returns>
-        public static List<T> Gets<T>(string key, List<T> defaultValue = default(List<T>), string aggregationName = null)
+        public static List<T> Gets<T>(string key, List<T> defaultValue = default, string aggregationName = null)
             => Func(aggregationName, agg => agg.Gets(key, defaultValue));
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace XmlStorage
         /// <param name="defaultValue">キーに対応するデータが存在しなかった時の返り値</param>
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>キーに対応するデータ</returns>
-        public static float GetFloat(string key, float defaultValue = default(float), string aggregationName = null)
+        public static float GetFloat(string key, float defaultValue = default, string aggregationName = null)
             => Func(aggregationName, agg => agg.GetFloat(key, defaultValue));
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace XmlStorage
         /// <param name="defaultValue">キーに対応するデータが存在しなかった時の返り値</param>
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>キーに対応するデータ</returns>
-        public static int GetInt(string key, int defaultValue = default(int), string aggregationName = null)
+        public static int GetInt(string key, int defaultValue = default, string aggregationName = null)
             => Func(aggregationName, agg => agg.GetInt(key, defaultValue));
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace XmlStorage
         /// <param name="defaultValue">キーに対応するデータが存在しなかった時の返り値</param>
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>キーに対応するデータ</returns>
-        public static bool GetBool(string key, bool defaultValue = default(bool), string aggregationName = null)
+        public static bool GetBool(string key, bool defaultValue = default, string aggregationName = null)
             => Func(aggregationName, agg => agg.GetBool(key, defaultValue));
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace XmlStorage
         /// <param name="defaultValue">キーに対応するデータが存在しなかった時の返り値</param>
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>型に対応するデータ</returns>
-        public static float[] GetFloats(float[] defaultValue = default(float[]), string aggregationName = null)
+        public static float[] GetFloats(float[] defaultValue = default, string aggregationName = null)
             => Func(aggregationName, agg => agg.GetFloats(defaultValue));
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace XmlStorage
         /// <param name="defaultValue">キーに対応するデータが存在しなかった時の返り値</param>
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>型に対応するデータ</returns>
-        public static int[] GetInts(int[] defaultValue = default(int[]), string aggregationName = null)
+        public static int[] GetInts(int[] defaultValue = default, string aggregationName = null)
             => Func(aggregationName, agg => agg.GetInts(defaultValue));
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace XmlStorage
         /// <param name="defaultValue">キーに対応するデータが存在しなかった時の返り値</param>
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>型に対応するデータ</returns>
-        public static string[] GetStrings(string[] defaultValue = default(string[]), string aggregationName = null)
+        public static string[] GetStrings(string[] defaultValue = default, string aggregationName = null)
             => Func(aggregationName, agg => agg.GetStrings(defaultValue));
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace XmlStorage
         /// <param name="defaultValue">キーに対応するデータが存在しなかった時の返り値</param>
         /// <param name="aggregationName">データが所属する集団名</param>
         /// <returns>型に対応するデータ</returns>
-        public static bool[] GetBools(bool[] defaultValue = default(bool[]), string aggregationName = null)
+        public static bool[] GetBools(bool[] defaultValue = default, string aggregationName = null)
             => Func(aggregationName, agg => agg.GetBools(defaultValue));
 
         /// <summary>

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace XmlStorage.Components.Data
+namespace XmlStorage.Systems.Data
 {
     /// <summary>
     /// データをファイルに保存する時のデータ形式
@@ -10,26 +10,25 @@ namespace XmlStorage.Components.Data
     [Serializable]
     public sealed class DataElement
     {
-        /// <summary>データを取り出す時に使うキー</summary>
-        public string Key { get; set; }
-        /// <summary>保存するデータ</summary>
-        public object Value { get; set; }
-        /// <summary>データの型のフルネーム</summary>
-        public string TypeName { get; set; }
-        /// <summary>保存型のフルネーム</summary>
-        public string SaveTypeName { get; set; }
-
         /// <summary>データの型(RO)</summary>
         public Type ValueType => this.GetType(this.TypeName);
         /// <summary>保存型</summary>
         public Type SaveType => this.GetType(this.SaveTypeName);
+        /// <summary>データを取り出す時に使うキー</summary>
+        public string Key { get; set; } = "";
+        /// <summary>保存するデータ</summary>
+        public object Value { get; set; } = null;
+        /// <summary>データの型のフルネーム</summary>
+        public string TypeName { get; set; } = "";
+        /// <summary>保存型のフルネーム</summary>
+        public string SaveTypeName { get; set; } = "";
 
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <remarks>シリアライズするのにデフォルトコンストラクタが必要</remarks>
-        public DataElement() : this(Guid.NewGuid().ToString(), new object(), typeof(object)) {; }
+        public DataElement() { }
 
         /// <summary>
         /// コンストラクタ
@@ -37,7 +36,7 @@ namespace XmlStorage.Components.Data
         /// <param name="key">データを取り出す時に使うキー</param>
         /// <param name="value">保存するデータ</param>
         /// <param name="type">データの型</param>
-        public DataElement(string key, object value, Type type) : this(key, value, type, type) {; }
+        public DataElement(string key, object value, Type type) : this(key, value, type, type) { }
 
         /// <summary>
         /// コンストラクタ
@@ -48,7 +47,7 @@ namespace XmlStorage.Components.Data
         /// <param name="type">保存する型</param>
         public DataElement(string key, object value, Type type, Type saveType)
         {
-            this.Set(key, value, type.FullName, saveType.FullName);
+            this.Set(key, value, type, saveType);
         }
 
         /// <summary>
@@ -57,9 +56,9 @@ namespace XmlStorage.Components.Data
         /// <param name="key">データを取り出す時に使うキー</param>
         /// <param name="value">保存するデータ</param>
         /// <param name="type">データの型</param>
-        public void Set(string key, object value, Type type)
+        public void Set(string key, object value, Type type, Type saveType)
         {
-            this.Set(key, value, type.FullName, type.FullName);
+            this.Set(key, value, type.FullName, saveType.FullName);
         }
 
         /// <summary>
@@ -77,11 +76,6 @@ namespace XmlStorage.Components.Data
             else if(key == "")
             {
                 throw new ArgumentException("key", "Key cannot be empty.");
-            }
-
-            if(value == null)
-            {
-                throw new ArgumentNullException("value", "Value cannot be null.");
             }
 
             if(type == null)
@@ -103,7 +97,7 @@ namespace XmlStorage.Components.Data
             }
 
             this.Key = key;
-            this.Value = value;
+            this.Value = value ?? throw new ArgumentNullException("value", "Value cannot be null.");
             this.TypeName = type;
             this.SaveTypeName = saveType;
         }

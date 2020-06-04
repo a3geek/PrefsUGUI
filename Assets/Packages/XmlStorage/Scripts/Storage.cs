@@ -5,11 +5,11 @@ using System.Xml.Serialization;
 
 namespace XmlStorage
 {
-    using Components;
-    using Components.Aggregations;
-    using Components.Utilities;
+    using Systems;
+    using Systems.Aggregations;
+    using Systems.Utilities;
 
-    using SerializeType = List<Components.Data.DataSet>;
+    using SerializeType = List<Systems.Data.DataSet>;
 
     /// <summary>
     /// セットしたデータ群をXML形式で保存する
@@ -19,8 +19,8 @@ namespace XmlStorage
         /// <summary><see cref="CurrentAggregation"/>がデータ群を保存するファイルを置くフォルダ</summary>
         public static string DirectoryPath
         {
-            set { Folder = FileUtils.AdjustAsDirectoryPath(value, Folder, false); }
-            get { return Folder; }
+            get => Folder;
+            set => Folder = FileUtils.AdjustAsDirectoryPath(value, Folder, false);
         }
         /// <summary>現在選択されている集団名</summary>
         public static string CurrentAggregationName
@@ -28,22 +28,23 @@ namespace XmlStorage
             get; private set;
         }
         /// <summary>デフォルトの集団名</summary>
-        public static string DefaultAggregationName => Consts.DefaultAggregationName;
+        public static string DefaultAggregationName => XmlStorageConsts.DefaultAggregationName;
         /// <summary>デフォルトの保存ディレクトリのフルパス</summary>
-        public static string DefaultSaveDirectory => Consts.DefaultSaveDirectory;
+        public static string DefaultSaveDirectory => XmlStorageConsts.DefaultSaveDirectory;
         /// <summary>現在選択されている集団</summary>
         public static Aggregation CurrentAggregation => Aggregations[CurrentAggregationName];
 
         /// <summary>集団群</summary>
         private static Dictionary<string, Aggregation> Aggregations
         {
-            set { Aggs = value; }
+            set => Aggs = value;
             get
             {
                 if(Aggs == null)
                 {
                     Load();
                 }
+
                 return Aggs;
             }
         }
@@ -66,11 +67,11 @@ namespace XmlStorage
         /// <remarks>全ての集団のデータ群を保存する</remarks>
         public static void Save()
         {
-            var dic = Converter.AggregationsToDictionary(Aggregations, Consts.Encode);
+            var dic = Converter.AggregationsToDictionary(Aggregations, XmlStorageConsts.Encode);
 
             foreach(var pair in dic)
             {
-                using(var sw = new StreamWriter(pair.Key, false, Consts.Encode))
+                using(var sw = new StreamWriter(pair.Key, false, XmlStorageConsts.Encode))
                 {
                     var serializer = new XmlSerializer(typeof(SerializeType));
                     serializer.Serialize(sw, pair.Value);
@@ -91,7 +92,7 @@ namespace XmlStorage
 
             foreach(var path in SearchFiles())
             {
-                Converter.Deserialize(path, Consts.Encode, ref aggs);
+                Converter.Deserialize(path, XmlStorageConsts.Encode, ref aggs);
             }
 
             Aggregations = aggs;
@@ -110,7 +111,7 @@ namespace XmlStorage
             }
 
             return Directory.GetFiles(
-                DirectoryPath, Consts.ExtensionSearchPattern, SearchOption.AllDirectories
+                DirectoryPath, XmlStorageConsts.ExtensionSearchPattern, SearchOption.AllDirectories
             );
         }
 
