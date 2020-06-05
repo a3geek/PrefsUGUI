@@ -7,32 +7,29 @@ namespace PrefsUGUI
 
     public static partial class Prefs
     {
-        [Serializable]
-        public abstract class PrefsGuiBaseConnector<ValType, GuiType> : PrefsValueBase<ValType>, IReadOnlyPrefs<ValType> where GuiType : PrefsGuiBase
+        public abstract class PrefsGuiBase<ValType, GuiType> : PrefsValueBase<ValType>, IReadOnlyPrefs<ValType> where GuiType : PrefsInputGuiBase<ValType>
         {
-            public event Action OnCreatedGui = delegate { };
-
             public override string GuiLabel => this.guiLabelPrefix + this.guiLabel + this.guiLabelSufix;
-            public virtual string GuiLabelWithoutAffix => this.guiLabel;
+            public virtual string GuiLabelWithoutAffix => base.GuiLabel;
 
             public virtual float BottomMargin
             {
-                get { return this.gui == null ? 0f : this.gui.GetBottomMargin(); }
-                set { this.gui?.SetBottomMargin(Mathf.Max(0f, value)); }
+                get => this.gui?.GetBottomMargin() ?? 0f;
+                set => this.gui?.SetBottomMargin(Mathf.Max(0f, value));
             }
             public virtual float TopMargin
             {
-                get { return this.gui == null ? 0f : this.gui.GetTopMargin(); }
-                set { this.gui?.SetTopMargin(Mathf.Max(0f, value)); }
+                get => this.gui?.GetTopMargin() ?? 0f;
+                set => this.gui?.SetTopMargin(Mathf.Max(0f, value));
             }
             public virtual bool VisibleGUI
             {
-                get { return this.gui == null ? false : this.gui.gameObject.activeSelf; }
-                set { this.gui?.gameObject.SetActive(value); }
+                get => this.gui?.GetVisible() ?? false;
+                set => this.gui?.SetVisible(value);
             }
             public virtual string GuiLabelPrefix
             {
-                get { return this.guiLabelPrefix; }
+                get => this.guiLabelPrefix;
                 set
                 {
                     this.guiLabelPrefix = value ?? "";
@@ -41,7 +38,7 @@ namespace PrefsUGUI
             }
             public virtual string GuiLabelSufix
             {
-                get { return this.guiLabelSufix; }
+                get => this.guiLabelSufix;
                 set
                 {
                     this.guiLabelSufix = value ?? "";
@@ -55,32 +52,36 @@ namespace PrefsUGUI
             protected string guiLabelSufix = "";
 
             protected GuiType gui = null;
-            protected Action<PrefsGuiBaseConnector<ValType, GuiType>> onCreatedGui = null;
+            protected Action<PrefsGuiBase<ValType, GuiType>> onCreatedGui = null;
 
 
-            public PrefsGuiBaseConnector(string key, ValType defaultValue = default(ValType),
-                GuiHierarchy hierarchy = null, string guiLabel = null, Action<PrefsGuiBaseConnector<ValType, GuiType>> onCreatedGui = null)
+            public PrefsGuiBase(
+                string key, ValType defaultValue = default, GuiHierarchy hierarchy = null, string guiLabel = null,
+                Action<PrefsGuiBase<ValType, GuiType>> onCreatedGui = null
+            )
                 : base(key, defaultValue, hierarchy, guiLabel)
             {
                 this.onCreatedGui = onCreatedGui;
             }
 
-            protected override void AfterRegist()
-                => AddPrefs<GuiType>(this, gui => this.ExecuteOnCreatedGui(gui));
+            protected override void OnRegisted()
+                => AddPrefs<ValType, GuiType>(this, gui => this.OnCreatedGui(gui));
 
-            protected void ExecuteOnCreatedGui(GuiType gui)
+            protected virtual void OnCreatedGui(GuiType gui)
             {
                 this.gui = gui;
                 this.OnCreatedGuiInternal(gui);
                 this.onCreatedGui?.Invoke(this);
-
-                this.OnCreatedGui();
             }
-
-            protected abstract void OnCreatedGuiInternal(GuiType gui);
 
             protected virtual void UpdateLabel()
                 => this.gui?.SetLabel(this.GuiLabel);
+
+            protected abstract void OnCreatedGuiInternal(GuiType gui);
+
+
+            public static implicit operator ValType(PrefsGuiBase<ValType, GuiType> prefs)
+                => prefs.Get();
         }
     }
 }

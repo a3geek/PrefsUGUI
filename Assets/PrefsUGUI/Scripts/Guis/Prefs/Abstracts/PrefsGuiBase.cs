@@ -4,9 +4,8 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    using Prefs = PrefsUGUI.Prefs;
-    using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
-
+    [Serializable]
+    [AddComponentMenu("")]
     [DisallowMultipleComponent]
     public abstract class PrefsGuiBase : MonoBehaviour
     {
@@ -19,6 +18,15 @@ namespace PrefsUGUI.Guis.Prefs
         [SerializeField]
         protected RectTransform elements = null;
 
+
+        protected virtual void Reset()
+        {
+            this.label = this.GetComponentInChildren<Text>();
+            this.layout = this.GetComponentInChildren<LayoutElement>();
+
+            var canvas = this.GetComponentInChildren<CanvasRenderer>();
+            this.elements = canvas == null ? null : canvas.GetComponent<RectTransform>();
+        }
 
         public virtual void SetBottomMargin(float value)
             => this.layout.minHeight += value;
@@ -38,25 +46,19 @@ namespace PrefsUGUI.Guis.Prefs
         public virtual float GetTopMargin()
             => -this.elements.anchoredPosition.y;
 
-        protected virtual void FireOnValueChanged()
-            => this.OnValueChanged();
-
         public virtual void SetLabel(string label)
             => this.label.text = label;
 
         public virtual string GetLabel()
             => this.label.text;
 
-        protected virtual void SetListener(PrefsBase prefs, bool withoutInitialize = true)
-            => this.OnValueChanged = withoutInitialize == true ? this.OnValueChanged : delegate { };
+        public virtual void SetVisible(bool visible)
+            => this.gameObject.SetActive(visible);
 
-        public abstract object GetValueObject();
+        public virtual bool GetVisible()
+            => this.gameObject.activeSelf;
 
-        protected virtual void Reset()
-        {
-            this.layout = GetComponentInChildren<LayoutElement>();
-            this.elements = GetComponentInChildren<CanvasRenderer>()?.GetComponent<RectTransform>();
-            this.label = GetComponentInChildren<Text>();
-        }
+        protected virtual void FireOnValueChanged()
+            => this.OnValueChanged();
     }
 }

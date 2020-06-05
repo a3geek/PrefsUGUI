@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    [AddComponentMenu("")]
-    public class PrefsGuiRect : PrefsGuiVectorBase<Rect>
+    [Serializable]
+    public class PrefsGuiRect : VectorGuiBase<Rect>
     {
         protected override int ElementCount => 4;
         protected override InputField.ContentType ContentType => InputField.ContentType.DecimalNumber;
@@ -26,7 +27,7 @@ namespace PrefsUGUI.Guis.Prefs
 
         protected override void SetValueInternal(string value)
         {
-            var v4 = this.GetVector4FromField();
+            var v4 = this.GetVector4FromFields();
             this.SetValueInternal(new Rect(v4.x, v4.y, v4.z, v4.w));
         }
     }

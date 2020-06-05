@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    [AddComponentMenu("")]
-    public class PrefsGuiColor : PrefsGuiVectorBase<Color>
+    [Serializable]
+    public class PrefsGuiColor : VectorGuiBase<Color>
     {
         protected override int ElementCount => 4;
         protected override InputField.ContentType ContentType => InputField.ContentType.DecimalNumber;
@@ -12,6 +13,12 @@ namespace PrefsUGUI.Guis.Prefs
         [SerializeField]
         protected RawImage preview = null;
 
+
+        protected override void Reset()
+        {
+            base.Reset();
+            this.preview = this.GetComponentInChildren<RawImage>();
+        }
 
         protected override void SetFields()
         {
@@ -23,15 +30,9 @@ namespace PrefsUGUI.Guis.Prefs
             => this.value[index].ToString();
 
         protected override void SetValueInternal(string value)
-            => this.SetValueInternal(this.GetVector4FromField());
+            => this.SetValueInternal(this.GetVector4FromFields());
 
         protected override bool IsDefaultValue()
             => this.GetValue() == this.defaultGetter();
-
-        protected override void Reset()
-        {
-            base.Reset();
-            this.preview = GetComponentInChildren<RawImage>();
-        }
     }
 }

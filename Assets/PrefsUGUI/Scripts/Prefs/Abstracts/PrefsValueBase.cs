@@ -3,32 +3,28 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
-    using Guis.Prefs;
     using XmlStorage;
 
     public static partial class Prefs
     {
+        [Serializable]
         public abstract class PrefsValueBase<ValType> : PrefsBase
         {
             public virtual ValType Value
             {
-                get { return this.Get(); }
-                set { this.Set(value); }
+                get => this.Get();
+                set => this.Set(value);
             }
             public virtual ValType DefaultValue => this.defaultValue;
 
-            public override object ValueAsObject => this.Get();
-            public override object DefaultValueAsObject => this.defaultValue;
-            public override Type ValueType => typeof(ValType);
-
             [SerializeField]
-            protected ValType defaultValue = default(ValType);
+            protected ValType defaultValue = default;
 
             protected bool got = false;
-            protected ValType value = default(ValType);
+            protected ValType value = default;
 
 
-            public PrefsValueBase(string key, ValType defaultValue = default(ValType), GuiHierarchy hierarchy = null, string guiLabel = null)
+            public PrefsValueBase(string key, ValType defaultValue = default, GuiHierarchy hierarchy = null, string guiLabel = null)
                 : base(key, hierarchy, guiLabel)
             {
                 this.value = defaultValue;
@@ -37,7 +33,7 @@ namespace PrefsUGUI
 
             public ValType Get()
             {
-                if(this.got == false)
+                if (this.got == false)
                 {
                     this.Reload(false);
                 }
@@ -45,30 +41,31 @@ namespace PrefsUGUI
                 return this.value;
             }
 
-            public void Set(ValType value, bool withEvent = true)
-                => this.SetValueInternal(value, withEvent);
+            public ValType GetDefaultValue()
+                => this.DefaultValue;
 
             public override void ResetDefaultValue()
                 => this.Set(this.DefaultValue);
 
+            public void Set(ValType value, bool withEvent = true)
+                => this.SetValueInternal(value, withEvent);
+
             public override void Reload(bool withEvent = true)
-            // 互換性のために古いセーブキーでもLOADだけはする.
-            => this.SetValueInternal(Storage.Get(
-                      (Storage.HasKey(this.SaveKey, typeof(ValType), AggregationName) == true ? this.SaveKey : this.OldSaveKey),
-                      this.DefaultValue, AggregationName), withEvent
-                  );
-            //=> this.SetValueInternal(Storage.Get(this.SaveKey, this.defaultValue, AggregationName), withEvent);
+                => this.SetValueInternal(Storage.Get(this.SaveKey, this.DefaultValue, AggregationName), withEvent);
 
             protected virtual void SetValueInternal(ValType value, bool withEvent = true)
             {
                 this.got = true;
                 this.value = value;
 
-                if(withEvent == true)
+                if (withEvent == true)
                 {
                     this.FireOnValueChanged();
                 }
             }
+
+            protected override void ValueSetToStorage()
+                => Storage.Set(typeof(ValType), this.SaveKey, this.Get(), AggregationName);
         }
     }
 }

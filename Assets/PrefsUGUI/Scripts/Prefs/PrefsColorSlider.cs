@@ -6,15 +6,19 @@ namespace PrefsUGUI
     using Guis.Prefs;
 
     [Serializable]
-    public class PrefsColorSlider : Prefs.PrefsExtends<Color, PrefsGuiColorSlider>
+    public class PrefsColorSlider : Prefs.PrefsGuiBase<Color, PrefsGuiColorSlider>
     {
-        public PrefsColorSlider(string key, Color defaultValue = default(Color), GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBaseConnector<Color, PrefsGuiColorSlider>> onCreatedGui = null)
-            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui) { }
+        public PrefsColorSlider(
+            string key, Color defaultValue = default, GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<Color, PrefsGuiColorSlider>> onCreatedGui = null
+        )
+            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui)
+        {
+        }
 
         protected override void OnCreatedGuiInternal(PrefsGuiColorSlider gui)
         {
-            gui.Initialize(this.GuiLabel, this.Get(), () => this.DefaultValue);
+            gui.Initialize(this.GuiLabel, this.Get(), this.GetDefaultValue);
         }
     }
 }

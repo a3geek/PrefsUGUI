@@ -30,9 +30,9 @@ namespace PrefsUGUI.Utilities
         public void OnDrag(PointerEventData pointerEventData)
         {
             var d = pointerEventData.position - this.position;
-            var pos = transform.position;
+            var pos = this.transform.position;
 
-            transform.position = d + new Vector2(pos.x, pos.y);
+            this.transform.position = d + new Vector2(pos.x, pos.y);
             this.position = pointerEventData.position;
         }
     }

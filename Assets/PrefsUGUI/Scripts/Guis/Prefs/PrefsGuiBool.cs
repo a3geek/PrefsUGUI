@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    [AddComponentMenu("")]
-    public class PrefsGuiBool : InputGuiValueBase<bool>
+    [Serializable]
+    public class PrefsGuiBool : PrefsInputGuiBase<bool>
     {
         [SerializeField]
         protected Toggle toggle = null;
@@ -15,6 +15,12 @@ namespace PrefsUGUI.Guis.Prefs
         {
             base.Awake();
             this.toggle.onValueChanged.AddListener(this.OnToggleChanged);
+        }
+
+        protected override void Reset()
+        {
+            base.Reset();
+            this.toggle = this.GetComponentInChildren<Toggle>();
         }
 
         public virtual void Initialize(string label, bool initialValue, Func<bool> defaultGetter)
@@ -37,12 +43,7 @@ namespace PrefsUGUI.Guis.Prefs
             this.toggle.isOn = this.GetValue();
         }
 
-        protected override bool IsDefaultValue() => this.GetValue() == this.defaultGetter();
-
-        protected override void Reset()
-        {
-            base.Reset();
-            this.toggle = GetComponentInChildren<Toggle>();
-        }
+        protected override bool IsDefaultValue()
+            => this.GetValue() == this.defaultGetter();
     }
 }

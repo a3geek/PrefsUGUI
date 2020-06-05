@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    [AddComponentMenu("")]
-    public class PrefsGuiVector3Int : PrefsGuiVectorBase<Vector3Int>
+    [Serializable]
+    public class PrefsGuiVector3Int : VectorGuiBase<Vector3Int>
     {
         protected override int ElementCount => 3;
         protected override InputField.ContentType ContentType => InputField.ContentType.IntegerNumber;
@@ -17,6 +18,6 @@ namespace PrefsUGUI.Guis.Prefs
             => this.GetValue() == this.defaultGetter();
 
         protected override void SetValueInternal(string value)
-            => this.SetValueInternal(this.GetVector3IntFromField());
+            => this.SetValueInternal(this.GetVector3IntFromFields());
     }
 }

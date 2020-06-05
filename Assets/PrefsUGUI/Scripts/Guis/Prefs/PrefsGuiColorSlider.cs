@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    [AddComponentMenu("")]
-    public class PrefsGuiColorSlider : PrefsGuiVectorSliderBase<Color>
+    [Serializable]
+    public class PrefsGuiColorSlider : VectorSliderGuiBase<Color>
     {
         protected override int ElementCount => 4;
         protected override bool IsDecimalNumber => true;
@@ -14,6 +14,12 @@ namespace PrefsUGUI.Guis.Prefs
         [SerializeField]
         protected RawImage preview = null;
 
+
+        protected override void Reset()
+        {
+            base.Reset();
+            this.preview = this.GetComponentInChildren<RawImage>();
+        }
 
         public override void Initialize(string label, Color initialValue, Func<Color> defaultGetter)
         {
@@ -37,15 +43,9 @@ namespace PrefsUGUI.Guis.Prefs
             => new Color(this.sliderX.value, this.sliderY.value, this.sliderZ.value, this.sliderW.value);
 
         protected override void SetValueInternal(string value)
-            => this.SetValueInternal(this.GetVector4FromField());
+            => this.SetValueInternal(this.GetVector4FromFields());
 
         protected override bool IsDefaultValue()
             => this.GetValue() == this.defaultGetter();
-
-        protected override void Reset()
-        {
-            base.Reset();
-            this.preview = GetComponentInChildren<RawImage>();
-        }
     }
 }

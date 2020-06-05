@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    [AddComponentMenu("")]
-    public abstract class PrefsGuiNumericSliderBase<ValType> : PrefsGuiNumericBase<ValType>
+    [Serializable]
+    public abstract class NumericSliderGuiBase<ValType> : NumericGuiBase<ValType>
     {
         public float MinValue => this.slider.minValue;
         public float MaxValue => this.slider.maxValue;
@@ -22,10 +22,14 @@ namespace PrefsUGUI.Guis.Prefs
             this.slider.onValueChanged.AddListener(this.OnSliderChanged);
         }
 
+        protected override void Reset()
+        {
+            base.Reset();
+            this.slider = this.GetComponentInChildren<Slider>();
+        }
+
         public override void Initialize(string label, ValType initialValue, Func<ValType> defaultGetter)
         {
-            this.SetValueInternal(initialValue);
-
             var val = this.GetValueAsFloat();
             this.Initialize(label, initialValue, 0f, val + val, defaultGetter);
         }
@@ -38,12 +42,6 @@ namespace PrefsUGUI.Guis.Prefs
             this.inited = true;
         }
 
-        protected override void SetFields()
-        {
-            base.SetFields();
-            this.slider.value = this.GetValueAsFloat();
-        }
-
         protected virtual void InitializeSlider(float min, float max)
         {
             this.slider.wholeNumbers = !this.IsDecimalNumber;
@@ -51,9 +49,15 @@ namespace PrefsUGUI.Guis.Prefs
             this.slider.maxValue = (min < max ? max : min);
         }
 
+        protected override void SetFields()
+        {
+            base.SetFields();
+            this.slider.value = this.GetValueAsFloat();
+        }
+
         protected virtual void OnSliderChanged(float v)
         {
-            if(this.inited == false)
+            if (this.inited == false)
             {
                 return;
             }
@@ -64,11 +68,5 @@ namespace PrefsUGUI.Guis.Prefs
 
         protected abstract float GetValueAsFloat();
         protected abstract void SetValueAsFloat(float v);
-
-        protected override void Reset()
-        {
-            base.Reset();
-            this.slider = GetComponentInChildren<Slider>();
-        }
     }
 }

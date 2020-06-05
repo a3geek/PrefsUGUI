@@ -34,6 +34,13 @@ namespace PrefsUGUI
         private static List<PrefsBase> PrefsInstances = new List<PrefsBase>();
 
 
+
+        private static void Regist(Action valueSetter)
+        {
+
+        }
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -88,7 +95,7 @@ namespace PrefsUGUI
                     continue;
                 }
 
-                Storage.Set(p.ValueType, p.SaveKey, p.ValueAsObject, AggregationName);
+                //Storage.Set(p.ValueType, p.SaveKey, p.ValueAsObject, AggregationName);
             }
 
             Storage.ChangeAggregation(current);
@@ -117,7 +124,10 @@ namespace PrefsUGUI
         public static void RemoveGuiHierarchy(GuiHierarchy hierarchy)
             => PrefsGuis?.RemoveCategory(hierarchy);
 
-        private static void AddPrefs<ValType, PrefabType>(PrefsValueBase<ValType> prefs, Action<PrefabType> onCreated) where PrefabType : InputGuiValueBase<ValType>
+        //private static void AddPrefs<ValType, PrefabType>(PrefsValueBase<ValType> prefs, Action<PrefabType> onCreated) where PrefabType : InputGuiValueBase<ValType>
+        //    => Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<ValType, PrefabType>(prefs));
+
+        private static void AddPrefs<ValType, PrefabType>(PrefsValueBase<ValType> prefs, Action<PrefabType> onCreated) where PrefabType : PrefsInputGuiBase<ValType>
             => Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<ValType, PrefabType>(prefs));
 
         /// <summary>
@@ -126,8 +136,8 @@ namespace PrefsUGUI
         /// <typeparam name="PrefabType"></typeparam>
         /// <param name="prefs">Prefs mamber for register.</param>
         /// <param name="onCreated">Callback action when created GUI.</param>
-        private static void AddPrefs<PrefabType>(PrefsBase prefs, Action<PrefabType> onCreated) where PrefabType : PrefsGuiBase
-            => Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<PrefabType>(prefs));
+        //private static void AddPrefs<PrefabType>(PrefsBase prefs, Action<PrefabType> onCreated) where PrefabType : PrefsGuiBase
+        //    => Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<PrefabType>(prefs));
 
         /// <summary>
         /// Remove registered information.

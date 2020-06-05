@@ -5,10 +5,12 @@ namespace PrefsUGUI
     using Guis.Prefs;
 
     [Serializable]
-    public class PrefsLabel : Prefs.PrefsGuiBaseConnector<string, PrefsGuiLabel>
+    public class PrefsLabel : Prefs.PrefsGuiBase<string, PrefsGuiLabel>
     {
-        public PrefsLabel(string key, string text, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBaseConnector<string, PrefsGuiLabel>> onCreatedGui = null)
+        public PrefsLabel(
+            string key, string text, GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<string, PrefsGuiLabel>> onCreatedGui = null
+        )
             : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui)
         {
         }
@@ -23,6 +25,6 @@ namespace PrefsUGUI
         }
 
         protected override void Regist()
-            => this.AfterRegist();
+            => this.OnRegisted();
     }
 }

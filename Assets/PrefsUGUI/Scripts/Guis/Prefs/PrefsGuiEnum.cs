@@ -10,7 +10,7 @@ namespace PrefsUGUI.Guis.Prefs
      * valueに保存するのはenumの整数値.
      */
     [AddComponentMenu("")]
-    public class PrefsGuiEnum : InputGuiValueBase<int>
+    public class PrefsGuiEnum : PrefsInputGuiBase<int>
     {
         [SerializeField]
         protected Dropdown dropdown = null;

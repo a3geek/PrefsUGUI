@@ -61,7 +61,7 @@ namespace PrefsUGUI.Guis.Factories
                 return button;
             }
 
-            public PrefabType GetGui<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs, Category category) where PrefabType : InputGuiValueBase<ValType>
+            public PrefabType GetGui<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs, Category category) where PrefabType : PrefsInputGuiBase<ValType>
             {
                 var gui = Instantiate(this.canvas.prefabs.GetGuiPrefab<PrefabType>(), category.Content);
 
@@ -79,7 +79,7 @@ namespace PrefsUGUI.Guis.Factories
                 return gui;
             }
 
-            private void SetGuiListeners<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs, PrefabType gui) where PrefabType : InputGuiValueBase<ValType>
+            private void SetGuiListeners<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs, PrefabType gui) where PrefabType : PrefsInputGuiBase<ValType>
             {
                 gui.SetGuiListeners(prefs);
                 prefs.OnValueChanged += () => gui.SetValue(prefs.Value);

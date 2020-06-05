@@ -47,7 +47,7 @@ namespace PrefsUGUI.Guis.Factories
             this.links.Save.onClick.AddListener(this.OnClickedSaveButton);
         }
 
-        public PrefabType AddPrefs<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs) where PrefabType : InputGuiValueBase<ValType>
+        public PrefabType AddPrefs<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs) where PrefabType : PrefsInputGuiBase<ValType>
         {
             var category = this.structs.GetCategory(prefs.GuiHierarchy);
             var gui = this.creator.GetGui<ValType, PrefabType>(prefs, category);

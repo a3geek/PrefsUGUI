@@ -6,7 +6,7 @@ namespace PrefsUGUI
     using Guis;
 
     [Serializable]
-    public class PrefsButton : Prefs.PrefsGuiBaseConnector<UnityAction, GuiButton>
+    public class PrefsButton : Prefs.PrefsGuiBase<UnityAction, GuiButton>
     {
         public UnityAction OnClicked
         {
@@ -14,8 +14,10 @@ namespace PrefsUGUI
             set { this.Value = value; }
         }
 
-        public PrefsButton(string key, UnityAction action, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBaseConnector<UnityAction, GuiButton>> onCreatedGui = null)
+        public PrefsButton(
+            string key, UnityAction action, GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<UnityAction, GuiButton>> onCreatedGui = null
+        )
             : base(key, action ?? delegate { }, hierarchy, guiLabel, onCreatedGui)
         {
         }
@@ -30,6 +32,6 @@ namespace PrefsUGUI
         }
 
         protected override void Regist()
-            => this.AfterRegist();
+            => this.OnRegisted();
     }
 }

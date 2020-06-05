@@ -7,7 +7,7 @@ namespace PrefsUGUI
     using Guis.Prefs;
 
     [Serializable]
-    public class PrefsImageLabel : Prefs.PrefsGuiBaseConnector<string, PrefsGuiImageLabel>
+    public class PrefsImageLabel : Prefs.PrefsGuiBase<string, PrefsGuiImageLabel>
     {
         public Texture Image
         {
@@ -16,8 +16,10 @@ namespace PrefsUGUI
         }
 
 
-        public PrefsImageLabel(string key, string text, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBaseConnector<string, PrefsGuiImageLabel>> onCreatedGui = null)
+        public PrefsImageLabel(
+            string key, string text, GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<string, PrefsGuiImageLabel>> onCreatedGui = null
+        )
             : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui)
         {
         }
@@ -32,6 +34,6 @@ namespace PrefsUGUI
         }
 
         protected override void Regist()
-            => this.AfterRegist();
+            => this.OnRegisted();
     }
 }

@@ -1,15 +1,17 @@
-﻿using UnityEngine.Events;
+﻿using System;
+using UnityEngine.Events;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    public abstract class TextInputGuiBase<ValType> : InputGuiValueBase<ValType>
+    [Serializable]
+    public abstract class TextInputGuiBase<ValType> : PrefsInputGuiBase<ValType>
     {
         protected override void Awake()
         {
             base.Awake();
 
             var events = this.GetInputEvents();
-            for(var i = 0; i < events.Length; i++)
+            for (var i = 0; i < events.Length; i++)
             {
                 events[i].AddListener(this.OnInputValue);
             }

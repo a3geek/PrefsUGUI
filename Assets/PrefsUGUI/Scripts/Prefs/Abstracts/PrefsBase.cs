@@ -12,34 +12,24 @@ namespace PrefsUGUI
         {
             public virtual event Action OnValueChanged = delegate { };
 
-            public virtual string SaveKey => (this.GuiHierarchy == null ? "" : this.GuiHierarchy.FullHierarchy) + this.key;
+            public virtual string SaveKey => (this.GuiHierarchy?.FullHierarchy ?? "") + this.key;
             public virtual string Key => this.key;
-            public virtual GuiHierarchy GuiHierarchy => this.hierarchy;
             public virtual string GuiLabel => this.guiLabel;
-
-            public virtual bool Unsave { get; set; }
-
-            public abstract Type ValueType { get; }
-            public abstract object DefaultValueAsObject { get; }
-            public abstract object ValueAsObject { get; }
+            public virtual bool Unsave { get; set; } = false;
+            public virtual GuiHierarchy GuiHierarchy { get; protected set; } = null;
 
             [SerializeField]
             protected string key = "";
             [SerializeField]
             protected string guiLabel = "";
 
-            public virtual string OldSaveKey => (this.GuiHierarchy == null ? "" : this.GuiHierarchy.Hierarchy) + this.key;
-
-            protected GuiHierarchy hierarchy = null;
-
 
             public PrefsBase(string key, GuiHierarchy hierarchy = null, string guiLabel = null)
             {
                 this.key = key;
-                this.hierarchy = hierarchy;
+                this.GuiHierarchy = hierarchy;
                 this.guiLabel = guiLabel ?? key.ToLabelable();
 
-                this.Unsave = false;
                 this.Regist();
             }
 
@@ -59,16 +49,15 @@ namespace PrefsUGUI
 
             protected virtual void Regist()
             {
-                PrefsInstances.Add(this);
-                this.AfterRegist();
+                Prefs.Regist(this.ValueSetToStorage);
+                this.OnRegisted();
             }
 
             protected virtual void FireOnValueChanged()
-            {
-                this.OnValueChanged();
-            }
+                => this.OnValueChanged();
 
-            protected abstract void AfterRegist();
+            protected abstract void ValueSetToStorage();
+            protected abstract void OnRegisted();
         }
     }
 }

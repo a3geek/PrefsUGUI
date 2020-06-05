@@ -1,23 +1,31 @@
 ﻿using System;
+using UnityEngine;
 
 namespace PrefsUGUI
 {
     using Guis.Prefs;
 
     [Serializable]
-    public class PrefsFloatSlider : Prefs.PrefsExtends<float, PrefsGuiNumericSliderDecimal>
+    public class PrefsFloatSlider : Prefs.PrefsGuiBase<float, PrefsGuiNumericSliderDecimal>
     {
+        [SerializeField]
         protected float min = 0f;
+        [SerializeField]
         protected float max = 0f;
 
 
-        public PrefsFloatSlider(string key, float defaultValue = default(float), GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBaseConnector<float, PrefsGuiNumericSliderDecimal>> onCreatedGui = null)
-            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui) { }
+        public PrefsFloatSlider(
+            string key, float defaultValue = default, GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<float, PrefsGuiNumericSliderDecimal>> onCreatedGui = null
+        )
+            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui)
+        {
+        }
 
-        public PrefsFloatSlider(string key, float minValue, float maxValue,
-            float defaultValue = default(float), GuiHierarchy hierarchy = null, string guiLabel = null,
-            Action<Prefs.PrefsGuiBaseConnector<float, PrefsGuiNumericSliderDecimal>> onCreatedGui = null)
+        public PrefsFloatSlider(
+            string key, float minValue, float maxValue, float defaultValue = default(float), GuiHierarchy hierarchy = null,
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<float, PrefsGuiNumericSliderDecimal>> onCreatedGui = null
+        )
             : this(key, defaultValue, hierarchy, guiLabel, onCreatedGui)
         {
             this.min = minValue;
@@ -26,13 +34,13 @@ namespace PrefsUGUI
 
         protected override void OnCreatedGuiInternal(PrefsGuiNumericSliderDecimal gui)
         {
-            if(this.min == 0f && this.max == 0f)
+            if (this.min == this.max)
             {
-                gui.Initialize(this.GuiLabel, this.Get(), () => this.DefaultValue);
+                gui.Initialize(this.GuiLabel, this.Get(), this.GetDefaultValue);
             }
             else
             {
-                gui.Initialize(this.GuiLabel, this.Get(), this.min, this.max, () => this.DefaultValue);
+                gui.Initialize(this.GuiLabel, this.Get(), this.min, this.max, this.GetDefaultValue);
             }
         }
     }

@@ -1,19 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    [AddComponentMenu("")]
-    public class PrefsGuiNumericDecimal : PrefsGuiNumericBase<float>
+    [Serializable]
+    public class PrefsGuiNumericDecimal : NumericGuiBase<float>
     {
         protected override bool IsDecimalNumber => true;
 
 
-        protected override bool IsDefaultValue() => this.GetValue() == this.defaultGetter();
+        protected override bool IsDefaultValue()
+            => this.GetValue() == this.defaultGetter();
 
         protected override void SetValueInternal(string value)
         {
-            var v = 0f;
-            if(float.TryParse(value, out v) == true)
+            if (float.TryParse(value, out var v) == true)
             {
                 this.SetValueInternal(v);
             }

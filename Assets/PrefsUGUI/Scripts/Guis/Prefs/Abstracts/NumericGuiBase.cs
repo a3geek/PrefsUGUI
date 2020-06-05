@@ -6,8 +6,10 @@ using UnityEngine.UI;
 namespace PrefsUGUI.Guis.Prefs
 {
     [Serializable]
-    public class PrefsGuiString : TextInputGuiBase<string>
+    public abstract class NumericGuiBase<ValType> : TextInputGuiBase<ValType>
     {
+        protected abstract bool IsDecimalNumber { get; }
+
         [SerializeField]
         protected InputField field = null;
 
@@ -18,24 +20,21 @@ namespace PrefsUGUI.Guis.Prefs
             this.field = this.GetComponentInChildren<InputField>();
         }
 
-        public void Initialize(string label, string initialValue, Func<string> defaultGetter)
+        public virtual void Initialize(string label, ValType initialValue, Func<ValType> defaultGetter)
         {
             this.SetLabel(label);
+            this.field.contentType
+                = this.IsDecimalNumber == true ? InputField.ContentType.DecimalNumber : InputField.ContentType.IntegerNumber;
+
             this.defaultGetter = defaultGetter;
             this.SetValue(initialValue);
         }
 
-        protected override bool IsDefaultValue()
-            => this.GetValue() == this.defaultGetter();
-
         protected override void SetFields()
         {
             base.SetFields();
-            this.field.text = this.value;
+            this.field.text = this.GetValue().ToString();
         }
-
-        protected override void SetValueInternal(string value)
-            => this.value = value;
 
         protected override UnityEvent<string>[] GetInputEvents()
             => new UnityEvent<string>[] { this.field.onEndEdit };

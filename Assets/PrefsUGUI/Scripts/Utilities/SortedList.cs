@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace PrefsUGUI.Utilities
 {
-    [Serializable]
     public sealed class SortedList<T> : IEnumerable<T>
     {
         public T this[int index]
@@ -14,8 +12,8 @@ namespace PrefsUGUI.Utilities
         }
 
         public int Count => this.items.Count;
-        public ReadOnlyCollection<T> Items => this.items.AsReadOnly();
-        public ReadOnlyCollection<int> Orders => this.orders.AsReadOnly();
+        public IReadOnlyList<T> Items => this.items;
+        public IReadOnlyList<int> Orders => this.orders;
 
         private List<T> items = new List<T>();
         private List<int> orders = new List<int>();
@@ -29,9 +27,9 @@ namespace PrefsUGUI.Utilities
 
         public int Add(T item, int order)
         {
-            for(var i = 0; i < this.orders.Count; i++)
+            for (var i = 0; i < this.orders.Count; i++)
             {
-                if(this.orders[i] == order)
+                if (this.orders[i] == order)
                 {
                     var e = this.items[i];
                     var sorted = this.sorter(e, item);
@@ -39,7 +37,7 @@ namespace PrefsUGUI.Utilities
                     this.items[i] = sorted <= 0 ? e : item;
                     item = sorted <= 0 ? item : e;
                 }
-                else if(this.orders[i] > order)
+                else if (this.orders[i] > order)
                 {
                     this.items.Insert(i, item);
                     this.orders.Insert(i, order);
@@ -57,7 +55,7 @@ namespace PrefsUGUI.Utilities
         public bool Remove(T item)
         {
             var index = this.items.IndexOf(item);
-            if(index < 0)
+            if (index < 0)
             {
                 return false;
             }
@@ -76,20 +74,16 @@ namespace PrefsUGUI.Utilities
 
         public IEnumerator<T> GetEnumerator()
         {
-            for(var i = 0; i < this.Count; i++)
+            for (var i = 0; i < this.Count; i++)
             {
                 yield return this.items[i];
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+            => this.GetEnumerator();
 
         public static explicit operator List<T>(SortedList<T> sortedList)
-        {
-            return new List<T>(sortedList.items);
-        }
+            => new List<T>(sortedList.items);
     }
 }
