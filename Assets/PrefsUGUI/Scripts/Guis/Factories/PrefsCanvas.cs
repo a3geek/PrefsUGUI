@@ -47,18 +47,11 @@ namespace PrefsUGUI.Guis.Factories
             this.links.Save.onClick.AddListener(this.OnClickedSaveButton);
         }
 
-        public PrefabType AddPrefs<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs) where PrefabType : PrefsInputGuiBase<ValType>
+        public GuiType AddPrefs<ValType, GuiType>(Prefs.PrefsValueBase<ValType> prefs)
+            where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             var category = this.structs.GetCategory(prefs.GuiHierarchy);
-            var gui = this.creator.GetGui<ValType, PrefabType>(prefs, category);
-
-            return gui;
-        }
-
-        public PrefabType AddPrefs<PrefabType>(PrefsBase prefs) where PrefabType : PrefsGuiBase
-        {
-            var category = this.structs.GetCategory(prefs.GuiHierarchy);
-            var gui = this.creator.GetGui<PrefabType>(prefs, category);
+            var gui = this.creator.GetGui<ValType, GuiType>(prefs, category);
 
             return gui;
         }

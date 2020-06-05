@@ -6,7 +6,7 @@ namespace PrefsUGUI
     using Guis;
 
     [Serializable]
-    public class PrefsButton : Prefs.PrefsGuiBase<UnityAction, GuiButton>
+    public class PrefsButton : Prefs.PrefsGuiBase<UnityAction, PrefsGuiButton>
     {
         public UnityAction OnClicked
         {
@@ -16,7 +16,7 @@ namespace PrefsUGUI
 
         public PrefsButton(
             string key, UnityAction action, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<UnityAction, GuiButton>> onCreatedGui = null
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<UnityAction, PrefsGuiButton>> onCreatedGui = null
         )
             : base(key, action ?? delegate { }, hierarchy, guiLabel, onCreatedGui)
         {
@@ -25,7 +25,7 @@ namespace PrefsUGUI
         public override void Reload(bool withEvent = true)
             => this.ResetDefaultValue();
 
-        protected override void OnCreatedGuiInternal(GuiButton gui)
+        protected override void OnCreatedGuiInternal(PrefsGuiButton gui)
         {
             gui.Initialize(this.GuiLabel, this.Get());
             this.OnValueChanged += () => gui.SetValue(this.Get());

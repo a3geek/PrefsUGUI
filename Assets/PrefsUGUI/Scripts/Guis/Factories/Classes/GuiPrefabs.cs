@@ -30,10 +30,10 @@ namespace PrefsUGUI.Guis.Factories.Classes
     [Serializable]
     public class GuiPrefabs
     {
-        public GuiButton Button => this.buttonPrefab;
+        public PrefsGuiButton Button => this.buttonPrefab;
 
         [SerializeField]
-        private GuiButton buttonPrefab = null;
+        private PrefsGuiButton buttonPrefab = null;
         [SerializeField]
         private GuiPrefab[] guiPrefabs = new GuiPrefab[]
         {
@@ -44,18 +44,19 @@ namespace PrefsUGUI.Guis.Factories.Classes
             new GuiPrefab(typeof(PrefsGuiString)), new GuiPrefab(typeof(PrefsGuiVector2)),
             new GuiPrefab(typeof(PrefsGuiVector2Int)), new GuiPrefab(typeof(PrefsGuiVector3)),
             new GuiPrefab(typeof(PrefsGuiVector3Int)), new GuiPrefab(typeof(PrefsGuiVector4)),
-            new GuiPrefab(typeof(PrefsGuiRect)), new GuiPrefab(typeof(GuiButton)),
+            new GuiPrefab(typeof(PrefsGuiRect)), new GuiPrefab(typeof(PrefsGuiButton)),
             new GuiPrefab(typeof(PrefsGuiLabel)), new GuiPrefab(typeof(PrefsGuiImageLabel))
         };
 
 
-        public PrefabType GetGuiPrefab<PrefabType>() where PrefabType : PrefsGuiBase
+        public GuiType GetGuiPrefab<ValType, GuiType>()
+            where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             for(var i = 0; i < this.guiPrefabs.Length; i++)
             {
-                if(this.guiPrefabs[i].Type == typeof(PrefabType))
+                if(this.guiPrefabs[i].Type == typeof(GuiType))
                 {
-                    return (PrefabType)this.guiPrefabs[i].Prefab;
+                    return (GuiType)this.guiPrefabs[i].Prefab;
                 }
             }
 

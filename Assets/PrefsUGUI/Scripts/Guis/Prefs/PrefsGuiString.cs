@@ -18,7 +18,7 @@ namespace PrefsUGUI.Guis.Prefs
             this.field = this.GetComponentInChildren<InputField>();
         }
 
-        public void Initialize(string label, string initialValue, Func<string> defaultGetter)
+        public virtual void Initialize(string label, string initialValue, Func<string> defaultGetter)
         {
             this.SetLabel(label);
             this.defaultGetter = defaultGetter;

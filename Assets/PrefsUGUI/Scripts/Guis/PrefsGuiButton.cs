@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -6,14 +7,22 @@ namespace PrefsUGUI.Guis
 {
     using Prefs;
 
-    [AddComponentMenu("")]
-    public class GuiButton : PrefsGuiBase
+    [Serializable]
+    public class PrefsGuiButton : PrefsGuiBase, IPrefsGuiConnector<UnityAction, PrefsGuiButton>
     {
+        public PrefsGuiButton Component => this;
+
         [SerializeField]
         protected Button button = null;
 
         protected UnityAction callback = null;
 
+
+        protected override void Reset()
+        {
+            base.Reset();
+            this.button = this.GetComponentInChildren<Button>();
+        }
 
         public virtual void Initialize(string label, UnityAction callback)
         {
@@ -34,13 +43,11 @@ namespace PrefsUGUI.Guis
             this.button.onClick.AddListener(this.callback);
         }
 
-        public override object GetValueObject()
+        public virtual UnityAction GetValue()
             => this.callback;
 
-        protected override void Reset()
+        public virtual void SetGuiListeners(PrefsUGUI.Prefs.PrefsValueBase<UnityAction> prefs)
         {
-            base.Reset();
-            this.button = GetComponentInChildren<Button>();
         }
     }
 }

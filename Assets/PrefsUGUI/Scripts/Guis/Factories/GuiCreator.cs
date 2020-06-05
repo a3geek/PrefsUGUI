@@ -16,7 +16,7 @@ namespace PrefsUGUI.Guis.Factories
             public RectTransform Content = null;
             public Dictionary<PrefsBase, PrefsGuiBase> Prefs = new Dictionary<PrefsBase, PrefsGuiBase>();
 
-            public SortedList<GuiButton> Buttons = new SortedList<GuiButton>(
+            public SortedList<PrefsGuiButton> Buttons = new SortedList<PrefsGuiButton>(
                 (b1, b2) => string.Compare(b1.GetLabel(), b2.GetLabel())
             );
 
@@ -50,7 +50,7 @@ namespace PrefsUGUI.Guis.Factories
                 return content;
             }
 
-            public GuiButton GetButton(Category category, string label, string targetCategoryName, int sortOrder)
+            public PrefsGuiButton GetButton(Category category, string label, string targetCategoryName, int sortOrder)
             {
                 var button = Instantiate(this.canvas.prefabs.Button, category.Content);
                 button.Initialize(label, () => this.canvas.ChangeGUI(category, targetCategoryName));
@@ -61,28 +61,18 @@ namespace PrefsUGUI.Guis.Factories
                 return button;
             }
 
-            public PrefabType GetGui<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs, Category category) where PrefabType : PrefsInputGuiBase<ValType>
+            public GuiType GetGui<ValType, GuiType>(Prefs.PrefsValueBase<ValType> prefs, Category category)
+                where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
             {
-                var gui = Instantiate(this.canvas.prefabs.GetGuiPrefab<PrefabType>(), category.Content);
+                var gui = Instantiate(this.canvas.prefabs.GetGuiPrefab<ValType, GuiType>().Component, category.Content);
 
-                this.SetGuiListeners(prefs, gui);
-                category.Prefs.Add(prefs, gui);
-
-                return gui;
-            }
-
-            public PrefabType GetGui<PrefabType>(PrefsBase prefs, Category category) where PrefabType : PrefsGuiBase
-            {
-                var gui = Instantiate(this.canvas.prefabs.GetGuiPrefab<PrefabType>(), category.Content);
-                category.Prefs.Add(prefs, gui);
-
-                return gui;
-            }
-
-            private void SetGuiListeners<ValType, PrefabType>(Prefs.PrefsValueBase<ValType> prefs, PrefabType gui) where PrefabType : PrefsInputGuiBase<ValType>
-            {
                 gui.SetGuiListeners(prefs);
-                prefs.OnValueChanged += () => gui.SetValue(prefs.Value);
+
+                void onPrefsValueChanged() => gui.SetValue(prefs.Value);
+                prefs.OnValueChanged += onPrefsValueChanged;
+
+                category.Prefs.Add(prefs, gui);
+                return gui;
             }
         }
     }

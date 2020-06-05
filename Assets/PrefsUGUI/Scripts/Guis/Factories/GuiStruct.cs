@@ -74,7 +74,7 @@ namespace PrefsUGUI.Guis.Factories
                 Destroy(next.Content.gameObject);
             }
 
-            private GuiButton GetButton(Category category, string label)
+            private PrefsGuiButton GetButton(Category category, string label)
             {
                 foreach(var b in category.Buttons)
                 {
@@ -157,7 +157,7 @@ namespace PrefsUGUI.Guis.Factories
                 return null;
             }
 
-            private GuiButton GetButton(Category category, string label, string targetCategoryName, int sortOrder)
+            private PrefsGuiButton GetButton(Category category, string label, string targetCategoryName, int sortOrder)
             {
                 foreach(var b in category.Buttons)
                 {

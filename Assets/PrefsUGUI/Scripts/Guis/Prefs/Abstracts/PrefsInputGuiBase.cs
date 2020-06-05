@@ -7,9 +7,11 @@ namespace PrefsUGUI.Guis.Prefs
     using Prefs = PrefsUGUI.Prefs;
 
     [Serializable]
-    public abstract class PrefsInputGuiBase<ValType> : PrefsGuiBase
+    public abstract class PrefsInputGuiBase<ValType> : PrefsGuiBase, IPrefsGuiConnector<ValType, PrefsInputGuiBase<ValType>>
     {
         public event Action OnDefaultButtonClicked = delegate { };
+
+        public PrefsInputGuiBase<ValType> Component => this;
 
         [SerializeField]
         protected Button defaultButton = null;
@@ -51,8 +53,8 @@ namespace PrefsUGUI.Guis.Prefs
             void onValueChanged() => prefs.Set(this.GetValue());
             void onDefaultButtonClicked() => prefs.ResetDefaultValue();
 
-            this.OnValueChanged += () => onValueChanged();
-            this.OnDefaultButtonClicked += () => onDefaultButtonClicked();
+            this.OnValueChanged += onValueChanged;
+            this.OnDefaultButtonClicked += onDefaultButtonClicked;
         }
 
         protected virtual void SetValueInternal(ValType value)

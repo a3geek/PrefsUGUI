@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    /*
-     * valueに保存するのはenumの整数値.
-     */
-    [AddComponentMenu("")]
+    /// <summary>
+    /// <see cref="Enum"/>型用のGUIクラス
+    /// </summary>
+    /// <remarks>valueに保存するのは<see cref="Enum"/>の整数値</remarks>
+    [Serializable]
     public class PrefsGuiEnum : PrefsInputGuiBase<int>
     {
         [SerializeField]
@@ -25,45 +26,47 @@ namespace PrefsUGUI.Guis.Prefs
             this.dropdown.onValueChanged.AddListener(this.OnDropdownChanged);
         }
 
-        public void Initialize<T>(string label, Type type, int initialValue, Func<T, int> converter, Func<int> defaultGetter)
+        protected override void Reset()
+        {
+            base.Reset();
+            this.dropdown = this.GetComponentInChildren<Dropdown>();
+        }
+
+        public virtual void Initialize<T>(string label, int initialValue, Func<int> defaultGetter) where T : Enum
         {
             this.SetLabel(label);
 
             this.defaultGetter = defaultGetter;
-            this.Refresh(type, initialValue, converter);
+            this.Refresh<T>(initialValue);
 
             this.inited = true;
         }
 
-        protected virtual void Refresh<T>(Type type, int initialValue, Func<T, int> converter)
+        protected virtual void Refresh<T>(int initialValue) where T : Enum
         {
-            if(type.IsEnum == false)
-            {
-                return;
-            }
-
             var options = new List<string>();
-            var values = Enum.GetValues(type).Cast<T>().OrderBy(e => e);
-            var iniVal = 0;
-            var i = 0;
+            var values = Enum.GetValues(typeof(T)).Cast<T>();
 
-            foreach(var e in values)
+            int? iniValue = null;
+
+            for(var i = 0; i < values.Count(); i++)
             {
-                var ei = converter(e);
+                var value = values.ElementAt(i);
+                var valueInt = Convert.ToInt32(value);
 
-                this.indexToValue[i++] = ei;
-                options.Add(e.ToString());
-
-                if(ei == initialValue)
+                if(iniValue == null || valueInt == initialValue)
                 {
-                    iniVal = ei;
+                    iniValue = valueInt;
                 }
+
+                this.indexToValue[i] = valueInt;
+                options.Add(value.ToString());
             }
 
             this.dropdown.ClearOptions();
             this.dropdown.AddOptions(options);
 
-            this.SetValue(iniVal);
+            this.SetValue(iniValue ?? 0);
         }
 
         protected override void SetFields()
@@ -75,7 +78,8 @@ namespace PrefsUGUI.Guis.Prefs
             {
                 if(pair.Value == this.value)
                 {
-                    this.dropdown.value = pair.Key; // list index.
+                    // list index.
+                    this.dropdown.value = pair.Key;
                 }
             }
 
@@ -94,12 +98,6 @@ namespace PrefsUGUI.Guis.Prefs
 
             this.SetValueInternal(this.indexToValue[index]);
             this.FireOnValueChanged();
-        }
-
-        protected override void Reset()
-        {
-            base.Reset();
-            this.dropdown = GetComponentInChildren<Dropdown>();
         }
     }
 }

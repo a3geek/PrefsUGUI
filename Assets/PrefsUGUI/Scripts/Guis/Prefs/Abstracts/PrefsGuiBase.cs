@@ -7,7 +7,7 @@ namespace PrefsUGUI.Guis.Prefs
     [Serializable]
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
-    public abstract class PrefsGuiBase : MonoBehaviour
+    public abstract class PrefsGuiBase : MonoBehaviour, IPrefsGuiBase
     {
         public event Action OnValueChanged = delegate { };
 

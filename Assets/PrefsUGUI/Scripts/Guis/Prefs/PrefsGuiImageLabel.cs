@@ -1,25 +1,30 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    [AddComponentMenu("")]
+    [Serializable]
     public class PrefsGuiImageLabel : PrefsGuiLabel
     {
         [SerializeField]
         protected RawImage rawImage = null;
 
 
-        public Texture SetImage(Texture texture)
+        protected override void Reset()
+        {
+            base.Reset();
+
+            if(this.elements != null)
+            {
+                this.rawImage = this.elements.GetComponentInChildren<RawImage>();
+            }
+        }
+
+        public void SetImage(Texture texture)
             => this.rawImage.texture = texture;
 
         public Texture GetImage()
             => this.rawImage.texture;
-
-        protected override void Reset()
-        {
-            base.Reset();
-            this.rawImage = this.elements?.GetComponentInChildren<RawImage>();
-        }
     }
 }

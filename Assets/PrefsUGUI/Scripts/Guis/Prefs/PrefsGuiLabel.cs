@@ -1,13 +1,30 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Prefs
 {
-    [AddComponentMenu("")]
-    public class PrefsGuiLabel : PrefsGuiBase
+    using Prefs = PrefsUGUI.Prefs;
+
+    [Serializable]
+    public class PrefsGuiLabel : PrefsGuiBase, IPrefsGuiConnector<string, PrefsGuiLabel>
     {
+        public PrefsGuiLabel Component => this;
+
         [SerializeField]
         protected Text text = null;
+
+
+        protected override void Reset()
+        {
+            base.Reset();
+
+            if(this.elements != null)
+            {
+                var image = this.elements.GetComponentInChildren<Image>();
+                this.text = image == null ? null : image.GetComponentInChildren<Text>();
+            }
+        }
 
         public virtual void Initialize(string label, string text)
         {
@@ -15,19 +32,14 @@ namespace PrefsUGUI.Guis.Prefs
             this.text.text = text;
         }
 
-        public void SetValue(string text)
-            => this.text.text = text;
-
-        public string GetValue(string text)
-            => this.text.text = text;
-
-        public override object GetValueObject()
+        public virtual string GetValue()
             => this.text.text;
 
-        protected override void Reset()
+        public virtual void SetValue(string text)
+            => this.text.text = text;
+
+        public virtual void SetGuiListeners(Prefs.PrefsValueBase<string> prefs)
         {
-            base.Reset();
-            this.text = this.elements?.GetComponentInChildren<Image>()?.GetComponentInChildren<Text>();
         }
     }
 }
