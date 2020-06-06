@@ -6,6 +6,7 @@ namespace PrefsUGUI
 {
     using Guis;
     using Guis.Prefs;
+    using System.Runtime.CompilerServices;
     using XmlStorage;
     using Creator = Dictionary<string, Action<Guis.Factories.PrefsCanvas>>;
     using XmlStorageConsts = XmlStorage.Systems.XmlStorageConsts;
@@ -23,33 +24,13 @@ namespace PrefsUGUI
         public static string AggregationName { get; private set; } = "";
         /// <summary>File name for saving.</summary>
         public static string FileName { get; private set; } = "";
-        //public static string AggregationName => Application.productName;
-        //public static string FileName => Application.productName;
 
         /// <summary>Reference to <see cref="PrefsGuis"/> component.</summary>
         private static PrefsGuis PrefsGuis = null;
         /// <summary>Actions for creating each GUI.</summary>
         private static Creator Creators = new Creator();
-        /// <summary>Instances of PrefsUGUI's members.</summary>
-        private static List<PrefsBase> PrefsInstances = new List<PrefsBase>();
+        private static List<Action> ValueSetters = new List<Action>();
 
-
-
-        private static void Regist(Action valueSetter)
-        {
-
-        }
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        static Prefs()
-        {
-            PrefsGuis = null;
-            Creators = new Creator();
-            PrefsInstances = new List<PrefsBase>();
-        }
 
         /// <summary>
         /// Initialize at before scene load.
@@ -71,8 +52,8 @@ namespace PrefsUGUI
             }
 
             var parameters = UnityEngine.Object.FindObjectOfType<PrefsParameters>();
-            AggregationName = parameters?.AggregationName ?? PrefsParameters.DefaultNameGetter();
-            FileName = parameters?.FileName ?? PrefsParameters.DefaultNameGetter();
+            AggregationName = parameters == null ? PrefsParameters.DefaultNameGetter() : parameters.AggregationName;
+            FileName = parameters == null ? PrefsParameters.DefaultNameGetter() : parameters.FileName;
 
             PrefsGuis.Initialize(() => Creators);
         }
@@ -87,15 +68,9 @@ namespace PrefsUGUI
             Storage.ChangeAggregation(AggregationName);
             Storage.CurrentAggregation.FileName = FileName + XmlStorageConsts.Extension;
 
-            for(var i = 0; i < PrefsInstances.Count; i++)
+            for(var i = 0; i < ValueSetters.Count; i++)
             {
-                var p = PrefsInstances[i];
-                if(p.Unsave == true)
-                {
-                    continue;
-                }
-
-                //Storage.Set(p.ValueType, p.SaveKey, p.ValueAsObject, AggregationName);
+                ValueSetters[i]?.Invoke();
             }
 
             Storage.ChangeAggregation(current);
@@ -105,13 +80,20 @@ namespace PrefsUGUI
         /// <summary>
         /// Toggle on for show the GUI.
         /// </summary>
-        public static void ShowGUI() => PrefsGuis?.ShowGUI();
+        public static void ShowGUI()
+        {
+            if(PrefsGuis != null)
+            {
+                PrefsGuis.ShowGUI();
+            }
+        }
 
         /// <summary>
         /// Get whether the GUI is showing.
         /// </summary>
         /// <returns>It's showing, If returned to true.</returns>
-        public static bool IsShowing() => PrefsGuis == null ? false : PrefsGuis.IsShowing;
+        public static bool IsShowing()
+            => PrefsGuis != null && PrefsGuis.IsShowing;
 
         /// <summary>
         /// Change cnavas size.
@@ -119,10 +101,20 @@ namespace PrefsUGUI
         /// <param name="width">Width of new canvas size.</param>
         /// <param name="height">Height of new canvas size.</param>
         public static void SetCanvasSize(float width, float height)
-            => PrefsGuis.SetCanvasSize(width, height);
+        {
+            if(PrefsGuis != null)
+            {
+                PrefsGuis.SetCanvasSize(width, height);
+            }
+        }
 
         public static void RemoveGuiHierarchy(GuiHierarchy hierarchy)
-            => PrefsGuis?.RemoveCategory(hierarchy);
+        {
+            if(PrefsGuis != null)
+            {
+                PrefsGuis.RemoveCategory(hierarchy);
+            }
+        }
 
         private static void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
@@ -133,6 +125,11 @@ namespace PrefsUGUI
         /// </summary>
         /// <param name="prefs">Prefs member for remove.</param>
         private static void RemovePrefs(PrefsBase prefs)
-            => PrefsGuis?.RemovePrefs(prefs);
+        {
+            if(PrefsGuis != null)
+            {
+                PrefsGuis.RemovePrefs(prefs);
+            }
+        }
     }
 }

@@ -49,7 +49,15 @@ namespace PrefsUGUI
 
             protected virtual void Regist()
             {
-                Prefs.Regist(this.ValueSetToStorage);
+                void ValueSetter()
+                {
+                    if(this.Unsave == false)
+                    {
+                        this.ValueSetToStorage();
+                    }
+                };
+                ValueSetters.Add(ValueSetter);
+
                 this.OnRegisted();
             }
 
