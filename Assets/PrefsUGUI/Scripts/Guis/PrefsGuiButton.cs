@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis
 {
-    using Prefs;
+    using Preferences;
 
     [Serializable]
     public class PrefsGuiButton : PrefsGuiBase, IPrefsGuiConnector<UnityAction, PrefsGuiButton>

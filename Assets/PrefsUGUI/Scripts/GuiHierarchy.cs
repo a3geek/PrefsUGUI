@@ -26,7 +26,7 @@ namespace PrefsUGUI
         /// <summary>Parent in GUI.</summary>
         public GuiHierarchy Parent => this.parent;
         /// <summary>All Parents in GUI to the root.</summary>
-        public IReadOnlyList<GuiHierarchy> Parents { get; }
+        public IReadOnlyList<GuiHierarchy> Parents { get; } = new List<GuiHierarchy>();
         public string FullHierarchy { get; }
 
         /// <summary>Hierarchy of GUI.</summary>

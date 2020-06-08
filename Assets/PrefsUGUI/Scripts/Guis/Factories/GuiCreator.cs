@@ -3,11 +3,9 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories
 {
-    using Guis.Prefs;
+    using Guis.Preferences;
     using Utilities;
-
-    using Prefs = PrefsUGUI.Prefs;
-    using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
+    using PrefsBase = Prefs.PrefsBase;
 
     public partial class PrefsCanvas
     {

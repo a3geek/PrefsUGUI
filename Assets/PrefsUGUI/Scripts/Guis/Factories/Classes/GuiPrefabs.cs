@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories.Classes
 {
-    using Guis.Prefs;
+    using Guis.Preferences;
 
     [Serializable]
     public class GuiPrefab

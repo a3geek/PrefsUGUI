@@ -3,10 +3,8 @@
 namespace PrefsUGUI.Guis.Factories
 {
     using Classes;
-    using Guis.Prefs;
-
-    using Prefs = PrefsUGUI.Prefs;
-    using PrefsBase = PrefsUGUI.Prefs.PrefsBase;
+    using Guis.Preferences;
+    using PrefsBase = Prefs.PrefsBase;
 
     [AddComponentMenu("")]
     [DisallowMultipleComponent]

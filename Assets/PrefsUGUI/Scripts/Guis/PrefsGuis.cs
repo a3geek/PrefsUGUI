@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 namespace PrefsUGUI.Guis
 {
     using Guis.Factories;
-    using Creator = Dictionary<string, Action<Factories.PrefsCanvas>>;
+    using Guis.Preferences;
 
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
@@ -18,66 +18,75 @@ namespace PrefsUGUI.Guis
 
         public bool IsShowing
         {
-            get { return this.canvas.gameObject.activeSelf; }
+            get => this.Canvas.gameObject.activeSelf;
         }
-        public PrefsCanvas Canvas
-        {
-            get { return this.prefsCanvas; }
-        }
+        public PrefsCanvas Canvas { get; private set; } = null;
 
-        [SerializeField]
-        private PrefsCanvas prefsCanvas = null;
-        [SerializeField]
-        private EventSystem eventSystem = null;
+        [SerializeField, UnityEngine.Serialization.FormerlySerializedAs("prefsCanvas")]
+        private PrefsCanvas prefsCanvasPrefab = null;
+        [SerializeField, UnityEngine.Serialization.FormerlySerializedAs("eventSystem")]
+        private EventSystem eventSystemPrefab = null;
 
-        private PrefsCanvas canvas = null;
-        private EventSystem system = null;
-        private Func<Creator> creator = null;
+        private Queue<Action> prefsCreators = new Queue<Action>();
 
-
-        public void Initialize(Func<Creator> creator)
-        {
-            this.creator = creator;
-
-            this.canvas = this.CreateCanvas();
-            this.Create();
-        }
 
         private void Awake()
         {
+            this.Canvas = this.CreateCanvas();
+            if(EventSystem.current == null)
+            {
+                this.CreateEventSystem();
+            }
+
             this.Create();
-            this.system = EventSystem.current;
         }
 
         private void Update()
         {
-            this.system = this.system ?? (this.eventSystem == null ? null : Instantiate(this.eventSystem));
-
             this.Create();
         }
 
-        public void RemovePrefs(PrefsUGUI.Prefs.PrefsBase prefs)
+        public void ShowGUI()
         {
-            if(this.canvas == null)
+            if(this.Canvas != null)
             {
-                return;
+                this.Canvas.gameObject.SetActive(true);
             }
+        }
 
-            this.canvas.RemovePrefs(prefs);
+        public void AddPrefs<ValType, GuiType>(Prefs.PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
+            where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
+        {
+            void Creator() => onCreated?.Invoke(this.Canvas.AddPrefs<ValType, GuiType>(prefs));
+
+            this.prefsCreators.Enqueue(Creator);
+        }
+
+        public void RemovePrefs(Prefs.PrefsBase prefs)
+        {
+            if(this.Canvas != null)
+            {
+                this.Canvas.RemovePrefs(prefs);
+            }
         }
 
         public void RemoveCategory(GuiHierarchy hierarchy)
-            => this.canvas?.RemoveCategory(hierarchy);
-
-        public void ShowGUI()
         {
-            this.canvas.gameObject.SetActive(true);
+            if(this.Canvas != null)
+            {
+                this.Canvas.RemoveCategory(hierarchy);
+            }
         }
 
         public void SetCanvasSize(float width, float height)
         {
-            var delta = this.canvas.Panel.sizeDelta;
-            this.canvas.Panel.sizeDelta = new Vector2(
+            if(this.Canvas == null)
+            {
+                return;
+            }
+
+            var delta = this.Canvas.Panel.sizeDelta;
+            this.Canvas.Panel.sizeDelta = new Vector2(
                 width <= 0f ? delta.x : width,
                 height <= 0f ? delta.y : height
             );
@@ -85,26 +94,24 @@ namespace PrefsUGUI.Guis
 
         private void Create()
         {
-            if(this.creator == null)
+            if(this.Canvas != null)
             {
-                return;
+                while(this.prefsCreators.Count > 0)
+                {
+                    this.prefsCreators.Dequeue()?.Invoke();
+                }
             }
-
-            var prefs = this.creator();
-            foreach(var pair in prefs)
-            {
-                pair.Value(this.canvas);
-            }
-
-            prefs.Clear();
         }
 
         private PrefsCanvas CreateCanvas()
         {
-            var canvas = Instantiate(this.prefsCanvas, Vector3.zero, Quaternion.identity, transform);
+            var canvas = Instantiate(this.prefsCanvasPrefab, Vector3.zero, Quaternion.identity, this.transform);
             canvas.gameObject.SetActive(false);
 
             return canvas;
         }
+
+        private EventSystem CreateEventSystem()
+            => Instantiate(this.eventSystemPrefab, Vector3.zero, Quaternion.identity, this.transform);
     }
 }

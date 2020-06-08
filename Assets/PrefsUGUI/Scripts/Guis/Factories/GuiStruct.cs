@@ -38,7 +38,7 @@ namespace PrefsUGUI.Guis.Factories
                 var previous = this.top;
                 var parents = hierarchy.Parents;
 
-                for(var i = 0; i < parents.Count; i++)
+                for(var i = 0; i < (parents?.Count ?? 0); i++)
                 {
                     previous = this.GetCategory(previous, parents[i]);
                 }

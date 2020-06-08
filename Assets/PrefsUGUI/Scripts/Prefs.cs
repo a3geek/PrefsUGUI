@@ -5,10 +5,8 @@ using UnityEngine;
 namespace PrefsUGUI
 {
     using Guis;
-    using Guis.Prefs;
-    using System.Runtime.CompilerServices;
+    using Guis.Preferences;
     using XmlStorage;
-    using Creator = Dictionary<string, Action<Guis.Factories.PrefsCanvas>>;
     using XmlStorageConsts = XmlStorage.Systems.XmlStorageConsts;
 
     /// <summary>
@@ -27,8 +25,7 @@ namespace PrefsUGUI
 
         /// <summary>Reference to <see cref="PrefsGuis"/> component.</summary>
         private static PrefsGuis PrefsGuis = null;
-        /// <summary>Actions for creating each GUI.</summary>
-        private static Creator Creators = new Creator();
+        private static Queue<Action> PrefsActionsCache = new Queue<Action>();
         private static List<Action> ValueSetters = new List<Action>();
 
 
@@ -55,7 +52,10 @@ namespace PrefsUGUI
             AggregationName = parameters == null ? PrefsParameters.DefaultNameGetter() : parameters.AggregationName;
             FileName = parameters == null ? PrefsParameters.DefaultNameGetter() : parameters.FileName;
 
-            PrefsGuis.Initialize(() => Creators);
+            while(PrefsActionsCache.Count > 0)
+            {
+                PrefsActionsCache.Dequeue()?.Invoke();
+            }
         }
 
         /// <summary>
@@ -118,7 +118,18 @@ namespace PrefsUGUI
 
         private static void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
-            => Creators[prefs.SaveKey] = canvas => onCreated(canvas.AddPrefs<ValType, GuiType>(prefs));
+        {
+            void AddPrefs() => PrefsGuis.AddPrefs(prefs, onCreated);
+
+            if(PrefsGuis == null)
+            {
+                PrefsActionsCache.Enqueue(AddPrefs);
+            }
+            else
+            {
+                AddPrefs();
+            }
+        }
 
         /// <summary>
         /// Remove registered information.
@@ -126,9 +137,15 @@ namespace PrefsUGUI
         /// <param name="prefs">Prefs member for remove.</param>
         private static void RemovePrefs(PrefsBase prefs)
         {
-            if(PrefsGuis != null)
+            void RemovePrefs() => PrefsGuis.RemovePrefs(prefs);
+
+            if(PrefsGuis == null)
             {
-                PrefsGuis.RemovePrefs(prefs);
+                PrefsActionsCache.Enqueue(RemovePrefs);
+            }
+            else
+            {
+                RemovePrefs();
             }
         }
     }
