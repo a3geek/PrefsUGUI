@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Factories.Classes
 {
-    using Utilities;
+    using Components;
 
     [Serializable]
     public sealed class GuiLinks

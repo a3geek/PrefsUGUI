@@ -4,7 +4,7 @@ using UnityEngine;
 namespace PrefsUGUI.Guis.Factories
 {
     using Guis.Preferences;
-    using Utilities;
+    using Commons;
     using PrefsBase = Prefs.PrefsBase;
 
     public partial class PrefsCanvas

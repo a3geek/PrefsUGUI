@@ -3,14 +3,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace PrefsUGUI.Guis
+namespace PrefsUGUI.Guis.Preferences
 {
-    using Preferences;
-
     [Serializable]
     public class PrefsGuiButton : PrefsGuiBase, IPrefsGuiConnector<UnityAction, PrefsGuiButton>
     {
-        public PrefsGuiButton Component => this;
+        public virtual PrefsGuiButton Component => this;
 
         [SerializeField]
         protected Button button = null;

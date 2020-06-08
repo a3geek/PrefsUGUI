@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace PrefsUGUI
 {
-    using Guis;
+    using Guis.Preferences;
 
     [Serializable]
     public class PrefsButton : Prefs.PrefsGuiBase<UnityAction, PrefsGuiButton>

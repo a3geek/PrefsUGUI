@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
-    using Utilities;
+    using CustomExtensions.Csharp;
 
     public static partial class Prefs
     {

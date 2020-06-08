@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories
 {
+    using Preferences;
+
     public partial class PrefsCanvas
     {
         private class GuiStruct

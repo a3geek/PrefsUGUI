@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Preferences
 {
-    using Utilities;
+    using CustomExtensions.Csharp;
 
     [Serializable]
     public abstract class VectorGuiBase<ValType, GuiType> : TextInputGuiBase<ValType, GuiType> where ValType : struct
