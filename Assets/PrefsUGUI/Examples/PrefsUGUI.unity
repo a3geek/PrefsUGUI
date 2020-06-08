@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44631976, g: 0.49611664, b: 0.5744803, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -228,12 +228,16 @@ MonoBehaviour:
       defaultValue: 10
       guiLabelPrefix: 
       guiLabelSufix: 
+      min: 0
+      max: 0
     PrefsIntSlider:
       key: PrefsIntSlider2
       guiLabel: Prefs Int Slider2
       defaultValue: 20
       guiLabelPrefix: 
       guiLabelSufix: 
+      min: 0
+      max: 0
   test1:
     PrefsBool:
       key: PrefsBool
@@ -265,6 +269,8 @@ MonoBehaviour:
       defaultValue: 5
       guiLabelPrefix: 
       guiLabelSufix: 
+      min: 0
+      max: 10
     PrefsInt:
       key: PrefsInt
       guiLabel: Prefs Int
@@ -277,6 +283,8 @@ MonoBehaviour:
       defaultValue: 2
       guiLabelPrefix: 
       guiLabelSufix: 
+      min: 0
+      max: 10
     PrefsButton1:
       key: Click1
       guiLabel: Click1
@@ -336,6 +344,8 @@ MonoBehaviour:
       defaultValue: 5
       guiLabelPrefix: 
       guiLabelSufix: 
+      min: 0
+      max: 10
     PrefsLabel1:
       key: PrefsLabel1
       guiLabel: Prefs Label1
