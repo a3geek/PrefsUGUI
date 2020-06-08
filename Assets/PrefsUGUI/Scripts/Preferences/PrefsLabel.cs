@@ -9,9 +9,9 @@ namespace PrefsUGUI
     {
         public PrefsLabel(
             string key, string text, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<string, PrefsGuiLabel>> onCreatedGui = null
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<string, PrefsGuiLabel>> onCreatedGui = null, int sortOrder = 0
         )
-            : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui)
+            : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui, sortOrder)
         {
         }
 

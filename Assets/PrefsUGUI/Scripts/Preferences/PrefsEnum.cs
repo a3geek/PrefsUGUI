@@ -9,9 +9,9 @@ namespace PrefsUGUI
     {
         public PrefsEnum(
             string key, T defaultValue = default, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<int, PrefsGuiEnum>> onCreatedGui = null
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<int, PrefsGuiEnum>> onCreatedGui = null, int sortOrder = 0
         )
-            : base(key, Convert.ToInt32(defaultValue), hierarchy, guiLabel, onCreatedGui)
+            : base(key, Convert.ToInt32(defaultValue), hierarchy, guiLabel, onCreatedGui, sortOrder)
         {
         }
 

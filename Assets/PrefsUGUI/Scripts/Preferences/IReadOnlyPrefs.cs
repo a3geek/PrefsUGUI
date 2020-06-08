@@ -29,6 +29,7 @@ namespace PrefsUGUI
         bool VisibleGUI { get; }
         string GuiLabelPrefix { get; }
         string GuiLabelSufix { get; }
+        int SortOrder { get; }
         #endregion
     }
 }

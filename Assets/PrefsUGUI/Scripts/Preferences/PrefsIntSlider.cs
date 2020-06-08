@@ -16,17 +16,17 @@ namespace PrefsUGUI
 
         public PrefsIntSlider(
             string key, int defaultValue = default, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<int, PrefsGuiNumericSliderInteger>> onCreatedGui = null
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<int, PrefsGuiNumericSliderInteger>> onCreatedGui = null, int sortOrder = 0
         )
-            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui)
+            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)
         {
         }
 
         public PrefsIntSlider(
             string key, int minValue, int maxValue, int defaultValue = default, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<int, PrefsGuiNumericSliderInteger>> onCreatedGui = null
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<int, PrefsGuiNumericSliderInteger>> onCreatedGui = null, int sortOrder = 0
         )
-            : this(key, defaultValue, hierarchy, guiLabel, onCreatedGui)
+            : this(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)
         {
             this.min = minValue;
             this.max = maxValue;

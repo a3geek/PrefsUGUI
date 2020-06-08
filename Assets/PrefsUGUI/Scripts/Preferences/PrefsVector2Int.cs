@@ -10,9 +10,9 @@ namespace PrefsUGUI
     {
         public PrefsVector2Int(
             string key, Vector2Int defaultValue = default, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<Vector2Int, PrefsGuiVector2Int>> onCreatedGui = null
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<Vector2Int, PrefsGuiVector2Int>> onCreatedGui = null, int sortOrder = 0
         )
-            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui)
+            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)
         {
         }
 

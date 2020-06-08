@@ -10,9 +10,9 @@ namespace PrefsUGUI
     {
         public PrefsColor(
             string key, Color defaultValue = default, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<Color, PrefsGuiColor>> onCreatedGui = null
+            string guiLabel = null, Action<Prefs.PrefsGuiBase<Color, PrefsGuiColor>> onCreatedGui = null, int sortOrder = 0
         )
-            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui)
+            : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)
         {
         }
 

@@ -64,6 +64,10 @@ namespace PrefsUGUI
                     this.UpdateLabel();
                 }
             }
+            public virtual int SortOrder
+            {
+                get; protected set;
+            }
 
             [SerializeField]
             protected string guiLabelPrefix = "";
@@ -76,11 +80,12 @@ namespace PrefsUGUI
 
             public PrefsGuiBase(
                 string key, ValType defaultValue = default, GuiHierarchy hierarchy = null, string guiLabel = null,
-                Action<PrefsGuiBase<ValType, GuiType>> onCreatedGui = null
+                Action<PrefsGuiBase<ValType, GuiType>> onCreatedGui = null, int sortOrder = 0
             )
                 : base(key, defaultValue, hierarchy, guiLabel)
             {
                 this.onCreatedGui = onCreatedGui;
+                this.SortOrder = sortOrder;
             }
 
             protected override void OnRegisted()
