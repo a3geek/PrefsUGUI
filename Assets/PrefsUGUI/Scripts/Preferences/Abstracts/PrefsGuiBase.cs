@@ -64,7 +64,7 @@ namespace PrefsUGUI
                     this.UpdateLabel();
                 }
             }
-            public virtual int SortOrder
+            public override int GuiSortOrder
             {
                 get; protected set;
             }
@@ -85,7 +85,7 @@ namespace PrefsUGUI
                 : base(key, defaultValue, hierarchy, guiLabel)
             {
                 this.onCreatedGui = onCreatedGui;
-                this.SortOrder = sortOrder;
+                this.GuiSortOrder = sortOrder;
             }
 
             protected override void OnRegisted()

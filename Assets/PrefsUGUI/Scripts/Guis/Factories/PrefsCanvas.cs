@@ -35,6 +35,7 @@ namespace PrefsUGUI.Guis.Factories
         private void Awake()
         {
             this.creator = new GuiCreator(this);
+            this.links.Content.gameObject.SetActive(false);
 
             var topContent = this.creator.GetContent();
             this.structs = new GuiStruct(topContent, this.creator);
@@ -77,7 +78,7 @@ namespace PrefsUGUI.Guis.Factories
         public void RemoveCategory(GuiHierarchy hierarchy)
             => this.structs.RemoveCategory(hierarchy);
 
-        private void ChangeGUI(Category previous, string targetCategoryName)
+        public void ChangeGUI(Category previous, string targetCategoryName)
             => this.OnGuiChanged(this.structs.ChangeGUI(previous, targetCategoryName));
 
         private void OnClickedDiscardButton()

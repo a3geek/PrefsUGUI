@@ -29,7 +29,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
                 this.key = guiType.ToString();
             }
 
-            public void Reset()
+            public void OnValidate()
             {
                 this.key = this.guiType.ToString();
             }
@@ -71,11 +71,11 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return null;
         }
 
-        public void Reset()
+        public void OnValidate()
         {
             for(var i = 0; i < this.guiPrefabs.Length; i++)
             {
-                this.guiPrefabs[i].Reset();
+                this.guiPrefabs[i].OnValidate();
             }
         }
     }

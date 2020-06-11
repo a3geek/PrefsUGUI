@@ -8,7 +8,7 @@ namespace PrefsUGUI.Commons
     {
         public T this[int index]
         {
-            get { return this.items[index]; }
+            get => this.items[index];
         }
 
         public int Count => this.items.Count;

@@ -12,6 +12,7 @@ namespace PrefsUGUI
         string GuiLabel { get; }
         bool Unsave { get; }
         GuiHierarchy GuiHierarchy { get; }
+        int GuiSortOrder { get; }
         #endregion
 
         #region "PrefsValueBase"
@@ -29,7 +30,7 @@ namespace PrefsUGUI
         bool VisibleGUI { get; }
         string GuiLabelPrefix { get; }
         string GuiLabelSufix { get; }
-        int SortOrder { get; }
+        int GuiSortOrder { get; }
         #endregion
     }
 }

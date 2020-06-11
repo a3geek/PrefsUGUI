@@ -17,6 +17,7 @@ namespace PrefsUGUI
             public virtual string GuiLabel => this.guiLabel;
             public virtual bool Unsave { get; set; } = false;
             public virtual GuiHierarchy GuiHierarchy { get; protected set; } = null;
+            public abstract int GuiSortOrder { get; protected set; }
 
             [SerializeField]
             protected string key = "";
