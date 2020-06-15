@@ -4,79 +4,57 @@ using System.Collections.Generic;
 
 namespace PrefsUGUI.Commons
 {
-    public sealed class SortedList<T> : IEnumerable<T>
+    public class SortedList<T> : IEnumerable<T> where T : class
     {
-        public T this[int index]
+        public virtual T this[int index]
         {
-            get => this.items[index];
+            get => this.list[index].item;
         }
 
-        public int Count => this.items.Count;
-        public IReadOnlyList<T> Items => this.items;
-        public IReadOnlyList<int> Orders => this.orders;
+        public virtual int Count => this.list.Count;
+        public virtual IReadOnlyList<T> Items => this.list.ConvertAll(t => t.item);
+        public virtual IReadOnlyList<int> Orders => this.list.ConvertAll(t => t.order);
 
-        private List<T> items = new List<T>();
-        private List<int> orders = new List<int>();
-        private Func<T, T, int> sorter = null;
+        protected List<(T item, int order)> list = new List<(T item, int order)>();
 
 
-        public SortedList(Func<T, T, int> equalSorter = null)
+        public virtual int Add(T item, int order)
         {
-            this.sorter = equalSorter ?? ((e1, e2) => 0);
-        }
-
-        public int Add(T item, int order)
-        {
-            for(var i = 0; i < this.orders.Count; i++)
+            for(var i = 0; i < this.list.Count; i++)
             {
-                if(this.orders[i] == order)
+                if(this.list[i].order > order)
                 {
-                    var e = this.items[i];
-                    var sorted = this.sorter(e, item);
-
-                    this.items[i] = sorted <= 0 ? e : item;
-                    item = sorted <= 0 ? item : e;
-                }
-                else if(this.orders[i] > order)
-                {
-                    this.items.Insert(i, item);
-                    this.orders.Insert(i, order);
-
+                    this.list.Insert(i, (item, order));
                     return i;
                 }
             }
 
-            this.items.Add(item);
-            this.orders.Add(order);
-
-            return this.items.Count - 1;
+            this.list.Add((item, order));
+            return this.list.Count - 1;
         }
 
-        public bool Remove(T item)
+        public virtual bool Remove(T item)
         {
-            var index = this.items.IndexOf(item);
-            if(index < 0)
+            for (var i = 0; i < this.list.Count; i++)
             {
-                return false;
+                if (this.list[i].item == item)
+                {
+                    this.list.RemoveAt(i);
+                    return true;
+                }
             }
 
-            this.items.RemoveAt(index);
-            this.orders.RemoveAt(index);
-
-            return true;
+            return false;
         }
 
-        public void Clear()
-        {
-            this.items.Clear();
-            this.orders.Clear();
-        }
+        public virtual void Clear()
+            => this.list.Clear();
 
-        public IEnumerator<T> GetEnumerator()
+        public virtual IEnumerator<T> GetEnumerator()
         {
-            for(var i = 0; i < this.Count; i++)
+            for (var i = 0; i < this.Count; i++)
             {
-                yield return this.items[i];
+                yield return this.list[i].item;
             }
         }
 
@@ -84,6 +62,6 @@ namespace PrefsUGUI.Commons
             => this.GetEnumerator();
 
         public static explicit operator List<T>(SortedList<T> sortedList)
-            => new List<T>(sortedList.items);
+            => new List<T>(sortedList.Items);
     }
 }

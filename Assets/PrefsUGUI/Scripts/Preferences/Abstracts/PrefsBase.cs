@@ -24,6 +24,8 @@ namespace PrefsUGUI
             [SerializeField]
             protected string guiLabel = "";
 
+            protected bool disposed = false;
+
 
             public PrefsBase(string key, GuiHierarchy hierarchy = null, string guiLabel = null)
             {
@@ -34,16 +36,6 @@ namespace PrefsUGUI
                 this.Regist();
             }
 
-            ~PrefsBase()
-            {
-                this.Dispose();
-            }
-
-            public void Dispose()
-            {
-                RemovePrefs(this);
-            }
-
             public abstract void ResetDefaultValue();
             public abstract void Reload(bool withEvent = true);
 
@@ -51,12 +43,12 @@ namespace PrefsUGUI
             {
                 void ValueSetter()
                 {
-                    if(this.Unsave == false)
+                    if (this.Unsave == false)
                     {
                         this.ValueSetToStorage();
                     }
                 };
-                ValueSetters.Add(ValueSetter);
+                StorageValueSetters.Add(ValueSetter);
 
                 this.OnRegisted();
             }
@@ -66,6 +58,30 @@ namespace PrefsUGUI
 
             protected abstract void ValueSetToStorage();
             protected abstract void OnRegisted();
+
+            #region IDisposable Support
+            ~PrefsBase()
+            {
+                this.Dispose(false);
+            }
+
+            public void Dispose()
+            {
+                this.Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (this.disposed == true)
+                {
+                    return;
+                }
+
+                RemovePrefs(this.SaveKey);
+                this.disposed = true;
+            }
+            #endregion
         }
     }
 }

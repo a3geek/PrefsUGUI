@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,28 +28,36 @@ namespace PrefsUGUI.Guis
         [SerializeField, UnityEngine.Serialization.FormerlySerializedAs("eventSystem")]
         private EventSystem eventSystemPrefab = null;
 
-        private Queue<Action> prefsCreators = new Queue<Action>();
+        private Func<ConcurrentQueue<Action>> prfsActionsCacheGetter = null;
 
 
         private void Awake()
         {
             this.Canvas = this.CreateCanvas();
-            if(EventSystem.current == null)
+            if (EventSystem.current == null)
             {
                 this.CreateEventSystem();
             }
 
-            this.Create();
+            this.DequeuePrefsActionsCache();
+        }
+
+        private void Start()
+        {
+            this.DequeuePrefsActionsCache();
         }
 
         private void Update()
         {
-            this.Create();
+            this.DequeuePrefsActionsCache();
         }
+
+        public void SetPrefsActionsCacheGetter(Func<ConcurrentQueue<Action>> getter)
+            => this.prfsActionsCacheGetter = this.prfsActionsCacheGetter ?? getter;
 
         public void ShowGUI()
         {
-            if(this.Canvas != null)
+            if (this.Canvas != null)
             {
                 this.Canvas.gameObject.SetActive(true);
             }
@@ -57,30 +66,31 @@ namespace PrefsUGUI.Guis
         public void AddPrefs<ValType, GuiType>(Prefs.PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
-            void Creator() => onCreated?.Invoke(this.Canvas.AddPrefs<ValType, GuiType>(prefs));
-
-            this.prefsCreators.Enqueue(Creator);
-        }
-
-        public void RemovePrefs(Prefs.PrefsBase prefs)
-        {
-            if(this.Canvas != null)
+            if (this.Canvas != null)
             {
-                this.Canvas.RemovePrefs(prefs);
+                onCreated?.Invoke(this.Canvas.AddPrefs<ValType, GuiType>(prefs));
             }
         }
 
-        public void RemoveCategory(GuiHierarchy hierarchy)
+        public void RemovePrefs(string prefsSaveKey)
         {
-            if(this.Canvas != null)
+            if (this.Canvas != null)
             {
-                this.Canvas.RemoveCategory(hierarchy);
+                this.Canvas.RemovePrefs(prefsSaveKey);
+            }
+        }
+
+        public void RemoveCategory(string fullHierarchyName)
+        {
+            if (this.Canvas != null)
+            {
+                this.Canvas.RemoveCategory(fullHierarchyName);
             }
         }
 
         public void SetCanvasSize(float width, float height)
         {
-            if(this.Canvas == null)
+            if (this.Canvas == null)
             {
                 return;
             }
@@ -92,14 +102,17 @@ namespace PrefsUGUI.Guis
             );
         }
 
-        private void Create()
+        private void DequeuePrefsActionsCache()
         {
-            if(this.Canvas != null)
+            if (this.prfsActionsCacheGetter == null)
             {
-                while(this.prefsCreators.Count > 0)
-                {
-                    this.prefsCreators.Dequeue()?.Invoke();
-                }
+                return;
+            }
+
+            var queue = this.prfsActionsCacheGetter.Invoke();
+            while (queue.TryDequeue(out var action) == true)
+            {
+                action?.Invoke();
             }
         }
 

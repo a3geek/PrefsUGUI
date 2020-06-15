@@ -1,113 +1,92 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace PrefsUGUI
 {
     using static Prefs;
 
-    /// <summary>
-    /// Hierarchy preset for GUI.
-    /// </summary>
     [Serializable]
-    public sealed class GuiHierarchy : IDisposable
+    public class GuiHierarchy : IDisposable
     {
-        /// <summary>Default sort order for GUI hierarchy.</summary>
         public const int DefaultSortOrder = 0;
 
-        /// <summary>Splitted hierarchy.</summary>
-        public string[] SplitHierarchy => this.Hierarchy.TrimEnd(HierarchySeparator).Split(HierarchySeparator);
-        /// <summary>Hierarchy of GUI.</summary>
-        public string Hierarchy => this.hierarchy;
-        /// <summary>Sort order for GUI hierarchy from root.</summary>
-        public int[] SortOrders => this.sortOrders;
-        /// <summary>Parent in GUI.</summary>
-        public GuiHierarchy Parent => this.parent;
-        /// <summary>All Parents in GUI to the root.</summary>
-        public IReadOnlyList<GuiHierarchy> Parents { get; } = new List<GuiHierarchy>();
-        public string FullHierarchy { get; }
+        public virtual string HierarchyName => this.hierarchyName;
+        public virtual int SortOrder => this.sortOrder;
+        public virtual GuiHierarchy Parent => this.parent;
+        public virtual Guid HierarchyId { get; } = Guid.Empty;
+        public virtual IReadOnlyList<GuiHierarchy> Parents { get; } = new List<GuiHierarchy>();
+        public virtual string FullHierarchy { get; } = "";
 
-        /// <summary>Hierarchy of GUI.</summary>
         [SerializeField]
-        private string hierarchy = "";
-        /// <summary>Sort order for GUI hierarchy from root.</summary>
+        protected string hierarchyName = "";
         [SerializeField]
-        private int[] sortOrders = new int[0];
-        /// <summary>Parent in GUI.</summary>
+        protected int sortOrder = 0;
         [SerializeField]
-        private GuiHierarchy parent = null;
+        protected GuiHierarchy parent = null;
+
+        protected bool disposed = false;
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="hierarchy">Hierarchy of GUI.</param>
-        /// <param name="sortOrder">Sort order for GUI hierarchy</param>
-        /// <param name="parent">Parent in GUI.</param>
-        public GuiHierarchy(string hierarchy, int sortOrder = DefaultSortOrder, GuiHierarchy parent = null)
-            : this(hierarchy, new int[] { sortOrder }, parent)
+        public GuiHierarchy(string hierarchyName, int sortOrder = DefaultSortOrder, GuiHierarchy parent = null)
         {
-            ;
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="hierarchy">Hierarchy of GUI.</param>
-        /// <param name="sortOrders">Sort order for GUI hierarchy from root.</param>
-        /// <param name="parent">Parent in GUI.</param>
-        public GuiHierarchy(string hierarchy, int[] sortOrders, GuiHierarchy parent = null)
-        {
+            this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty) + HierarchySeparator;
             this.parent = parent;
-            this.sortOrders = (sortOrders == null || sortOrders.Length <= 0) ? new int[] { DefaultSortOrder } : sortOrders;
+            this.sortOrder = sortOrder;
 
-            this.hierarchy = (hierarchy.TrimEnd(HierarchySeparator) + HierarchySeparator).TrimStart(HierarchySeparator);
+            this.HierarchyId = Guid.NewGuid();
             this.Parents = this.GetParents();
             this.FullHierarchy = this.GetFullHierarchy();
         }
 
-        /// <summary>
-        /// Get sorted order by the specified index.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public int GetSortOrder(int index)
-        {
-            var orders = this.SortOrders;
-            return index >= 0 && index < orders.Length ? orders[index] :
-                (orders.Length == 1 ? orders[0] : DefaultSortOrder);
-        }
-
-        public void Dispose()
-        {
-            RemoveGuiHierarchy(this);
-        }
-
-        private List<GuiHierarchy> GetParents()
+        protected virtual List<GuiHierarchy> GetParents()
         {
             var parents = new List<GuiHierarchy>();
             var parent = this.Parent;
 
-            while(parent != null)
+            while (parent != null)
             {
-                parents.Insert(0, parent);
+                parents.Add(parent);
                 parent = parent.Parent;
             }
 
+            parents.Reverse();
             return parents;
         }
 
-        private string GetFullHierarchy()
+        protected virtual string GetFullHierarchy()
         {
             var hierarchy = "";
-            foreach(var parent in this.Parents)
+            foreach (var parent in this.Parents)
             {
-                hierarchy += parent.Hierarchy;
+                hierarchy += parent.HierarchyName;
             }
 
-            return hierarchy + this.Hierarchy;
+            return hierarchy + this.HierarchyName;
         }
+
+        #region IDisposable Support
+        ~GuiHierarchy()
+        {
+            this.Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed == true)
+            {
+                return;
+            }
+
+            RemoveGuiHierarchy(this.FullHierarchy.ToCharArray().ToString());
+            this.disposed = true;
+        }
+        #endregion
     }
 }
