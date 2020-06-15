@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PrefsUGUI.Guis
 {
@@ -71,8 +72,8 @@ namespace PrefsUGUI.Guis
     public static class PrefsGuiTypeExtentions
     {
         private static IReadOnlyDictionary<Type, PrefsGuiType> PrefsGuiTypesDictionary { get; }
-            = Enum.GetValues(typeof(PrefsGuiType))
-            .Cast<PrefsGuiType>().ToDictionary(guiType => guiType.GetPrefsGuiComponentType());
+            = Enum.GetValues(typeof(PrefsGuiType)).Cast<PrefsGuiType>().Where(type => type != PrefsGuiType.None)
+                .ToDictionary(guiType => guiType.GetPrefsGuiComponentType());
 
 
         public static Type GetPrefsGuiComponentType(this PrefsGuiType type)

@@ -23,7 +23,9 @@ namespace PrefsUGUI
 
         private static PrefsGuis PrefsGuis = null;
         private static ConcurrentBag<Action> StorageValueSetters = new ConcurrentBag<Action>();
-        private static ConcurrentQueue<Action> PrefsActionsCache = new ConcurrentQueue<Action>();
+        private static ConcurrentDictionary<Guid, Action> AddPrefsCache = new ConcurrentDictionary<Guid, Action>();
+        private static ConcurrentDictionary<Guid, Action> RemovePrefsCache = new ConcurrentDictionary<Guid, Action>();
+        private static ConcurrentDictionary<Guid, Action> RemoveGuiHierarchyCache = new ConcurrentDictionary<Guid, Action>();
 
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -45,8 +47,13 @@ namespace PrefsUGUI
             AggregationName = parameters == null ? PrefsParameters.DefaultNameGetter() : parameters.AggregationName;
             FileName = parameters == null ? PrefsParameters.DefaultNameGetter() : parameters.FileName;
 
-            ConcurrentQueue<Action> GetPrefsActionsCache() => PrefsActionsCache;
-            PrefsGuis.SetPrefsActionsCacheGetter(GetPrefsActionsCache);
+            void ExecuteCachingActions()
+            {
+                ExecuteAndClear(AddPrefsCache);
+                ExecuteAndClear(RemovePrefsCache);
+                ExecuteAndClear(RemoveGuiHierarchyCache);
+            }
+            PrefsGuis.SetCachingActionsExecutor(ExecuteCachingActions);
         }
 
         public static void Save()
@@ -88,20 +95,29 @@ namespace PrefsUGUI
         public static void RemoveGuiHierarchy(Guid hierarchyId)
         {
             void RemoveGuiHierarchy() => PrefsGuis.RemoveCategory(ref hierarchyId);
-            PrefsActionsCache.Enqueue(RemoveGuiHierarchy);
+            RemoveGuiHierarchyCache[hierarchyId] = RemoveGuiHierarchy;
         }
 
         private static void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             void AddPrefs() => PrefsGuis.AddPrefs(prefs, onCreated);
-            PrefsActionsCache.Enqueue(AddPrefs);
+            AddPrefsCache[prefs.PrefsId] = AddPrefs;
         }
 
         private static void RemovePrefs(Guid prefsId)
         {
             void RemovePrefs() => PrefsGuis.RemovePrefs(ref prefsId);
-            PrefsActionsCache.Enqueue(RemovePrefs);
+            RemovePrefsCache[prefsId] = RemovePrefs;
+        }
+
+        private static void ExecuteAndClear(ConcurrentDictionary<Guid, Action> dictionary)
+        {
+            foreach(var pair in dictionary)
+            {
+                pair.Value?.Invoke();
+            }
+            dictionary.Clear();
         }
     }
 }

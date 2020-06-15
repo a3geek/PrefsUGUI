@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,9 +30,9 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
         public void RemovePrefs(ref Guid prefsId)
         {
-            for(var i = 0; i < this.categories.Count; i++)
+            for (var i = 0; i < this.categories.Count; i++)
             {
-                if(this.categories[i].TryRemovePrefs(ref prefsId, out var prefsGui) == false)
+                if (this.categories[i].TryRemovePrefs(ref prefsId, out var prefsGui) == false)
                 {
                     continue;
                 }
@@ -49,9 +50,9 @@ namespace PrefsUGUI.Guis.Factories.Classes
             }
 
             var currentCategory = this.Top;
-            var parents = hierarchy.Parents;
+            var parents = hierarchy?.Parents;
 
-            foreach (var parent in parents)
+            foreach (var parent in (parents ?? Enumerable.Empty<GuiHierarchy>()))
             {
                 var categoryId = parent.HierarchyId;
                 currentCategory = this.GetOrCreateNextCategory(

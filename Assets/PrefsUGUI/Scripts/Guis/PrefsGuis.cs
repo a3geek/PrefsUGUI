@@ -28,7 +28,7 @@ namespace PrefsUGUI.Guis
         [SerializeField, UnityEngine.Serialization.FormerlySerializedAs("eventSystem")]
         private EventSystem eventSystemPrefab = null;
 
-        private Func<ConcurrentQueue<Action>> prfsActionsCacheGetter = null;
+        private Action cachingActionsExecutor = null;
 
 
         private void Awake()
@@ -39,21 +39,21 @@ namespace PrefsUGUI.Guis
                 this.CreateEventSystem();
             }
 
-            this.DequeuePrefsActionsCache();
+            this.cachingActionsExecutor?.Invoke();
         }
 
         private void Start()
         {
-            this.DequeuePrefsActionsCache();
+            this.cachingActionsExecutor?.Invoke();
         }
 
         private void Update()
         {
-            this.DequeuePrefsActionsCache();
+            this.cachingActionsExecutor?.Invoke();
         }
 
-        public void SetPrefsActionsCacheGetter(Func<ConcurrentQueue<Action>> getter)
-            => this.prfsActionsCacheGetter = this.prfsActionsCacheGetter ?? getter;
+        public void SetCachingActionsExecutor(Action executor)
+            => this.cachingActionsExecutor = this.cachingActionsExecutor ?? executor;
 
         public void ShowGUI()
         {
@@ -100,20 +100,6 @@ namespace PrefsUGUI.Guis
                 width <= 0f ? delta.x : width,
                 height <= 0f ? delta.y : height
             );
-        }
-
-        private void DequeuePrefsActionsCache()
-        {
-            if (this.prfsActionsCacheGetter == null)
-            {
-                return;
-            }
-
-            var queue = this.prfsActionsCacheGetter.Invoke();
-            while (queue.TryDequeue(out var action) == true)
-            {
-                action?.Invoke();
-            }
         }
 
         private PrefsCanvas CreateCanvas()
