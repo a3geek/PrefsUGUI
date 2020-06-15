@@ -49,7 +49,13 @@ namespace PrefsUGUI.Guis.Factories.Classes
             void onPrefsValueChanged() => gui.SetValue(prefs.Value);
             prefs.OnValueChanged += onPrefsValueChanged;
 
-            category.PrefsList.Add((prefs, gui), prefs.GuiSortOrder);
+            void OnDisposed() => category.OnDiscard -= prefs.Reload;
+            prefs.OnDisposed += OnDisposed;
+            category.OnDiscard += prefs.Reload;
+
+            var index = category.AddPrefs(prefs.PrefsId, gui, prefs.GuiSortOrder);
+            gui.transform.SetSiblingIndex(index);
+
             return gui;
         }
     }

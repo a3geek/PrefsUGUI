@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories
@@ -35,16 +36,21 @@ namespace PrefsUGUI.Guis.Factories
 
         private void Awake()
         {
-            this.creator = new PrefsGuiCreator(this);
+            this.creator = new PrefsGuiCreator(this, this.links, this.prefabs);
             this.links.Content.gameObject.SetActive(false);
 
             var topContent = this.creator.CreateContent();
             this.structs = new CategoriesStruct(topContent, this.creator);
-            this.OnGuiChanged(this.structs.current);
+            this.OnCategoryChanged(this.structs.Current);
 
             this.links.Close.onClick.AddListener(this.OnClickedCloseButton);
             this.links.Discard.onClick.AddListener(this.OnClickedDiscardButton);
             this.links.Save.onClick.AddListener(this.OnClickedSaveButton);
+        }
+
+        private void Reset()
+        {
+            this.links.Reset(this.gameObject);
         }
 
         private void OnValidate()
@@ -61,49 +67,28 @@ namespace PrefsUGUI.Guis.Factories
             return gui;
         }
 
-        public void RemovePrefs(string prefsSaveKey)
-        {
-            var categories = this.structs.categories;
+        public void RemovePrefs(ref Guid prefsId)
+            => this.structs.RemovePrefs(ref prefsId);
 
-            for (var i = 0; i < categories.Count; i++)
-            {
-                var dic = categories[i].Prefs;
-
-                if (dic.ContainsKey(prefs) == true)
-                {
-                    var gui = dic[prefs].gameObject;
-
-                    dic.Remove(prefs);
-                    Destroy(gui);
-
-                    return;
-                }
-            }
-        }
-
-        public void RemoveCategory(string fullHierarchyName)
-            => this.structs.RemoveCategory(fullHierarchyName);
+        public void RemoveCategory(ref Guid categoryId)
+            => this.structs.RemoveCategory(ref categoryId);
 
         public void ChangeGUI(Category nextCategory)
-            => this.OnGuiChanged(this.structs.ChangeGUI(nextCategory));
+            => this.OnCategoryChanged(this.structs.ChangeGUI(nextCategory));
 
         private void OnClickedDiscardButton()
-        {
-            foreach (var prefs in this.structs.Current.Prefs)
-            {
-                prefs.Key.Reload();
-            }
-        }
+            => this.structs.Current.Discard();
 
-        private void OnClickedCloseButton() => this.OnGuiChanged(this.structs.ChangeGUI(this.structs.Current.Previous));
+        private void OnClickedCloseButton()
+            => this.OnCategoryChanged(this.structs.ChangeGUI(this.structs.Current.Previous));
 
         private void OnClickedSaveButton()
         {
             Prefs.Save();
-            gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
         }
 
-        private void OnGuiChanged(Category category)
+        private void OnCategoryChanged(Category category)
         {
             this.links.Scroll.content = category.Content;
 
@@ -120,13 +105,13 @@ namespace PrefsUGUI.Guis.Factories
                 hierarchy = previous.CategoryName + Prefs.HierarchySeparator + hierarchy;
                 previous = previous.Previous;
             }
-            var isTop = string.IsNullOrEmpty(hierarchy);
+            var isTop = category.CategoryId == this.structs.Top.CategoryId;
 
             this.links.Hierarchy.color = isTop == true ? this.topHierarchyColor : this.untopHierarchyColor;
             this.links.Hierarchy.fontStyle = isTop == true ? FontStyle.Italic : FontStyle.Normal;
-            this.links.Hierarchy.text = isTop == true ?
-                TopHierarchyText :
-                hierarchy.TrimStart(Prefs.HierarchySeparator) + Prefs.HierarchySeparator;
+            this.links.Hierarchy.text = isTop == true
+                ? TopHierarchyText
+                : hierarchy.TrimStart(Prefs.HierarchySeparator) + Prefs.HierarchySeparator;
 
             return isTop;
         }
@@ -144,7 +129,5 @@ namespace PrefsUGUI.Guis.Factories
                 this.links.Save.gameObject.SetActive(false);
             }
         }
-
-        private void Reset() => this.links.Reset(gameObject);
     }
 }

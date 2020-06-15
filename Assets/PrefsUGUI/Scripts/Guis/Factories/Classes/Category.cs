@@ -10,6 +10,8 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
     public class Category
     {
+        public event Action OnDiscard = delegate { };
+
         public RectTransform Content { get; } = null;
         public string CategoryName { get; } = "";
         public Guid CategoryId { get; } = Guid.Empty;
@@ -35,6 +37,9 @@ namespace PrefsUGUI.Guis.Factories.Classes
         {
             this.Previous = previous;
         }
+
+        public void Discard()
+            => this.OnDiscard();
 
         public PrefsGuiButton GetButton(string label)
         {
@@ -80,7 +85,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return true;
         }
 
-        public int AddPrefs(ref Guid guid, PrefsGuiBase prefsGui, int sortOrder)
+        public int AddPrefs(Guid guid, PrefsGuiBase prefsGui, int sortOrder)
         {
             this.prefsGuis[guid] = prefsGui;
             return this.prefs.Add(prefsGui, sortOrder) + this.buttons.Count;

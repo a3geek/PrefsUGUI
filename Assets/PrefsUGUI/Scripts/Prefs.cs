@@ -85,9 +85,9 @@ namespace PrefsUGUI
             }
         }
 
-        public static void RemoveGuiHierarchy(string fullHierarchyName)
+        public static void RemoveGuiHierarchy(Guid hierarchyId)
         {
-            void RemoveGuiHierarchy() => PrefsGuis.RemoveCategory(fullHierarchyName);
+            void RemoveGuiHierarchy() => PrefsGuis.RemoveCategory(ref hierarchyId);
             PrefsActionsCache.Enqueue(RemoveGuiHierarchy);
         }
 
@@ -98,9 +98,9 @@ namespace PrefsUGUI
             PrefsActionsCache.Enqueue(AddPrefs);
         }
 
-        private static void RemovePrefs(string prefsSaveKey)
+        private static void RemovePrefs(Guid prefsId)
         {
-            void RemovePrefs() => PrefsGuis.RemovePrefs(prefsSaveKey);
+            void RemovePrefs() => PrefsGuis.RemovePrefs(ref prefsId);
             PrefsActionsCache.Enqueue(RemovePrefs);
         }
     }

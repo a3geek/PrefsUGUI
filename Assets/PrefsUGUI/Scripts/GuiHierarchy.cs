@@ -84,7 +84,7 @@ namespace PrefsUGUI
                 return;
             }
 
-            RemoveGuiHierarchy(this.FullHierarchy.ToCharArray().ToString());
+            RemoveGuiHierarchy(this.HierarchyId);
             this.disposed = true;
         }
         #endregion

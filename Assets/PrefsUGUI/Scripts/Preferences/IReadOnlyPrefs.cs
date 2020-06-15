@@ -6,7 +6,9 @@ namespace PrefsUGUI
     {
         #region "PrefsBase"
         event Action OnValueChanged;
+        event Action OnDisposed;
 
+        Guid PrefsId { get; }
         string SaveKey { get; }
         string Key { get; }
         string GuiLabel { get; }

@@ -72,19 +72,19 @@ namespace PrefsUGUI.Guis
             }
         }
 
-        public void RemovePrefs(string prefsSaveKey)
+        public void RemovePrefs(ref Guid prefsId)
         {
             if (this.Canvas != null)
             {
-                this.Canvas.RemovePrefs(prefsSaveKey);
+                this.Canvas.RemovePrefs(ref prefsId);
             }
         }
 
-        public void RemoveCategory(string fullHierarchyName)
+        public void RemoveCategory(ref Guid categoryId)
         {
             if (this.Canvas != null)
             {
-                this.Canvas.RemoveCategory(fullHierarchyName);
+                this.Canvas.RemoveCategory(ref categoryId);
             }
         }
 

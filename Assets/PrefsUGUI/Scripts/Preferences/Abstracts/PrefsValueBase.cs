@@ -50,7 +50,10 @@ namespace PrefsUGUI
             public virtual void Set(ValType value, bool withEvent = true)
                 => this.SetValueInternal(value, withEvent);
 
-            public override void Reload(bool withEvent = true)
+            public override void Reload()
+                => this.Reload(true);
+
+            public override void Reload(bool withEvent)
                 => this.SetValueInternal(Storage.Get(this.SaveKey, this.DefaultValue, AggregationName), withEvent);
 
             protected virtual void SetValueInternal(ValType value, bool withEvent = true)

@@ -11,7 +11,9 @@ namespace PrefsUGUI
         public abstract class PrefsBase : IDisposable
         {
             public virtual event Action OnValueChanged = delegate { };
+            public virtual event Action OnDisposed = delegate { };
 
+            public virtual Guid PrefsId { get; } = Guid.Empty;
             public virtual string SaveKey => (this.GuiHierarchy?.FullHierarchy ?? "") + this.key;
             public virtual string Key => this.key;
             public virtual string GuiLabel => this.guiLabel;
@@ -32,12 +34,14 @@ namespace PrefsUGUI
                 this.key = key;
                 this.GuiHierarchy = hierarchy;
                 this.guiLabel = guiLabel ?? key.ToLabelable();
+                this.PrefsId = Guid.NewGuid();
 
                 this.Regist();
             }
 
             public abstract void ResetDefaultValue();
-            public abstract void Reload(bool withEvent = true);
+            public abstract void Reload();
+            public abstract void Reload(bool withEvent);
 
             protected virtual void Regist()
             {
@@ -78,7 +82,7 @@ namespace PrefsUGUI
                     return;
                 }
 
-                RemovePrefs(this.SaveKey);
+                RemovePrefs(this.PrefsId);
                 this.disposed = true;
             }
             #endregion

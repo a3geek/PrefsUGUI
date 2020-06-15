@@ -10,30 +10,45 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
     public class CategoriesStruct
     {
-        private Category current = null;
-        private Category top = null;
+        public Category Top { get; } = null;
+        public Category Current { get; private set; } = null;
+
         private List<Category> categories = new List<Category>();
         private PrefsGuiCreator creator = null;
 
 
         public CategoriesStruct(RectTransform topContent, PrefsGuiCreator creator)
         {
-            this.top = new Category(Guid.NewGuid(), topContent, PrefsCanvas.TopCategoryName);
+            this.Top = new Category(Guid.NewGuid(), topContent, PrefsCanvas.TopCategoryName);
 
             this.creator = creator;
-            this.categories.Add(this.top);
+            this.categories.Add(this.Top);
 
-            this.ChangeGUI(this.top);
+            this.ChangeGUI(this.Top);
+        }
+
+        public void RemovePrefs(ref Guid prefsId)
+        {
+            for(var i = 0; i < this.categories.Count; i++)
+            {
+                if(this.categories[i].TryRemovePrefs(ref prefsId, out var prefsGui) == false)
+                {
+                    continue;
+                }
+
+                Object.Destroy(prefsGui.gameObject);
+                return;
+            }
         }
 
         public Category GetCategory(GuiHierarchy hierarchy)
         {
             if (hierarchy == null)
             {
-                return this.top;
+                return this.Top;
             }
 
-            var currentCategory = this.top;
+            var currentCategory = this.Top;
             var parents = hierarchy.Parents;
 
             foreach (var parent in parents)
@@ -73,12 +88,12 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
         public Category ChangeGUI(Category nextCategory)
         {
-            this.current?.SetActive(false);
+            this.Current?.SetActive(false);
 
-            this.current = nextCategory;
-            this.current?.SetActive(true);
+            this.Current = nextCategory ?? this.Top;
+            this.Current.SetActive(true);
 
-            return this.current;
+            return this.Current;
         }
 
         private bool GetNextCategory(Category currentCategory, ref Guid nextCategoryId, out Category category)
