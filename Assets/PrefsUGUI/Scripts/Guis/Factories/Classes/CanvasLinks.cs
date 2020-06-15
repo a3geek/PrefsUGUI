@@ -7,7 +7,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
     using Components;
 
     [Serializable]
-    public sealed class GuiLinks
+    public sealed class CanvasLinks
     {
         public Canvas Canvas => this.canvas;
         public RectTransform Panel => this.panel;

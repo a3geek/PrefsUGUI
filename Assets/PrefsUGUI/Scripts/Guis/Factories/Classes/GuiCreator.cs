@@ -7,11 +7,11 @@ namespace PrefsUGUI.Guis.Factories.Classes
     public class GuiCreator
     {
         private PrefsCanvas canvas = null;
-        private GuiLinks links = null;
-        private GuiPrefabs prefabs = null;
+        private CanvasLinks links = null;
+        private PrefsGuiPrefabs prefabs = null;
 
 
-        public GuiCreator(PrefsCanvas canvas, GuiLinks links, GuiPrefabs prefabs)
+        public GuiCreator(PrefsCanvas canvas, CanvasLinks links, PrefsGuiPrefabs prefabs)
         {
             this.canvas = canvas;
             this.links = links;

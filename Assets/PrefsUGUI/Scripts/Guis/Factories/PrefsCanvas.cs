@@ -24,9 +24,9 @@ namespace PrefsUGUI.Guis.Factories
         [SerializeField]
         private Color untopHierarchyColor = Color.white;
         [SerializeField]
-        private GuiLinks links = new GuiLinks();
+        private CanvasLinks links = new CanvasLinks();
         [SerializeField]
-        private GuiPrefabs prefabs = new GuiPrefabs();
+        private PrefsGuiPrefabs prefabs = new PrefsGuiPrefabs();
 
         private GuiCreator creator = null;
         private GuiStruct structs = null;
