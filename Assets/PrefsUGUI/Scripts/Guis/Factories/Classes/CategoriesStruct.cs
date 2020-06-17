@@ -66,8 +66,13 @@ namespace PrefsUGUI.Guis.Factories.Classes
             );
         }
 
-        public void RemoveCategory(ref Guid categoryId)
+        public Category RemoveCategory(ref Guid categoryId)
         {
+            if(this.Top.CategoryId == categoryId)
+            {
+                return this.Top;
+            }
+
             for (var i = 0; i < this.categories.Count; i++)
             {
                 if (this.categories[i].CategoryId == categoryId)
@@ -82,9 +87,11 @@ namespace PrefsUGUI.Guis.Factories.Classes
                     Object.Destroy(category.Content.gameObject);
                     this.categories.RemoveAt(i);
 
-                    return;
+                    return category.Previous;
                 }
             }
+
+            return this.Top;
         }
 
         public Category ChangeGUI(Category nextCategory)

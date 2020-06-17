@@ -24,6 +24,7 @@ namespace PrefsUGUI
         private static PrefsGuis PrefsGuis = null;
         private static ConcurrentBag<Action> StorageValueSetters = new ConcurrentBag<Action>();
         private static ConcurrentDictionary<string, Action> AddPrefsCache = new ConcurrentDictionary<string, Action>();
+        private static ConcurrentQueue<string> AddPrefsCacheOrders = new ConcurrentQueue<string>();
         private static ConcurrentDictionary<Guid, Action> RemovePrefsCache = new ConcurrentDictionary<Guid, Action>();
         private static ConcurrentDictionary<Guid, Action> RemoveGuiHierarchyCache = new ConcurrentDictionary<Guid, Action>();
 
@@ -49,7 +50,7 @@ namespace PrefsUGUI
 
             void ExecuteCachingActions()
             {
-                ExecuteAndClear(AddPrefsCache);
+                ExecuteAndClear(AddPrefsCache, AddPrefsCacheOrders);
                 ExecuteAndClear(RemovePrefsCache);
                 ExecuteAndClear(RemoveGuiHierarchyCache);
             }
@@ -103,6 +104,7 @@ namespace PrefsUGUI
         {
             void AddPrefs() => PrefsGuis.AddPrefs(prefs, onCreated);
             AddPrefsCache[prefs.SaveKey] = AddPrefs;
+            AddPrefsCacheOrders.Enqueue(prefs.SaveKey);
         }
 
         private static void RemovePrefs(Guid prefsId)
@@ -116,6 +118,18 @@ namespace PrefsUGUI
             foreach(var pair in dictionary)
             {
                 pair.Value?.Invoke();
+            }
+            dictionary.Clear();
+        }
+
+        private static void ExecuteAndClear<T>(ConcurrentDictionary<T, Action> dictionary, ConcurrentQueue<T> orders)
+        {
+            while (orders.TryDequeue(out var index) == true)
+            {
+                if (dictionary.TryRemove(index, out var action) == true)
+                {
+                    action?.Invoke();
+                }
             }
             dictionary.Clear();
         }

@@ -26,9 +26,12 @@ namespace PrefsUGUI
             => this.ResetDefaultValue();
 
         protected override void OnCreatedGuiInternal(PrefsGuiButton gui)
-            => gui.Initialize(this.GuiLabel, this.Get());
+            => gui.Initialize(this.GuiLabel, this.FireOnClicked);
 
         protected override void Regist()
             => this.OnRegisted();
+
+        protected virtual void FireOnClicked()
+            => this.OnClicked();
     }
 }

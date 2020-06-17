@@ -71,7 +71,7 @@ namespace PrefsUGUI.Guis.Factories
             => this.structs.RemovePrefs(ref prefsId);
 
         public void RemoveCategory(ref Guid categoryId)
-            => this.structs.RemoveCategory(ref categoryId);
+            => this.ChangeGUI(this.structs.RemoveCategory(ref categoryId));
 
         public void ChangeGUI(Category nextCategory)
             => this.OnCategoryChanged(this.structs.ChangeGUI(nextCategory));

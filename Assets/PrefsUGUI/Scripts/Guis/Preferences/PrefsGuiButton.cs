@@ -44,7 +44,7 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual UnityAction GetValue()
             => this.callback;
 
-        public virtual void SetGuiListeners(PrefsUGUI.Prefs.PrefsValueBase<UnityAction> prefs)
+        public virtual void SetGuiListeners(Prefs.PrefsValueBase<UnityAction> prefs)
         {
         }
     }

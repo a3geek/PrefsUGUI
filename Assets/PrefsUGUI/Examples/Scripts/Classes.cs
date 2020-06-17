@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace PrefsUGUI.Examples
 {
@@ -36,12 +34,12 @@ namespace PrefsUGUI.Examples
                 sortOrder: 0
             );
             public PrefsFloatSlider PrefsFloatSlider = new PrefsFloatSlider("PrefsFloatSlider", -1f, 1f, 0.01f, Test0Gui,
-                sortOrder: 0
+                sortOrder: 0, onCreatedGui: prefs => prefs.BottomMargin = 25f
             );
 
             [SerializeField]
             private PrefsString PrefsString = new PrefsString("PrefsString", "String", Test0Gui,
-                sortOrder: 0
+                sortOrder: 2, onCreatedGui: prefs => prefs.TopMargin = 25f
             );
         }
 
@@ -96,7 +94,7 @@ namespace PrefsUGUI.Examples
             }
 
             private static void OnButton1Clicked()
-                => Instance.PrefsLabel.Set(nameof(Instance.PrefsButton1) + "Clicked");
+                => Instance.PrefsLabel.Set(nameof(Instance.PrefsButton1) + " Clicked");
         }
 #pragma warning restore 0414
     }

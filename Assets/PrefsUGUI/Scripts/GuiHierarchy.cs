@@ -30,7 +30,7 @@ namespace PrefsUGUI
 
         public GuiHierarchy(string hierarchyName, int sortOrder = DefaultSortOrder, GuiHierarchy parent = null)
         {
-            this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty) + HierarchySeparator;
+            this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);
             this.parent = parent;
             this.sortOrder = sortOrder;
 
@@ -59,7 +59,7 @@ namespace PrefsUGUI
             var hierarchy = "";
             foreach (var parent in this.Parents)
             {
-                hierarchy += parent.HierarchyName;
+                hierarchy += string.IsNullOrEmpty(parent?.HierarchyName) == true ? "" : parent.HierarchyName + HierarchySeparator;
             }
 
             return hierarchy + this.HierarchyName;

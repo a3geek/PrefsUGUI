@@ -46,7 +46,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
             gui.SetGuiListeners(prefs);
 
-            void onPrefsValueChanged() => gui.SetValue(prefs.Value);
+            void onPrefsValueChanged() => gui.SetValue(prefs.Get());
             prefs.OnValueChanged += onPrefsValueChanged;
 
             void OnDisposed() => category.OnDiscard -= prefs.Reload;

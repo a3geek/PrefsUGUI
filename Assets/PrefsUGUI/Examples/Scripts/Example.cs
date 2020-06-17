@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -17,14 +16,17 @@ namespace PrefsUGUI.Examples
         private List<(GuiHierarchy hierarchy, PrefsInt prefsInt)> hierarchies = new List<(GuiHierarchy hierarchy, PrefsInt prefsInt)>();
 
         [SerializeField]
+        private Texture2D prefsImage = null;
+        [SerializeField]
         private Test0 test0 = new Test0();
 
         private PrefsRect prefsRect = new PrefsRect("PrefsRect", new Rect(0.25f, 0.5f, 1f, 2f));
 #pragma warning restore 0414
 
 
-        private void Awake()
+        private void Start()
         {
+            this.test0.PrefsImageLabel.Image = this.prefsImage;
         }
 
         private void Update()
@@ -38,7 +40,7 @@ namespace PrefsUGUI.Examples
             {
                 this.prefsRect.VisibleGUI = !this.prefsRect.VisibleGUI;
             }
-            if(Input.GetKeyDown(KeyCode.S))
+            if(Input.GetKeyDown(KeyCode.N))
             {
                 this.prefsRect.Set(new Rect(1f, 2f, 3f, 4f));
             }
@@ -60,6 +62,8 @@ namespace PrefsUGUI.Examples
 
             var hierarchy = new GuiHierarchy("Hierarchy" + count, count, parent);
             var prefsInt = new PrefsInt("PrefsInt", count, hierarchy);
+            prefsInt.OnValueChanged += ()
+                => Debug.Log("OnValueChanged : " + hierarchy.FullHierarchy + Prefs.HierarchySeparator + prefsInt.Key);
 
             this.hierarchies.Add((hierarchy, prefsInt));
         }

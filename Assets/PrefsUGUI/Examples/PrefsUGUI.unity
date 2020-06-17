@@ -221,146 +221,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f00f1ac44a51645b3a62679bbcb467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Test2Ex:
-    PrefsFloatSlider:
-      key: PrefsFloatSlider2
-      guiLabel: Prefs Float Slider2
-      defaultValue: 10
-      guiLabelPrefix: 
-      guiLabelSufix: 
-      min: 0
-      max: 0
-    PrefsIntSlider:
-      key: PrefsIntSlider2
-      guiLabel: Prefs Int Slider2
-      defaultValue: 20
-      guiLabelPrefix: 
-      guiLabelSufix: 
-      min: 0
-      max: 0
-  test1:
+  prefsImage: {fileID: 2800000, guid: 63b42c8cc46add740b59956e10f0ee0c, type: 3}
+  test0:
     PrefsBool:
       key: PrefsBool
-      guiLabel: Prefs <color=red>Bool</color>
+      guiLabel: Prefs<color=red>Bool</color>
       defaultValue: 1
       guiLabelPrefix: 
       guiLabelSufix: 
-    PrefsColor:
-      key: PrefsColor
-      guiLabel: Prefs Color
-      defaultValue: {r: 1, g: 0, b: 0, a: 1}
+    PrefsImageLabel:
+      key: PrefsImageLabel
+      guiLabel: Prefs Image Label
+      defaultValue: TEXT
       guiLabelPrefix: 
       guiLabelSufix: 
-    PrefsColorSlider:
-      key: PrefsColorSlider
-      guiLabel: Prefs Color Slider
-      defaultValue: {r: 0, g: 0, b: 1, a: 1}
+    PrefsLabel:
+      key: PrefsLabel
+      guiLabel: Prefs Label
+      defaultValue: TEXT
       guiLabelPrefix: 
       guiLabelSufix: 
-    PrefsFloat:
-      key: PrefsFloat
-      guiLabel: Prefs Float
-      defaultValue: 0.12345
-      guiLabelPrefix: 
-      guiLabelSufix: 
-    PrefsFloatSlider:
-      key: PrefsFloatSlider
-      guiLabel: Prefs Float Slider
-      defaultValue: 5
-      guiLabelPrefix: 
-      guiLabelSufix: 
-      min: 0
-      max: 10
     PrefsInt:
       key: PrefsInt
       guiLabel: Prefs Int
-      defaultValue: 3
+      defaultValue: 10
       guiLabelPrefix: 
       guiLabelSufix: 
     PrefsIntSlider:
       key: PrefsIntSlider
       guiLabel: Prefs Int Slider
-      defaultValue: 2
+      defaultValue: 10
       guiLabelPrefix: 
       guiLabelSufix: 
-      min: 0
-      max: 10
-    PrefsButton1:
-      key: Click1
-      guiLabel: Click1
+      min: -20
+      max: 20
+    PrefsFloat:
+      key: PrefsFloat
+      guiLabel: Prefs Float
+      defaultValue: 0.01
       guiLabelPrefix: 
       guiLabelSufix: 
-    PrefsButton2:
-      key: SwitchClick1
-      guiLabel: Switch Click1
+    PrefsFloatSlider:
+      key: PrefsFloatSlider
+      guiLabel: Prefs Float Slider
+      defaultValue: 0.01
       guiLabelPrefix: 
       guiLabelSufix: 
-  test2:
+      min: -1
+      max: 1
     PrefsString:
       key: PrefsString
       guiLabel: Prefs String
-      defaultValue: Example
-      guiLabelPrefix: 
-      guiLabelSufix: 
-    PrefsVector2:
-      key: PrefsVector2
-      guiLabel: Prefs Vector2
-      defaultValue: {x: 1, y: 1}
-      guiLabelPrefix: 
-      guiLabelSufix: 
-    PrefsVector2Int:
-      key: PrefsVector2Int
-      guiLabel: Prefs Vector2 Int
-      defaultValue: {x: 1, y: 0}
-      guiLabelPrefix: 
-      guiLabelSufix: 
-    PrefsButton3:
-      key: PrefsButton3
-      guiLabel: Prefs Button3
-      guiLabelPrefix: 
-      guiLabelSufix: 
-    prefsVector3:
-      key: PrefsVector3
-      guiLabel: Prefs Vector3
-      defaultValue: {x: 0, y: -1, z: 0}
-      guiLabelPrefix: 
-      guiLabelSufix: 
-    prefsVector3Int:
-      key: PrefsVector3Int
-      guiLabel: Prefs Vector3 Int
-      defaultValue: {x: -1, y: 0, z: 0}
-      guiLabelPrefix: 
-      guiLabelSufix: 
-    prefsVector4:
-      key: PrefsVector4
-      guiLabel: Prefs Vector4
-      defaultValue: {x: 0.1, y: 0.2, z: 0.3, w: 0.4}
-      guiLabelPrefix: 
-      guiLabelSufix: 
-  test3:
-    PrefsIntSliderUnsave:
-      key: PrefsIntSliderUnsave
-      guiLabel: Prefs Int Slider Unsave
-      defaultValue: 5
-      guiLabelPrefix: 
-      guiLabelSufix: 
-      min: 0
-      max: 10
-    PrefsLabel1:
-      key: PrefsLabel1
-      guiLabel: Prefs Label1
-      defaultValue: Test
-      guiLabelPrefix: 
-      guiLabelSufix: 
-    PrefsButton:
-      key: ChangePrefsLabel1
-      guiLabel: Change Prefs Label1
-      guiLabelPrefix: 
-      guiLabelSufix: 
-    prefsLabel:
-      key: PrefsLabel2
-      guiLabel: Prefs Label2
-      defaultValue: TimeExample
+      defaultValue: String
       guiLabelPrefix: 
       guiLabelSufix: 
 --- !u!20 &282840813
