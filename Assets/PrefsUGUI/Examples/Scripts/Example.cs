@@ -1,63 +1,30 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace PrefsUGUI.Examples
 {
-    using static Structs;
+    using static GuiHierarchies;
 
     [AddComponentMenu("")]
     public partial class Example : MonoBehaviour
     {
-        public IReadOnlyPrefs<string> Label => this.label;
-
 #pragma warning disable 0414
-        public Test2Ex1 Test2Ex = new Test2Ex1();
-
-        [SerializeField]
         private Test1 test1 = new Test1();
-        [SerializeField]
-        private Test2 test2 = new Test2();
-        [SerializeField]
-        private Test3 test3 = new Test3();
+        private Test1Ex1 test1Ex1 = new Test1Ex1();
+        private Test1Ex2 test1Ex2 = new Test1Ex2();
+        private List<(GuiHierarchy hierarchy, PrefsInt prefsInt)> hierarchies = new List<(GuiHierarchy hierarchy, PrefsInt prefsInt)>();
 
         [SerializeField]
-        private PrefsEnum<TestEnum1> prefsEnum1 = new PrefsEnum<TestEnum1>("PrefsEnum1", TestEnum1.Three, HierarchyTest2Ex2);
-        [SerializeField]
-        private PrefsEnum<TestEnum2> prefsEnum2 = new PrefsEnum<TestEnum2>("PrefsEnum2", TestEnum2.A, HierarchyTest2Ex2);
+        private Test0 test0 = new Test0();
 
         private PrefsRect prefsRect = new PrefsRect("PrefsRect", new Rect(0.25f, 0.5f, 1f, 2f));
-        private PrefsLabel label = new PrefsLabel("PrefsLabel", "Label", HierarchyTest2Ex2, "", prefs =>
-        {
-            prefs.TopMargin = 15f;
-            prefs.GuiLabelPrefix = RichTextColors.Blue("-");
-        });
 #pragma warning restore 0414
 
 
         private void Awake()
         {
-            Debug.Log(HierarchyTest1.FullHierarchy);
-            Debug.Log(HierarchyTest2Ex2.FullHierarchy);
-
-            this.test2.PrefsString.TopMargin = 50f;
-            this.test2.PrefsString.BottomMargin = 50f;
-
-            this.test2.PrefsButton3.TopMargin = 30f;
-            this.test2.PrefsButton3.BottomMargin = 25f;
-
-            this.test1.PrefsIntSlider.BottomMargin = 50f;
-            this.test1.PrefsIntSlider.GuiLabelSufix = RichTextColors.Blue(" ~ ");
-            this.test1.PrefsIntSlider.GuiLabelPrefix = RichTextColors.Red(" ~ ");
-
-            this.test3.PrefsLabel1.TopMargin = 20f;
-            this.test3.PrefsLabel1.BottomMargin = 20f;
-
-            this.prefsRect.TopMargin = 15f;
-        }
-
-        private void Start()
-        {
-            Debug.Log(this.Label.Get());
-            //this.test2.ReadOnlyPrefsString.OnValueChanged += () => Debug.Log(this.test2.ReadOnlyPrefsString.Get());
         }
 
         private void Update()
@@ -67,23 +34,42 @@ namespace PrefsUGUI.Examples
                 Prefs.ShowGUI();
             }
 
-            if(Input.GetKeyDown(KeyCode.A))
+            if(Input.GetKeyDown(KeyCode.V))
             {
-                this.test1.PrefsInt.VisibleGUI = !this.test1.PrefsInt.VisibleGUI;
+                this.prefsRect.VisibleGUI = !this.prefsRect.VisibleGUI;
             }
-            if(Input.GetKeyDown(KeyCode.N))
+            if(Input.GetKeyDown(KeyCode.S))
             {
-                this.test2.PrefsVector2.Set(this.test2.PrefsVector2 + Vector2.one);
+                this.prefsRect.Set(new Rect(1f, 2f, 3f, 4f));
             }
 
-            if(Input.GetKeyDown(KeyCode.Y))
+            if(Input.GetKeyDown(KeyCode.A))
             {
-                this.Test2Ex.AddHierarchy();
+                this.AddHierarchy();
             }
-            if(Input.GetKeyDown(KeyCode.U))
+            if(Input.GetKeyDown(KeyCode.R))
             {
-                this.Test2Ex.RemoveHierarchy();
+                this.RemoveHierarchy();
             }
+        }
+
+        private void AddHierarchy()
+        {
+            var count = this.hierarchies.Count;
+            var parent = this.hierarchies.ElementAtOrDefault(count - 1).hierarchy ?? Test0Gui;
+
+            var hierarchy = new GuiHierarchy("Hierarchy" + count, count, parent);
+            var prefsInt = new PrefsInt("PrefsInt", count, hierarchy);
+
+            this.hierarchies.Add((hierarchy, prefsInt));
+        }
+
+        private void RemoveHierarchy()
+        {
+            var (hierarchy, prefsInt) = this.hierarchies.LastOrDefault();
+            prefsInt?.Dispose();
+            hierarchy?.Dispose();
+            this.hierarchies.RemoveAt(this.hierarchies.Count - 1);
         }
     }
 }

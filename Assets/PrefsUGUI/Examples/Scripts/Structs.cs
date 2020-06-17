@@ -2,27 +2,18 @@
 
 namespace PrefsUGUI.Examples
 {
-    public static class Structs
+    public static class GuiHierarchies
     {
-        public static readonly GuiHierarchy HierarchyTest1 = new GuiHierarchy("Test1", 1);
-        public static readonly GuiHierarchy HierarchyTest2 = new GuiHierarchy("Test2", 0);
-        public static readonly GuiHierarchy HierarchyTest3 = new GuiHierarchy("Test3", 2);
-        public static readonly GuiHierarchy HierarchyTest2Ex1 = new GuiHierarchy("Ex1", 0, HierarchyTest2);
-        public static readonly GuiHierarchy HierarchyTest2Ex2 = new GuiHierarchy("Ex2", 0, HierarchyTest2);
+        public static readonly GuiHierarchy Test1Gui = new GuiHierarchy("Test1", 1);
+        public static readonly GuiHierarchy Test1Ex1Gui = new GuiHierarchy("Ex1", 0, Test1Gui);
+        public static readonly GuiHierarchy Test1Ex2Gui = new GuiHierarchy("Ex2", 0, Test1Gui);
+
+        public static readonly GuiHierarchy Test0Gui = new GuiHierarchy("Test0", 0);
     }
 
     [Serializable]
-    public enum TestEnum1
+    public enum TestEnum
     {
-        One = 0, Two, Three
-    }
-
-    public partial class Example
-    {
-        [Serializable]
-        private enum TestEnum2
-        {
-            A = -1, B = 0, C = 4
-        }
+        MinusOne = -1, Zero = 0, Four = 4
     }
 }
