@@ -8,7 +8,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
     using Guis.Preferences;
     using PrefsGuiBase = Preferences.PrefsGuiBase;
 
-    public class Category
+    public class Category : IDisposable
     {
         public event Action OnDiscard = delegate { };
 
@@ -36,6 +36,15 @@ namespace PrefsUGUI.Guis.Factories.Classes
             : this(categoryId, content, categoryName)
         {
             this.Previous = previous;
+        }
+
+        public void Dispose()
+        {
+            this.OnDiscard = null;
+            this.nextCategories.Clear();
+            this.buttons.Clear();
+            this.prefsGuis.Clear();
+            this.prefs.Clear();
         }
 
         public void Discard()

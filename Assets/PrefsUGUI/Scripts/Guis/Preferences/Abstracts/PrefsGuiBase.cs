@@ -7,7 +7,7 @@ namespace PrefsUGUI.Guis.Preferences
     [Serializable]
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
-    public abstract class PrefsGuiBase : MonoBehaviour, IPrefsGuiBase
+    public abstract class PrefsGuiBase : MonoBehaviour, IPrefsGuiBase, IDisposable
     {
         public event Action OnValueChanged = delegate { };
 
@@ -18,6 +18,8 @@ namespace PrefsUGUI.Guis.Preferences
         [SerializeField]
         protected RectTransform elements = null;
 
+        protected bool isDisposed = false;
+
 
         protected virtual void Reset()
         {
@@ -26,6 +28,14 @@ namespace PrefsUGUI.Guis.Preferences
 
             var canvas = this.GetComponentInChildren<CanvasRenderer>();
             this.elements = canvas == null ? null : canvas.GetComponent<RectTransform>();
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if(this.isDisposed == false)
+            {
+                this.Dispose();
+            }
         }
 
         public virtual void SetBottomMargin(float value)
@@ -57,6 +67,12 @@ namespace PrefsUGUI.Guis.Preferences
 
         public virtual bool GetVisible()
             => this.gameObject.activeSelf;
+
+        public virtual void Dispose()
+        {
+            this.isDisposed = true;
+            this.OnValueChanged = null;
+        }
 
         protected virtual void FireOnValueChanged()
             => this.OnValueChanged();

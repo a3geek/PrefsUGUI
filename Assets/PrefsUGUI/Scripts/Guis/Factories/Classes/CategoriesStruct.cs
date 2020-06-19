@@ -37,6 +37,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
                     continue;
                 }
 
+                prefsGui.Dispose();
                 Object.Destroy(prefsGui.gameObject);
                 return;
             }
@@ -84,9 +85,10 @@ namespace PrefsUGUI.Guis.Factories.Classes
                         Object.Destroy(button.gameObject);
                     }
 
+                    category.Dispose();
                     Object.Destroy(category.Content.gameObject);
-                    this.categories.RemoveAt(i);
 
+                    this.categories.RemoveAt(i);
                     return category.Previous;
                 }
             }

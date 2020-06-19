@@ -47,5 +47,12 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual void SetGuiListeners(Prefs.PrefsValueBase<UnityAction> prefs)
         {
         }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            this.button.onClick.RemoveAllListeners();
+            this.callback = null;
+        }
     }
 }

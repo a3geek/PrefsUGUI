@@ -56,6 +56,13 @@ namespace PrefsUGUI.Guis.Preferences
             this.OnDefaultButtonClicked += onDefaultButtonClicked;
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+            this.OnDefaultButtonClicked = null;
+            this.defaultGetter = null;
+        }
+
         protected virtual void SetValueInternal(ValType value)
             => this.value = value;
 
