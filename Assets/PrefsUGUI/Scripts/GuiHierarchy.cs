@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
+    using Guis;
+    using Guis.Factories;
+    using Guis.Factories.Classes;
+    using Guis.Preferences;
     using static Prefs;
 
     [Serializable]
@@ -11,6 +15,7 @@ namespace PrefsUGUI
     {
         public const int DefaultSortOrder = 0;
 
+        public virtual HierarchyType HierarchyType => HierarchyType.Standard;
         public virtual string HierarchyName => this.hierarchyName;
         public virtual int SortOrder => this.sortOrder;
         public virtual GuiHierarchy Parent => this.parent;
@@ -37,6 +42,17 @@ namespace PrefsUGUI
             this.HierarchyId = Guid.NewGuid();
             this.Parents = this.GetParents();
             this.FullHierarchy = this.GetFullHierarchy();
+
+            this.Regist();
+        }
+
+        protected virtual void Regist()
+            => AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
+
+        protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiButton gui)
+        {
+            void onButtonClicked() => canvas.ChangeGUI(category);
+            gui.Initialize(this.HierarchyName, onButtonClicked);
         }
 
         protected virtual List<GuiHierarchy> GetParents()
@@ -44,7 +60,7 @@ namespace PrefsUGUI
             var parents = new List<GuiHierarchy>();
             var parent = this.Parent;
 
-            while (parent != null)
+            while(parent != null)
             {
                 parents.Add(parent);
                 parent = parent.Parent;
@@ -57,7 +73,7 @@ namespace PrefsUGUI
         protected virtual string GetFullHierarchy()
         {
             var hierarchy = "";
-            foreach (var parent in this.Parents)
+            foreach(var parent in this.Parents)
             {
                 hierarchy += string.IsNullOrEmpty(parent?.HierarchyName) == true ? "" : parent.HierarchyName + HierarchySeparator;
             }
@@ -79,7 +95,7 @@ namespace PrefsUGUI
 
         protected virtual void Dispose(bool disposing)
         {
-            if (this.disposed == true)
+            if(this.disposed == true)
             {
                 return;
             }

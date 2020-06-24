@@ -6,8 +6,9 @@ using UnityEngine.EventSystems;
 
 namespace PrefsUGUI.Guis
 {
-    using Guis.Factories;
-    using Guis.Preferences;
+    using Factories;
+    using Factories.Classes;
+    using Preferences;
 
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
@@ -77,6 +78,16 @@ namespace PrefsUGUI.Guis
             if (this.Canvas != null)
             {
                 this.Canvas.RemovePrefs(ref prefsId);
+            }
+        }
+
+        public void AddCategory<GuiType>(GuiHierarchy hierarchy, Action<PrefsCanvas, Category, GuiType> onCreated)
+             where GuiType : PrefsGuiButton
+        {
+            if(this.Canvas != null)
+            {
+                var category = this.Canvas.AddCategory(hierarchy);
+                onCreated?.Invoke(this.Canvas, category, (GuiType)category.GuiButton);
             }
         }
 

@@ -16,9 +16,10 @@ namespace PrefsUGUI.Guis.Factories.Classes
         public string CategoryName { get; } = "";
         public Guid CategoryId { get; } = Guid.Empty;
         public Category Previous { get; } = null;
+        public PrefsGuiButton GuiButton { get; private set; }
 
         private Dictionary<Category, PrefsGuiButton> nextCategories = new Dictionary<Category, PrefsGuiButton>();
-        private MultistageSortedList<PrefsGuiButton> buttons = new MultistageSortedList<PrefsGuiButton>(
+        private MultistageSortedList<PrefsGuiButton> nextButtons = new MultistageSortedList<PrefsGuiButton>(
             (b1, b2) => string.Compare(b1.GetLabel(), b2.GetLabel())
         );
         private Dictionary<Guid, PrefsGuiBase> prefsGuis = new Dictionary<Guid, PrefsGuiBase>();
@@ -41,8 +42,9 @@ namespace PrefsUGUI.Guis.Factories.Classes
         public void Dispose()
         {
             this.OnDiscard = null;
+            this.GuiButton = null;
             this.nextCategories.Clear();
-            this.buttons.Clear();
+            this.nextButtons.Clear();
             this.prefsGuis.Clear();
             this.prefs.Clear();
         }
@@ -50,9 +52,9 @@ namespace PrefsUGUI.Guis.Factories.Classes
         public void Discard()
             => this.OnDiscard();
 
-        public PrefsGuiButton GetButton(string label)
+        public PrefsGuiButton GetNextButton(string label)
         {
-            foreach (var button in this.buttons)
+            foreach (var button in this.nextButtons)
             {
                 if (button.GetLabel() == label)
                 {
@@ -78,8 +80,9 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
         public int AddNextCategory(Category nextCategory, PrefsGuiButton button, int sortOrder)
         {
+            nextCategory.GuiButton = button;
             this.nextCategories[nextCategory] = button;
-            return this.buttons.Add(button, sortOrder);
+            return this.nextButtons.Add(button, sortOrder);
         }
 
         public bool TryRemoveNextCategory(Category nextCategory, out PrefsGuiButton button)
@@ -89,7 +92,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
                 return false;
             }
 
-            this.buttons.Remove(button);
+            this.nextButtons.Remove(button);
             this.nextCategories.Remove(nextCategory);
             return true;
         }
@@ -97,7 +100,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
         public int AddPrefs(Guid guid, PrefsGuiBase prefsGui, int sortOrder)
         {
             this.prefsGuis[guid] = prefsGui;
-            return this.prefs.Add(prefsGui, sortOrder) + this.buttons.Count;
+            return this.prefs.Add(prefsGui, sortOrder) + this.nextButtons.Count;
         }
 
         public bool TryRemovePrefs(ref Guid guid, out PrefsGuiBase prefsGui)

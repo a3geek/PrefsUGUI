@@ -37,9 +37,12 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
 
         public PrefsGuiButton Button => this.buttonPrefab;
+        public PrefsGuiRemovableButton RemovableButton => this.removableButtonPrefab;
 
         [SerializeField]
         private PrefsGuiButton buttonPrefab = null;
+        [SerializeField]
+        private PrefsGuiRemovableButton removableButtonPrefab = null;
         [SerializeField]
         private GuiPrefab[] guiPrefabs = new GuiPrefab[]
         {

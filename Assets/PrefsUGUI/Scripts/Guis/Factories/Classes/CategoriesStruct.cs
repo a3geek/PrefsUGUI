@@ -43,7 +43,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             }
         }
 
-        public Category GetCategory(GuiHierarchy hierarchy)
+        public Category GetOrCreateCategory(GuiHierarchy hierarchy)
         {
             if (hierarchy == null)
             {
@@ -57,13 +57,13 @@ namespace PrefsUGUI.Guis.Factories.Classes
             {
                 var categoryId = parent.HierarchyId;
                 currentCategory = this.GetOrCreateNextCategory(
-                    currentCategory, ref categoryId, parent.HierarchyName, parent.HierarchyName, parent.SortOrder
+                    currentCategory, ref categoryId, parent.HierarchyName, parent, parent.SortOrder
                 );
             }
 
             var id = hierarchy.HierarchyId;
             return this.GetOrCreateNextCategory(
-                currentCategory, ref id, hierarchy.HierarchyName, hierarchy.HierarchyName, hierarchy.SortOrder
+                currentCategory, ref id, hierarchy.HierarchyName, hierarchy, hierarchy.SortOrder
             );
         }
 
@@ -113,7 +113,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
         }
 
         private Category GetOrCreateNextCategory(
-            Category currentCategory, ref Guid nextCategoryId, string nextCategoryName, string label, int sortOrder
+            Category currentCategory, ref Guid nextCategoryId, string nextCategoryName, GuiHierarchy hierarchy, int sortOrder
         )
         {
             if (this.GetNextCategory(currentCategory, ref nextCategoryId, out var category) == true)
@@ -122,20 +122,20 @@ namespace PrefsUGUI.Guis.Factories.Classes
             }
 
             category = new Category(nextCategoryId, this.creator.CreateContent(), nextCategoryName, currentCategory);
-            this.GetOrCreateButton(currentCategory, label, category, sortOrder);
+            this.GetOrCreateButton(currentCategory, hierarchy, category, sortOrder);
 
             this.categories.Add(category);
             return category;
         }
 
-        private bool GetButton(Category currentCategory, string label, out PrefsGuiButton prefsButton)
+        private bool GetNextButton(Category currentCategory, GuiHierarchy hierarchy, out PrefsGuiButton prefsButton)
         {
-            prefsButton = currentCategory?.GetButton(label);
+            prefsButton = currentCategory?.GetNextButton(hierarchy.HierarchyName);
             return prefsButton != null;
         }
 
-        private PrefsGuiButton GetOrCreateButton(Category currentCategory, string label, Category nextCategory, int sortOrder)
-            => this.GetButton(currentCategory, label, out var button) == true
-                ? button : this.creator.CreateButton(currentCategory, label, nextCategory, sortOrder);
+        private PrefsGuiButton GetOrCreateButton(Category currentCategory, GuiHierarchy hierarchy, Category nextCategory, int sortOrder)
+            => this.GetNextButton(currentCategory, hierarchy, out var button) == true
+                ? button : this.creator.CreateButton(currentCategory, hierarchy, nextCategory, sortOrder);
     }
 }

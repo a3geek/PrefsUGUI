@@ -61,7 +61,7 @@ namespace PrefsUGUI.Guis.Factories
         public GuiType AddPrefs<ValType, GuiType>(Prefs.PrefsValueBase<ValType> prefs)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
-            var category = this.structs.GetCategory(prefs.GuiHierarchy);
+            var category = this.structs.GetOrCreateCategory(prefs.GuiHierarchy);
             var gui = this.creator.CreatePrefsGui<ValType, GuiType>(prefs, category);
 
             return gui;
@@ -69,6 +69,9 @@ namespace PrefsUGUI.Guis.Factories
 
         public void RemovePrefs(ref Guid prefsId)
             => this.structs.RemovePrefs(ref prefsId);
+
+        public Category AddCategory(GuiHierarchy hierarchy)
+            => this.structs.GetOrCreateCategory(hierarchy);
 
         public void RemoveCategory(ref Guid categoryId)
             => this.ChangeGUI(this.structs.RemoveCategory(ref categoryId));
@@ -100,7 +103,7 @@ namespace PrefsUGUI.Guis.Factories
         {
             var hierarchy = category.CategoryName;
             var previous = category.Previous;
-            while (previous != null)
+            while(previous != null)
             {
                 hierarchy = previous.CategoryName + Prefs.HierarchySeparator + hierarchy;
                 previous = previous.Previous;
@@ -118,7 +121,7 @@ namespace PrefsUGUI.Guis.Factories
 
         private void SetButtonActive(bool isTop)
         {
-            if (isTop == true)
+            if(isTop == true)
             {
                 this.links.Close.gameObject.SetActive(false);
                 this.links.Save.gameObject.SetActive(true);

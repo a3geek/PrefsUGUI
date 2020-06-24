@@ -8,6 +8,8 @@ namespace PrefsUGUI
 {
     using Guis;
     using Guis.Preferences;
+    using Guis.Factories;
+    using Guis.Factories.Classes;
     using XmlStorage;
     using XmlStorageConsts = XmlStorage.Systems.XmlStorageConsts;
 
@@ -26,6 +28,8 @@ namespace PrefsUGUI
         private static ConcurrentDictionary<string, Action> AddPrefsCache = new ConcurrentDictionary<string, Action>();
         private static ConcurrentQueue<string> AddPrefsCacheOrders = new ConcurrentQueue<string>();
         private static ConcurrentDictionary<Guid, Action> RemovePrefsCache = new ConcurrentDictionary<Guid, Action>();
+        private static ConcurrentDictionary<string, Action> AddGuiHierarchyCache = new ConcurrentDictionary<string, Action>();
+        private static ConcurrentQueue<string> AddGuiHierarchyCacheOrders = new ConcurrentQueue<string>();
         private static ConcurrentDictionary<Guid, Action> RemoveGuiHierarchyCache = new ConcurrentDictionary<Guid, Action>();
 
 
@@ -50,6 +54,7 @@ namespace PrefsUGUI
 
             void ExecuteCachingActions()
             {
+                ExecuteAndClear(AddGuiHierarchyCache, AddGuiHierarchyCacheOrders);
                 ExecuteAndClear(AddPrefsCache, AddPrefsCacheOrders);
                 ExecuteAndClear(RemovePrefsCache);
                 ExecuteAndClear(RemoveGuiHierarchyCache);
@@ -91,6 +96,14 @@ namespace PrefsUGUI
             {
                 PrefsGuis.SetCanvasSize(width, height);
             }
+        }
+
+        public static void AddGuiHierarchy<GuiType>(GuiHierarchy hierarchy, Action<PrefsCanvas, Category, GuiType> onCreated)
+            where GuiType : PrefsGuiButton
+        {
+            void AddGuiHierarchy() => PrefsGuis.AddCategory(hierarchy, onCreated);
+            AddGuiHierarchyCache[hierarchy.FullHierarchy] = AddGuiHierarchy;
+            AddGuiHierarchyCacheOrders.Enqueue(hierarchy.FullHierarchy);
         }
 
         public static void RemoveGuiHierarchy(Guid hierarchyId)

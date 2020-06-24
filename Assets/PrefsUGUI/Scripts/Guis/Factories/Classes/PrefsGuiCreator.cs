@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories.Classes
 {
     using Guis.Preferences;
+    using Object = UnityEngine.Object;
 
     public class PrefsGuiCreator
     {
@@ -26,16 +28,15 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return content;
         }
 
-        public PrefsGuiButton CreateButton(Category currentCategory, string label, Category nextCategory, int sortOrder)
+        public PrefsGuiButton CreateButton(Category currentCategory, GuiHierarchy hierarchy, Category nextCategory, int sortOrder)
         {
-            void onButtonClicked() => this.canvas.ChangeGUI(nextCategory);
-
-            var button = Object.Instantiate(this.prefabs.Button, currentCategory.Content);
-            button.Initialize(label, onButtonClicked);
+            PrefsGuiButton button = Object.Instantiate(
+                hierarchy.HierarchyType == HierarchyType.Standard ? this.prefabs.Button : this.prefabs.RemovableButton,
+                currentCategory.Content
+            );
 
             var index = currentCategory.AddNextCategory(nextCategory, button, sortOrder);
             button.transform.SetSiblingIndex(index);
-
             return button;
         }
 
