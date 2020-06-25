@@ -1530,61 +1530,81 @@ MonoBehaviour:
   prefabs:
     buttonPrefab: {fileID: 114174054903132308, guid: a15efa66ad6781b42b470f02e578f1f8,
       type: 3}
+    removableButtonPrefab: {fileID: 114708861807857754, guid: 2c782700466001b4ebb3ea66b76bf518,
+      type: 3}
     guiPrefabs:
     - key: PrefsGuiBool
       prefab: {fileID: 114432432582041434, guid: 04bfdbbbd6bf889488aa766483ee579d,
         type: 3}
+      guiType: 1
     - key: PrefsGuiColor
       prefab: {fileID: 114660815706675666, guid: be7acb095ec35b649bfe5cf6a71599c3,
         type: 3}
+      guiType: 2
     - key: PrefsGuiColorSlider
       prefab: {fileID: 114516997268354788, guid: bbe501a7a3fd978408beaaddac6b88c1,
         type: 3}
+      guiType: 3
     - key: PrefsGuiEnum
       prefab: {fileID: 114197912285529006, guid: a5d5ffeadaa98814d896f26642d7c8b5,
         type: 3}
+      guiType: 4
     - key: PrefsGuiNumericDecimal
       prefab: {fileID: 114528740947436940, guid: d4e1e805f3bb2d84081b033c7f4a1676,
         type: 3}
+      guiType: 5
     - key: PrefsGuiNumericInteger
       prefab: {fileID: 114980692133129528, guid: 19ede43413eb24e41b30a31589408401,
         type: 3}
+      guiType: 6
     - key: PrefsGuiNumericSliderDecimal
       prefab: {fileID: 114190008020698152, guid: 7183933936d666d48b0cedf7b96060bc,
         type: 3}
+      guiType: 7
     - key: PrefsGuiNumericSliderInteger
       prefab: {fileID: 114838242517192136, guid: 77c6e819119400941ab8a138588bdf9a,
         type: 3}
+      guiType: 8
     - key: PrefsGuiString
       prefab: {fileID: 114860318047597516, guid: 5e079881dbfd2624da12272d40764b70,
         type: 3}
+      guiType: 9
     - key: PrefsGuiVector2
       prefab: {fileID: 114423034815468980, guid: 08b134b2a66194b4daa16fa942dc773c,
         type: 3}
+      guiType: 10
     - key: PrefsGuiVector2Int
       prefab: {fileID: 114606381850297302, guid: e097baa398c0db74b89e5ce46818e4c3,
         type: 3}
+      guiType: 11
     - key: PrefsGuiVector3
       prefab: {fileID: 114067175487308992, guid: 09a3fca986ffeb042aff99bd0a425c3a,
         type: 3}
+      guiType: 12
     - key: PrefsGuiVector3Int
       prefab: {fileID: 114170023707539648, guid: 0852f042bcb6e1d4cbaab16def458036,
         type: 3}
+      guiType: 13
     - key: PrefsGuiVector4
       prefab: {fileID: 114459291038590326, guid: 644c64d084286164a9b4ab3fa51fa776,
         type: 3}
+      guiType: 14
     - key: PrefsGuiRect
       prefab: {fileID: 114297598981283736, guid: 75845da7f46e1834ca906a08c41bfc2a,
         type: 3}
-    - key: GuiButton
+      guiType: 15
+    - key: PrefsGuiButton
       prefab: {fileID: 114174054903132308, guid: a15efa66ad6781b42b470f02e578f1f8,
         type: 3}
+      guiType: 16
     - key: PrefsGuiLabel
       prefab: {fileID: 114390116732711480, guid: 1e1ca0b8eeedc604581a9743e958c359,
         type: 3}
+      guiType: 17
     - key: PrefsGuiImageLabel
       prefab: {fileID: 114738236854438500, guid: 2bdce11f31a54e641838985d763d817f,
         type: 3}
+      guiType: 18
 --- !u!1 &1905199983086328
 GameObject:
   m_ObjectHideFlags: 0

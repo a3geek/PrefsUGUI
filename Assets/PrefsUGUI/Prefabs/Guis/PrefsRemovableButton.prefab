@@ -201,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4986883606224187569}
   - component: {fileID: 5170016686555828291}
-  - component: {fileID: 5169413574647669633}
+  - component: {fileID: 114708861807857754}
   m_Layer: 5
   m_Name: PrefsRemovableButton
   m_TagString: Untagged
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &5169413574647669633
+--- !u!114 &114708861807857754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,13 +258,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5056238027500529197}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a99bc64d0b858f642a079b52ea1f1b90, type: 3}
+  m_Script: {fileID: 11500000, guid: 57c45368728a5044ebee5c2ce6097b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 5169608502959528985}
   layout: {fileID: 5170016686555828291}
-  elements: {fileID: 4987063867645621091}
+  elements: {fileID: 4987137742826133991}
   button: {fileID: 5170057450939013251}
+  removeButton: {fileID: 5055522522944382580}
 --- !u!1 &5056771064374817741
 GameObject:
   m_ObjectHideFlags: 0

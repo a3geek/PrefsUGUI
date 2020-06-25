@@ -96,6 +96,11 @@ namespace PrefsUGUI.Examples
             private static void OnButton1Clicked()
                 => Instance.PrefsLabel.Set(nameof(Instance.PrefsButton1) + " Clicked");
         }
+
+        private class Test2
+        {
+
+        }
 #pragma warning restore 0414
     }
 }

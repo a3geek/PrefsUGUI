@@ -9,6 +9,7 @@ namespace PrefsUGUI.Examples
         public static readonly GuiHierarchy Test1Ex1Gui = new GuiHierarchy("Ex1", 0, Test1Gui);
 
         public static readonly GuiHierarchy Test0Gui = new GuiHierarchy("Test0", 0);
+        public static readonly GuiHierarchy Test2Gui = new GuiHierarchy("Test2", 2);
     }
 
     [Serializable]

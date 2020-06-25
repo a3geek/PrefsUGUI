@@ -35,7 +35,12 @@ namespace PrefsUGUI
         protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiRemovableButton gui)
         {
             void onButtonClicked() => canvas.ChangeGUI(category);
-            void FireOnRemoved() => this.OnRemoved?.Invoke();
+            void FireOnRemoved()
+            {
+                this.OnRemoved?.Invoke();
+                this.Dispose();
+            }
+
             gui.Initialize(this.HierarchyName, onButtonClicked, FireOnRemoved);
         }
 

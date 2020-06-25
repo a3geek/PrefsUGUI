@@ -13,6 +13,7 @@ namespace PrefsUGUI.Examples
         private Test1 test1 = new Test1();
         private Test1Ex1 test1Ex1 = new Test1Ex1();
         private Test1Ex2 test1Ex2 = new Test1Ex2();
+        private Test2 test2 = new Test2();
         private List<(GuiHierarchy hierarchy, PrefsInt prefsInt)> hierarchies = new List<(GuiHierarchy hierarchy, PrefsInt prefsInt)>();
 
         [SerializeField]
@@ -58,12 +59,12 @@ namespace PrefsUGUI.Examples
         private void AddHierarchy()
         {
             var count = this.hierarchies.Count;
-            var parent = this.hierarchies.ElementAtOrDefault(count - 1).hierarchy ?? Test0Gui;
+            var hierarchy = new RemovableGuiHierarchy("Hierarchy" + count, null, count, Test2Gui);
 
-            var hierarchy = new GuiHierarchy("Hierarchy" + count, count, parent);
             var prefsInt = new PrefsInt("PrefsInt", count, hierarchy);
             prefsInt.OnValueChanged += ()
                 => Debug.Log("OnValueChanged : " + hierarchy.FullHierarchy + Prefs.HierarchySeparator + prefsInt.Key);
+            prefsInt.OnDisposed += () => Debug.Log(count);
 
             this.hierarchies.Add((hierarchy, prefsInt));
         }

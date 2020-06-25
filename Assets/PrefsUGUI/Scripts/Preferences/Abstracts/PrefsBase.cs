@@ -83,6 +83,7 @@ namespace PrefsUGUI
                 }
 
                 RemovePrefs(this.PrefsId);
+                this.OnDisposed();
                 this.disposed = true;
             }
             #endregion
