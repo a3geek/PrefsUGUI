@@ -80,6 +80,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
         public int AddNextCategory(Category nextCategory, PrefsGuiButton button, int sortOrder)
         {
+            button.gameObject.SetActive(false);
             nextCategory.GuiButton = button;
             this.nextCategories[nextCategory] = button;
             return this.nextButtons.Add(button, sortOrder);
@@ -99,6 +100,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
         public int AddPrefs(Guid guid, PrefsGuiBase prefsGui, int sortOrder)
         {
+            this.ActivateGuiButtons();
             this.prefsGuis[guid] = prefsGui;
             return this.prefs.Add(prefsGui, sortOrder) + this.nextButtons.Count;
         }
@@ -117,5 +119,24 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
         public void SetActive(bool active)
             => this.Content.gameObject.SetActive(active);
+
+        private void ActivateGuiButtons()
+        {
+            if(this.GuiButton != null)
+            {
+                this.GuiButton.gameObject.SetActive(true);
+            }
+
+            var previous = this.Previous;
+            while(previous != null)
+            {
+                if(previous.GuiButton != null)
+                {
+                    previous.GuiButton.gameObject.SetActive(true);
+                }
+
+                previous = previous.Previous;
+            }
+        }
     }
 }
