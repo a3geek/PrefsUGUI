@@ -10,7 +10,7 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual PrefsGuiLabel Component => this;
 
         [SerializeField]
-        protected Text text = null;
+        protected InputField inputfield = null;
 
 
         protected override void Reset()
@@ -20,21 +20,21 @@ namespace PrefsUGUI.Guis.Preferences
             if(this.elements != null)
             {
                 var image = this.elements.GetComponentInChildren<Image>();
-                this.text = image == null ? null : image.GetComponentInChildren<Text>();
+                this.inputfield = image == null ? null : image.GetComponentInChildren<InputField>();
             }
         }
 
         public virtual void Initialize(string label, string text)
         {
             this.SetLabel(label);
-            this.text.text = text;
+            this.inputfield.text = text;
         }
 
         public virtual string GetValue()
-            => this.text.text;
+            => this.inputfield.text;
 
         public virtual void SetValue(string text)
-            => this.text.text = text;
+            => this.inputfield.text = text;
 
         public virtual void SetGuiListeners(Prefs.PrefsValueBase<string> prefs)
         {
