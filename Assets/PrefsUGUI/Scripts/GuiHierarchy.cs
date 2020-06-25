@@ -78,7 +78,7 @@ namespace PrefsUGUI
                 hierarchy += string.IsNullOrEmpty(parent?.HierarchyName) == true ? "" : parent.HierarchyName + HierarchySeparator;
             }
 
-            return hierarchy + this.HierarchyName;
+            return hierarchy + this.HierarchyName + HierarchySeparator;
         }
 
         #region IDisposable Support
