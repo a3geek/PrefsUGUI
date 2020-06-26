@@ -3,10 +3,11 @@ using UnityEngine.Events;
 
 namespace PrefsUGUI
 {
+    using Preferences.Abstracts;
     using Guis.Preferences;
 
     [Serializable]
-    public class PrefsButton : Prefs.PrefsGuiBase<UnityAction, PrefsGuiButton>
+    public class PrefsButton : PrefsGuiBase<UnityAction, PrefsGuiButton>
     {
         public UnityAction OnClicked
         {
@@ -16,7 +17,7 @@ namespace PrefsUGUI
 
         public PrefsButton(
             string key, UnityAction action, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<UnityAction, PrefsGuiButton>> onCreatedGui = null, int sortOrder = 0
+            string guiLabel = null, Action<PrefsGuiBase<UnityAction, PrefsGuiButton>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, action ?? delegate { }, hierarchy, guiLabel, onCreatedGui, sortOrder)
         {

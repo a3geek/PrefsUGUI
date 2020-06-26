@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Preferences
 {
+    using PrefsUGUI.Preferences.Abstracts;
+
     [Serializable]
     public class PrefsGuiRemovableButton : PrefsGuiButton
     {
@@ -36,7 +38,7 @@ namespace PrefsUGUI.Guis.Preferences
             this.removePrefs?.Invoke();
         }
 
-        public override void SetGuiListeners(Prefs.PrefsValueBase<UnityAction> prefs)
+        public override void SetGuiListeners(PrefsValueBase<UnityAction> prefs)
         {
             base.SetGuiListeners(prefs);
 

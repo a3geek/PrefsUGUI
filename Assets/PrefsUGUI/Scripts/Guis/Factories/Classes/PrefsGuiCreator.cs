@@ -4,6 +4,7 @@ using UnityEngine;
 namespace PrefsUGUI.Guis.Factories.Classes
 {
     using Guis.Preferences;
+    using PrefsUGUI.Preferences.Abstracts;
     using Object = UnityEngine.Object;
 
     public class PrefsGuiCreator
@@ -40,7 +41,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return button;
         }
 
-        public GuiType CreatePrefsGui<ValType, GuiType>(Prefs.PrefsValueBase<ValType> prefs, Category category)
+        public GuiType CreatePrefsGui<ValType, GuiType>(PrefsValueBase<ValType> prefs, Category category)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             var gui = Object.Instantiate(this.prefabs.GetGuiPrefab<ValType, GuiType>().Component, category.Content);

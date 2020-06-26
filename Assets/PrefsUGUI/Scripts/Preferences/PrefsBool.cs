@@ -2,14 +2,15 @@
 
 namespace PrefsUGUI
 {
+    using Preferences.Abstracts;
     using Guis.Preferences;
 
     [Serializable]
-    public class PrefsBool : Prefs.PrefsGuiBase<bool, PrefsGuiBool>
+    public class PrefsBool : PrefsGuiBase<bool, PrefsGuiBool>
     {
         public PrefsBool(
             string key, bool defaultValue = default, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<bool, PrefsGuiBool>> onCreatedGui = null, int sortOrder = 0
+            string guiLabel = null, Action<PrefsGuiBase<bool, PrefsGuiBool>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)
         {

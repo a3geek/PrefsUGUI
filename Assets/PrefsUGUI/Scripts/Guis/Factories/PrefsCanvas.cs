@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories
 {
     using Classes;
     using Guis.Preferences;
-    using PrefsBase = Prefs.PrefsBase;
+    using PrefsUGUI.Preferences.Abstracts;
 
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
@@ -58,7 +57,7 @@ namespace PrefsUGUI.Guis.Factories
             this.prefabs.OnValidate();
         }
 
-        public GuiType AddPrefs<ValType, GuiType>(Prefs.PrefsValueBase<ValType> prefs)
+        public GuiType AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             var category = this.structs.GetOrCreateCategory(prefs.GuiHierarchy);
@@ -103,7 +102,7 @@ namespace PrefsUGUI.Guis.Factories
         {
             var hierarchy = category.CategoryName;
             var previous = category.Previous;
-            while(previous != null)
+            while (previous != null)
             {
                 hierarchy = previous.CategoryName + Prefs.HierarchySeparator + hierarchy;
                 previous = previous.Previous;
@@ -121,7 +120,7 @@ namespace PrefsUGUI.Guis.Factories
 
         private void SetButtonActive(bool isTop)
         {
-            if(isTop == true)
+            if (isTop == true)
             {
                 this.links.Close.gameObject.SetActive(false);
                 this.links.Save.gameObject.SetActive(true);

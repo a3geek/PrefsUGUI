@@ -1,13 +1,13 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PrefsUGUI
 {
+    using Preferences.Abstracts;
     using Guis.Preferences;
 
     [Serializable]
-    public class PrefsImageLabel : Prefs.PrefsGuiBase<string, PrefsGuiImageLabel>
+    public class PrefsImageLabel : PrefsGuiBase<string, PrefsGuiImageLabel>
     {
         public Texture Image
         {
@@ -24,7 +24,7 @@ namespace PrefsUGUI
 
         public PrefsImageLabel(
             string key, string text, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<string, PrefsGuiImageLabel>> onCreatedGui = null, int sortOrder = 0
+            string guiLabel = null, Action<PrefsGuiBase<string, PrefsGuiImageLabel>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui, sortOrder)
         {

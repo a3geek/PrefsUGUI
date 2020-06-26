@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Preferences
 {
+    using PrefsUGUI.Preferences.Abstracts;
+
     [Serializable]
     public abstract class PrefsInputGuiBase<ValType, GuiType> : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         where GuiType : PrefsInputGuiBase<ValType, GuiType>
@@ -47,7 +49,7 @@ namespace PrefsUGUI.Guis.Preferences
             this.SetFields();
         }
 
-        public virtual void SetGuiListeners(Prefs.PrefsValueBase<ValType> prefs)
+        public virtual void SetGuiListeners(PrefsValueBase<ValType> prefs)
         {
             void onValueChanged() => prefs.Set(this.GetValue());
             void onDefaultButtonClicked() => prefs.ResetDefaultValue();

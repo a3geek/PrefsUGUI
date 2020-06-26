@@ -2,14 +2,15 @@
 
 namespace PrefsUGUI
 {
+    using Preferences.Abstracts;
     using Guis.Preferences;
 
     [Serializable]
-    public class PrefsLabel : Prefs.PrefsGuiBase<string, PrefsGuiLabel>
+    public class PrefsLabel : PrefsGuiBase<string, PrefsGuiLabel>
     {
         public PrefsLabel(
             string key, string text, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<string, PrefsGuiLabel>> onCreatedGui = null, int sortOrder = 0
+            string guiLabel = null, Action<PrefsGuiBase<string, PrefsGuiLabel>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui, sortOrder)
         {

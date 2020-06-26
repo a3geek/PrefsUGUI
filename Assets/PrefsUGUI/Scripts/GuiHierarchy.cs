@@ -8,6 +8,7 @@ namespace PrefsUGUI
     using Guis.Factories;
     using Guis.Factories.Classes;
     using Guis.Preferences;
+    using Managers;
     using static Prefs;
 
     [Serializable]
@@ -47,7 +48,7 @@ namespace PrefsUGUI
         }
 
         protected virtual void Regist()
-            => AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
+            => PrefsManager.AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
 
         protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiButton gui)
         {
@@ -60,7 +61,7 @@ namespace PrefsUGUI
             var parents = new List<GuiHierarchy>();
             var parent = this.Parent;
 
-            while(parent != null)
+            while (parent != null)
             {
                 parents.Add(parent);
                 parent = parent.Parent;
@@ -73,7 +74,7 @@ namespace PrefsUGUI
         protected virtual string GetFullHierarchy()
         {
             var hierarchy = "";
-            foreach(var parent in this.Parents)
+            foreach (var parent in this.Parents)
             {
                 hierarchy += string.IsNullOrEmpty(parent?.HierarchyName) == true ? "" : parent.HierarchyName + HierarchySeparator;
             }
@@ -95,12 +96,12 @@ namespace PrefsUGUI
 
         protected virtual void Dispose(bool disposing)
         {
-            if(this.disposed == true)
+            if (this.disposed == true)
             {
                 return;
             }
 
-            RemoveGuiHierarchy(this.HierarchyId);
+            PrefsManager.RemoveGuiHierarchy(this.HierarchyId);
             this.disposed = true;
         }
         #endregion

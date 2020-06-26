@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,6 +7,7 @@ namespace PrefsUGUI.Guis
     using Factories;
     using Factories.Classes;
     using Preferences;
+    using PrefsUGUI.Preferences.Abstracts;
 
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
@@ -64,7 +63,7 @@ namespace PrefsUGUI.Guis
             }
         }
 
-        public void AddPrefs<ValType, GuiType>(Prefs.PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
+        public void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             if (this.Canvas != null)
@@ -84,7 +83,7 @@ namespace PrefsUGUI.Guis
         public void AddCategory<GuiType>(GuiHierarchy hierarchy, Action<PrefsCanvas, Category, GuiType> onCreated)
              where GuiType : PrefsGuiButton
         {
-            if(this.Canvas != null)
+            if (this.Canvas != null)
             {
                 var category = this.Canvas.AddCategory(hierarchy);
                 onCreated?.Invoke(this.Canvas, category, (GuiType)category.GuiButton);

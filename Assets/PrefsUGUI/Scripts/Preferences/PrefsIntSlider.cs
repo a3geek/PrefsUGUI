@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
+    using Preferences.Abstracts;
     using Guis.Preferences;
 
     [Serializable]
-    public class PrefsIntSlider : Prefs.PrefsGuiBase<int, PrefsGuiNumericSliderInteger>
+    public class PrefsIntSlider : PrefsGuiBase<int, PrefsGuiNumericSliderInteger>
     {
         [SerializeField]
         protected int min = 0;
@@ -16,7 +17,7 @@ namespace PrefsUGUI
 
         public PrefsIntSlider(
             string key, int defaultValue = default, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<int, PrefsGuiNumericSliderInteger>> onCreatedGui = null, int sortOrder = 0
+            string guiLabel = null, Action<PrefsGuiBase<int, PrefsGuiNumericSliderInteger>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)
         {
@@ -24,7 +25,7 @@ namespace PrefsUGUI
 
         public PrefsIntSlider(
             string key, int minValue, int maxValue, int defaultValue = default, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<int, PrefsGuiNumericSliderInteger>> onCreatedGui = null, int sortOrder = 0
+            string guiLabel = null, Action<PrefsGuiBase<int, PrefsGuiNumericSliderInteger>> onCreatedGui = null, int sortOrder = 0
         )
             : this(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)
         {

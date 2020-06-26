@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Preferences
 {
+    using PrefsUGUI.Preferences.Abstracts;
+
     public interface IPrefsGuiBase
     {
         event Action OnValueChanged;
@@ -23,6 +25,6 @@ namespace PrefsUGUI.Guis.Preferences
 
         ValType GetValue();
         void SetValue(ValType value);
-        void SetGuiListeners(Prefs.PrefsValueBase<ValType> prefs);
+        void SetGuiListeners(PrefsValueBase<ValType> prefs);
     }
 }

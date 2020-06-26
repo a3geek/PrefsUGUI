@@ -3,14 +3,15 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
+    using Preferences.Abstracts;
     using Guis.Preferences;
 
     [Serializable]
-    public class PrefsRect : Prefs.PrefsGuiBase<Rect, PrefsGuiRect>
+    public class PrefsRect : PrefsGuiBase<Rect, PrefsGuiRect>
     {
         public PrefsRect(
             string key, Rect defaultValue = default, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<Rect, PrefsGuiRect>> onCreatedGui = null, int sortOrder = 0
+            string guiLabel = null, Action<PrefsGuiBase<Rect, PrefsGuiRect>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)
         {

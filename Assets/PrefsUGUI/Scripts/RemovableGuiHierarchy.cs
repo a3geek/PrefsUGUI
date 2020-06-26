@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace PrefsUGUI
 {
@@ -8,7 +6,7 @@ namespace PrefsUGUI
     using Guis.Factories;
     using Guis.Factories.Classes;
     using Guis.Preferences;
-    using static Prefs;
+    using Managers;
 
     [Serializable]
     public class RemovableGuiHierarchy : GuiHierarchy
@@ -23,14 +21,14 @@ namespace PrefsUGUI
         )
             : base(hierarchyName, sortOrder, parent)
         {
-            if(onRemoved != null)
+            if (onRemoved != null)
             {
                 this.OnRemoved += onRemoved;
             }
         }
-        
+
         protected override void Regist()
-            => AddGuiHierarchy<PrefsGuiRemovableButton>(this, this.OnCreatedGuiButton);
+            => PrefsManager.AddGuiHierarchy<PrefsGuiRemovableButton>(this, this.OnCreatedGuiButton);
 
         protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiRemovableButton gui)
         {

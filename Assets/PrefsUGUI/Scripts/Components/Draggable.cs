@@ -11,14 +11,14 @@ namespace PrefsUGUI.Components
     public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         /// <summary>Position of cursor.</summary>
-        private Vector2 position = Vector2.zero;
+        protected Vector2 position = Vector2.zero;
 
 
         /// <summary>
         /// Start Move
         /// </summary>
         /// <param name="pointerEventData">Drag information</param>
-        public void OnBeginDrag(PointerEventData pointerEventData)
+        public virtual void OnBeginDrag(PointerEventData pointerEventData)
         {
             this.position = pointerEventData.position;
         }
@@ -27,7 +27,7 @@ namespace PrefsUGUI.Components
         /// Dragging
         /// </summary>
         /// <param name="pointerEventData">Drag information</param>
-        public void OnDrag(PointerEventData pointerEventData)
+        public virtual void OnDrag(PointerEventData pointerEventData)
         {
             var d = pointerEventData.position - this.position;
             var pos = this.transform.position;

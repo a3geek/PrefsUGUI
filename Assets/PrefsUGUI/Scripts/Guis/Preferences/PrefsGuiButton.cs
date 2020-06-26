@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Preferences
 {
+    using PrefsUGUI.Preferences.Abstracts;
+
     [Serializable]
     public class PrefsGuiButton : PrefsGuiBase, IPrefsGuiConnector<UnityAction, PrefsGuiButton>
     {
@@ -44,7 +46,7 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual UnityAction GetValue()
             => this.callback;
 
-        public virtual void SetGuiListeners(Prefs.PrefsValueBase<UnityAction> prefs)
+        public virtual void SetGuiListeners(PrefsValueBase<UnityAction> prefs)
         {
         }
 

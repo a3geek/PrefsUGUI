@@ -2,14 +2,15 @@
 
 namespace PrefsUGUI
 {
+    using Preferences.Abstracts;
     using Guis.Preferences;
 
     [Serializable]
-    public class PrefsEnum<T> : Prefs.PrefsGuiBase<int, PrefsGuiEnum> where T : Enum
+    public class PrefsEnum<T> : PrefsGuiBase<int, PrefsGuiEnum> where T : Enum
     {
         public PrefsEnum(
             string key, T defaultValue = default, GuiHierarchy hierarchy = null,
-            string guiLabel = null, Action<Prefs.PrefsGuiBase<int, PrefsGuiEnum>> onCreatedGui = null, int sortOrder = 0
+            string guiLabel = null, Action<PrefsGuiBase<int, PrefsGuiEnum>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, Convert.ToInt32(defaultValue), hierarchy, guiLabel, onCreatedGui, sortOrder)
         {
