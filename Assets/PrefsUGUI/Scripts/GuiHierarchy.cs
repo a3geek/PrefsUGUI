@@ -21,8 +21,8 @@ namespace PrefsUGUI
         public virtual int SortOrder => this.sortOrder;
         public virtual GuiHierarchy Parent => this.parent;
         public virtual Guid HierarchyId { get; } = Guid.Empty;
-        public virtual IReadOnlyList<GuiHierarchy> Parents { get; } = new List<GuiHierarchy>();
-        public virtual string FullHierarchy { get; } = "";
+        public virtual IReadOnlyList<GuiHierarchy> Parents { get; protected set; } = new List<GuiHierarchy>();
+        public virtual string FullHierarchy { get; protected set; } = "";
 
         [SerializeField]
         protected string hierarchyName = "";
@@ -32,6 +32,7 @@ namespace PrefsUGUI
         protected GuiHierarchy parent = null;
 
         protected bool disposed = false;
+        protected PrefsGuiButton gui = null;
 
 
         public GuiHierarchy(string hierarchyName, int sortOrder = DefaultSortOrder, GuiHierarchy parent = null)
@@ -47,11 +48,28 @@ namespace PrefsUGUI
             this.Regist();
         }
 
+        public void OverrideGui(GuiHierarchy src)
+        {
+            this.hierarchyName = src.hierarchyName;
+            this.parent = src.parent;
+            this.sortOrder = src.sortOrder;
+
+            this.Parents = this.GetParents();
+            this.FullHierarchy = this.GetFullHierarchy();
+
+            if(this.gui != null)
+            {
+                this.gui.SetLabel(this.HierarchyName);
+            }
+        }
+
         protected virtual void Regist()
             => PrefsManager.AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
 
         protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiButton gui)
         {
+            this.gui = gui;
+
             void onButtonClicked() => canvas.ChangeGUI(category);
             gui.Initialize(this.HierarchyName, onButtonClicked);
         }
@@ -61,7 +79,7 @@ namespace PrefsUGUI
             var parents = new List<GuiHierarchy>();
             var parent = this.Parent;
 
-            while (parent != null)
+            while(parent != null)
             {
                 parents.Add(parent);
                 parent = parent.Parent;
@@ -74,7 +92,7 @@ namespace PrefsUGUI
         protected virtual string GetFullHierarchy()
         {
             var hierarchy = "";
-            foreach (var parent in this.Parents)
+            foreach(var parent in this.Parents)
             {
                 hierarchy += string.IsNullOrEmpty(parent?.HierarchyName) == true ? "" : parent.HierarchyName + HierarchySeparator;
             }
@@ -96,11 +114,13 @@ namespace PrefsUGUI
 
         protected virtual void Dispose(bool disposing)
         {
-            if (this.disposed == true)
+            if(this.disposed == true)
             {
                 return;
             }
 
+            this.parent = null;
+            this.gui = null;
             PrefsManager.RemoveGuiHierarchy(this.HierarchyId);
             this.disposed = true;
         }
