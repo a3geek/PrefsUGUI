@@ -87,6 +87,21 @@ namespace PrefsUGUI.Preferences.Abstracts
             this.GuiSortOrder = sortOrder;
         }
 
+        public virtual void OverrideGui(PrefsGuiBase<ValType, GuiType> src)
+        {
+            this.key = src.key;
+            this.guiLabel = src.guiLabel;
+
+            this.GuiSortOrder = src.GuiSortOrder;
+            this.BottomMargin = src.BottomMargin;
+            this.TopMargin = src.TopMargin;
+            this.guiLabelPrefix = src.GuiLabelPrefix;
+            this.guiLabelSufix = src.GuiLabelSufix;
+            this.VisibleGUI = src.VisibleGUI;
+
+            this.UpdateLabel();
+        }
+
         protected override void OnRegisted()
             => PrefsManager.AddPrefs<ValType, GuiType>(this, this.OnCreatedGui);
 
