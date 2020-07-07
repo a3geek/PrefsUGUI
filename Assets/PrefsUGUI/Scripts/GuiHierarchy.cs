@@ -48,21 +48,6 @@ namespace PrefsUGUI
             this.Regist();
         }
 
-        public void OverrideGui(GuiHierarchy src)
-        {
-            this.hierarchyName = src.hierarchyName;
-            this.parent = src.parent;
-            this.sortOrder = src.sortOrder;
-
-            this.Parents = this.GetParents();
-            this.FullHierarchy = this.GetFullHierarchy();
-
-            if(this.gui != null)
-            {
-                this.gui.SetLabel(this.HierarchyName);
-            }
-        }
-
         protected virtual void Regist()
             => PrefsManager.AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
 
