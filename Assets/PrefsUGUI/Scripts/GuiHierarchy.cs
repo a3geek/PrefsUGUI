@@ -20,6 +20,17 @@ namespace PrefsUGUI
         public virtual string HierarchyName => this.hierarchyName;
         public virtual int SortOrder => this.sortOrder;
         public virtual GuiHierarchy Parent => this.parent;
+        public virtual bool VisibleGUI
+        {
+            get => this.gui != null && this.gui.GetVisible();
+            set
+            {
+                if (this.gui != null)
+                {
+                    this.gui.SetVisible(value);
+                }
+            }
+        }
         public virtual Guid HierarchyId { get; } = Guid.Empty;
         public virtual IReadOnlyList<GuiHierarchy> Parents { get; protected set; } = new List<GuiHierarchy>();
         public virtual string FullHierarchy { get; protected set; } = "";

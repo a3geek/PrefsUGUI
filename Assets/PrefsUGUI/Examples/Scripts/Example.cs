@@ -40,6 +40,7 @@ namespace PrefsUGUI.Examples
             if(Input.GetKeyDown(KeyCode.V))
             {
                 this.prefsRect.VisibleGUI = !this.prefsRect.VisibleGUI;
+                Test1Gui.VisibleGUI = !Test1Gui.VisibleGUI;
             }
             if(Input.GetKeyDown(KeyCode.N))
             {
