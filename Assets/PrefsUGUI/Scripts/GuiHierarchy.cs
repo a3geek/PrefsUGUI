@@ -16,6 +16,8 @@ namespace PrefsUGUI
     {
         public const int DefaultSortOrder = 0;
 
+        public event Action OnHierarchyClicked = delegate { };
+
         public virtual HierarchyType HierarchyType => HierarchyType.Standard;
         public virtual string HierarchyName => this.hierarchyName;
         public virtual int SortOrder => this.sortOrder;
@@ -66,7 +68,11 @@ namespace PrefsUGUI
         {
             this.gui = gui;
 
-            void onButtonClicked() => canvas.ChangeGUI(category);
+            void onButtonClicked()
+            {
+                canvas.ChangeGUI(category);
+                this.OnHierarchyClicked?.Invoke();
+            }
             gui.Initialize(this.HierarchyName, onButtonClicked);
         }
 
@@ -75,7 +81,7 @@ namespace PrefsUGUI
             var parents = new List<GuiHierarchy>();
             var parent = this.Parent;
 
-            while(parent != null)
+            while (parent != null)
             {
                 parents.Add(parent);
                 parent = parent.Parent;
@@ -88,7 +94,7 @@ namespace PrefsUGUI
         protected virtual string GetFullHierarchy()
         {
             var hierarchy = "";
-            foreach(var parent in this.Parents)
+            foreach (var parent in this.Parents)
             {
                 hierarchy += string.IsNullOrEmpty(parent?.HierarchyName) == true ? "" : parent.HierarchyName + HierarchySeparator;
             }
@@ -110,13 +116,14 @@ namespace PrefsUGUI
 
         protected virtual void Dispose(bool disposing)
         {
-            if(this.disposed == true)
+            if (this.disposed == true)
             {
                 return;
             }
 
             this.parent = null;
             this.gui = null;
+            this.OnHierarchyClicked = null;
             PrefsManager.RemoveGuiHierarchy(this.HierarchyId);
             this.disposed = true;
         }

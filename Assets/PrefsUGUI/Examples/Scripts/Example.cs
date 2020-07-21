@@ -28,6 +28,8 @@ namespace PrefsUGUI.Examples
         private void Start()
         {
             this.test0.PrefsImageLabel.Image = this.prefsImage;
+
+            Test1Gui.OnHierarchyClicked += () => Debug.Log("Test1Gui Clicked");
         }
 
         private void Update()
