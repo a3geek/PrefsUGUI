@@ -54,7 +54,7 @@ namespace PrefsUGUI.Managers
             PrefsGuis.SetCachingActionsExecutor(ExecuteCachingActions);
         }
 
-        public static void AddGuiHierarchy<GuiType>(GuiHierarchy hierarchy, Action<PrefsCanvas, Category, GuiType> onCreated)
+        public static void AddGuiHierarchy<GuiType>(AbstractGuiHierarchy hierarchy, Action<PrefsCanvas, Category, GuiType> onCreated)
             where GuiType : PrefsGuiButton
         {
             void AddGuiHierarchy() => PrefsGuis.AddCategory(hierarchy, onCreated);

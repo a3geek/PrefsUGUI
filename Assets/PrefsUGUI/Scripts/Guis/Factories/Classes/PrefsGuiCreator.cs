@@ -9,14 +9,12 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
     public class PrefsGuiCreator
     {
-        private PrefsCanvas canvas = null;
         private CanvasLinks links = null;
         private PrefsGuiPrefabs prefabs = null;
 
 
-        public PrefsGuiCreator(PrefsCanvas canvas, CanvasLinks links, PrefsGuiPrefabs prefabs)
+        public PrefsGuiCreator(CanvasLinks links, PrefsGuiPrefabs prefabs)
         {
-            this.canvas = canvas;
             this.links = links;
             this.prefabs = prefabs;
         }
@@ -29,7 +27,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return content;
         }
 
-        public PrefsGuiButton CreateButton(Category currentCategory, GuiHierarchy hierarchy, Category nextCategory, int sortOrder)
+        public PrefsGuiButton CreateButton(Category currentCategory, AbstractGuiHierarchy hierarchy, Category nextCategory, int sortOrder)
         {
             PrefsGuiButton button = Object.Instantiate(
                 hierarchy.HierarchyType == HierarchyType.Standard ? this.prefabs.Button : this.prefabs.RemovableButton,

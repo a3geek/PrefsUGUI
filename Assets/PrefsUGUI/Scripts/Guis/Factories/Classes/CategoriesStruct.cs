@@ -43,7 +43,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             }
         }
 
-        public Category GetOrCreateCategory(GuiHierarchy hierarchy)
+        public Category GetOrCreateCategory(AbstractGuiHierarchy hierarchy)
         {
             if (hierarchy == null)
             {
@@ -53,7 +53,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             var currentCategory = this.Top;
             var parents = hierarchy?.Parents;
 
-            foreach (var parent in (parents ?? Enumerable.Empty<GuiHierarchy>()))
+            foreach (var parent in (parents ?? Enumerable.Empty<AbstractGuiHierarchy>()))
             {
                 var categoryId = parent.HierarchyId;
                 currentCategory = this.GetOrCreateNextCategory(
@@ -113,7 +113,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
         }
 
         private Category GetOrCreateNextCategory(
-            Category currentCategory, ref Guid nextCategoryId, string nextCategoryName, GuiHierarchy hierarchy, int sortOrder
+            Category currentCategory, ref Guid nextCategoryId, string nextCategoryName, AbstractGuiHierarchy hierarchy, int sortOrder
         )
         {
             if (this.GetNextCategory(currentCategory, ref nextCategoryId, out var category) == true)
@@ -128,13 +128,13 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return category;
         }
 
-        private bool GetNextButton(Category currentCategory, GuiHierarchy hierarchy, out PrefsGuiButton prefsButton)
+        private bool GetNextButton(Category currentCategory, AbstractGuiHierarchy hierarchy, out PrefsGuiButton prefsButton)
         {
             prefsButton = currentCategory?.GetNextButton(hierarchy.HierarchyName);
             return prefsButton != null;
         }
 
-        private PrefsGuiButton GetOrCreateButton(Category currentCategory, GuiHierarchy hierarchy, Category nextCategory, int sortOrder)
+        private PrefsGuiButton GetOrCreateButton(Category currentCategory, AbstractGuiHierarchy hierarchy, Category nextCategory, int sortOrder)
             => this.GetNextButton(currentCategory, hierarchy, out var button) == true
                 ? button : this.creator.CreateButton(currentCategory, hierarchy, nextCategory, sortOrder);
     }

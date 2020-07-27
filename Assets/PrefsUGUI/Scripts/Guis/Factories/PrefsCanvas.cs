@@ -35,7 +35,7 @@ namespace PrefsUGUI.Guis.Factories
 
         private void Awake()
         {
-            this.creator = new PrefsGuiCreator(this, this.links, this.prefabs);
+            this.creator = new PrefsGuiCreator(this.links, this.prefabs);
             this.links.Content.gameObject.SetActive(false);
 
             var topContent = this.creator.CreateContent();
@@ -69,7 +69,7 @@ namespace PrefsUGUI.Guis.Factories
         public void RemovePrefs(ref Guid prefsId)
             => this.structs.RemovePrefs(ref prefsId);
 
-        public Category AddCategory(GuiHierarchy hierarchy)
+        public Category AddCategory(AbstractGuiHierarchy hierarchy)
             => this.structs.GetOrCreateCategory(hierarchy);
 
         public void RemoveCategory(ref Guid categoryId)

@@ -80,7 +80,7 @@ namespace PrefsUGUI.Guis
             }
         }
 
-        public void AddCategory<GuiType>(GuiHierarchy hierarchy, Action<PrefsCanvas, Category, GuiType> onCreated)
+        public void AddCategory<GuiType>(AbstractGuiHierarchy hierarchy, Action<PrefsCanvas, Category, GuiType> onCreated)
              where GuiType : PrefsGuiButton
         {
             if (this.Canvas != null)
