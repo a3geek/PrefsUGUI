@@ -39,16 +39,6 @@ namespace PrefsUGUI.Guis.Factories.Classes
             this.Previous = previous;
         }
 
-        public void Dispose()
-        {
-            this.OnDiscard = null;
-            this.GuiButton = null;
-            this.nextCategories.Clear();
-            this.nextButtons.Clear();
-            this.prefsGuis.Clear();
-            this.prefs.Clear();
-        }
-
         public void Discard()
             => this.OnDiscard();
 
@@ -120,19 +110,29 @@ namespace PrefsUGUI.Guis.Factories.Classes
         public void SetActive(bool active)
             => this.Content.gameObject.SetActive(active);
 
+        public void Dispose()
+        {
+            this.OnDiscard = null;
+            this.GuiButton = null;
+            this.nextCategories.Clear();
+            this.nextButtons.Clear();
+            this.prefsGuis.Clear();
+            this.prefs.Clear();
+        }
+
         private void ActivateGuiButtons()
         {
-            if(this.GuiButton != null)
+            if (this.GuiButton != null)
             {
-                this.GuiButton.gameObject.SetActive(true);
+                this.GuiButton.SetVisible(true);
             }
 
             var previous = this.Previous;
-            while(previous != null)
+            while (previous != null)
             {
-                if(previous.GuiButton != null)
+                if (previous.GuiButton != null)
                 {
-                    previous.GuiButton.gameObject.SetActive(true);
+                    previous.GuiButton.SetVisible(true);
                 }
 
                 previous = previous.Previous;

@@ -69,7 +69,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
         public Category RemoveCategory(ref Guid categoryId)
         {
-            if(this.Top.CategoryId == categoryId)
+            if (this.Top.CategoryId == categoryId)
             {
                 return this.Top;
             }
