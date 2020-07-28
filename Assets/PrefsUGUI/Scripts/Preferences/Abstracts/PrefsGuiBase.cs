@@ -5,7 +5,6 @@ namespace PrefsUGUI.Preferences.Abstracts
 {
     using Guis.Preferences;
     using Managers;
-    using UnityEngine.Events;
 
     public abstract class PrefsGuiBase<ValType, GuiType> : PrefsValueBase<ValType>, IReadOnlyPrefs<ValType>, IPrefsCommon
         where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>

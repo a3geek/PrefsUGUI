@@ -23,6 +23,7 @@ namespace PrefsUGUI
 
         #region "PrefsGuiBase"
         string GuiLabelWithoutAffix { get; }
+        bool IsCreatedGui { get; }
         float BottomMargin { get; set; }
         float TopMargin { get; set; }
         bool VisibleGUI { get; set; }
