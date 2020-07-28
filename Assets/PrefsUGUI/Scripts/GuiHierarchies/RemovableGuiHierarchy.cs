@@ -37,8 +37,8 @@ namespace PrefsUGUI
 
             this.onButtonClicked = () =>
             {
-                canvas.ChangeGUI(category);
                 this.FireOnHierarchyClicked();
+                canvas.ChangeGUI(category);
             };
 
             void FireOnRemoved()

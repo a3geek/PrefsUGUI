@@ -51,14 +51,7 @@ namespace PrefsUGUI
 
 
         public virtual void Open(bool withEvent = false)
-        {
-            this.onButtonClicked?.Invoke();
-
-            if (withEvent == true)
-            {
-                this.FireOnHierarchyClicked();
-            }
-        }
+          => this.onButtonClicked?.Invoke();
 
         protected virtual void Regist()
             => PrefsManager.AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
@@ -69,8 +62,8 @@ namespace PrefsUGUI
 
             this.onButtonClicked = () =>
             {
-                canvas.ChangeGUI(category);
                 this.FireOnHierarchyClicked();
+                canvas.ChangeGUI(category);
             };
 
             gui.Initialize(this.HierarchyName, this.onButtonClicked);

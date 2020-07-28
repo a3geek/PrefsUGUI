@@ -39,8 +39,8 @@ namespace PrefsUGUI
 
             this.onButtonClicked = () =>
             {
-                this.linkParent?.Open(false);
                 this.FireOnHierarchyClicked();
+                this.linkParent?.Open(false);
             };
 
             gui.Initialize(this.HierarchyName, this.onButtonClicked);
