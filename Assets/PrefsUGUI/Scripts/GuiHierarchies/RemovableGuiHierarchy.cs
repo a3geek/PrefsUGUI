@@ -35,10 +35,10 @@ namespace PrefsUGUI
         {
             this.gui = gui;
 
-            this.onButtonClicked = () =>
+            this.onButtonClicked = (string hierarchyCategoryName) =>
             {
                 this.FireOnHierarchyClicked();
-                canvas.ChangeGUI(category);
+                canvas.ChangeGUI(category, hierarchyCategoryName);
             };
 
             void FireOnRemoved()
@@ -47,7 +47,7 @@ namespace PrefsUGUI
                 this.Dispose();
             }
 
-            gui.Initialize(this.HierarchyName, this.onButtonClicked, FireOnRemoved);
+            gui.Initialize(this.HierarchyName, () => this.onButtonClicked(null), FireOnRemoved);
             this.onCreatedGui?.Invoke(this);
         }
 

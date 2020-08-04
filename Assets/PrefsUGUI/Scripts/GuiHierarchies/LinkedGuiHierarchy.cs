@@ -15,20 +15,19 @@ namespace PrefsUGUI
 
 
         public LinkedGuiHierarchy(
-            string hierarchyName, int sortOrder = DefaultSortOrder, GuiHierarchy parent = null, GuiHierarchy linkParent = null,
+            string hierarchyName, GuiHierarchy linkParent, int sortOrder = DefaultSortOrder, GuiHierarchy parent = null,
             Action<LinkedGuiHierarchy> onCreatedGui = null
         )
         {
             this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);
             this.parent = parent;
+            this.linkParent = linkParent;
             this.sortOrder = sortOrder;
+            this.onCreatedGui = onCreatedGui;
 
             this.HierarchyId = Guid.NewGuid();
             this.Parents = this.GetParents();
             this.FullHierarchy = this.GetFullHierarchy();
-
-            this.onCreatedGui = onCreatedGui;
-            this.linkParent = linkParent;
 
             this.Regist();
         }
@@ -37,13 +36,13 @@ namespace PrefsUGUI
         {
             this.gui = gui;
 
-            this.onButtonClicked = () =>
+            this.onButtonClicked = (string hierarchyCategoryName) =>
             {
                 this.FireOnHierarchyClicked();
-                this.linkParent?.Open(false);
+                this.linkParent?.Open(hierarchyCategoryName);
             };
 
-            gui.Initialize(this.HierarchyName, this.onButtonClicked);
+            gui.Initialize(this.HierarchyName, () => this.onButtonClicked(this.HierarchyName));
             this.onCreatedGui?.Invoke(this);
         }
 

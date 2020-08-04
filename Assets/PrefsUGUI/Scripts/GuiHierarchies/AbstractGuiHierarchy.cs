@@ -47,11 +47,11 @@ namespace PrefsUGUI
 
         protected bool disposed = false;
         protected PrefsGuiButton gui = null;
-        protected UnityAction onButtonClicked = null;
+        protected UnityAction<string> onButtonClicked = null;
 
 
-        public virtual void Open(bool withEvent = false)
-          => this.onButtonClicked?.Invoke();
+        public virtual void Open(string hierarchyCategoryName = null)
+          => this.onButtonClicked?.Invoke(hierarchyCategoryName);
 
         protected virtual void Regist()
             => PrefsManager.AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
@@ -60,13 +60,13 @@ namespace PrefsUGUI
         {
             this.gui = gui;
 
-            this.onButtonClicked = () =>
+            this.onButtonClicked = (string hierarchyCategoryName) =>
             {
                 this.FireOnHierarchyClicked();
-                canvas.ChangeGUI(category);
+                canvas.ChangeGUI(category, hierarchyCategoryName);
             };
 
-            gui.Initialize(this.HierarchyName, this.onButtonClicked);
+            gui.Initialize(this.HierarchyName, () => this.onButtonClicked(null));
             this.FireOnCreatedGui();
         }
 
