@@ -36,13 +36,13 @@ namespace PrefsUGUI
         {
             this.gui = gui;
 
-            this.onButtonClicked = (string hierarchyCategoryName) =>
+            this.changeGUI = (string hierarchyCategoryName) => this.linkParent?.Open(hierarchyCategoryName, false);
+
+            gui.Initialize(this.HierarchyName, () =>
             {
                 this.FireOnHierarchyClicked();
-                this.linkParent?.Open(hierarchyCategoryName);
-            };
-
-            gui.Initialize(this.HierarchyName, () => this.onButtonClicked(this.HierarchyName));
+                this.changeGUI(this.HierarchyName);
+            });
             this.onCreatedGui?.Invoke(this);
         }
 
