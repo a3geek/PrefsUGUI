@@ -71,10 +71,10 @@ namespace PrefsUGUI.Guis.Preferences
             this.SetValue(iniValue ?? 0);
         }
 
-        protected override void SetFields()
+        protected override void SetFieldsInternal()
         {
             this.inited = false;
-            base.SetFields();
+            base.SetFieldsInternal();
 
             foreach(var pair in this.indexToValue)
             {
@@ -99,7 +99,7 @@ namespace PrefsUGUI.Guis.Preferences
             }
 
             this.SetValueInternal(this.indexToValue[index]);
-            this.FireOnValueChanged();
+            this.SetFields(true);
         }
     }
 }

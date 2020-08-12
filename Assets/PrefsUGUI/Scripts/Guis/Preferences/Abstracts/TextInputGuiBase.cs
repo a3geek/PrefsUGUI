@@ -23,7 +23,7 @@ namespace PrefsUGUI.Guis.Preferences
         protected virtual void OnInputValue(string v)
         {
             this.SetValueInternal(v);
-            this.FireOnValueChanged();
+            this.SetFields(true);
         }
 
         protected abstract void SetValueInternal(string value);

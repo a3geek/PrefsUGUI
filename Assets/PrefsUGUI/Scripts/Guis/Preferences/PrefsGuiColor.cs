@@ -22,9 +22,9 @@ namespace PrefsUGUI.Guis.Preferences
             this.preview = this.GetComponentInChildren<RawImage>();
         }
 
-        protected override void SetFields()
+        protected override void SetFieldsInternal()
         {
-            base.SetFields();
+            base.SetFieldsInternal();
             this.preview.color = this.GetValue();
         }
 

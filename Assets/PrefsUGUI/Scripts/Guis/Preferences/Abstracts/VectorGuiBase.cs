@@ -63,9 +63,9 @@ namespace PrefsUGUI.Guis.Preferences
             return events;
         }
 
-        protected override void SetFields()
+        protected override void SetFieldsInternal()
         {
-            base.SetFields();
+            base.SetFieldsInternal();
 
             for (var i = 0; i < this.ElementCount; i++)
             {

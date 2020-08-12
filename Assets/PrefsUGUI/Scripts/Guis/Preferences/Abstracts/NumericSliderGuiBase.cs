@@ -50,9 +50,9 @@ namespace PrefsUGUI.Guis.Preferences
             this.slider.maxValue = (min < max ? max : min);
         }
 
-        protected override void SetFields()
+        protected override void SetFieldsInternal()
         {
-            base.SetFields();
+            base.SetFieldsInternal();
             this.slider.value = this.GetValueAsFloat();
         }
 
@@ -63,11 +63,11 @@ namespace PrefsUGUI.Guis.Preferences
                 return;
             }
 
-            this.SetValueAsFloat(v);
-            this.FireOnValueChanged();
+            this.SetValueInternalAsFloat(v);
+            this.SetFields(true);
         }
 
         protected abstract float GetValueAsFloat();
-        protected abstract void SetValueAsFloat(float v);
+        protected abstract void SetValueInternalAsFloat(float v);
     }
 }

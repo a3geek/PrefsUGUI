@@ -30,9 +30,9 @@ namespace PrefsUGUI.Guis.Preferences
         protected override bool IsDefaultValue()
             => this.GetValue() == this.defaultGetter();
 
-        protected override void SetFields()
+        protected override void SetFieldsInternal()
         {
-            base.SetFields();
+            base.SetFieldsInternal();
             this.field.text = this.value;
         }
 

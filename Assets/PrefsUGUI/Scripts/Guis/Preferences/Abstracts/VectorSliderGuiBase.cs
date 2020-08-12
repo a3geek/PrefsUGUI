@@ -73,10 +73,10 @@ namespace PrefsUGUI.Guis.Preferences
             }
         }
 
-        protected override void SetFields()
+        protected override void SetFieldsInternal()
         {
             this.inited = false;
-            base.SetFields();
+            base.SetFieldsInternal();
 
             for (var i = 0; i < this.sliders.Length; i++)
             {
@@ -93,8 +93,8 @@ namespace PrefsUGUI.Guis.Preferences
                 return;
             }
 
-            this.SetValue(this.GetValueFromSlider());
-            this.FireOnValueChanged();
+            this.SetValueInternal(this.GetValueFromSlider());
+            this.SetFields(true);
         }
 
         protected virtual UnityEvent<float>[] GetSliderEvents()

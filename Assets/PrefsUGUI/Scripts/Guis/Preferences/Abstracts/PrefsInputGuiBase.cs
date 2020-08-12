@@ -19,10 +19,11 @@ namespace PrefsUGUI.Guis.Preferences
         [SerializeField]
         protected Text defaultButtonText = null;
         [SerializeField]
-        private Color defaultColor = new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f);
+        protected Color defaultColor = new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f);
         [SerializeField]
-        private Color nondefaultColor = Color.red;
+        protected Color nondefaultColor = Color.red;
 
+        protected bool isUpdatingFields = false;
         protected ValType value = default;
         protected Func<ValType> defaultGetter = null;
 
@@ -46,7 +47,7 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual void SetValue(ValType value)
         {
             this.SetValueInternal(value);
-            this.SetFields();
+            this.SetFields(false);
         }
 
         public virtual void SetGuiListeners(PrefsValueBase<ValType> prefs)
@@ -65,10 +66,28 @@ namespace PrefsUGUI.Guis.Preferences
             this.defaultGetter = null;
         }
 
+        protected virtual void SetFields(bool withEvent = true)
+        {
+            if(this.isUpdatingFields == true)
+            {
+                return;
+            }
+
+            this.isUpdatingFields = true;
+
+            this.SetFieldsInternal();
+            if(withEvent == true)
+            {
+                this.FireOnValueChanged();
+            }
+
+            this.isUpdatingFields = false;
+        }
+
         protected virtual void SetValueInternal(ValType value)
             => this.value = value;
 
-        protected virtual void SetFields()
+        protected virtual void SetFieldsInternal()
             => this.defaultButtonText.color = this.IsDefaultValue() == true ? this.defaultColor : this.nondefaultColor;
 
         protected abstract bool IsDefaultValue();

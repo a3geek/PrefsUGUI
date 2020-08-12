@@ -29,9 +29,9 @@ namespace PrefsUGUI.Guis.Preferences
             this.Initialize(label, initialValue, 0f, 1f, defaultGetter);
         }
 
-        protected override void SetFields()
+        protected override void SetFieldsInternal()
         {
-            base.SetFields();
+            base.SetFieldsInternal();
             this.preview.color = this.GetValue();
         }
 

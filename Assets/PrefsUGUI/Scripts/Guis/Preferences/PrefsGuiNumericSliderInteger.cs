@@ -25,7 +25,7 @@ namespace PrefsUGUI.Guis.Preferences
         protected override float GetValueAsFloat()
             => this.GetValue();
 
-        protected override void SetValueAsFloat(float v)
-            => this.SetValue(Mathf.RoundToInt(v));
+        protected override void SetValueInternalAsFloat(float v)
+            => this.SetValueInternal(Mathf.RoundToInt(v));
     }
 }

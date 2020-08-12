@@ -31,9 +31,9 @@ namespace PrefsUGUI.Guis.Preferences
             this.SetValue(initialValue);
         }
 
-        protected override void SetFields()
+        protected override void SetFieldsInternal()
         {
-            base.SetFields();
+            base.SetFieldsInternal();
             this.field.text = this.GetValue().ToString();
         }
 

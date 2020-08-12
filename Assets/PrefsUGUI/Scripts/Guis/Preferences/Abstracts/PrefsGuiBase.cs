@@ -32,7 +32,7 @@ namespace PrefsUGUI.Guis.Preferences
 
         protected virtual void OnDestroy()
         {
-            if(this.isDisposed == false)
+            if (this.isDisposed == false)
             {
                 this.Dispose();
             }

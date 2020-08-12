@@ -36,12 +36,12 @@ namespace PrefsUGUI.Guis.Preferences
         protected virtual void OnToggleChanged(bool value)
         {
             this.SetValueInternal(value);
-            this.FireOnValueChanged();
+            this.SetFields(true);
         }
 
-        protected override void SetFields()
+        protected override void SetFieldsInternal()
         {
-            base.SetFields();
+            base.SetFieldsInternal();
             this.toggle.isOn = this.GetValue();
         }
 
