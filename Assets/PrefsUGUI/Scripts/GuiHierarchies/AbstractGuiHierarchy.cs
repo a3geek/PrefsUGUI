@@ -47,11 +47,18 @@ namespace PrefsUGUI
 
         protected bool disposed = false;
         protected PrefsGuiButton gui = null;
-        protected UnityAction<string> onButtonClicked = null;
+        protected UnityAction<string> changeGUI = null;
 
 
-        public virtual void Open(string hierarchyCategoryName = null)
-          => this.onButtonClicked?.Invoke(hierarchyCategoryName);
+        public virtual void Open(string hierarchyCategoryName = null, bool withClickedEvent = true)
+        {
+            this.changeGUI?.Invoke(hierarchyCategoryName);
+
+            if(withClickedEvent == true)
+            {
+                this.FireOnHierarchyClicked();
+            }
+        }
 
         protected virtual void Regist()
             => PrefsManager.AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
@@ -60,13 +67,13 @@ namespace PrefsUGUI
         {
             this.gui = gui;
 
-            this.onButtonClicked = (string hierarchyCategoryName) =>
-            {
-                this.FireOnHierarchyClicked();
-                canvas.ChangeGUI(category, hierarchyCategoryName);
-            };
+            this.changeGUI = (string hierarchyCategoryName) => canvas.ChangeGUI(category, hierarchyCategoryName);
 
-            gui.Initialize(this.HierarchyName, () => this.onButtonClicked(null));
+            gui.Initialize(this.HierarchyName, () =>
+            {
+                this.changeGUI(null);
+                this.FireOnHierarchyClicked();
+            });
             this.FireOnCreatedGui();
         }
 
@@ -117,7 +124,7 @@ namespace PrefsUGUI
 
             this.parent = null;
             this.gui = null;
-            this.onButtonClicked = null;
+            this.changeGUI = null;
             this.OnHierarchyClicked = null;
             PrefsManager.RemoveGuiHierarchy(this.HierarchyId);
             this.disposed = true;
