@@ -21,5 +21,8 @@ namespace PrefsUGUI.Guis.Preferences
 
         protected override void SetValueInternal(string value)
             => this.SetValueInternal(this.GetVector4FromFields());
+
+        protected override Vector4 GetDeltaAddedValue(Vector4 v4)
+            => this.value + v4;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Preferences
 {
+    using Commons;
     using CustomExtensions.Csharp;
 
     [Serializable]
@@ -18,6 +19,8 @@ namespace PrefsUGUI.Guis.Preferences
         protected virtual InputField[] fields { get; set; } = new InputField[0];
 
         [SerializeField]
+        protected NumericUpDownInput updown = new NumericUpDownInput();
+        [SerializeField]
         protected InputField fieldX = null;
         [SerializeField]
         protected InputField fieldY = null;
@@ -27,9 +30,28 @@ namespace PrefsUGUI.Guis.Preferences
         protected InputField fieldW = null;
 
 
+        protected virtual void Update()
+        {
+            for (var i = 0; i < this.ElementCount; i++)
+            {
+                if (this.updown.Update(this.fields[i], out var delta) == true)
+                {
+                    var vec = Vector4.zero;
+                    vec[i] = delta;
+                    this.OnInputValue(this.GetDeltaAddedValue(vec));
+                }
+            }
+        }
+
         protected override void Reset()
         {
             base.Reset();
+
+            if(this.ContentType == InputField.ContentType.IntegerNumber)
+            {
+                this.updown.UpDownStep = 1f;
+                this.updown.StepDelay = 0.1f;
+            }
 
             var fields = this.GetComponentsInChildren<InputField>();
             this.fieldX = fields.Length >= 1 ? fields[0] : this.fieldX;
@@ -100,5 +122,6 @@ namespace PrefsUGUI.Guis.Preferences
         }
 
         protected abstract string GetElement(int index);
+        protected abstract ValType GetDeltaAddedValue(Vector4 v4);
     }
 }

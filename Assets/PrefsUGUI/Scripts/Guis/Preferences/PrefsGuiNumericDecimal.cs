@@ -20,5 +20,8 @@ namespace PrefsUGUI.Guis.Preferences
                 this.SetValueInternal(v);
             }
         }
+
+        protected override float GetDeltaAddedValue(float delta)
+            => this.value + delta;
     }
 }

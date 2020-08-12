@@ -30,6 +30,12 @@ namespace PrefsUGUI.Examples
             this.test0.PrefsImageLabel.Image = this.prefsImage;
 
             Test1Gui.OnHierarchyClicked += () => Debug.Log("Test1Gui Clicked");
+
+            this.test0.PrefsIntSlider.OnValueChanged += ()
+                => Debug.Log(nameof(this.test0.PrefsIntSlider) + " Changed : " + this.test0.PrefsIntSlider.Get());
+
+            this.test0.PrefsBool.OnValueChanged += ()
+                => Debug.Log(nameof(this.test0.PrefsBool) + " Changed : " + this.test0.PrefsBool.Get());
         }
 
         private void Update()

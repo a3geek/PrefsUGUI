@@ -24,5 +24,8 @@ namespace PrefsUGUI.Guis.Preferences
             var v4 = this.GetVector4FromFields();
             this.SetValueInternal(new Vector3(v4.x, v4.y, v4.z));
         }
+
+        protected override Vector3 GetDeltaAddedValue(Vector4 v4)
+            => this.value + new Vector3(v4.x, v4.y, v4.z);
     }
 }

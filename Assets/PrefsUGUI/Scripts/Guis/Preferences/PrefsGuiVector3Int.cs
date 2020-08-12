@@ -21,5 +21,8 @@ namespace PrefsUGUI.Guis.Preferences
 
         protected override void SetValueInternal(string value)
             => this.SetValueInternal(this.GetVector3IntFromFields());
+
+        protected override Vector3Int GetDeltaAddedValue(Vector4 v4)
+            => this.value + new Vector3Int(Mathf.RoundToInt(v4.x), Mathf.RoundToInt(v4.y), Mathf.RoundToInt(v4.z));
     }
 }

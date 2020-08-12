@@ -26,6 +26,12 @@ namespace PrefsUGUI.Guis.Preferences
             this.SetFields(true);
         }
 
+        protected virtual void OnInputValue(ValType v)
+        {
+            this.SetValueInternal(v);
+            this.SetFields(true);
+        }
+
         protected abstract void SetValueInternal(string value);
     }
 }

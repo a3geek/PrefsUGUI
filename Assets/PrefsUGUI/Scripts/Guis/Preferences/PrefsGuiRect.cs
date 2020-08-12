@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 namespace PrefsUGUI.Guis.Preferences
 {
@@ -15,7 +15,7 @@ namespace PrefsUGUI.Guis.Preferences
 
         protected override string GetElement(int index)
         {
-            switch(index)
+            switch (index)
             {
                 case 0: return this.value.x.ToString();
                 case 1: return this.value.y.ToString();
@@ -32,5 +32,11 @@ namespace PrefsUGUI.Guis.Preferences
             var v4 = this.GetVector4FromFields();
             this.SetValueInternal(new Rect(v4.x, v4.y, v4.z, v4.w));
         }
+
+        protected override Rect GetDeltaAddedValue(Vector4 v4)
+            => new Rect(
+                this.value.x + v4.x, this.value.y + v4.y,
+                this.value.width + v4.z, this.value.height + v4.w
+            );
     }
 }

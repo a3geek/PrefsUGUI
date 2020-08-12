@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace PrefsUGUI.Guis.Preferences
 {
@@ -20,5 +21,8 @@ namespace PrefsUGUI.Guis.Preferences
                 this.SetValueInternal(v);
             }
         }
+
+        protected override int GetDeltaAddedValue(float delta)
+            => this.value + Mathf.RoundToInt(delta);
     }
 }

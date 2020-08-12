@@ -27,5 +27,8 @@ namespace PrefsUGUI.Guis.Preferences
 
         protected override void SetValueInternalAsFloat(float v)
             => this.SetValueInternal(Mathf.RoundToInt(v));
+
+        protected override int GetDeltaAddedValue(float delta)
+            => this.value + Mathf.RoundToInt(delta);
     }
 }
