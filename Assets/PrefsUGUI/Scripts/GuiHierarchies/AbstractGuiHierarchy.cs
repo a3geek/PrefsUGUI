@@ -47,12 +47,12 @@ namespace PrefsUGUI
 
         protected bool disposed = false;
         protected PrefsGuiButton gui = null;
-        protected UnityAction<string> changeGUI = null;
+        protected UnityAction changeGUI = null;
 
 
-        public virtual void Open(string hierarchyCategoryName = null, bool withClickedEvent = true)
+        public virtual void Open(bool withClickedEvent = true)
         {
-            this.changeGUI?.Invoke(hierarchyCategoryName);
+            this.changeGUI?.Invoke();
 
             if(withClickedEvent == true)
             {
@@ -67,11 +67,11 @@ namespace PrefsUGUI
         {
             this.gui = gui;
 
-            this.changeGUI = (string hierarchyCategoryName) => canvas.ChangeGUI(category, hierarchyCategoryName);
+            this.changeGUI = () => canvas.ChangeGUI(category);
 
             gui.Initialize(this.HierarchyName, () =>
             {
-                this.changeGUI(null);
+                this.changeGUI();
                 this.FireOnHierarchyClicked();
             });
             this.FireOnCreatedGui();

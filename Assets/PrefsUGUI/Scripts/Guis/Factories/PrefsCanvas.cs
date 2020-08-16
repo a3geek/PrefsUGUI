@@ -75,8 +75,8 @@ namespace PrefsUGUI.Guis.Factories
         public void RemoveCategory(ref Guid categoryId)
             => this.ChangeGUI(this.structs.RemoveCategory(ref categoryId));
 
-        public void ChangeGUI(Category nextCategory, string hierarchyCategoryName = null)
-            => this.OnCategoryChanged(this.structs.ChangeGUI(nextCategory), hierarchyCategoryName);
+        public void ChangeGUI(Category nextCategory)
+            => this.OnCategoryChanged(this.structs.ChangeGUI(nextCategory));
 
         private void OnClickedDiscardButton()
             => this.structs.Current.Discard();
@@ -90,17 +90,17 @@ namespace PrefsUGUI.Guis.Factories
             this.gameObject.SetActive(false);
         }
 
-        private void OnCategoryChanged(Category category, string hierarchyCategoryName = null)
+        private void OnCategoryChanged(Category category)
         {
             this.links.Scroll.content = category.Content;
 
-            var isTop = this.SetHierarchy(category, hierarchyCategoryName);
+            var isTop = this.SetHierarchy(category);
             this.SetButtonActive(isTop);
         }
 
-        private bool SetHierarchy(Category category, string hierarchyCategoryName = null)
+        private bool SetHierarchy(Category category)
         {
-            var hierarchy = hierarchyCategoryName ?? category.CategoryName;
+            var hierarchy = category.CategoryName;
             var previous = category.Previous;
             while (previous != null)
             {
