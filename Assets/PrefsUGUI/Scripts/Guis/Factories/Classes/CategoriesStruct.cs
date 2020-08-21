@@ -84,6 +84,10 @@ namespace PrefsUGUI.Guis.Factories.Classes
                     {
                         Object.Destroy(button.gameObject);
                     }
+                    if (this.Current.CategoryId == categoryId)
+                    {
+                        this.Current = null;
+                    }
 
                     category.Dispose();
                     Object.Destroy(category.Content.gameObject);
