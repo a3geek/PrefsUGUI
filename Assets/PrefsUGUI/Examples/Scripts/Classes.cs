@@ -38,7 +38,7 @@ namespace PrefsUGUI.Examples
             );
 
             [SerializeField]
-            private PrefsString PrefsString = new PrefsString("PrefsString", "String", Test0Gui,
+            private PrefsString prefsString = new PrefsString("PrefsString", "String", Test0Gui,
                 sortOrder: 2, onCreatedGui: prefs => prefs.TopMargin = 25f
             );
         }
