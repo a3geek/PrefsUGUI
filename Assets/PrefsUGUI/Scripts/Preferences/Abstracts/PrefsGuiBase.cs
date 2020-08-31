@@ -9,91 +9,41 @@ namespace PrefsUGUI.Preferences.Abstracts
     public abstract class PrefsGuiBase<ValType, GuiType> : PrefsValueBase<ValType>, IReadOnlyPrefs<ValType>, IPrefsCommon
         where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
     {
-        protected virtual event Action onCreatedGuiEvent = delegate { };
-
-        public override string GuiLabel => this.guiLabelPrefix + this.guiLabel + this.guiLabelSufix;
-        public virtual string GuiLabelWithoutAffix => base.GuiLabel;
-        public virtual bool IsCreatedGui => this.gui != null;
+        public override string GuiLabel => this.properties.GuiLabel;
+        public virtual string GuiLabelWithoutAffix => this.properties.GuiLabelWithoutAffix;
+        public virtual bool IsCreatedGui => this.properties.IsCreatedGui;
         public virtual float BottomMargin
         {
-            get => this.gui == null ? 0f : this.gui.GetBottomMargin();
-            set
-            {
-                void SetBottomMargin() => this.gui.SetBottomMargin(Mathf.Max(0f, value));
-
-                if (this.gui != null)
-                {
-                    SetBottomMargin();
-                }
-                else
-                {
-                    this.onCreatedGuiEvent += SetBottomMargin;
-                }
-            }
+            get => this.properties.BottomMargin;
+            set => this.properties.BottomMargin = value;
         }
         public virtual float TopMargin
         {
-            get => this.gui == null ? 0f : this.gui.GetTopMargin();
-            set
-            {
-                void SetTopMargin() => this.gui.SetTopMargin(Mathf.Max(0f, value));
-
-                if (this.gui != null)
-                {
-                    SetTopMargin();
-                }
-                else
-                {
-                    this.onCreatedGuiEvent += SetTopMargin;
-                }
-            }
+            get => this.properties.TopMargin;
+            set => this.properties.TopMargin = value;
         }
         public virtual bool VisibleGUI
         {
-            get => this.gui != null && this.gui.GetVisible();
-            set
-            {
-                void SetVisible() => this.gui.SetVisible(value);
-
-                if (this.gui != null)
-                {
-                    SetVisible();
-                }
-                else
-                {
-                    this.onCreatedGuiEvent += SetVisible;
-                }
-            }
+            get => this.properties.VisibleGUI;
+            set => this.properties.VisibleGUI = value;
         }
         public virtual string GuiLabelPrefix
         {
-            get => this.guiLabelPrefix;
-            set
-            {
-                this.guiLabelPrefix = value ?? "";
-                this.UpdateLabel();
-            }
+            get => this.properties.GuiLabelPrefix;
+            set => this.properties.GuiLabelPrefix = value;
         }
         public virtual string GuiLabelSufix
         {
-            get => this.guiLabelSufix;
-            set
-            {
-                this.guiLabelSufix = value ?? "";
-                this.UpdateLabel();
-            }
+            get => this.properties.GuiLabelSufix;
+            set => this.properties.GuiLabelSufix = value;
         }
         public override int GuiSortOrder
         {
-            get; protected set;
+            get => this.properties.GuiSortOrder;
+            protected set => this.properties.GuiSortOrder = value;
         }
 
-        [SerializeField]
-        protected string guiLabelPrefix = "";
-        [SerializeField]
-        protected string guiLabelSufix = "";
-
-        protected GuiType gui = null;
+        protected PrefsGuiProperties<GuiType> properties = new PrefsGuiProperties<GuiType>();
         protected Action<PrefsGuiBase<ValType, GuiType>> onCreatedGui = null;
 
 
@@ -112,24 +62,10 @@ namespace PrefsUGUI.Preferences.Abstracts
 
         protected virtual void OnCreatedGui(GuiType gui)
         {
-            this.gui = gui;
+            this.properties.OnCreatedGui(gui, this.guiLabel);
 
             this.OnCreatedGuiInternal(gui);
             this.onCreatedGui?.Invoke(this);
-        }
-
-        protected virtual void UpdateLabel()
-        {
-            void SetLabel() => this.gui.SetLabel(this.GuiLabel);
-
-            if (this.gui != null)
-            {
-                SetLabel();
-            }
-            else
-            {
-                this.onCreatedGuiEvent += SetLabel;
-            }
         }
 
         protected override void Dispose(bool disposing)
@@ -141,9 +77,8 @@ namespace PrefsUGUI.Preferences.Abstracts
                 return;
             }
 
-            this.gui = null;
+            this.properties.Dispose();
             this.onCreatedGui = null;
-            this.onCreatedGuiEvent = null;
         }
 
         protected abstract void OnCreatedGuiInternal(GuiType gui);

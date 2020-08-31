@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories.Classes
 {
+    using GuiHierarchies.Abstracts;
     using Preferences;
     using Object = UnityEngine.Object;
 
@@ -57,13 +58,13 @@ namespace PrefsUGUI.Guis.Factories.Classes
             {
                 var categoryId = parent.HierarchyId;
                 currentCategory = this.GetOrCreateNextCategory(
-                    currentCategory, ref categoryId, parent.HierarchyName, parent, parent.SortOrder
+                    currentCategory, ref categoryId, parent.HierarchyName, parent, parent.GuiSortOrder
                 );
             }
 
             var id = hierarchy.HierarchyId;
             return this.GetOrCreateNextCategory(
-                currentCategory, ref id, hierarchy.HierarchyName, hierarchy, hierarchy.SortOrder
+                currentCategory, ref id, hierarchy.HierarchyName, hierarchy, hierarchy.GuiSortOrder
             );
         }
 

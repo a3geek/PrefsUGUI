@@ -33,7 +33,7 @@ namespace PrefsUGUI
 
         protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiRemovableButton gui)
         {
-            this.gui = gui;
+            this.properties.OnCreatedGui(gui, this.HierarchyName);
 
             this.changeGUI = () => canvas.ChangeGUI(category);
 

@@ -2,6 +2,7 @@
 
 namespace PrefsUGUI
 {
+    using GuiHierarchies.Abstracts;
     using Guis.Factories;
     using Guis.Factories.Classes;
     using Guis.Preferences;
@@ -34,7 +35,7 @@ namespace PrefsUGUI
 
         protected override void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiButton gui)
         {
-            this.gui = gui;
+            this.properties.OnCreatedGui(gui, this.HierarchyName);
 
             this.changeGUI = () => this.linkParent?.Open(false);
 

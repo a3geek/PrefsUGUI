@@ -3,20 +3,20 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
-    using Preferences.Abstracts;
     using Guis.Preferences;
+    using Preferences.Abstracts;
 
     [Serializable]
     public class PrefsImageLabel : PrefsGuiBase<string, PrefsGuiImageLabel>
     {
         public Texture Image
         {
-            get => this.gui == null ? null : this.gui.GetImage();
+            get => this.properties.Gui == null ? null : this.properties.Gui.GetImage();
             set
             {
-                if(this.gui != null)
+                if (this.properties.Gui != null)
                 {
-                    this.gui.SetImage(value);
+                    this.properties.Gui.SetImage(value);
                 }
             }
         }

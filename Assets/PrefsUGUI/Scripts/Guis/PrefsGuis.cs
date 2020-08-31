@@ -6,6 +6,7 @@ namespace PrefsUGUI.Guis
 {
     using Factories;
     using Factories.Classes;
+    using GuiHierarchies.Abstracts;
     using Preferences;
     using PrefsUGUI.Preferences.Abstracts;
 

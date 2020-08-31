@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PrefsUGUI
+namespace PrefsUGUI.GuiHierarchies.Abstracts
 {
     using Guis;
     using Guis.Factories;
     using Guis.Factories.Classes;
     using Guis.Preferences;
     using Managers;
+    using Preferences.Abstracts;
     using UnityEngine.Events;
     using static Prefs;
 
@@ -21,22 +22,31 @@ namespace PrefsUGUI
 
         public virtual HierarchyType HierarchyType => HierarchyType.Standard;
         public virtual string HierarchyName => this.hierarchyName;
-        public virtual int SortOrder => this.sortOrder;
         public virtual AbstractGuiHierarchy Parent => this.parent;
-        public virtual bool VisibleGUI
-        {
-            get => this.gui != null && this.gui.GetVisible();
-            set
-            {
-                if (this.gui != null)
-                {
-                    this.gui.SetVisible(value);
-                }
-            }
-        }
+        public virtual bool IsCreatedGui => this.properties.IsCreatedGui;
         public virtual Guid HierarchyId { get; protected set; } = Guid.Empty;
         public virtual IReadOnlyList<AbstractGuiHierarchy> Parents { get; protected set; } = new List<AbstractGuiHierarchy>();
         public virtual string FullHierarchy { get; protected set; } = "";
+        public virtual float BottomMargin
+        {
+            get => this.properties.BottomMargin;
+            set => this.properties.BottomMargin = value;
+        }
+        public virtual float TopMargin
+        {
+            get => this.properties.TopMargin;
+            set => this.properties.TopMargin = value;
+        }
+        public virtual bool VisibleGUI
+        {
+            get => this.properties.VisibleGUI;
+            set => this.properties.VisibleGUI = value;
+        }
+        public virtual int GuiSortOrder
+        {
+            get => this.properties.GuiSortOrder;
+            protected set => this.properties.GuiSortOrder = value;
+        }
 
         [SerializeField]
         protected string hierarchyName = "";
@@ -46,15 +56,15 @@ namespace PrefsUGUI
         protected AbstractGuiHierarchy parent = null;
 
         protected bool disposed = false;
-        protected PrefsGuiButton gui = null;
         protected UnityAction changeGUI = null;
+        protected PrefsGuiProperties<PrefsGuiButton> properties = new PrefsGuiProperties<PrefsGuiButton>();
 
 
         public virtual void Open(bool withClickedEvent = true)
         {
             this.changeGUI?.Invoke();
 
-            if(withClickedEvent == true)
+            if (withClickedEvent == true)
             {
                 this.FireOnHierarchyClicked();
             }
@@ -65,7 +75,7 @@ namespace PrefsUGUI
 
         protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiButton gui)
         {
-            this.gui = gui;
+            this.properties.OnCreatedGui(gui, this.HierarchyName);
 
             this.changeGUI = () => canvas.ChangeGUI(category);
 
@@ -122,8 +132,8 @@ namespace PrefsUGUI
                 return;
             }
 
+            this.properties.Dispose();
             this.parent = null;
-            this.gui = null;
             this.changeGUI = null;
             this.OnHierarchyClicked = null;
             PrefsManager.RemoveGuiHierarchy(this.HierarchyId);

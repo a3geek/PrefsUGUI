@@ -2,6 +2,7 @@
 
 namespace PrefsUGUI
 {
+    using GuiHierarchies.Abstracts;
     using static Prefs;
 
     [Serializable]

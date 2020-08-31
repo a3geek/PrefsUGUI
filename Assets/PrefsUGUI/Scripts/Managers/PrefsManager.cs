@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace PrefsUGUI.Managers
 {
+    using GuiHierarchies.Abstracts;
     using Guis;
     using Guis.Factories;
     using Guis.Factories.Classes;

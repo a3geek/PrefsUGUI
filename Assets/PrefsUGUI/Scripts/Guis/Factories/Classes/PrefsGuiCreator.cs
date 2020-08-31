@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories.Classes
 {
+    using GuiHierarchies.Abstracts;
     using Guis.Preferences;
     using PrefsUGUI.Preferences.Abstracts;
     using Object = UnityEngine.Object;

@@ -4,6 +4,7 @@ using UnityEngine;
 namespace PrefsUGUI.Guis.Factories
 {
     using Classes;
+    using GuiHierarchies.Abstracts;
     using Guis.Preferences;
     using PrefsUGUI.Preferences.Abstracts;
 
