@@ -13,6 +13,8 @@ namespace PrefsUGUI.Managers
 
     public static class PrefsManager
     {
+        public static event Action<PrefsBase> OnAnyPrefsValueChanged = delegate { };
+
         public static string AggregationName { get; private set; } = "";
         public static string FileName { get; private set; } = "";
         public static PrefsGuis PrefsGuis { get; private set; } = null;
@@ -75,6 +77,9 @@ namespace PrefsUGUI.Managers
             void AddPrefs() => PrefsGuis.AddPrefs(prefs, onCreated);
             AddPrefsCache[prefs.SaveKey] = AddPrefs;
             AddPrefsCacheOrders.Enqueue(prefs.SaveKey);
+
+            void OnPrefsValueChanged() => OnAnyPrefsValueChanged(prefs);
+            prefs.OnValueChanged += OnPrefsValueChanged;
         }
 
         public static void RemovePrefs(Guid prefsId)

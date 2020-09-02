@@ -1,6 +1,10 @@
-﻿namespace PrefsUGUI
+﻿using System;
+
+namespace PrefsUGUI
 {
     using Managers;
+    using Preferences.Abstracts;
+    using UnityEngine;
     using XmlStorage;
     using XmlStorageConsts = XmlStorage.Systems.XmlStorageConsts;
 
@@ -8,9 +12,25 @@
     {
         public const char HierarchySeparator = '/';
 
+        public static event Action<PrefsBase> OnPrefsValueChanged = delegate { };
+
         public static string AggregationName => PrefsManager.AggregationName;
         public static string FileName => PrefsManager.FileName;
 
+        private static bool WillQuit = false;
+
+
+        static Prefs()
+        {
+            Application.quitting += () => WillQuit = true;
+            PrefsManager.OnAnyPrefsValueChanged += prefs =>
+            {
+                if (WillQuit == false)
+                {
+                    OnPrefsValueChanged(prefs);
+                }
+            };
+        }
 
         public static void Save()
         {

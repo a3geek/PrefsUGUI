@@ -83,6 +83,11 @@ namespace PrefsUGUI.Preferences.Abstracts
 
             PrefsManager.RemovePrefs(this.PrefsId);
             this.OnDisposed();
+
+            this.OnValueChanged = null;
+            this.OnDisposed = null;
+            this.GuiHierarchy = null;
+
             this.disposed = true;
         }
         #endregion
