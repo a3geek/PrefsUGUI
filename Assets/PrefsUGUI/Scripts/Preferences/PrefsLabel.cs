@@ -17,9 +17,6 @@ namespace PrefsUGUI
             this.Unsave = true;
         }
 
-        public override void Reload(bool withEvent = true)
-            => this.ResetDefaultValue();
-
         protected override void OnCreatedGuiInternal(PrefsGuiLabel gui)
             => gui.Initialize(this.GuiLabel, this.Get());
     }
