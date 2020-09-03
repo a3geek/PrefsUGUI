@@ -2,8 +2,8 @@
 
 namespace PrefsUGUI
 {
-    using Preferences.Abstracts;
     using Guis.Preferences;
+    using Preferences.Abstracts;
 
     [Serializable]
     public class PrefsLabel : PrefsGuiBase<string, PrefsGuiLabel>
@@ -14,6 +14,7 @@ namespace PrefsUGUI
         )
             : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui, sortOrder)
         {
+            this.Unsave = true;
         }
 
         public override void Reload(bool withEvent = true)
@@ -21,8 +22,5 @@ namespace PrefsUGUI
 
         protected override void OnCreatedGuiInternal(PrefsGuiLabel gui)
             => gui.Initialize(this.GuiLabel, this.Get());
-
-        protected override void Regist()
-            => this.OnRegisted();
     }
 }
