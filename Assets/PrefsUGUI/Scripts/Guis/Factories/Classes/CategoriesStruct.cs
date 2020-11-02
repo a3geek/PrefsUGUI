@@ -46,7 +46,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
         public Category GetOrCreateCategory(AbstractGuiHierarchy hierarchy)
         {
-            if (hierarchy == null)
+            if (hierarchy == null || string.IsNullOrEmpty(hierarchy.FullHierarchy))
             {
                 return this.Top;
             }

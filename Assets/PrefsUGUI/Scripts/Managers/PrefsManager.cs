@@ -20,8 +20,8 @@ namespace PrefsUGUI.Managers
         public static PrefsGuis PrefsGuis { get; private set; } = null;
         public static ConcurrentBag<Action> StorageValueSetters { get; } = new ConcurrentBag<Action>();
 
-        private static ConcurrentDictionary<string, Action> AddPrefsCache = new ConcurrentDictionary<string, Action>();
-        private static ConcurrentQueue<string> AddPrefsCacheOrders = new ConcurrentQueue<string>();
+        private static ConcurrentDictionary<Guid, Action> AddPrefsCache = new ConcurrentDictionary<Guid, Action>();
+        private static ConcurrentQueue<Guid> AddPrefsCacheOrders = new ConcurrentQueue<Guid>();
         private static ConcurrentDictionary<Guid, Action> RemovePrefsCache = new ConcurrentDictionary<Guid, Action>();
         private static ConcurrentDictionary<string, Action> AddGuiHierarchyCache = new ConcurrentDictionary<string, Action>();
         private static ConcurrentQueue<string> AddGuiHierarchyCacheOrders = new ConcurrentQueue<string>();
@@ -75,8 +75,8 @@ namespace PrefsUGUI.Managers
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             void AddPrefs() => PrefsGuis.AddPrefs(prefs, onCreated);
-            AddPrefsCache[prefs.SaveKey] = AddPrefs;
-            AddPrefsCacheOrders.Enqueue(prefs.SaveKey);
+            AddPrefsCache[prefs.PrefsId] = AddPrefs;
+            AddPrefsCacheOrders.Enqueue(prefs.PrefsId);
 
             void OnPrefsValueChanged() => OnAnyPrefsValueChanged(prefs);
             prefs.OnValueChanged += OnPrefsValueChanged;
