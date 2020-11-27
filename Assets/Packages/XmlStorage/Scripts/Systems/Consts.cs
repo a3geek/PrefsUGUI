@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Text;
-using UnityEngine;
 
 namespace XmlStorage.Systems
 {
@@ -35,7 +34,13 @@ namespace XmlStorage.Systems
         /// <summary>デフォルトの保存ディレクトリのフルパス</summary>
         public static readonly string DefaultSaveDirectory
             = FileUtils.AdjustAsDirectoryPath(
-                Directory.GetCurrentDirectory() + Separator + DefaultSubDirectoryName
+#if UNITY_EDITOR
+                Directory.GetCurrentDirectory()
+#else
+                System.AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\')
+#endif
+
+                + Separator + DefaultSubDirectoryName
             );
     }
 }

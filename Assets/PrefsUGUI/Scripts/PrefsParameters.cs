@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
-    [AddComponentMenu("")]
     [DisallowMultipleComponent]
+    [AddComponentMenu("PrefsUGUI/Prefs Parameters")]
     public class PrefsParameters : MonoBehaviour
     {
         public static readonly Func<string> DefaultNameGetter = () => Application.productName;

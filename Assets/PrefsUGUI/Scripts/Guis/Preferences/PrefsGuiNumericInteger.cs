@@ -4,6 +4,7 @@ using UnityEngine;
 namespace PrefsUGUI.Guis.Preferences
 {
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiNumericInteger : NumericGuiBase<int, PrefsGuiNumericInteger>
     {
         public override PrefsGuiNumericInteger Component => this;

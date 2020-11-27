@@ -5,6 +5,7 @@ using UnityEngine.UI;
 namespace PrefsUGUI.Guis.Preferences
 {
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiBool : PrefsInputGuiBase<bool, PrefsGuiBool>
     {
         public override PrefsGuiBool Component => this;

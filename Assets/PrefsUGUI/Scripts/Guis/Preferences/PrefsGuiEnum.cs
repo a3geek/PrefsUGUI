@@ -11,6 +11,7 @@ namespace PrefsUGUI.Guis.Preferences
     /// </summary>
     /// <remarks>valueに保存するのは<see cref="Enum"/>の整数値</remarks>
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiEnum : PrefsInputGuiBase<int, PrefsGuiEnum>
     {
         public override PrefsGuiEnum Component => this;

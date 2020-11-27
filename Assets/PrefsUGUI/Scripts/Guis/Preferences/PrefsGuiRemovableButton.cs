@@ -9,6 +9,7 @@ namespace PrefsUGUI.Guis.Preferences
     using PrefsUGUI.Preferences.Abstracts;
 
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiRemovableButton : PrefsGuiButton
     {
         [SerializeField]

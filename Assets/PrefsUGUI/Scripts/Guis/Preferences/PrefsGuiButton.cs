@@ -8,6 +8,7 @@ namespace PrefsUGUI.Guis.Preferences
     using PrefsUGUI.Preferences.Abstracts;
 
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiButton : PrefsGuiBase, IPrefsGuiConnector<UnityAction, PrefsGuiButton>
     {
         public virtual PrefsGuiButton Component => this;

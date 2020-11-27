@@ -7,6 +7,7 @@ namespace PrefsUGUI.Guis.Preferences
     using PrefsUGUI.Preferences.Abstracts;
 
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiLabel : PrefsGuiBase, IPrefsGuiConnector<string, PrefsGuiLabel>
     {
         public virtual PrefsGuiLabel Component => this;

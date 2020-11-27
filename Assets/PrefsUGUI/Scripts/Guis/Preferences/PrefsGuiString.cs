@@ -6,6 +6,7 @@ using UnityEngine.UI;
 namespace PrefsUGUI.Guis.Preferences
 {
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiString : TextInputGuiBase<string, PrefsGuiString>
     {
         public override PrefsGuiString Component => this;

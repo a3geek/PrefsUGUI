@@ -4,6 +4,7 @@ using UnityEngine;
 namespace PrefsUGUI.Guis.Preferences
 {
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiNumericSliderInteger : NumericSliderGuiBase<int, PrefsGuiNumericSliderInteger>
     {
         public override PrefsGuiNumericSliderInteger Component => this;

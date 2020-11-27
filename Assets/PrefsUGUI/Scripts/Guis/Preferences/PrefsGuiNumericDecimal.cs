@@ -1,8 +1,10 @@
 ﻿using System;
+using UnityEngine;
 
 namespace PrefsUGUI.Guis.Preferences
 {
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiNumericDecimal : NumericGuiBase<float, PrefsGuiNumericDecimal>
     {
         public override PrefsGuiNumericDecimal Component => this;

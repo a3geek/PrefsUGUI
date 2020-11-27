@@ -5,6 +5,7 @@ using UnityEngine.UI;
 namespace PrefsUGUI.Guis.Preferences
 {
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiVector4 : VectorGuiBase<Vector4, PrefsGuiVector4>
     {
         public override PrefsGuiVector4 Component => this;

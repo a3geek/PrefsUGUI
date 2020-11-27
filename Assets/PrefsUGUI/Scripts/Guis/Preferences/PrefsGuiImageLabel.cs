@@ -5,6 +5,7 @@ using UnityEngine.UI;
 namespace PrefsUGUI.Guis.Preferences
 {
     [Serializable]
+    [AddComponentMenu("")]
     public class PrefsGuiImageLabel : PrefsGuiLabel, IPrefsGuiConnector<string, PrefsGuiImageLabel>
     {
         public new virtual PrefsGuiImageLabel Component => this;
