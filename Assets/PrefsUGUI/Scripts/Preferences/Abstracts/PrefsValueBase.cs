@@ -31,7 +31,7 @@ namespace PrefsUGUI.Preferences.Abstracts
 
         public virtual ValType Get()
         {
-            if (this.got == false)
+            if(this.got == false)
             {
                 this.Reload(false);
             }
@@ -59,16 +59,13 @@ namespace PrefsUGUI.Preferences.Abstracts
             this.got = true;
             this.value = value;
 
-            if (withEvent == true)
+            if(withEvent == true)
             {
                 this.FireOnValueChanged();
             }
         }
 
         protected override void ValueSetToStorage()
-        {
-            Debug.Log(this.SaveKey);
-            Storage.Set(typeof(ValType), this.SaveKey, this.Get(), Prefs.AggregationName);
-        }
+            => Storage.Set(typeof(ValType), this.SaveKey, this.Get(), Prefs.AggregationName);
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PrefsUGUI.Commons
 {
@@ -16,6 +13,11 @@ namespace PrefsUGUI.Commons
         {
             this.caches[key] = value;
             this.orders.Enqueue(key);
+        }
+
+        public void Remove(Key key)
+        {
+            this.caches.TryRemove(key, out var _);
         }
 
         public void TakeEach(Action<Value> action)
