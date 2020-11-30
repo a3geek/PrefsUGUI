@@ -51,7 +51,7 @@ namespace PrefsUGUI.Preferences.Abstracts
                     this.ValueSetToStorage();
                 }
             };
-            PrefsManager.StorageValueSetters.Add(ValueSetter);
+            PrefsManager.StorageValueSetters.Add(this.SaveKey, ValueSetter);
 
             this.OnRegisted();
         }

@@ -39,10 +39,7 @@ namespace PrefsUGUI
             Storage.ChangeAggregation(AggregationName);
             Storage.CurrentAggregation.FileName = FileName + XmlStorageConsts.Extension;
 
-            foreach (var setter in PrefsManager.StorageValueSetters)
-            {
-                setter?.Invoke();
-            }
+            PrefsManager.StorageValueSetters.TakeEach(action => action?.Invoke());
 
             Storage.ChangeAggregation(current);
             Storage.Save();
