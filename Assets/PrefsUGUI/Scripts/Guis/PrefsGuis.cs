@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace PrefsUGUI.Guis
 {
+    using Commons;
     using Factories;
     using Factories.Classes;
     using GuiHierarchies.Abstracts;
@@ -30,6 +34,8 @@ namespace PrefsUGUI.Guis
         private EventSystem eventSystemPrefab = null;
 
         private Action cachingActionsExecutor = null;
+        private MultikeyDictionary<string, Guid, PrefsGuiBase> guis = new MultikeyDictionary<string, Guid, PrefsGuiBase>();
+        private MultikeyDictionary<string, Guid, Category> categories = new MultikeyDictionary<string, Guid, Category>();
 
 
         private void Awake()
@@ -67,36 +73,50 @@ namespace PrefsUGUI.Guis
         public void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
-            if (this.Canvas != null)
+            if(this.Canvas == null)
             {
-                onCreated?.Invoke(this.Canvas.AddPrefs<ValType, GuiType>(prefs));
+                return;
             }
+
+            onCreated?.Invoke(
+                (GuiType)this.guis.GetOrAdd(prefs.SaveKey, prefs.PrefsId, () => this.Canvas.AddPrefs<ValType, GuiType>(prefs))
+            );
         }
 
         public void RemovePrefs(ref Guid prefsId)
         {
-            if (this.Canvas != null)
+            if(this.Canvas == null)
             {
-                this.Canvas.RemovePrefs(ref prefsId);
+                return;
             }
+
+            this.guis.Remove(prefsId);
+            this.Canvas.RemovePrefs(ref prefsId);
         }
 
         public void AddCategory<GuiType>(AbstractGuiHierarchy hierarchy, Action<PrefsCanvas, Category, GuiType> onCreated)
              where GuiType : PrefsGuiButton
         {
-            if (this.Canvas != null)
+            if(this.Canvas == null)
             {
-                var category = this.Canvas.AddCategory(hierarchy);
-                onCreated?.Invoke(this.Canvas, category, (GuiType)category.GuiButton);
+                return;
             }
+
+            var category = this.categories.GetOrAdd(
+                hierarchy.FullHierarchy, hierarchy.HierarchyId, () => this.Canvas.AddCategory(hierarchy)
+            );
+            onCreated?.Invoke(this.Canvas, category, (GuiType)category.GuiButton);
         }
 
         public void RemoveCategory(ref Guid categoryId)
         {
-            if (this.Canvas != null)
+            if(this.Canvas == null)
             {
-                this.Canvas.RemoveCategory(ref categoryId);
+                return;
             }
+
+            this.Canvas.RemoveCategory(ref categoryId);
+            this.categories.Remove(categoryId);
         }
 
         public void SetCanvasSize(float width, float height)
