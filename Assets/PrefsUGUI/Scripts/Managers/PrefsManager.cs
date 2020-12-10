@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PrefsUGUI.Managers
@@ -16,11 +17,13 @@ namespace PrefsUGUI.Managers
     {
         public static event Action<PrefsBase> OnAnyPrefsValueChanged = delegate { };
 
+        public static bool Inited { get; private set; } = false;
         public static string AggregationName { get; private set; } = "";
         public static string FileName { get; private set; } = "";
         public static PrefsGuis PrefsGuis { get; private set; } = null;
         public static OrderableConcurrentCache<string, Action> StorageValueSetters { get; } = new OrderableConcurrentCache<string, Action>();
 
+        private static ConcurrentStack<PrefsBase> FastPrefsCache = new ConcurrentStack<PrefsBase>();
         private static OrderableConcurrentCache<string, Action> AddPrefsCache = new OrderableConcurrentCache<string, Action>();
         private static OrderableConcurrentCache<Guid, Action> RemovePrefsCache = new OrderableConcurrentCache<Guid, Action>();
         private static OrderableConcurrentCache<string, Action> AddGuiHierarchiesCache = new OrderableConcurrentCache<string, Action>();
@@ -45,6 +48,12 @@ namespace PrefsUGUI.Managers
             var parameters = UnityEngine.Object.FindObjectOfType<PrefsParameters>();
             AggregationName = parameters == null ? PrefsParameters.DefaultNameGetter() : parameters.AggregationName;
             FileName = parameters == null ? PrefsParameters.DefaultNameGetter() : parameters.FileName;
+
+            while(FastPrefsCache.TryPop(out var prefs) == true)
+            {
+                prefs.Reload(true);
+            }
+            Inited = true;
 
             void ExecuteCachingActions()
             {
@@ -76,6 +85,11 @@ namespace PrefsUGUI.Managers
         {
             void AddPrefs() => PrefsGuis.AddPrefs(prefs, onCreated);
             AddPrefsCache.Add(prefs.SaveKey, AddPrefs);
+
+            if(Inited == false)
+            {
+                FastPrefsCache.Push(prefs);
+            }
 
             void OnPrefsValueChanged() => OnAnyPrefsValueChanged(prefs);
             prefs.OnValueChanged += OnPrefsValueChanged;
