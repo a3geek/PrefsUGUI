@@ -3,16 +3,16 @@
 namespace PrefsUGUI
 {
     using GuiHierarchies.Abstracts;
-    using Guis.Factories;
-    using Guis.Factories.Classes;
     using Guis.Preferences;
+    using Managers;
     using static Prefs;
 
     [Serializable]
     public class LinkedGuiHierarchy : AbstractGuiHierarchy
     {
+        public virtual GuiHierarchy LinkParent { get; protected set; }
+
         protected Action<LinkedGuiHierarchy> onCreatedGui = null;
-        protected GuiHierarchy linkParent = null;
 
 
         public LinkedGuiHierarchy(
@@ -22,30 +22,20 @@ namespace PrefsUGUI
         {
             this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);
             this.parent = parent;
-            this.linkParent = linkParent;
+            this.LinkParent = linkParent;
             this.sortOrder = sortOrder;
             this.onCreatedGui = onCreatedGui;
 
             this.HierarchyId = Guid.NewGuid();
             this.Parents = this.GetParents();
             this.FullHierarchy = this.GetFullHierarchy();
+            this.SaveKeyPath = this.LinkParent.SaveKeyPath;
 
             this.Regist();
         }
 
-        protected override void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiButton gui)
-        {
-            this.properties.OnCreatedGui(gui, this.HierarchyName);
-
-            this.changeGUI = () => this.linkParent?.Open(false);
-
-            gui.Initialize(this.HierarchyName, () =>
-            {
-                this.FireOnHierarchyClicked();
-                this.changeGUI();
-            });
-            this.onCreatedGui?.Invoke(this);
-        }
+        protected override void Regist()
+            => PrefsManager.AddLinkedGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
 
         protected override void FireOnCreatedGui()
             => this.onCreatedGui?.Invoke(this);
@@ -59,12 +49,6 @@ namespace PrefsUGUI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
-            if (this.disposed == true)
-            {
-                return;
-            }
-
             this.onCreatedGui = null;
         }
         #endregion

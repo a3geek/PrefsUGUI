@@ -39,7 +39,7 @@ namespace PrefsUGUI
 
             void FireOnRemoved()
             {
-                this.OnRemoved?.Invoke();
+                this.OnRemoved.Invoke();
                 this.Dispose();
             }
 
@@ -48,7 +48,7 @@ namespace PrefsUGUI
                 this.changeGUI();
                 this.FireOnHierarchyClicked();
             }, FireOnRemoved);
-            this.onCreatedGui?.Invoke(this);
+            this.FireOnCreatedGui();
         }
 
         protected override void Dispose(bool disposing)

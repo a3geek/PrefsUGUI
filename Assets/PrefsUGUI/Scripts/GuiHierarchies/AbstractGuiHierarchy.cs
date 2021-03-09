@@ -20,13 +20,14 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
 
         public event Action OnHierarchyClicked = delegate { };
 
-        public virtual HierarchyType HierarchyType => HierarchyType.Standard;
         public virtual string HierarchyName => this.hierarchyName;
         public virtual AbstractGuiHierarchy Parent => this.parent;
         public virtual bool IsCreatedGui => this.properties.IsCreatedGui;
+        public virtual HierarchyType HierarchyType => HierarchyType.Standard;
         public virtual Guid HierarchyId { get; protected set; } = Guid.Empty;
-        public virtual IReadOnlyList<AbstractGuiHierarchy> Parents { get; protected set; } = new List<AbstractGuiHierarchy>();
         public virtual string FullHierarchy { get; protected set; } = "";
+        public virtual string SaveKeyPath { get; protected set; } = "";
+        public virtual IReadOnlyList<AbstractGuiHierarchy> Parents { get; protected set; } = new List<AbstractGuiHierarchy>();
         public virtual float BottomMargin
         {
             get => this.properties.BottomMargin;
@@ -49,9 +50,9 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
         }
 
         [SerializeField]
-        protected string hierarchyName = "";
-        [SerializeField]
         protected int sortOrder = 0;
+        [SerializeField]
+        protected string hierarchyName = "";
         [SerializeField]
         protected AbstractGuiHierarchy parent = null;
 
@@ -64,7 +65,7 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
         {
             this.changeGUI?.Invoke();
 
-            if (withClickedEvent == true)
+            if(withClickedEvent == true)
             {
                 this.FireOnHierarchyClicked();
             }
@@ -86,13 +87,13 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
             });
             this.FireOnCreatedGui();
         }
-
+        
         protected virtual List<AbstractGuiHierarchy> GetParents()
         {
             var parents = new List<AbstractGuiHierarchy>();
             var parent = this.Parent;
 
-            while (parent != null)
+            while(parent != null)
             {
                 parents.Add(parent);
                 parent = parent.Parent;
@@ -105,16 +106,16 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
         protected virtual string GetFullHierarchy()
         {
             var hierarchy = "";
-            foreach (var parent in this.Parents)
+            foreach(var parent in this.Parents)
             {
-                hierarchy += string.IsNullOrEmpty(parent?.HierarchyName) == true ? "" : parent.HierarchyName + HierarchySeparator;
+                hierarchy += string.IsNullOrEmpty(parent?.HierarchyName) == true? "" : parent.HierarchyName + HierarchySeparator;
             }
 
             return hierarchy + this.HierarchyName + HierarchySeparator;
         }
 
         protected virtual void FireOnHierarchyClicked()
-            => this.OnHierarchyClicked?.Invoke();
+            => this.OnHierarchyClicked.Invoke();
 
         protected abstract void FireOnCreatedGui();
 
@@ -127,7 +128,7 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
 
         protected virtual void Dispose(bool disposing)
         {
-            if (this.disposed == true)
+            if(this.disposed == true)
             {
                 return;
             }

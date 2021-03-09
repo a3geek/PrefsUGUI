@@ -8,34 +8,6 @@ namespace PrefsUGUI.Guis.Factories.Classes
     [Serializable]
     public class PrefsGuiPrefabs
     {
-        [Serializable]
-        public class GuiPrefab
-        {
-            public string Key => this.key;
-            public PrefsGuiBase Prefab => this.prefab;
-            public PrefsGuiType GuiType => this.guiType;
-
-            [SerializeField]
-            private string key = "";
-            [SerializeField]
-            private PrefsGuiBase prefab = null;
-            [SerializeField]
-            private PrefsGuiType guiType = PrefsGuiType.None;
-
-
-            public GuiPrefab(PrefsGuiType guiType)
-            {
-                this.guiType = guiType;
-                this.key = guiType.ToString();
-            }
-
-            public void OnValidate()
-            {
-                this.key = this.guiType.ToString();
-            }
-        }
-
-
         public PrefsGuiButton Button => this.buttonPrefab;
         public PrefsGuiRemovableButton RemovableButton => this.removableButtonPrefab;
 
@@ -44,17 +16,17 @@ namespace PrefsUGUI.Guis.Factories.Classes
         [SerializeField]
         private PrefsGuiRemovableButton removableButtonPrefab = null;
         [SerializeField]
-        private GuiPrefab[] guiPrefabs = new GuiPrefab[]
+        private PrefsGuiPrefab[] guiPrefabs = new PrefsGuiPrefab[]
         {
-            new GuiPrefab(PrefsGuiType.PrefsGuiBool), new GuiPrefab(PrefsGuiType.PrefsGuiColor),
-            new GuiPrefab(PrefsGuiType.PrefsGuiColorSlider), new GuiPrefab(PrefsGuiType.PrefsGuiEnum),
-            new GuiPrefab(PrefsGuiType.PrefsGuiNumericDecimal), new GuiPrefab(PrefsGuiType.PrefsGuiNumericInteger),
-            new GuiPrefab(PrefsGuiType.PrefsGuiNumericSliderDecimal), new GuiPrefab(PrefsGuiType.PrefsGuiNumericSliderInteger),
-            new GuiPrefab(PrefsGuiType.PrefsGuiString), new GuiPrefab(PrefsGuiType.PrefsGuiVector2),
-            new GuiPrefab(PrefsGuiType.PrefsGuiVector2Int), new GuiPrefab(PrefsGuiType.PrefsGuiVector3),
-            new GuiPrefab(PrefsGuiType.PrefsGuiVector3Int), new GuiPrefab(PrefsGuiType.PrefsGuiVector4),
-            new GuiPrefab(PrefsGuiType.PrefsGuiRect), new GuiPrefab(PrefsGuiType.PrefsGuiButton),
-            new GuiPrefab(PrefsGuiType.PrefsGuiLabel), new GuiPrefab(PrefsGuiType.PrefsGuiImageLabel)
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiBool), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiColor),
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiColorSlider), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiEnum),
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiNumericDecimal), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiNumericInteger),
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiNumericSliderDecimal), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiNumericSliderInteger),
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiString), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiVector2),
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiVector2Int), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiVector3),
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiVector3Int), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiVector4),
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiRect), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiButton),
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiLabel), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiImageLabel)
         };
 
 

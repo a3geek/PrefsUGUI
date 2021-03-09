@@ -30,14 +30,14 @@ namespace PrefsUGUI.Commons
         {
             deltaValue = 0f;
 
-            if (field == null || field.isFocused == false || this.IsNumericType(field) == false)
+            if(field == null || field.isFocused == false || this.IsNumericType(field) == false)
             {
                 return false;
             }
-            if (this.stepTime >= 0f)
+            if(this.stepTime >= 0f)
             {
                 this.stepTime += Time.deltaTime;
-                if (this.stepTime < this.stepDelay)
+                if(this.stepTime < this.stepDelay)
                 {
                     return false;
                 }
@@ -46,11 +46,11 @@ namespace PrefsUGUI.Commons
             }
 
             int dir;
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKey(KeyCode.UpArrow))
+            if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKey(KeyCode.UpArrow))
             {
                 dir = 1;
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKey(KeyCode.DownArrow))
+            else if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKey(KeyCode.DownArrow))
             {
                 dir = -1;
             }

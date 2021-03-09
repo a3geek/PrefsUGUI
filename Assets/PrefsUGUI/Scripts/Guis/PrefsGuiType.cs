@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace PrefsUGUI.Guis
 {
+    using System.Linq;
     using CustomExtensions.Attributes;
     using CustomExtensions.Csharp;
     using Guis.Preferences;
-    using System.Linq;
 
     public enum PrefsGuiType
     {
@@ -72,14 +72,16 @@ namespace PrefsUGUI.Guis
     public static class PrefsGuiTypeExtentions
     {
         private static IReadOnlyDictionary<Type, PrefsGuiType> PrefsGuiTypesDictionary { get; }
-            = Enum.GetValues(typeof(PrefsGuiType)).Cast<PrefsGuiType>().Where(type => type != PrefsGuiType.None)
-                .ToDictionary(guiType => guiType.GetPrefsGuiComponentType());
+            = Enum.GetValues(typeof(PrefsGuiType))
+                .Cast<PrefsGuiType>()
+                .Where(type => type != PrefsGuiType.None)
+                .ToDictionary(type => type.GetPrefsGuiComponentType());
 
 
-        public static Type GetPrefsGuiComponentType(this PrefsGuiType type)
-            => type.GetAttribute<PrefsGuiComponentTypeAttribute>()?.ComponentType;
+        public static Type GetPrefsGuiComponentType(this PrefsGuiType guiType)
+            => guiType.GetAttribute<PrefsGuiComponentTypeAttribute>()?.ComponentType;
 
-        public static PrefsGuiType GetPrefsGuiTypeByComponentType(Type type)
-            => PrefsGuiTypesDictionary.TryGetValue(type, out var guiType) == true ? guiType : PrefsGuiType.None;
+        public static PrefsGuiType GetPrefsGuiTypeByComponentType(Type guiType)
+            => PrefsGuiTypesDictionary.TryGetValue(guiType, out var type) == true ? type : PrefsGuiType.None;
     }
 }

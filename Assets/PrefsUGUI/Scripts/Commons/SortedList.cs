@@ -6,10 +6,7 @@ namespace PrefsUGUI.Commons
 {
     public class SortedList<T> : IEnumerable<T> where T : class
     {
-        public virtual T this[int index]
-        {
-            get => this.list[index].item;
-        }
+        public virtual T this[int index] => this.list[index].item;
 
         public virtual int Count => this.list.Count;
         public virtual IReadOnlyList<T> Items => this.list.ConvertAll(t => t.item);
@@ -35,9 +32,9 @@ namespace PrefsUGUI.Commons
 
         public virtual bool Remove(T item)
         {
-            for (var i = 0; i < this.list.Count; i++)
+            for(var i = 0; i < this.list.Count; i++)
             {
-                if (this.list[i].item == item)
+                if(this.list[i].item == item)
                 {
                     this.list.RemoveAt(i);
                     return true;
@@ -52,7 +49,7 @@ namespace PrefsUGUI.Commons
 
         public virtual IEnumerator<T> GetEnumerator()
         {
-            for (var i = 0; i < this.Count; i++)
+            for(var i = 0; i < this.Count; i++)
             {
                 yield return this.list[i].item;
             }

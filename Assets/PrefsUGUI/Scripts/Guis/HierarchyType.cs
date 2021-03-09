@@ -3,6 +3,7 @@
     public enum HierarchyType
     {
         Standard = 1,
-        Removable = 2
+        Linked = 2,
+        Removable = 3
     }
 }

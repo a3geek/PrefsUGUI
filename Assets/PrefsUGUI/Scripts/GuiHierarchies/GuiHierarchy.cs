@@ -23,6 +23,7 @@ namespace PrefsUGUI
             this.HierarchyId = Guid.NewGuid();
             this.Parents = this.GetParents();
             this.FullHierarchy = this.GetFullHierarchy();
+            this.SaveKeyPath = this.FullHierarchy;
 
             this.onCreatedGui = onCreatedGui;
 
@@ -41,12 +42,6 @@ namespace PrefsUGUI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
-            if (this.disposed == true)
-            {
-                return;
-            }
-
             this.onCreatedGui = null;
         }
         #endregion

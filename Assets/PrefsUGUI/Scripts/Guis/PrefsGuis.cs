@@ -19,21 +19,23 @@ namespace PrefsUGUI.Guis
     [DefaultExecutionOrder(ExecutionOrder)]
     public class PrefsGuis : MonoBehaviour
     {
+        public interface ICacheExecutor
+        {
+            void ExecuteCacheAction();
+        }
+
         public const int ExecutionOrder = -30000;
         public const string PrefsGuisPrefabName = "PrefsGuis";
 
-        public bool IsShowing
-        {
-            get => this.Canvas.gameObject.activeSelf;
-        }
+        public bool IsShowing => this.Canvas.gameObject.activeSelf;
         public PrefsCanvas Canvas { get; private set; } = null;
 
-        [SerializeField, UnityEngine.Serialization.FormerlySerializedAs("prefsCanvas")]
+        [SerializeField]
         private PrefsCanvas prefsCanvasPrefab = null;
-        [SerializeField, UnityEngine.Serialization.FormerlySerializedAs("eventSystem")]
+        [SerializeField]
         private EventSystem eventSystemPrefab = null;
 
-        private Action cachingActionsExecutor = null;
+        private ICacheExecutor executor = null;
         private MultikeyDictionary<string, Guid, PrefsGuiBase> guis = new MultikeyDictionary<string, Guid, PrefsGuiBase>();
         private MultikeyDictionary<string, Guid, Category> categories = new MultikeyDictionary<string, Guid, Category>();
 
@@ -41,30 +43,30 @@ namespace PrefsUGUI.Guis
         private void Awake()
         {
             this.Canvas = this.CreateCanvas();
-            if (EventSystem.current == null)
+            if(EventSystem.current == null)
             {
                 this.CreateEventSystem();
             }
 
-            this.cachingActionsExecutor?.Invoke();
+            this.executor?.ExecuteCacheAction();
         }
 
         private void Start()
         {
-            this.cachingActionsExecutor?.Invoke();
+            this.executor?.ExecuteCacheAction();
         }
 
         private void Update()
         {
-            this.cachingActionsExecutor?.Invoke();
+            this.executor?.ExecuteCacheAction();
         }
 
-        public void SetCachingActionsExecutor(Action executor)
-            => this.cachingActionsExecutor = this.cachingActionsExecutor ?? executor;
+        public void SetCacheExecutor(ICacheExecutor executor)
+            => this.executor = this.executor ?? executor;
 
         public void ShowGUI()
         {
-            if (this.Canvas != null)
+            if(this.Canvas != null)
             {
                 this.Canvas.gameObject.SetActive(true);
             }
@@ -121,7 +123,7 @@ namespace PrefsUGUI.Guis
 
         public void SetCanvasSize(float width, float height)
         {
-            if (this.Canvas == null)
+            if(this.Canvas == null)
             {
                 return;
             }

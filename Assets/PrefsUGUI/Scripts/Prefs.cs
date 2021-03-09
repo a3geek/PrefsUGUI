@@ -23,7 +23,7 @@ namespace PrefsUGUI
         static Prefs()
         {
             Application.quitting += () => WillQuit = true;
-            PrefsManager.OnAnyPrefsValueChanged += prefs =>
+            PrefsManager.OnAnyPrefsEditedInGui += prefs =>
             {
                 if (WillQuit == false)
                 {

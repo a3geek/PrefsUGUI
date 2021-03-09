@@ -22,9 +22,9 @@ namespace PrefsUGUI.Commons
 
         public override int Add(T item, int order)
         {
-            for (var i = 0; i < this.list.Count; i++)
+            for(var i = 0; i < this.list.Count; i++)
             {
-                if (this.list[i].order == order)
+                if(this.list[i].order == order)
                 {
                     var e = this.list[i].item;
                     var sorted = this.sorter(e, item);
@@ -33,7 +33,7 @@ namespace PrefsUGUI.Commons
                     item = sorted <= 0 ? item : e;
                 }
 
-                if (this.list[i].order > order)
+                if(this.list[i].order > order)
                 {
                     this.list.Insert(i, (item, order));
                     return i;

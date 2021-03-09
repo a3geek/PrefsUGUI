@@ -10,6 +10,7 @@ namespace PrefsUGUI.Preferences.Abstracts
     public abstract class PrefsBase : IDisposable
     {
         public virtual event Action OnValueChanged = delegate { };
+        public virtual event Action OnEditedInGui = delegate { };
         public virtual event Action OnDisposed = delegate { };
 
         public virtual Guid PrefsId { get; } = Guid.Empty;
@@ -46,6 +47,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         {
             void ValueSetter()
             {
+                Debug.Log(this.SaveKey);
                 if (this.Unsave == false)
                 {
                     this.ValueSetToStorage();

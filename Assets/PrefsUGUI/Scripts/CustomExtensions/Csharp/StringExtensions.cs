@@ -10,11 +10,15 @@
 
         public static string ToLabelable(this string str)
         {
-            var label = "";
-            for(var i = 0; i < str.Length; i++)
+            var label = str.Length > 0 ? str[0].ToString() : "";
+            for(var i = 1; i < str.Length; i++)
             {
                 var c = str[i];
-                label += (i > 0 && char.IsUpper(c) == true ? " " : "") + c.ToString();
+                var next = i + 1 < str.Length ? str[i + 1] : '\0';
+                var previous = i - 1 > 0 ? str[i - 1] : '\0';
+                var isNeedSpace = char.IsUpper(c) && (char.IsLower(previous) || char.IsLower(next));
+
+                label += (isNeedSpace ? " " : "") + c.ToString();
             }
 
             return label;
