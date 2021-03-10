@@ -3,6 +3,7 @@
 namespace PrefsUGUI
 {
     using GuiHierarchies.Abstracts;
+    using Guis;
     using Guis.Preferences;
     using Managers;
     using static Prefs;
@@ -10,26 +11,27 @@ namespace PrefsUGUI
     [Serializable]
     public class LinkedGuiHierarchy : AbstractGuiHierarchy
     {
-        public virtual GuiHierarchy LinkParent { get; protected set; }
+        public virtual GuiHierarchy LinkTarget { get; protected set; }
+        public override HierarchyType HierarchyType => HierarchyType.Linked;
 
         protected Action<LinkedGuiHierarchy> onCreatedGui = null;
 
 
         public LinkedGuiHierarchy(
-            string hierarchyName, GuiHierarchy linkParent, int sortOrder = DefaultSortOrder, GuiHierarchy parent = null,
+            string hierarchyName, GuiHierarchy linkTarget, int sortOrder = DefaultSortOrder, GuiHierarchy parent = null,
             Action<LinkedGuiHierarchy> onCreatedGui = null
         )
         {
             this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);
             this.parent = parent;
-            this.LinkParent = linkParent;
+            this.LinkTarget = linkTarget;
             this.sortOrder = sortOrder;
             this.onCreatedGui = onCreatedGui;
 
             this.HierarchyId = Guid.NewGuid();
             this.Parents = this.GetParents();
             this.FullHierarchy = this.GetFullHierarchy();
-            this.SaveKeyPath = this.LinkParent.SaveKeyPath;
+            this.SaveKeyPath = this.LinkTarget.SaveKeyPath;
 
             this.Regist();
         }

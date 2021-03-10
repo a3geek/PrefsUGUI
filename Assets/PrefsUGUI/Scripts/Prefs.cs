@@ -14,8 +14,8 @@ namespace PrefsUGUI
 
         public static event Action<PrefsBase> OnPrefsValueChanged = delegate { };
 
-        public static string AggregationName => PrefsManager.AggregationName;
-        public static string FileName => PrefsManager.FileName;
+        public static string AggregationName => PrefsManager.PrefsParameters.AggregationName;
+        public static string FileName => PrefsManager.PrefsParameters.FileName;
 
         private static bool WillQuit = false;
 

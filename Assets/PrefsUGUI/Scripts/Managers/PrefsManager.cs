@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace PrefsUGUI.Managers
 {
@@ -16,48 +17,23 @@ namespace PrefsUGUI.Managers
     using RemoveCache = Commons.OrderableConcurrentCache<Guid, Action>;
     using UnityObject = UnityEngine.Object;
 
-    public static class PrefsManager
+    public static partial class PrefsManager
     {
-        private class CacheExecutor : PrefsGuis.ICacheExecutor
-        {
-            public AddCache AddPrefsCache = new AddCache();
-            public RemoveCache RemovePrefsCache = new RemoveCache();
-            public AddCache AddGuiHierarchiesCache = new AddCache();
-            public RemoveCache RemoveGuiHierarchiesCache = new RemoveCache();
-
-
-            public void ExecuteCacheAction()
-            {
-                AddGuiHierarchiesCache.TakeEach(this.Execute);
-                AddPrefsCache.TakeEach(this.Execute);
-                RemovePrefsCache.TakeEach(this.Execute);
-                RemoveGuiHierarchiesCache.TakeEach(this.Execute);
-            }
-
-            private void Execute(Action act)
-                => act?.Invoke();
-        }
-
-        public static event Action<PrefsBase> OnAnyPrefsEditedInGui = delegate { };
-
-        public static bool Inited { get; private set; } = false;
-        //public static string AggregationName { get; private set; } = "";
-        //public static string FileName { get; private set; } = "";
         public static IPrefsParameters PrefsParameters
         {
             get => PrefsParametersInternal;
             set
             {
-                InitializeInternal();
-                PrefsParametersInternal = value;
+                Inited = false;
+                InitializeInternal(value);
             }
         }
+        public static bool Inited { get; private set; } = false;
         public static PrefsGuis PrefsGuis { get; private set; } = null;
         public static OrderableConcurrentCache<string, Action> StorageValueSetters { get; } = new OrderableConcurrentCache<string, Action>();
 
-        private static CacheExecutor Executor = new CacheExecutor();
         private static ConcurrentStack<PrefsBase> FastPrefsCache = new ConcurrentStack<PrefsBase>();
-        private static IPrefsParameters PrefsParametersInternal = null;
+        private static IPrefsParameters PrefsParametersInternal = PrefsUGUI.PrefsParameters.Empty;
 
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -75,6 +51,10 @@ namespace PrefsUGUI.Managers
                 PrefsGuis = UnityObject.Instantiate(prefab).GetComponent<PrefsGuis>();
             }
             UnityObject.DontDestroyOnLoad(PrefsGuis);
+            PrefsGuis.SetCacheExecutor(Executor);
+
+            InitializeInternal(UnityObject.FindObjectOfType<PrefsParametersEntity>());
+            SceneManager.sceneLoaded += SceneLoaded;
         }
 
         public static void NotifyWillSceneLoad()
@@ -82,60 +62,36 @@ namespace PrefsUGUI.Managers
             Inited = false;
         }
 
-        public static void AddGuiHierarchy<GuiType>(AbstractGuiHierarchy hierarchy, Action<PrefsCanvas, Category, GuiType> onCreated)
-            where GuiType : PrefsGuiButton
+        private static void InitializeInternal(IPrefsParameters parameters)
         {
-            void AddGuiHierarchy() => PrefsGuis.AddCategory(hierarchy, onCreated);
-            Executor.AddGuiHierarchiesCache.Add(hierarchy.FullHierarchy, AddGuiHierarchy);
-        }
-
-        public static void AddLinkedGuiHierarchy<GuiType>(LinkedGuiHierarchy hierarchy, Action<PrefsCanvas, Category, GuiType> onCreated)
-            where GuiType : PrefsGuiButton
-        {
-            //void AddGuiHierarchy() => PrefsGuis.AddCategory(hierarchy, onCreated);
-            //AddGuiHierarchiesCache.Add(hierarchy.FullHierarchy, AddGuiHierarchy);
-        }
-
-        public static void RemoveGuiHierarchy(Guid hierarchyId)
-        {
-            void RemoveGuiHierarchy() => PrefsGuis.RemoveCategory(ref hierarchyId);
-            Executor.RemoveGuiHierarchiesCache.Add(hierarchyId, RemoveGuiHierarchy);
-        }
-
-        public static void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
-            where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
-        {
-            void AddPrefs() => PrefsGuis.AddPrefs(prefs, onCreated);
-            Executor.AddPrefsCache.Add(prefs.SaveKey, AddPrefs);
-
-            if(Inited == false)
+            if(Inited == true)
             {
-                FastPrefsCache.Push(prefs);
+                return;
             }
 
-            void OnPrefsEdited() => OnAnyPrefsEditedInGui(prefs);
-            prefs.OnEditedInGui += OnPrefsEdited;
-        }
-
-        public static void RemovePrefs(Guid prefsId)
-        {
-            void RemovePrefs() => PrefsGuis.RemovePrefs(ref prefsId);
-            Executor.RemovePrefsCache.Add(prefsId, RemovePrefs);
-        }
-
-        private static void InitializeInternal()
-        {
-            var parameters = UnityObject.FindObjectOfType<PrefsParametersEntity>();
-            AggregationName = parameters == null ? PrefsParametersEntity.DefaultNameGetter() : parameters.AggregationName;
-            FileName = parameters == null ? PrefsParametersEntity.DefaultNameGetter() : parameters.FileName;
+            if(parameters != null && PrefsParameters.IsEqual(parameters) == false)
+            {
+                PrefsParametersInternal = parameters;
+            }
+            if(PrefsParameters.IsEmpty() == true)
+            {
+                PrefsParametersInternal = PrefsUGUI.PrefsParameters.Default;
+            }
 
             while(FastPrefsCache.TryPop(out var prefs) == true)
             {
                 prefs.Reload(true);
             }
-            Inited = true;
 
-            PrefsGuis.SetCacheExecutor(Executor);
+            Inited = true;
+        }
+
+        private static void SceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if(mode == LoadSceneMode.Single)
+            {
+                InitializeInternal(UnityObject.FindObjectOfType<PrefsParametersEntity>());
+            }
         }
     }
 }

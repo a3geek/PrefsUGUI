@@ -28,19 +28,20 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return content;
         }
 
-        public PrefsGuiButton CreateButton(Category currentCategory, AbstractGuiHierarchy hierarchy, Category nextCategory, int sortOrder)
+        public PrefsGuiButton CreateButton(AbstractHierarchy current, AbstractGuiHierarchy hierarchy, AbstractHierarchy next, int sortOrder)
         {
-            PrefsGuiButton button = Object.Instantiate(
-                hierarchy.HierarchyType == HierarchyType.Standard ? this.prefabs.Button : this.prefabs.RemovableButton,
-                currentCategory.Content
+            var isRemovable = hierarchy.HierarchyType == HierarchyType.Removable;
+            var button = Object.Instantiate(
+                isRemovable ? this.prefabs.RemovableButton : this.prefabs.Button,
+                current.Content
             );
 
-            var index = currentCategory.AddNextCategory(nextCategory, button, sortOrder);
+            var index = current.AddNextHierarchy(next, button, sortOrder);
             button.transform.SetSiblingIndex(index);
             return button;
         }
 
-        public GuiType CreatePrefsGui<ValType, GuiType>(PrefsValueBase<ValType> prefs, Category category)
+        public GuiType CreatePrefsGui<ValType, GuiType>(PrefsValueBase<ValType> prefs, AbstractHierarchy category)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             var gui = Object.Instantiate(this.prefabs.GetGuiPrefab<ValType, GuiType>().Component, category.Content);

@@ -71,14 +71,11 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
             }
         }
 
-        protected virtual void Regist()
-            => PrefsManager.AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
-
-        protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiButton gui)
+        protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, AbstractHierarchy hierarchy, PrefsGuiButton gui)
         {
             this.properties.OnCreatedGui(gui, this.HierarchyName);
 
-            this.changeGUI = () => canvas.ChangeGUI(category);
+            this.changeGUI = () => canvas.ChangeGUI(hierarchy);
 
             gui.Initialize(this.HierarchyName, () =>
             {
@@ -117,6 +114,7 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
         protected virtual void FireOnHierarchyClicked()
             => this.OnHierarchyClicked.Invoke();
 
+        protected abstract void Regist();
         protected abstract void FireOnCreatedGui();
 
         #region IDisposable Support

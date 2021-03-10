@@ -3,6 +3,8 @@
 namespace PrefsUGUI
 {
     using GuiHierarchies.Abstracts;
+    using Guis.Preferences;
+    using Managers;
     using static Prefs;
 
     [Serializable]
@@ -29,6 +31,9 @@ namespace PrefsUGUI
 
             this.Regist();
         }
+
+        protected override void Regist()
+            => PrefsManager.AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
 
         protected override void FireOnCreatedGui()
             => this.onCreatedGui?.Invoke(this);

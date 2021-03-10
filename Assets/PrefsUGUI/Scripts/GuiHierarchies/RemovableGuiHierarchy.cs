@@ -31,11 +31,11 @@ namespace PrefsUGUI
         protected override void Regist()
             => PrefsManager.AddGuiHierarchy<PrefsGuiRemovableButton>(this, this.OnCreatedGuiButton);
 
-        protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, Category category, PrefsGuiRemovableButton gui)
+        protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, AbstractHierarchy hierarchy, PrefsGuiRemovableButton gui)
         {
             this.properties.OnCreatedGui(gui, this.HierarchyName);
 
-            this.changeGUI = () => canvas.ChangeGUI(category);
+            this.changeGUI = () => canvas.ChangeGUI(hierarchy);
 
             void FireOnRemoved()
             {
