@@ -13,7 +13,7 @@ namespace PrefsUGUI.Guis.Factories
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Canvas))]
-    public partial class PrefsCanvas : MonoBehaviour
+    public class PrefsCanvas : MonoBehaviour
     {
         public const string TopHierarchyName = "";
         public const string TopHierarchyText = "Hierarchy...";
@@ -61,7 +61,7 @@ namespace PrefsUGUI.Guis.Factories
         public GuiType AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
-            var hierarchy = this.structs.GetOrCreateHierarchy(prefs.GuiHierarchy);
+            var hierarchy = this.GetOrAddHierarchy(prefs.GuiHierarchy);
             var gui = this.creator.CreatePrefsGui<ValType, GuiType>(prefs, hierarchy);
 
             return gui;
@@ -71,10 +71,12 @@ namespace PrefsUGUI.Guis.Factories
             => this.structs.RemovePrefs(ref prefsId);
 
         public AbstractHierarchy GetOrAddHierarchy(GuiHierarchy hierarchy)
-            => this.structs.GetOrCreateHierarchy(hierarchy);
+            => this.structs.GetOrCreateHierarchy(hierarchy, out var result) == true
+                ? this.OnAddedHierarchy(result) : result;
 
         public AbstractHierarchy GetOrAddHierarchy(LinkedGuiHierarchy hierarchy)
-            => this.structs.GetOrCreateHierarchy(hierarchy, hierarchy.LinkTarget);
+            => this.structs.GetOrCreateHierarchy(hierarchy, out var result, hierarchy.LinkTarget) == true
+                ? this.OnAddedHierarchy(result) : result;
 
         public void RemoveHierarchy(ref Guid hierarchyId)
         {
@@ -85,7 +87,13 @@ namespace PrefsUGUI.Guis.Factories
             }
         }
 
-        public void ChangeGUI(AbstractHierarchy nextHierarchy)
+        private AbstractHierarchy OnAddedHierarchy(AbstractHierarchy hierarchy)
+        {
+            hierarchy.GuiButton.OnValueChanged += () => this.ChangeGUI(hierarchy);
+            return hierarchy;
+        }
+
+        private void ChangeGUI(AbstractHierarchy nextHierarchy)
         {
             this.hierarchyTexts.Add(nextHierarchy.HierarchyName);
             this.OnHierarchyChanged(this.structs.ChangeGUI(nextHierarchy));

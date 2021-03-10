@@ -41,21 +41,21 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return button;
         }
 
-        public GuiType CreatePrefsGui<ValType, GuiType>(PrefsValueBase<ValType> prefs, AbstractHierarchy category)
+        public GuiType CreatePrefsGui<ValType, GuiType>(PrefsValueBase<ValType> prefs, AbstractHierarchy hierarchy)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
-            var gui = Object.Instantiate(this.prefabs.GetGuiPrefab<ValType, GuiType>().Component, category.Content);
+            var gui = Object.Instantiate(this.prefabs.GetGuiPrefab<ValType, GuiType>().Component, hierarchy.Content);
 
             gui.SetGuiListeners(prefs);
 
             void onPrefsValueChanged() => gui.SetValue(prefs.Get());
             prefs.OnValueChanged += onPrefsValueChanged;
 
-            void OnDisposed() => category.OnDiscard -= prefs.Reload;
+            void OnDisposed() => hierarchy.OnDiscard -= prefs.Reload;
             prefs.OnDisposed += OnDisposed;
-            category.OnDiscard += prefs.Reload;
+            hierarchy.OnDiscard += prefs.Reload;
 
-            var index = category.AddPrefs(prefs.PrefsId, gui, prefs.GuiSortOrder);
+            var index = hierarchy.AddPrefs(prefs.PrefsId, gui, prefs.GuiSortOrder);
             gui.transform.SetSiblingIndex(index);
 
             return gui;

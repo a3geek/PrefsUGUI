@@ -44,18 +44,16 @@ namespace PrefsUGUI.Guis.Factories.Classes
             }
         }
 
-        public AbstractHierarchy GetOrCreateHierarchy(AbstractGuiHierarchy hierarchy, AbstractGuiHierarchy linkTarget = null)
+        public bool GetOrCreateHierarchy(AbstractGuiHierarchy hierarchy, out AbstractHierarchy result, AbstractGuiHierarchy linkTarget = null)
         {
-            if(hierarchy == null || string.IsNullOrEmpty(hierarchy.FullHierarchy))
+            if(hierarchy == null || string.IsNullOrEmpty(hierarchy.FullHierarchy) == true)
             {
-                return this.Top;
+                result = this.Top;
+                return false;
             }
-            for(var i = 0; i < this.hierarchies.Count; i++)
+            else if(this.GetHierarchy(hierarchy, out result) == true)
             {
-                if(this.hierarchies[i].HierarchyId == hierarchy.HierarchyId)
-                {
-                    return this.hierarchies[i];
-                }
+                return false;
             }
 
             var currentHierarchy = (AbstractHierarchy)this.Top;
@@ -64,14 +62,14 @@ namespace PrefsUGUI.Guis.Factories.Classes
             foreach(var parent in (parents ?? Enumerable.Empty<AbstractGuiHierarchy>()))
             {
                 var hierarchyId = parent.HierarchyId;
-                currentHierarchy = this.GetOrCreateNextHierarchy(
-                    currentHierarchy, ref hierarchyId, parent, parent.GuiSortOrder
+                this.GetOrCreateNextHierarchy(
+                    currentHierarchy, ref hierarchyId, parent, parent.GuiSortOrder, out currentHierarchy
                 );
             }
 
             var id = hierarchy.HierarchyId;
             return this.GetOrCreateNextHierarchy(
-                currentHierarchy, ref id, hierarchy, hierarchy.GuiSortOrder, linkTarget
+                currentHierarchy, ref id, hierarchy, hierarchy.GuiSortOrder, out result, linkTarget
             );
         }
 
@@ -126,22 +124,40 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return hierarchy != null;
         }
 
-        private AbstractHierarchy GetOrCreateNextHierarchy(
-            AbstractHierarchy current, ref Guid nextHierarchyId, AbstractGuiHierarchy nextGui, int sortOrder, AbstractGuiHierarchy linkTarget = null
+        public bool GetHierarchy(AbstractGuiHierarchy guiHierarchy, out AbstractHierarchy hierarchy)
+        {
+            for(var i = 0; guiHierarchy != null && i < this.hierarchies.Count; i++)
+            {
+                if(this.hierarchies[i].HierarchyId == guiHierarchy.HierarchyId)
+                {
+                    hierarchy = this.hierarchies[i];
+                    return true;
+                }
+            }
+
+            hierarchy = this.Top;
+            return false;
+        }
+
+        private bool GetOrCreateNextHierarchy(
+            AbstractHierarchy current, ref Guid nextHierarchyId, AbstractGuiHierarchy nextGui, int sortOrder, out AbstractHierarchy result, AbstractGuiHierarchy linkTarget = null
         )
         {
             if(this.GetNextHierarchy(current, ref nextHierarchyId, out var hierarchy) == true)
             {
-                return hierarchy;
+                result = hierarchy;
+                return false;
             }
 
-            hierarchy = nextGui.HierarchyType == HierarchyType.Linked && linkTarget != null
-                ? (AbstractHierarchy)new LinkedHierarchy(nextHierarchyId, nextGui.HierarchyName, this.GetOrCreateHierarchy(linkTarget))
+            var isLinked = nextGui.HierarchyType == HierarchyType.Linked;
+            hierarchy = isLinked && this.GetHierarchy(linkTarget, out var linkHierarchy) == true
+                ? (AbstractHierarchy)new LinkedHierarchy(nextHierarchyId, nextGui.HierarchyName, linkHierarchy)
                 : new Hierarchy(nextHierarchyId, this.creator.CreateContent(), nextGui.HierarchyName, current);
             this.GetOrCreateButton(current, nextGui, hierarchy, sortOrder);
 
             this.hierarchies.Add(hierarchy);
-            return hierarchy;
+            result = hierarchy;
+            return true;
         }
 
         private bool GetNextButton(AbstractHierarchy current, AbstractGuiHierarchy nextGui, out PrefsGuiButton prefsButton)

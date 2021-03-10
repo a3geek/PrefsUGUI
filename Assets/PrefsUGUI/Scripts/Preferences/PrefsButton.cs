@@ -9,11 +9,8 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsButton : PrefsGuiBase<UnityAction, PrefsGuiButton>
     {
-        public UnityAction OnClicked
-        {
-            get { return this.Value; }
-            set { this.Value = value; }
-        }
+        public event UnityAction OnClicked = delegate { };
+
 
         public PrefsButton(
             string key, UnityAction action, GuiHierarchy hierarchy = null,
@@ -27,12 +24,17 @@ namespace PrefsUGUI
             => this.ResetDefaultValue();
 
         protected override void OnCreatedGuiInternal(PrefsGuiButton gui)
-            => gui.Initialize(this.GuiLabel, this.FireOnClicked);
+        {
+            gui.Initialize(this.GuiLabel, this.FireOnClicked);
+        }
 
         protected override void Regist()
             => this.OnRegisted();
 
         protected virtual void FireOnClicked()
-            => this.OnClicked();
+        {
+            this.OnClicked();
+            this.Value?.Invoke();
+        }
     }
 }

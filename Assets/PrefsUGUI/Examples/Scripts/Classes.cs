@@ -76,7 +76,7 @@ namespace PrefsUGUI.Examples
             private static Test1Ex2 Instance = null;
 
             public PrefsRect PrefsRect = new PrefsRect("PrefsRect", new Rect(-1f, -2f, -3f, -4f), Test1Ex2Gui);
-            public PrefsButton PrefsButton1 = new PrefsButton("PrefsButton1", OnButton1Clicked, Test1Ex2Gui);
+            public PrefsButton PrefsButton1 = new PrefsButton("PrefsButton1", OnButton1Clicked1, Test1Ex2Gui);
             public PrefsButton PrefsButton2 = new PrefsButton("PrefsButton2", null, Test1Ex2Gui);
             public PrefsButton PrefsButton3 = new PrefsButton("PrefsButton3", null, Test1Ex2Gui);
 
@@ -84,17 +84,34 @@ namespace PrefsUGUI.Examples
                 onCreatedGui: prefs => prefs.TopMargin = 25f
             );
 
+            private bool toggle = true;
+
 
             public Test1Ex2()
             {
                 Instance = this;
 
                 this.PrefsButton2.OnClicked += () => this.PrefsLabel.Set(nameof(this.PrefsButton2) + " Clicked");
-                this.PrefsButton3.OnValueChanged += () => this.PrefsLabel.Set(nameof(this.PrefsButton3) + " Clicked");
+                this.PrefsButton1.OnValueChanged += () => Debug.Log("OnValueChanged : " + nameof(this.PrefsButton1));
+                this.PrefsButton3.OnClicked += () =>
+                {
+                    this.toggle = !this.toggle;
+                    if(toggle == true)
+                    {
+                        this.PrefsButton1.Set(OnButton1Clicked1);
+                    }
+                    else
+                    {
+                        this.PrefsButton1.Set(OnButton1Clicked2);
+                    }
+                };
             }
 
-            private static void OnButton1Clicked()
-                => Instance.PrefsLabel.Set(nameof(Instance.PrefsButton1) + " Clicked");
+            private static void OnButton1Clicked1()
+                => Instance.PrefsLabel.Set(nameof(Instance.PrefsButton1) + " Clicked 1");
+
+            private static void OnButton1Clicked2()
+                => Instance.PrefsLabel.Set(nameof(Instance.PrefsButton1) + " Clicked 2");
         }
 
         private class Test2

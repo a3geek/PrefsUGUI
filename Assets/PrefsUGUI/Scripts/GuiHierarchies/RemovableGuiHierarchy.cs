@@ -35,19 +35,13 @@ namespace PrefsUGUI
         {
             this.properties.OnCreatedGui(gui, this.HierarchyName);
 
-            this.changeGUI = () => canvas.ChangeGUI(hierarchy);
-
             void FireOnRemoved()
             {
                 this.OnRemoved.Invoke();
                 this.Dispose();
             }
 
-            gui.Initialize(this.HierarchyName, () =>
-            {
-                this.changeGUI();
-                this.FireOnHierarchyClicked();
-            }, FireOnRemoved);
+            gui.Initialize(this.HierarchyName, this.FireOnHierarchyClicked, FireOnRemoved);
             this.FireOnCreatedGui();
         }
 

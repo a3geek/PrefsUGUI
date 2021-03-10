@@ -75,13 +75,7 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
         {
             this.properties.OnCreatedGui(gui, this.HierarchyName);
 
-            this.changeGUI = () => canvas.ChangeGUI(hierarchy);
-
-            gui.Initialize(this.HierarchyName, () =>
-            {
-                this.changeGUI();
-                this.FireOnHierarchyClicked();
-            });
+            gui.Initialize(this.HierarchyName, this.FireOnHierarchyClicked);
             this.FireOnCreatedGui();
         }
         
