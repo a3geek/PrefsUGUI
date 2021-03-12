@@ -9,8 +9,6 @@ namespace PrefsUGUI.Guis.Preferences
     [DisallowMultipleComponent]
     public abstract class PrefsGuiBase : MonoBehaviour, IPrefsGuiBase, IDisposable
     {
-        //public event Action OnEditedInGui = delegate { };
-
         [SerializeField]
         protected Text label = null;
         [SerializeField]
@@ -71,10 +69,6 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual void Dispose()
         {
             this.isDisposed = true;
-            //this.OnValueChanged = null;
         }
-
-        //protected virtual void FireOnValueChanged()
-        //    => this.OnValueChanged();
     }
 }

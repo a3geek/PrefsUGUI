@@ -19,7 +19,7 @@ namespace PrefsUGUI
 
         protected override void OnCreatedGuiInternal(PrefsGuiColorSlider gui)
         {
-            gui.Initialize(this.GuiLabel, this.Get(), this.GetDefaultValue);
+            gui.Initialize(this.GuiLabel, this.Get());
         }
     }
 }

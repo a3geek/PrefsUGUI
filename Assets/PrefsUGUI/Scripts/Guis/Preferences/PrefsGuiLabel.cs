@@ -39,7 +39,7 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual void SetValue(string text)
             => this.inputfield.text = text;
 
-        public virtual void SetGuiListeners(PrefsValueBase<string> prefs, IPrefsGuiEvents<string> prefsEventer)
+        public virtual void SetGuiListeners(PrefsValueBase<string> prefs, IPrefsGuiEvents<string, PrefsGuiLabel> prefsEventer)
         {
         }
     }

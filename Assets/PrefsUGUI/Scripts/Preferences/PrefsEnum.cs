@@ -17,6 +17,6 @@ namespace PrefsUGUI
         }
 
         protected override void OnCreatedGuiInternal(PrefsGuiEnum gui)
-            => gui.Initialize<T>(this.GuiLabel, this.Get(), this.GetDefaultValue);
+            => gui.Initialize<T>(this.GuiLabel, this.Get());
     }
 }

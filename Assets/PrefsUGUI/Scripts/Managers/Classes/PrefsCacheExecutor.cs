@@ -65,10 +65,10 @@ namespace PrefsUGUI.Managers
             Executor.RemoveGuiHierarchiesCache.Add(hierarchyId, RemoveGuiHierarchy);
         }
 
-        public static void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
+        public static void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
-            void AddPrefs() => PrefsGuis.AddPrefs(prefs, onCreated);
+            void AddPrefs() => PrefsGuis.AddPrefs(prefs, events);
             Executor.AddPrefsCache.Add(prefs.SaveKey, AddPrefs);
 
             if(Inited == false)

@@ -25,7 +25,7 @@ namespace PrefsUGUI.Guis.Preferences
 
         protected bool isUpdatingFields = false;
         protected ValType value = default;
-        protected IPrefsGuiEvents<ValType> prefsEvents = null;
+        protected IPrefsGuiEvents<ValType, GuiType> prefsEvents = null;
         //protected Func<ValType> defaultGetter = null;
 
 
@@ -51,7 +51,7 @@ namespace PrefsUGUI.Guis.Preferences
             this.SetFields(false);
         }
 
-        public virtual void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType> prefsEvents)
+        public virtual void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> prefsEvents)
         {
             //void onValueChanged() => prefs.Set(this.GetValue());
             //void onDefaultButtonClicked() => prefs.ResetDefaultValue();

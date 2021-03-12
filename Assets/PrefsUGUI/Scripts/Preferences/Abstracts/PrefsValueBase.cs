@@ -72,6 +72,12 @@ namespace PrefsUGUI.Preferences.Abstracts
             this.FireOnEditedInGui();
         }
 
+        protected virtual void OnClickedDefaultButton()
+        {
+            this.ResetDefaultValue();
+            this.FireOnEditedInGui();
+        }
+
         protected override void ValueSetToStorage()
             => Storage.Set(typeof(ValType), this.SaveKey, this.Get(), Prefs.AggregationName);
     }

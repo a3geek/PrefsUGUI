@@ -56,12 +56,13 @@ namespace PrefsUGUI.Preferences.Abstracts
         {
             this.onCreatedGui = onCreatedGui;
             this.GuiSortOrder = sortOrder;
-
-            this.events = new PrefsGuiEvents(this);
         }
 
         protected override void OnRegisted()
-            => PrefsManager.AddPrefs<ValType, GuiType>(this, this.OnCreatedGui);
+        {
+            this.events = new PrefsGuiEvents(this);
+            PrefsManager.AddPrefs(this, this.events);
+        }
 
         protected virtual void OnCreatedGui(GuiType gui)
         {

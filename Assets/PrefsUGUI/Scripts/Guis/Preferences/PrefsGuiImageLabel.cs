@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Preferences
 {
+    using PrefsUGUI.Preferences.Abstracts;
+
     [Serializable]
     [AddComponentMenu("")]
     public class PrefsGuiImageLabel : PrefsGuiLabel, IPrefsGuiConnector<string, PrefsGuiImageLabel>
@@ -29,5 +31,9 @@ namespace PrefsUGUI.Guis.Preferences
 
         public Texture GetImage()
             => this.rawImage.texture;
+
+        public virtual void SetGuiListeners(PrefsValueBase<string> prefs, IPrefsGuiEvents<string, PrefsGuiImageLabel> prefsEventer)
+        {
+        }
     }
 }

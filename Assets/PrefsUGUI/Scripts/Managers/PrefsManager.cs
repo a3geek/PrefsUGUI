@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace PrefsUGUI.Managers
 {
+    using Classes;
     using Commons;
     using GuiHierarchies.Abstracts;
     using Guis;
@@ -30,8 +31,8 @@ namespace PrefsUGUI.Managers
         }
         public static bool Inited { get; private set; } = false;
         public static PrefsGuis PrefsGuis { get; private set; } = null;
-        public static OrderableConcurrentCache<string, Action> StorageValueSetters { get; } = new OrderableConcurrentCache<string, Action>();
 
+        private static ConcurrentDictionary<string, IPrefsStorageSetter> StorageSetters = new ConcurrentDictionary<string, IPrefsStorageSetter>();
         private static ConcurrentStack<PrefsBase> FastPrefsCache = new ConcurrentStack<PrefsBase>();
         private static IPrefsParameters PrefsParametersInternal = PrefsUGUI.PrefsParameters.Empty;
 
@@ -58,8 +59,17 @@ namespace PrefsUGUI.Managers
         }
 
         public static void NotifyWillSceneLoad()
+            => Inited = false;
+
+        public static void AddStorageSetter(string saveKey, IPrefsStorageSetter setter)
+            => StorageSetters[saveKey] = setter;
+
+        public static void ExecuteStorageSetters()
         {
-            Inited = false;
+            foreach(var setter in StorageSetters)
+            {
+                setter.Value.SetStorageValue();
+            }
         }
 
         private static void InitializeInternal(IPrefsParameters parameters)

@@ -58,11 +58,11 @@ namespace PrefsUGUI.Guis.Factories
             this.prefabs.OnValidate();
         }
 
-        public GuiType AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs)
+        public GuiType AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             var hierarchy = this.GetOrAddHierarchy(prefs.GuiHierarchy);
-            var gui = this.creator.CreatePrefsGui<ValType, GuiType>(prefs, hierarchy);
+            var gui = this.creator.CreatePrefsGui(prefs, events, hierarchy);
 
             return gui;
         }

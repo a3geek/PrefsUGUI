@@ -18,7 +18,7 @@ namespace PrefsUGUI
 
         protected override void OnCreatedGuiInternal(PrefsGuiNumericInteger gui)
         {
-            gui.Initialize(this.GuiLabel, this.Get(), this.GetDefaultValue);
+            gui.Initialize(this.GuiLabel, this.Get());
         }
     }
 }

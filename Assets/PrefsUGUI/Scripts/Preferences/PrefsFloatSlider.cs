@@ -37,11 +37,11 @@ namespace PrefsUGUI
         {
             if (this.min == this.max)
             {
-                gui.Initialize(this.GuiLabel, this.Get(), this.GetDefaultValue);
+                gui.Initialize(this.GuiLabel, this.Get());
             }
             else
             {
-                gui.Initialize(this.GuiLabel, this.Get(), this.min, this.max, this.GetDefaultValue);
+                gui.Initialize(this.GuiLabel, this.Get(), this.min, this.max);
             }
         }
     }

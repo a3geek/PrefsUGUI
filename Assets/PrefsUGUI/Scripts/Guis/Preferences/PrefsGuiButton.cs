@@ -49,7 +49,7 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual UnityAction GetValue()
             => this.callback;
 
-        public virtual void SetGuiListeners(PrefsValueBase<UnityAction> prefs, IPrefsGuiEvents<UnityAction> prefsEventer)
+        public virtual void SetGuiListeners(PrefsValueBase<UnityAction> prefs, IPrefsGuiEvents<UnityAction, PrefsGuiButton> prefsEventer)
         {
         }
 

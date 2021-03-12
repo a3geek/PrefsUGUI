@@ -12,7 +12,7 @@ namespace PrefsUGUI
     {
         public const char HierarchySeparator = '/';
 
-        public static event Action<PrefsBase> OnPrefsValueChanged = delegate { };
+        public static event Action<PrefsBase> OnPrefsEditedinGui = delegate { };
 
         public static string AggregationName => PrefsManager.PrefsParameters.AggregationName;
         public static string FileName => PrefsManager.PrefsParameters.FileName;
@@ -27,7 +27,7 @@ namespace PrefsUGUI
             {
                 if (WillQuit == false)
                 {
-                    OnPrefsValueChanged(prefs);
+                    OnPrefsEditedinGui(prefs);
                 }
             };
         }
@@ -39,7 +39,7 @@ namespace PrefsUGUI
             Storage.ChangeAggregation(AggregationName);
             Storage.CurrentAggregation.FileName = FileName + XmlStorageConsts.Extension;
 
-            PrefsManager.StorageValueSetters.TakeEach(action => action?.Invoke());
+            PrefsManager.ExecuteStorageSetters();
 
             Storage.ChangeAggregation(current);
             Storage.Save();
@@ -52,6 +52,9 @@ namespace PrefsUGUI
                 PrefsManager.PrefsGuis.ShowGUI();
             }
         }
+
+        public static void NotifyWillSceneLoad()
+            => PrefsManager.NotifyWillSceneLoad();
 
         public static bool IsShowing()
             => PrefsManager.PrefsGuis != null && PrefsManager.PrefsGuis.IsShowing;

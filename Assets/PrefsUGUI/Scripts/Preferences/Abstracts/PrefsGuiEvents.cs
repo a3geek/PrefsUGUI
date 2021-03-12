@@ -7,7 +7,7 @@ namespace PrefsUGUI.Preferences.Abstracts
 
     public abstract partial class PrefsGuiBase<ValType, GuiType>
     {
-        protected class PrefsGuiEvents : IPrefsGuiEvents<ValType>
+        protected class PrefsGuiEvents : IPrefsGuiEvents<ValType, GuiType>
         {
             private PrefsGuiBase<ValType, GuiType> parent = null;
 
@@ -17,11 +17,14 @@ namespace PrefsUGUI.Preferences.Abstracts
                 this.parent = parent;
             }
 
+            public void OnCreatedGui(GuiType gui)
+                => this.parent.OnCreatedGui(gui);
+
             public void OnEditedInGui(ValType value)
                 => this.parent.OnEditedInGuiInternal(value);
 
             public void OnClickedDefaultButton()
-                => this.parent.ResetDefaultValue();
+                => this.parent.OnClickedDefaultButton();
 
             public ValType GetDefaultValue()
                 => this.parent.GetDefaultValue();

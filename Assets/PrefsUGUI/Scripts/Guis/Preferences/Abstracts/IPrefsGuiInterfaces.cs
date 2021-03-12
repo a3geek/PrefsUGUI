@@ -5,8 +5,9 @@ namespace PrefsUGUI.Guis.Preferences
 {
     using PrefsUGUI.Preferences.Abstracts;
 
-    public interface IPrefsGuiEvents<ValType>
+    public interface IPrefsGuiEvents<ValType, GuiType>
     {
+        void OnCreatedGui(GuiType gui);
         void OnEditedInGui(ValType value);
         void OnClickedDefaultButton();
         ValType GetDefaultValue();
@@ -14,8 +15,6 @@ namespace PrefsUGUI.Guis.Preferences
 
     public interface IPrefsGuiBase
     {
-        //event Action OnEditedInGui;
-
         void SetBottomMargin(float value);
         float GetBottomMargin();
         void SetTopMargin(float value);
@@ -26,12 +25,12 @@ namespace PrefsUGUI.Guis.Preferences
         bool GetVisible();
     }
 
-    public interface IPrefsGuiConnector<ValType, ComponentType> : IPrefsGuiBase where ComponentType : PrefsGuiBase
+    public interface IPrefsGuiConnector<ValType, GuiType> : IPrefsGuiBase where GuiType : PrefsGuiBase
     {
-        ComponentType Component { get; }
+        GuiType Component { get; }
 
         ValType GetValue();
         void SetValue(ValType value);
-        void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType> events);
+        void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events);
     }
 }

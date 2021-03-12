@@ -4,10 +4,11 @@ using UnityEngine;
 namespace PrefsUGUI.Preferences.Abstracts
 {
     using CustomExtensions.Csharp;
+    using Managers.Classes;
     using Managers;
 
     [Serializable]
-    public abstract class PrefsBase : IDisposable
+    public abstract partial class PrefsBase : IDisposable
     {
         public virtual event Action OnValueChanged = delegate { };
         public virtual event Action OnEditedInGui = delegate { };
@@ -28,6 +29,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         protected string guiLabel = "";
 
         protected bool disposed = false;
+        protected IPrefsStorageSetter storageSetter = null;
 
 
         public PrefsBase(string key, GuiHierarchy hierarchy = null, string guiLabel = null)
@@ -36,6 +38,7 @@ namespace PrefsUGUI.Preferences.Abstracts
             this.GuiHierarchy = hierarchy;
             this.guiLabel = guiLabel ?? key.ToLabelable();
             this.PrefsId = Guid.NewGuid();
+            this.storageSetter = new StorageSetter(this);
 
             this.Regist();
         }
@@ -46,17 +49,16 @@ namespace PrefsUGUI.Preferences.Abstracts
 
         protected virtual void Regist()
         {
-            void ValueSetter()
-            {
-                Debug.Log(this.SaveKey);
-                if (this.Unsave == false && this.IsCreatedGui == true)
-                {
-                    this.ValueSetToStorage();
-                }
-            };
-            PrefsManager.StorageValueSetters.Add(this.SaveKey, ValueSetter);
-
+            PrefsManager.AddStorageSetter(this.SaveKey, this.storageSetter);
             this.OnRegisted();
+        }
+
+        protected virtual void SetStorageValue()
+        {
+            if(this.Unsave == false && this.IsCreatedGui == true)
+            {
+                this.ValueSetToStorage();
+            }
         }
 
         protected virtual void FireOnEditedInGui()

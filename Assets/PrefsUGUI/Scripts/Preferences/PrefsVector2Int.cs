@@ -19,7 +19,7 @@ namespace PrefsUGUI
 
         protected override void OnCreatedGuiInternal(PrefsGuiVector2Int gui)
         {
-            gui.Initialize(this.guiLabel, this.Get(), this.GetDefaultValue);
+            gui.Initialize(this.guiLabel, this.Get());
         }
     }
 }

@@ -37,7 +37,7 @@ namespace PrefsUGUI.Examples
             this.test0.PrefsBool.OnValueChanged += ()
                 => Debug.Log(nameof(this.test0.PrefsBool) + " Changed : " + this.test0.PrefsBool.Get());
 
-            Prefs.OnPrefsValueChanged += prefs => Debug.Log("OnPrefsModified : " + prefs.GuiLabel);
+            Prefs.OnPrefsEditedinGui += prefs => Debug.Log("OnPrefsModified : " + prefs.GuiLabel);
         }
 
         private void Update()

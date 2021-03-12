@@ -73,7 +73,7 @@ namespace PrefsUGUI.Guis
             this.Canvas.gameObject.SetActive(true);
         }
 
-        public void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, Action<GuiType> onCreated)
+        public void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             if(this.Canvas == null)
@@ -82,9 +82,9 @@ namespace PrefsUGUI.Guis
             }
 
             var gui = (GuiType)this.guis.GetOrAdd(
-                prefs.SaveKey, prefs.PrefsId, () => this.Canvas.AddPrefs<ValType, GuiType>(prefs)
+                prefs.SaveKey, prefs.PrefsId, () => this.Canvas.AddPrefs(prefs, events)
             );
-            onCreated?.Invoke(gui);
+            events.OnCreatedGui(gui);
         }
 
         public void RemovePrefs(ref Guid prefsId)
