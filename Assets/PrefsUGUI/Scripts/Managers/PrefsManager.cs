@@ -56,6 +56,9 @@ namespace PrefsUGUI.Managers
         public static void AddStorageSetter(string saveKey, IPrefsStorageSetter setter)
             => StorageSetters[saveKey] = setter;
 
+        public static void RemoveStorageSetter(string saveKey)
+            => StorageSetters.TryRemove(saveKey, out _);
+
         public static void ExecuteStorageSetters()
         {
             foreach(var setter in StorageSetters)
