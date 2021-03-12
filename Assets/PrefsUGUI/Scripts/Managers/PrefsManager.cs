@@ -46,7 +46,7 @@ namespace PrefsUGUI.Managers
             UnityObject.DontDestroyOnLoad(PrefsGuis);
             PrefsGuis.SetCacheExecutor(Executor);
 
-            InitializeInternal(UnityObject.FindObjectOfType<PrefsParametersEntity>());
+            InitializeInternal(UnityObject.FindObjectOfType<PrefsParametersEntity>() ?? PrefsParameters.Empty);
             SceneManager.sceneLoaded += SceneLoaded;
         }
 
@@ -74,7 +74,7 @@ namespace PrefsUGUI.Managers
                 return;
             }
 
-            if(parameters != null && PrefsParameters.IsEqual(parameters) == false)
+            if(parameters != null && parameters.IsEmpty() == false && PrefsParameters.IsEqual(parameters) == false)
             {
                 PrefsParametersInternal = parameters;
             }
@@ -95,7 +95,9 @@ namespace PrefsUGUI.Managers
         {
             if(mode == LoadSceneMode.Single)
             {
-                InitializeInternal(UnityObject.FindObjectOfType<PrefsParametersEntity>());
+                InitializeInternal(
+                    UnityObject.FindObjectOfType<PrefsParametersEntity>() ?? PrefsParameters.Empty
+                );
             }
         }
     }
