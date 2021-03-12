@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace PrefsUGUI.Managers
 {
     using Classes;
-    using Commons;
-    using GuiHierarchies.Abstracts;
     using Guis;
-    using Guis.Factories;
-    using Guis.Factories.Classes;
-    using Guis.Preferences;
     using Preferences.Abstracts;
-    using AddCache = Commons.OrderableConcurrentCache<string, Action>;
-    using RemoveCache = Commons.OrderableConcurrentCache<Guid, Action>;
     using UnityObject = UnityEngine.Object;
 
     public static partial class PrefsManager
     {
-        public static IPrefsParameters PrefsParameters
+        public static PrefsParameters PrefsParameters
         {
             get => PrefsParametersInternal;
             set
@@ -34,7 +26,7 @@ namespace PrefsUGUI.Managers
 
         private static ConcurrentDictionary<string, IPrefsStorageSetter> StorageSetters = new ConcurrentDictionary<string, IPrefsStorageSetter>();
         private static ConcurrentStack<PrefsBase> FastPrefsCache = new ConcurrentStack<PrefsBase>();
-        private static IPrefsParameters PrefsParametersInternal = PrefsUGUI.PrefsParameters.Empty;
+        private static PrefsParameters PrefsParametersInternal = PrefsParameters.Empty;
 
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -72,7 +64,7 @@ namespace PrefsUGUI.Managers
             }
         }
 
-        private static void InitializeInternal(IPrefsParameters parameters)
+        private static void InitializeInternal(PrefsParameters parameters)
         {
             if(Inited == true)
             {
@@ -85,7 +77,7 @@ namespace PrefsUGUI.Managers
             }
             if(PrefsParameters.IsEmpty() == true)
             {
-                PrefsParametersInternal = PrefsUGUI.PrefsParameters.Default;
+                PrefsParametersInternal = PrefsParameters.Default;
             }
 
             while(FastPrefsCache.TryPop(out var prefs) == true)

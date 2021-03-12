@@ -71,5 +71,8 @@ namespace PrefsUGUI
 
         public static string GetDefaultName()
             => PrefsParameters.GetDefaultName();
+
+        public static implicit operator PrefsParameters(PrefsParametersEntity entity)
+            => new PrefsParameters(entity.aggregationName, entity.fileName);
     }
 }

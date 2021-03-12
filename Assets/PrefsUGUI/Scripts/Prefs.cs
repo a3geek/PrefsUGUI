@@ -14,8 +14,13 @@ namespace PrefsUGUI
 
         public static event Action<PrefsBase> OnPrefsEditedinGui = delegate { };
 
-        public static string AggregationName => PrefsManager.PrefsParameters.AggregationName;
-        public static string FileName => PrefsManager.PrefsParameters.FileName;
+        public static PrefsParameters PrefsParameters
+        {
+            get => PrefsManager.PrefsParameters;
+            set => PrefsManager.PrefsParameters = value;
+        }
+        public static string AggregationName => PrefsParameters.AggregationName;
+        public static string FileName => PrefsParameters.FileName;
 
         private static bool WillQuit = false;
 
