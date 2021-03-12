@@ -40,13 +40,12 @@ namespace PrefsUGUI.Guis.Preferences
             }
         }
 
-        public virtual void Initialize(string label, ValType initialValue, Func<ValType> defaultGetter)
+        public virtual void Initialize(string label, ValType initialValue)
         {
             this.SetLabel(label);
             this.field.contentType
                 = this.IsDecimalNumber == true ? InputField.ContentType.DecimalNumber : InputField.ContentType.IntegerNumber;
 
-            this.defaultGetter = defaultGetter;
             this.SetValue(initialValue);
         }
 

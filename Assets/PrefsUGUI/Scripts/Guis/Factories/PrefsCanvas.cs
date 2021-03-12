@@ -89,7 +89,7 @@ namespace PrefsUGUI.Guis.Factories
 
         private AbstractHierarchy OnAddedHierarchy(AbstractHierarchy hierarchy)
         {
-            hierarchy.GuiButton.OnValueChanged += () => this.ChangeGUI(hierarchy);
+            hierarchy.GuiButton.OnClicked += () => this.ChangeGUI(hierarchy);
             return hierarchy;
         }
 

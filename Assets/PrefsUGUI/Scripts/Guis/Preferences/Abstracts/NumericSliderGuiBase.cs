@@ -29,16 +29,16 @@ namespace PrefsUGUI.Guis.Preferences
             this.slider = this.GetComponentInChildren<Slider>();
         }
 
-        public override void Initialize(string label, ValType initialValue, Func<ValType> defaultGetter)
+        public override void Initialize(string label, ValType initialValue)
         {
             var val = this.GetValueAsFloat();
-            this.Initialize(label, initialValue, 0f, val + val, defaultGetter);
+            this.Initialize(label, initialValue, 0f, val + val);
         }
 
-        public virtual void Initialize(string label, ValType initialValue, float minValue, float maxValue, Func<ValType> defaultGetter)
+        public virtual void Initialize(string label, ValType initialValue, float minValue, float maxValue)
         {
             this.InitializeSlider(minValue, maxValue);
-            base.Initialize(label, initialValue, defaultGetter);
+            base.Initialize(label, initialValue);
 
             this.inited = true;
         }

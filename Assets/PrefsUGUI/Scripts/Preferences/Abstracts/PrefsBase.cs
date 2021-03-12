@@ -19,6 +19,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         public virtual string GuiLabel => this.guiLabel;
         public virtual bool Unsave { get; set; } = false;
         public virtual GuiHierarchy GuiHierarchy { get; protected set; } = null;
+        public abstract bool IsCreatedGui { get; }
         public abstract int GuiSortOrder { get; protected set; }
 
         [SerializeField]
@@ -48,7 +49,7 @@ namespace PrefsUGUI.Preferences.Abstracts
             void ValueSetter()
             {
                 Debug.Log(this.SaveKey);
-                if (this.Unsave == false)
+                if (this.Unsave == false && this.IsCreatedGui == true)
                 {
                     this.ValueSetToStorage();
                 }
@@ -57,6 +58,9 @@ namespace PrefsUGUI.Preferences.Abstracts
 
             this.OnRegisted();
         }
+
+        protected virtual void FireOnEditedInGui()
+            => this.OnEditedInGui();
 
         protected virtual void FireOnValueChanged()
             => this.OnValueChanged();

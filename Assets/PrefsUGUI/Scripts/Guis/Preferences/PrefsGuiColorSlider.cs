@@ -24,10 +24,10 @@ namespace PrefsUGUI.Guis.Preferences
             this.preview = this.GetComponentInChildren<RawImage>();
         }
 
-        public override void Initialize(string label, Color initialValue, Func<Color> defaultGetter)
+        public override void Initialize(string label, Color initialValue)
         {
             this.SetValueInternal(initialValue);
-            this.Initialize(label, initialValue, 0f, 1f, defaultGetter);
+            this.Initialize(label, initialValue, 0f, 1f);
         }
 
         protected override void SetFieldsInternal()
@@ -49,7 +49,7 @@ namespace PrefsUGUI.Guis.Preferences
             => this.SetValueInternal(this.GetVector4FromFields());
 
         protected override bool IsDefaultValue()
-            => this.GetValue() == this.defaultGetter();
+            => this.GetValue() == this.prefsEvents.GetDefaultValue();
 
         protected override Color GetDeltaAddedValue(Vector4 v4)
             => this.value + (Color)v4;

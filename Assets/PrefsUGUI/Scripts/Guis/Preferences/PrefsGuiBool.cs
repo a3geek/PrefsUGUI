@@ -14,9 +14,8 @@ namespace PrefsUGUI.Guis.Preferences
         protected Toggle toggle = null;
 
 
-        protected override void Awake()
+        protected virtual void Awake()
         {
-            base.Awake();
             this.toggle.onValueChanged.AddListener(this.OnToggleChanged);
         }
 
@@ -26,10 +25,8 @@ namespace PrefsUGUI.Guis.Preferences
             this.toggle = this.GetComponentInChildren<Toggle>();
         }
 
-        public virtual void Initialize(string label, bool initialValue, Func<bool> defaultGetter)
+        public virtual void Initialize(string label, bool initialValue)
         {
-            this.defaultGetter = defaultGetter;
-
             this.SetLabel(label);
             this.SetValue(initialValue);
         }
@@ -47,6 +44,6 @@ namespace PrefsUGUI.Guis.Preferences
         }
 
         protected override bool IsDefaultValue()
-            => this.GetValue() == this.defaultGetter();
+            => this.GetValue() == this.prefsEvents.GetDefaultValue();
     }
 }

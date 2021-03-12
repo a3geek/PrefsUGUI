@@ -9,7 +9,7 @@ namespace PrefsUGUI.Guis.Preferences
     [DisallowMultipleComponent]
     public abstract class PrefsGuiBase : MonoBehaviour, IPrefsGuiBase, IDisposable
     {
-        public event Action OnValueChanged = delegate { };
+        //public event Action OnEditedInGui = delegate { };
 
         [SerializeField]
         protected Text label = null;
@@ -71,10 +71,10 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual void Dispose()
         {
             this.isDisposed = true;
-            this.OnValueChanged = null;
+            //this.OnValueChanged = null;
         }
 
-        protected virtual void FireOnValueChanged()
-            => this.OnValueChanged();
+        //protected virtual void FireOnValueChanged()
+        //    => this.OnValueChanged();
     }
 }

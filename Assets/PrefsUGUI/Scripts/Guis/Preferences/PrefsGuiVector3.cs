@@ -18,7 +18,7 @@ namespace PrefsUGUI.Guis.Preferences
             => this.value[index].ToString();
 
         protected override bool IsDefaultValue()
-            => this.GetValue() == this.defaultGetter();
+            => this.GetValue() == this.prefsEvents.GetDefaultValue();
 
         protected override void SetValueInternal(string value)
         {

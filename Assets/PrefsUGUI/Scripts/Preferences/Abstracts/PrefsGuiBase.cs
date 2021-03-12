@@ -6,12 +6,12 @@ namespace PrefsUGUI.Preferences.Abstracts
     using Guis.Preferences;
     using Managers;
 
-    public abstract class PrefsGuiBase<ValType, GuiType> : PrefsValueBase<ValType>, IReadOnlyPrefs<ValType>, IPrefsCommon
+    public abstract partial class PrefsGuiBase<ValType, GuiType> : PrefsValueBase<ValType>, IReadOnlyPrefs<ValType>, IPrefsCommon
         where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
     {
         public override string GuiLabel => this.properties.GuiLabel;
         public virtual string GuiLabelWithoutAffix => this.properties.GuiLabelWithoutAffix;
-        public virtual bool IsCreatedGui => this.properties.IsCreatedGui;
+        public override bool IsCreatedGui => this.properties.IsCreatedGui;
         public virtual float BottomMargin
         {
             get => this.properties.BottomMargin;
@@ -45,6 +45,7 @@ namespace PrefsUGUI.Preferences.Abstracts
 
         protected PrefsGuiProperties<GuiType> properties = new PrefsGuiProperties<GuiType>();
         protected Action<PrefsGuiBase<ValType, GuiType>> onCreatedGui = null;
+        protected PrefsGuiEvents events = null;
 
 
         public PrefsGuiBase(
@@ -55,6 +56,8 @@ namespace PrefsUGUI.Preferences.Abstracts
         {
             this.onCreatedGui = onCreatedGui;
             this.GuiSortOrder = sortOrder;
+
+            this.events = new PrefsGuiEvents(this);
         }
 
         protected override void OnRegisted()

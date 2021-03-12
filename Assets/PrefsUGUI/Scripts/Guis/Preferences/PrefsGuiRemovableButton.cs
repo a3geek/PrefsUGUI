@@ -16,7 +16,6 @@ namespace PrefsUGUI.Guis.Preferences
         protected Button removeButton = null;
 
         protected UnityAction onRemoveClicked = null;
-        protected Action removePrefs = null;
 
 
         protected override void Reset()
@@ -36,15 +35,7 @@ namespace PrefsUGUI.Guis.Preferences
         protected virtual void OnRemoveButtonClicked()
         {
             this.onRemoveClicked?.Invoke();
-            this.removePrefs?.Invoke();
-        }
-
-        public override void SetGuiListeners(PrefsValueBase<UnityAction> prefs)
-        {
-            base.SetGuiListeners(prefs);
-
-            void RemovePrefs() => prefs.Dispose();
-            this.removePrefs = RemovePrefs;
+            this.Dispose();
         }
 
         public override void Dispose()
@@ -52,7 +43,6 @@ namespace PrefsUGUI.Guis.Preferences
             base.Dispose();
 
             this.removeButton.onClick.RemoveAllListeners();
-            this.removePrefs = null;
             this.onRemoveClicked = null;
         }
     }

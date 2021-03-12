@@ -21,15 +21,14 @@ namespace PrefsUGUI.Guis.Preferences
             this.field = this.GetComponentInChildren<InputField>();
         }
 
-        public virtual void Initialize(string label, string initialValue, Func<string> defaultGetter)
+        public virtual void Initialize(string label, string initialValue)
         {
             this.SetLabel(label);
-            this.defaultGetter = defaultGetter;
             this.SetValue(initialValue);
         }
 
         protected override bool IsDefaultValue()
-            => this.GetValue() == this.defaultGetter();
+            => this.GetValue() == this.prefsEvents.GetDefaultValue();
 
         protected override void SetFieldsInternal()
         {

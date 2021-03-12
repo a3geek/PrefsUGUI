@@ -4,9 +4,10 @@ using UnityEngine;
 namespace PrefsUGUI.Preferences.Abstracts
 {
     using XmlStorage;
+    using Guis.Preferences;
 
     [Serializable]
-    public abstract class PrefsValueBase<ValType> : PrefsBase
+    public abstract partial class PrefsValueBase<ValType> : PrefsBase
     {
         public virtual ValType Value
         {
@@ -63,6 +64,12 @@ namespace PrefsUGUI.Preferences.Abstracts
             {
                 this.FireOnValueChanged();
             }
+        }
+
+        protected virtual void OnEditedInGuiInternal(ValType value)
+        {
+            this.Set(value, true);
+            this.FireOnEditedInGui();
         }
 
         protected override void ValueSetToStorage()

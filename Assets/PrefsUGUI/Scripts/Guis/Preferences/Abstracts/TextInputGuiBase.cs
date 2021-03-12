@@ -7,10 +7,8 @@ namespace PrefsUGUI.Guis.Preferences
     public abstract class TextInputGuiBase<ValType, GuiType> : PrefsInputGuiBase<ValType, GuiType>
         where GuiType : PrefsInputGuiBase<ValType, GuiType>
     {
-        protected override void Awake()
+        protected virtual void Awake()
         {
-            base.Awake();
-
             var events = this.GetInputEvents();
             for (var i = 0; i < events.Length; i++)
             {

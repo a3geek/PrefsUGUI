@@ -46,18 +46,18 @@ namespace PrefsUGUI.Guis.Preferences
             this.sliderW = sliders.Length >= 4 ? sliders[3] : this.sliderW;
         }
 
-        public override void Initialize(string label, ValType initialValue, Func<ValType> defaultGetter)
+        public override void Initialize(string label, ValType initialValue)
         {
             var val = this.GetElementAsFloat(0);
-            this.Initialize(label, initialValue, 0f, val + val, defaultGetter);
+            this.Initialize(label, initialValue, 0f, val + val);
         }
 
-        public virtual void Initialize(string label, ValType initialValue, float minValue, float maxValue, Func<ValType> defaultGetter)
+        public virtual void Initialize(string label, ValType initialValue, float minValue, float maxValue)
         {
             this.sliders = new Slider[] { this.sliderX, this.sliderY, this.sliderZ, this.sliderW };
 
             this.InitializeSlider(minValue, maxValue);
-            base.Initialize(label, initialValue, defaultGetter);
+            base.Initialize(label, initialValue);
 
             this.inited = true;
         }

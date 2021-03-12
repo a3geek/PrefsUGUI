@@ -36,7 +36,7 @@ namespace PrefsUGUI.Guis.Preferences
             => this.SetValueInternal(this.GetVector4FromFields());
 
         protected override bool IsDefaultValue()
-            => this.GetValue() == this.defaultGetter();
+            => this.GetValue() == this.prefsEvents.GetDefaultValue();
 
         protected override Color GetDeltaAddedValue(Vector4 v4)
             => this.value + (Color)v4;

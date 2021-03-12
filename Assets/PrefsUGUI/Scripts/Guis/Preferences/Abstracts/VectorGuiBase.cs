@@ -16,7 +16,7 @@ namespace PrefsUGUI.Guis.Preferences
 
         protected abstract int ElementCount { get; }
         protected abstract InputField.ContentType ContentType { get; }
-        protected virtual InputField[] fields { get; set; } = new InputField[0];
+        protected virtual InputField[] Fields { get; set; } = new InputField[0];
 
         [SerializeField]
         protected NumericUpDownInput updown = new NumericUpDownInput();
@@ -34,7 +34,7 @@ namespace PrefsUGUI.Guis.Preferences
         {
             for (var i = 0; i < this.ElementCount; i++)
             {
-                if (this.updown.Update(this.fields[i], out var delta) == true)
+                if (this.updown.Update(this.Fields[i], out var delta) == true)
                 {
                     var vec = Vector4.zero;
                     vec[i] = delta;
@@ -60,17 +60,16 @@ namespace PrefsUGUI.Guis.Preferences
             this.fieldW = fields.Length >= 4 ? fields[3] : this.fieldW;
         }
 
-        public virtual void Initialize(string label, ValType initialValue, Func<ValType> defaultGetter)
+        public virtual void Initialize(string label, ValType initialValue)
         {
             this.SetLabel(label);
 
-            this.fields = new InputField[] { this.fieldX, this.fieldY, this.fieldZ, this.fieldW };
+            this.Fields = new InputField[] { this.fieldX, this.fieldY, this.fieldZ, this.fieldW };
             for (var i = 0; i < this.ElementCount; i++)
             {
-                this.fields[i].contentType = this.ContentType;
+                this.Fields[i].contentType = this.ContentType;
             }
 
-            this.defaultGetter = defaultGetter;
             this.SetValue(initialValue);
         }
 
@@ -79,7 +78,7 @@ namespace PrefsUGUI.Guis.Preferences
             var events = new UnityEvent<string>[this.ElementCount];
             for (var i = 0; i < this.ElementCount; i++)
             {
-                events[i] = this.fields[i].onEndEdit;
+                events[i] = this.Fields[i].onEndEdit;
             }
 
             return events;
@@ -91,7 +90,7 @@ namespace PrefsUGUI.Guis.Preferences
 
             for (var i = 0; i < this.ElementCount; i++)
             {
-                this.fields[i].text = this.GetElement(i);
+                this.Fields[i].text = this.GetElement(i);
             }
         }
 

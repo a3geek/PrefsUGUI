@@ -11,6 +11,8 @@ namespace PrefsUGUI.Guis.Preferences
     [AddComponentMenu("")]
     public class PrefsGuiButton : PrefsGuiBase, IPrefsGuiConnector<UnityAction, PrefsGuiButton>
     {
+        public virtual event Action OnClicked = delegate { };
+
         public virtual PrefsGuiButton Component => this;
 
         [SerializeField]
@@ -29,7 +31,7 @@ namespace PrefsUGUI.Guis.Preferences
         {
             this.SetLabel(label);
 
-            this.button.onClick.AddListener(this.FireOnValueChanged);
+            this.button.onClick.AddListener(this.FireOnClicked);
             this.SetValue(callback);
         }
 
@@ -47,7 +49,7 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual UnityAction GetValue()
             => this.callback;
 
-        public virtual void SetGuiListeners(PrefsValueBase<UnityAction> prefs)
+        public virtual void SetGuiListeners(PrefsValueBase<UnityAction> prefs, IPrefsGuiEvents<UnityAction> prefsEventer)
         {
         }
 
@@ -57,5 +59,8 @@ namespace PrefsUGUI.Guis.Preferences
             this.button.onClick.RemoveAllListeners();
             this.callback = null;
         }
+
+        protected virtual void FireOnClicked()
+            => this.OnClicked();
     }
 }

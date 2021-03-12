@@ -23,9 +23,8 @@ namespace PrefsUGUI.Guis.Preferences
         protected Dictionary<int, int> indexToValue = new Dictionary<int, int>();
 
 
-        protected override void Awake()
+        protected virtual void Awake()
         {
-            base.Awake();
             this.dropdown.onValueChanged.AddListener(this.OnDropdownChanged);
         }
 
@@ -35,11 +34,10 @@ namespace PrefsUGUI.Guis.Preferences
             this.dropdown = this.GetComponentInChildren<Dropdown>();
         }
 
-        public virtual void Initialize<T>(string label, int initialValue, Func<int> defaultGetter) where T : Enum
+        public virtual void Initialize<T>(string label, int initialValue) where T : Enum
         {
             this.SetLabel(label);
 
-            this.defaultGetter = defaultGetter;
             this.Refresh<T>(initialValue);
 
             this.inited = true;
@@ -90,7 +88,7 @@ namespace PrefsUGUI.Guis.Preferences
         }
 
         protected override bool IsDefaultValue()
-            => this.value == this.defaultGetter();
+            => this.value == this.prefsEvents.GetDefaultValue();
 
         protected virtual void OnDropdownChanged(int index)
         {
