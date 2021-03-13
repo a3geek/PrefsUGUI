@@ -105,6 +105,7 @@ namespace PrefsUGUI.Examples
                         this.PrefsButton1.Set(OnButton1Clicked2);
                     }
                 };
+                this.PrefsButton3.OnEditedInGui += () => Debug.Log("OnEditedInGui : " + nameof(this.PrefsButton3));
             }
 
             private static void OnButton1Clicked1()

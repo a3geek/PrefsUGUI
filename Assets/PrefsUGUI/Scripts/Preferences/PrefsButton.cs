@@ -35,6 +35,7 @@ namespace PrefsUGUI
         protected virtual void FireOnClicked()
         {
             this.OnClicked();
+            this.FireOnEditedInGui();
             this.Value?.Invoke();
         }
     }
