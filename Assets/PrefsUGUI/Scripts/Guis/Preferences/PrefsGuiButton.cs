@@ -37,6 +37,10 @@ namespace PrefsUGUI.Guis.Preferences
 
         public virtual void SetValue(UnityAction callback)
         {
+            if(callback == null)
+            {
+                return;
+            }
             if(this.callback != null)
             {
                 this.button.onClick.RemoveListener(this.callback);

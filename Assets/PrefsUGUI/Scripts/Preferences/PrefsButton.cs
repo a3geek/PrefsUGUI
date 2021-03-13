@@ -25,7 +25,8 @@ namespace PrefsUGUI
 
         protected override void OnCreatedGuiInternal(PrefsGuiButton gui)
         {
-            gui.Initialize(this.GuiLabel, this.FireOnClicked);
+            gui.Initialize(this.GuiLabel, null);
+            gui.OnClicked += this.FireOnClicked;
         }
 
         protected override void Regist()
