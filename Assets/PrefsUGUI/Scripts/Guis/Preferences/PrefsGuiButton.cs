@@ -50,6 +50,15 @@ namespace PrefsUGUI.Guis.Preferences
             this.button.onClick.AddListener(this.callback);
         }
 
+        public virtual void ManualClick(bool withCallback = false)
+        {
+            this.FireOnClicked();
+            if(withCallback == true)
+            {
+                this.callback?.Invoke();
+            }
+        }
+
         public virtual UnityAction GetValue()
             => this.callback;
 

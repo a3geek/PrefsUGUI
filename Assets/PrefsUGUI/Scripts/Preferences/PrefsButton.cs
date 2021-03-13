@@ -5,6 +5,7 @@ namespace PrefsUGUI
 {
     using Preferences.Abstracts;
     using Guis.Preferences;
+    using Managers;
 
     [Serializable]
     public class PrefsButton : PrefsGuiBase<UnityAction, PrefsGuiButton>
@@ -20,8 +21,14 @@ namespace PrefsUGUI
         {
         }
 
+        public virtual void ManualClick()
+            => this.properties.Gui.ManualClick();
+
         public override void Reload(bool withEvent = true)
             => this.ResetDefaultValue();
+
+        protected override void AddPrefsToSyncManager()
+            => EditSyncManager.AddPrefs(this);
 
         protected override void OnCreatedGuiInternal(PrefsGuiButton gui)
         {

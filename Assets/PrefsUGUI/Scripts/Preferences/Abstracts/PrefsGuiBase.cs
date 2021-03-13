@@ -68,9 +68,17 @@ namespace PrefsUGUI.Preferences.Abstracts
         {
             this.properties.OnCreatedGui(gui, this.guiLabel);
 
+            if(this.UnEditSync == false)
+            {
+                this.AddPrefsToSyncManager();
+            }
+
             this.OnCreatedGuiInternal(gui);
             this.onCreatedGui?.Invoke(this);
         }
+
+        protected virtual void AddPrefsToSyncManager()
+            => EditSyncManager.AddPrefs(this);
 
         protected override void Dispose(bool disposing)
         {

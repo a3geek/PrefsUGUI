@@ -19,6 +19,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         public virtual string Key => this.key;
         public virtual string GuiLabel => this.guiLabel;
         public virtual bool Unsave { get; set; } = false;
+        public virtual bool UnEditSync { get; set; } = false;
         public virtual GuiHierarchy GuiHierarchy { get; protected set; } = null;
         public abstract bool IsCreatedGui { get; }
         public abstract int GuiSortOrder { get; protected set; }
@@ -46,6 +47,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         public abstract void ResetDefaultValue();
         public abstract void Reload();
         public abstract void Reload(bool withEvent);
+        public abstract void OnReceivedEditSyncMessage(string message);
 
         protected virtual void Regist()
         {
