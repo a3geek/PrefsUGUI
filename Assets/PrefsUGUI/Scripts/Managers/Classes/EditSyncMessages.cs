@@ -9,7 +9,7 @@ namespace PrefsUGUI.Managers.Classes
     [Serializable]
     public enum PrefsType
     {
-        None = 0, Prefs, PrefsButton, GuiHierarchy
+        None = 0, Prefs, PrefsButton, RemovableHierarchy
     }
 
     public class EditSyncBaseMessage : ISerializationCallbackReceiver
@@ -73,21 +73,21 @@ namespace PrefsUGUI.Managers.Classes
         }
     }
 
-    public class EditSyncDisposeMessage : EditSyncBaseMessage
+    public class EditSyncRemoveHierarchyMessage : EditSyncBaseMessage
     {
-        public new const string MethodName = "EditSyncDispose";
+        public new const string MethodName = "EditSyncRemoveHierarchy";
 
         public PrefsType PrefsType => this.prefsType;
 
         [SerializeField]
-        private PrefsType prefsType = PrefsType.Prefs;
+        private PrefsType prefsType = PrefsType.RemovableHierarchy;
 
 
-        public EditSyncDisposeMessage(string json) : base(json)
+        public EditSyncRemoveHierarchyMessage(string json) : base(json)
         {
         }
 
-        public EditSyncDisposeMessage(string saveKey, PrefsType prefsType) : base("")
+        public EditSyncRemoveHierarchyMessage(string saveKey, PrefsType prefsType) : base("")
         {
             this.method = MethodName;
             this.saveKey = saveKey;

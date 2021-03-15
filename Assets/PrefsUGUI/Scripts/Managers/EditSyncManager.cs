@@ -11,8 +11,8 @@ namespace PrefsUGUI.Managers
     using Classes;
     using Guis;
     using Preferences.Abstracts;
-    //using GuiHierarchy.Abstracts;
     using XmlStorage;
+    using Hierarchies.Abstracts;
     using XmlStorage.Systems;
     using XmlStorage.Systems.Utilities;
     using UnityObject = UnityEngine.Object;
@@ -34,9 +34,9 @@ namespace PrefsUGUI.Managers
 
         private Dictionary<string, PrefsBase> prefs = new Dictionary<string, PrefsBase>();
         private Dictionary<string, PrefsButton> buttons = new Dictionary<string, PrefsButton>();
-        //private Dictionary<string, AbstractGuiHierarchy> hierarchies = new Dictionary<string, AbstractHierarchy>();
+        private Dictionary<string, RemovableHierarchy> removableHierarchies = new Dictionary<string, RemovableHierarchy>();
 
-
+        
         public void ReceivedEditSyncMessage(string message)
         {
             var baseMessage = new EditSyncBaseMessage(message);
@@ -51,42 +51,71 @@ namespace PrefsUGUI.Managers
                     button.ManualClick();
                 }
             }
-            else if(baseMessage.Method == EditSyncDisposeMessage.MethodName)
+            else if(baseMessage.Method == EditSyncRemoveHierarchyMessage.MethodName)
             {
-
+                if(this.removableHierarchies.TryGetValue(baseMessage.SaveKey, out var hierarchy) == true)
+                {
+                    hierarchy.ManualRemove();
+                }
             }
         }
 
         public static void AddPrefs<ValType>(PrefsValueBase<ValType> prefs)
         {
-            if(TryGetInstance(out var instance) == false)
+            if(AddPrefsInternal(prefs, out var instance) == true)
             {
-                return;
+                instance.prefs[prefs.SaveKey] = prefs;
             }
-
-            void OnEdited()
-            {
-                instance.transfer.Send(prefs.GetEditSyncMessage().ToJson());
-            }
-
-            instance.prefs[prefs.SaveKey] = prefs;
-            prefs.OnEditedInGui += OnEdited;
         }
 
         public static void AddPrefs(PrefsButton prefs)
+        {
+            if(AddPrefsInternal(prefs, out var instance) == true)
+            {
+                instance.buttons[prefs.SaveKey] = prefs;
+            }
+        }
+
+        public static void AddRemovableHierarchy(RemovableHierarchy removableHierarchy)
         {
             if(TryGetInstance(out var instance) == false)
             {
                 return;
             }
 
-            void OnEdited()
+            instance.removableHierarchies[removableHierarchy.SaveKeyPath] = removableHierarchy;
+            removableHierarchy.OnRemoved +=
+                () => instance.transfer.Send(removableHierarchy.GetEditSyncRemoveHierarchyMessage().ToJson());
+        }
+
+        public static void RemovePrefs<ValType>(PrefsValueBase<ValType> prefs)
+        {
+            if(TryGetInstance(out var instance) == false)
             {
-                instance.transfer.Send(prefs.GetEditSyncMessage().ToJson());
+                return;
             }
 
-            instance.buttons[prefs.SaveKey] = prefs;
-            prefs.OnEditedInGui += OnEdited;
+            instance.prefs.Remove(prefs.SaveKey);
+        }
+
+        public static void RemovePrefs(PrefsButton prefs)
+        {
+            if(TryGetInstance(out var instance) == false)
+            {
+                return;
+            }
+
+            instance.buttons.Remove(prefs.SaveKey);
+        }
+        
+        public static void RemoveRemovableHierarchy(RemovableHierarchy removableHierarchy)
+        {
+            if(TryGetInstance(out var instance) == false)
+            {
+                return;
+            }
+
+            instance.removableHierarchies.Remove(removableHierarchy.SaveKeyPath);
         }
 
         public static void SetSyncTransfer(ISyncTransfer transfer)
@@ -96,6 +125,17 @@ namespace PrefsUGUI.Managers
                 return;
             }
             instance.transfer = transfer;
+        }
+
+        private static bool AddPrefsInternal<ValType>(PrefsValueBase<ValType> prefs, out EditSyncManager instance)
+        {
+            if(TryGetInstance(out instance) == false)
+            {
+                return false;
+            }
+
+            prefs.OnEditedInGui += () => Instance.transfer.Send(prefs.GetEditSyncMessage().ToJson());
+            return true;
         }
 
         private static bool TryGetInstance(out EditSyncManager instance)

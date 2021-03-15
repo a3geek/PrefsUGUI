@@ -86,13 +86,18 @@ namespace PrefsUGUI.Preferences.Abstracts
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected void Dispose(bool disposing)
         {
             if (this.disposed == true)
             {
                 return;
             }
 
+            this.DisposeInternal(disposing);
+        }
+
+        protected virtual void DisposeInternal(bool disposing)
+        {
             PrefsManager.RemovePrefs(this.PrefsId);
             this.OnDisposed();
 

@@ -7,6 +7,7 @@ namespace PrefsUGUI
     using Guis.Factories.Classes;
     using Guis.Preferences;
     using Managers;
+    using Managers.Classes;
 
     [Serializable]
     public class RemovableHierarchy : Hierarchy
@@ -28,27 +29,36 @@ namespace PrefsUGUI
             }
         }
 
+        public virtual void ManualRemove()
+            => this.FireOnRemoved();
+
+        public virtual EditSyncRemoveHierarchyMessage GetEditSyncRemoveHierarchyMessage()
+            => new EditSyncRemoveHierarchyMessage(this.SaveKeyPath, PrefsType.RemovableHierarchy);
+
         protected override void Regist()
             => PrefsManager.AddGuiHierarchy<PrefsGuiRemovableButton>(this, this.OnCreatedGuiButton);
 
-        protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, AbstractGuiHierarchy hierarchy, PrefsGuiRemovableButton gui)
+        protected virtual void OnCreatedGuiButton(PrefsGuiRemovableButton gui)
         {
             this.properties.OnCreatedGui(gui, this.HierarchyName);
 
-            void FireOnRemoved()
-            {
-                this.OnRemoved.Invoke();
-                this.Dispose();
-            }
+            gui.Initialize(this.HierarchyName, this.FireOnHierarchyClicked, this.FireOnRemoved);
+            EditSyncManager.AddRemovableHierarchy(this);
 
-            gui.Initialize(this.HierarchyName, this.FireOnHierarchyClicked, FireOnRemoved);
             this.FireOnCreatedGui();
         }
 
-        protected override void Dispose(bool disposing)
+        protected virtual void FireOnRemoved()
         {
+            this.OnRemoved.Invoke();
+            this.Dispose();
+        }
+
+        protected override void DisposeInternal(bool disposing)
+        {
+            base.DisposeInternal(disposing);
+            EditSyncManager.RemoveRemovableHierarchy(this);
             this.OnRemoved = null;
-            base.Dispose(disposing);
         }
     }
 }

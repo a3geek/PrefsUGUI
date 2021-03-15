@@ -44,9 +44,9 @@ namespace PrefsUGUI
             this.Dispose(false);
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void DisposeInternal(bool disposing)
         {
-            base.Dispose(disposing);
+            base.DisposeInternal(disposing);
             this.onCreatedGui = null;
         }
         #endregion

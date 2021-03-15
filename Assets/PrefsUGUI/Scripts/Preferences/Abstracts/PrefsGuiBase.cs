@@ -84,6 +84,7 @@ namespace PrefsUGUI.Preferences.Abstracts
 
         protected virtual void OnCreatedGui(GuiType gui)
         {
+            this.OnCreatedGuiInternal(gui);
             this.properties.OnCreatedGui(gui, this.guiLabel);
 
             if(this.UnEditSync == false)
@@ -91,16 +92,15 @@ namespace PrefsUGUI.Preferences.Abstracts
                 this.AddPrefsToSyncManager();
             }
 
-            this.OnCreatedGuiInternal(gui);
             this.onCreatedGui?.Invoke(this);
         }
 
         protected virtual void AddPrefsToSyncManager()
             => EditSyncManager.AddPrefs(this);
 
-        protected override void Dispose(bool disposing)
+        protected override void DisposeInternal(bool disposing)
         {
-            base.Dispose(disposing);
+            base.DisposeInternal(disposing);
 
             if (this.disposed == true)
             {

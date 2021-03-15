@@ -99,6 +99,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         {
             this.gui = gui;
             this.guiLabel = guiLabel;
+            this.UpdateLabel();
             this.OnCreatedGuiEvent();
         }
 

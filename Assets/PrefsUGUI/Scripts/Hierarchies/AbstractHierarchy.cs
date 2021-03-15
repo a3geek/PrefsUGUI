@@ -112,19 +112,24 @@ namespace PrefsUGUI.Hierarchies.Abstracts
         protected abstract void FireOnCreatedGui();
 
         #region IDisposable Support
-        public virtual void Dispose()
+        public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected void Dispose(bool disposing)
         {
             if(this.disposed == true)
             {
                 return;
             }
 
+            this.DisposeInternal(disposing);
+        }
+
+        protected virtual void DisposeInternal(bool disposing)
+        {
             this.properties.Dispose();
             this.parent = null;
             this.changeGUI = null;
