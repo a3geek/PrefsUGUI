@@ -17,7 +17,7 @@ namespace PrefsUGUI.Guis
     {
         public interface ICacheExecutor
         {
-            void ExecuteCacheAction();
+            void ExecuteCachedAction();
         }
 
         public const int ExecutionOrder = -30000;
@@ -43,17 +43,17 @@ namespace PrefsUGUI.Guis
                 this.CreateEventSystem();
             }
 
-            this.executor?.ExecuteCacheAction();
+            this.executor?.ExecuteCachedAction();
         }
 
         private void Start()
         {
-            this.executor?.ExecuteCacheAction();
+            this.executor?.ExecuteCachedAction();
         }
 
         private void Update()
         {
-            this.executor?.ExecuteCacheAction();
+            this.executor?.ExecuteCachedAction();
         }
 
         public void SetCacheExecutor(ICacheExecutor executor)

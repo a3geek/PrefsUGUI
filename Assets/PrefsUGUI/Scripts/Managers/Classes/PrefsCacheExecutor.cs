@@ -24,7 +24,7 @@ namespace PrefsUGUI.Managers
             public RemoveCache RemoveGuiHierarchiesCache = new RemoveCache();
 
 
-            public void ExecuteCacheAction()
+            public void ExecuteCachedAction()
             {
                 AddGuiHierarchiesCache.TakeEach(this);
                 AddPrefsCache.TakeEach(this);

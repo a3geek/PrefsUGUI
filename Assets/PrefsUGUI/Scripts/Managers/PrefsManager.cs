@@ -48,6 +48,8 @@ namespace PrefsUGUI.Managers
 
             InitializeInternal(UnityObject.FindObjectOfType<PrefsParametersEntity>() ?? PrefsParameters.Empty);
             SceneManager.sceneLoaded += SceneLoaded;
+
+            Executor.ExecuteCachedAction();
         }
 
         public static void NotifyWillSceneLoad()
