@@ -143,7 +143,7 @@ namespace PrefsUGUI.Managers
             if(Instance != null)
             {
                 instance = Instance;
-                return IsEnable(instance);
+                return true;
             }
             else if(Instance == null && IsTryedFindInstance == true)
             {
@@ -153,10 +153,7 @@ namespace PrefsUGUI.Managers
 
             instance = Instance = FindObjectOfType<EditSyncManager>();
             IsTryedFindInstance = true;
-            return IsEnable(instance);
+            return instance != null;
         }
-
-        private static bool IsEnable(EditSyncManager instance)
-            => instance != null && instance.enabled == true && instance.transfer != null;
     }
 }
