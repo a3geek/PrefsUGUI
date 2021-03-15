@@ -24,7 +24,7 @@ namespace PrefsUGUI
         public virtual void ManualClick()
             => this.properties.Gui.ManualClick();
 
-        public override void Reload(bool withEvent = true)
+        public override void Reload()
             => this.ResetDefaultValue();
 
         protected override void AddPrefsToSyncManager()

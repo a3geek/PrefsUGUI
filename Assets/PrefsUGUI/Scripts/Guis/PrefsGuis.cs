@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace PrefsUGUI.Guis
 {
     using Commons;
     using Factories;
-    using Factories.Classes;
-    using GuiHierarchies.Abstracts;
     using Preferences;
     using PrefsUGUI.Preferences.Abstracts;
 
@@ -98,7 +94,7 @@ namespace PrefsUGUI.Guis
             this.Canvas.RemovePrefs(ref prefsId);
         }
 
-        public void AddHierarchy<GuiType>(GuiHierarchy guiHierarchy, Action<PrefsCanvas, AbstractHierarchy, GuiType> onCreated)
+        public void AddHierarchy<GuiType>(GuiHierarchy guiHierarchy, Action<GuiType> onCreated)
              where GuiType : PrefsGuiButton
         {
             if(this.Canvas == null)
@@ -107,10 +103,10 @@ namespace PrefsUGUI.Guis
             }
 
             var hierarchy = this.Canvas.GetOrAddHierarchy(guiHierarchy);
-            onCreated?.Invoke(this.Canvas, hierarchy, (GuiType)hierarchy.GuiButton);
+            onCreated((GuiType)hierarchy.GuiButton);
         }
 
-        public void AddHierarchy<GuiType>(LinkedGuiHierarchy guiHierarchy, Action<PrefsCanvas, AbstractHierarchy, GuiType> onCreated)
+        public void AddHierarchy<GuiType>(LinkedGuiHierarchy guiHierarchy, Action<GuiType> onCreated)
              where GuiType : PrefsGuiButton
         {
             if(this.Canvas == null)
@@ -119,7 +115,7 @@ namespace PrefsUGUI.Guis
             }
 
             var hierarchy = this.Canvas.GetOrAddHierarchy(guiHierarchy);
-            onCreated?.Invoke(this.Canvas, hierarchy, (GuiType)hierarchy.GuiButton);
+            onCreated((GuiType)hierarchy.GuiButton);
         }
 
         public void RemoveHierarchy(ref Guid hierarchyId)

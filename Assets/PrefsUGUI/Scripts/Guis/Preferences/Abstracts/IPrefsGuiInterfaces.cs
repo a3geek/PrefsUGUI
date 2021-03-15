@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Preferences
 {
+    using Factories.Classes;
     using PrefsUGUI.Preferences.Abstracts;
 
     public interface IPrefsGuiEvents<ValType, GuiType>
@@ -10,6 +11,7 @@ namespace PrefsUGUI.Guis.Preferences
         void OnCreatedGui(GuiType gui);
         void OnEditedInGui(ValType value);
         void OnClickedDefaultButton();
+        void OnClickedDiscardButton();
         ValType GetDefaultValue();
     }
 
@@ -31,6 +33,6 @@ namespace PrefsUGUI.Guis.Preferences
 
         ValType GetValue();
         void SetValue(ValType value);
-        void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events);
+        void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events, AbstractHierarchy hierarchy);
     }
 }

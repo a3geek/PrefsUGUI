@@ -85,7 +85,7 @@ namespace PrefsUGUI.Managers
 
             while(FastPrefsCache.TryPop(out var prefs) == true)
             {
-                prefs.Reload(true);
+                prefs.Reload();
             }
 
             Inited = true;

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Preferences
 {
+    using Factories.Classes;
     using PrefsUGUI.Preferences.Abstracts;
 
     [Serializable]
@@ -39,7 +40,7 @@ namespace PrefsUGUI.Guis.Preferences
         public virtual void SetValue(string text)
             => this.inputfield.text = text;
 
-        public virtual void SetGuiListeners(PrefsValueBase<string> prefs, IPrefsGuiEvents<string, PrefsGuiLabel> prefsEventer)
+        public virtual void SetGuiListeners(PrefsValueBase<string> prefs, IPrefsGuiEvents<string, PrefsGuiLabel> prefsEventer, AbstractHierarchy hierarchy)
         {
         }
     }

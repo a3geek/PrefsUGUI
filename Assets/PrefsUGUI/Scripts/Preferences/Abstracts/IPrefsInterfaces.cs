@@ -19,7 +19,6 @@ namespace PrefsUGUI
 
         void ResetDefaultValue();
         void Reload();
-        void Reload(bool withEvent);
         #endregion
 
         #region "PrefsValueBase"
@@ -58,7 +57,6 @@ namespace PrefsUGUI
 
         void ResetDefaultValue();
         void Reload();
-        void Reload(bool withEvent);
         #endregion
 
         #region "PrefsGuiBase"

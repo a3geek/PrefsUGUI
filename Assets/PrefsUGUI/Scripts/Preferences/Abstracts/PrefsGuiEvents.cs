@@ -26,6 +26,9 @@ namespace PrefsUGUI.Preferences.Abstracts
             public void OnClickedDefaultButton()
                 => this.parent.OnClickedDefaultButton();
 
+            public void OnClickedDiscardButton()
+                => this.parent.OnClickedDiscardButton();
+
             public ValType GetDefaultValue()
                 => this.parent.GetDefaultValue();
         }

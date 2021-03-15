@@ -46,13 +46,13 @@ namespace PrefsUGUI.Preferences.Abstracts
         public override void ResetDefaultValue()
             => this.Set(this.DefaultValue);
 
-        public virtual void Set(ValType value, bool withEvent = true)
-            => this.SetValueInternal(value, withEvent);
+        public virtual void Set(ValType value)
+            => this.SetValueInternal(value, true);
 
         public override void Reload()
             => this.Reload(true);
 
-        public override void Reload(bool withEvent)
+        protected virtual void Reload(bool withEvent)
             => this.SetValueInternal(Storage.Get(this.SaveKey, this.DefaultValue, Prefs.AggregationName), withEvent);
 
         protected virtual void SetValueInternal(ValType value, bool withEvent = true)
@@ -68,13 +68,19 @@ namespace PrefsUGUI.Preferences.Abstracts
 
         protected virtual void OnEditedInGuiInternal(ValType value)
         {
-            this.Set(value, true);
+            this.SetValueInternal(value);
             this.FireOnEditedInGui();
         }
 
         protected virtual void OnClickedDefaultButton()
         {
             this.ResetDefaultValue();
+            this.FireOnEditedInGui();
+        }
+
+        protected virtual void OnClickedDiscardButton()
+        {
+            this.Reload();
             this.FireOnEditedInGui();
         }
 

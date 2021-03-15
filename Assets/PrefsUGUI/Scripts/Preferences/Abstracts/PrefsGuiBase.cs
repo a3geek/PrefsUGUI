@@ -58,6 +58,24 @@ namespace PrefsUGUI.Preferences.Abstracts
             this.GuiSortOrder = sortOrder;
         }
 
+        public override void Set(ValType value)
+        {
+            base.Set(value);
+            if(this.IsCreatedGui == true)
+            {
+                this.properties.Gui.SetValue(value);
+            }
+        }
+
+        protected override void Reload(bool withEvent)
+        {
+            base.Reload(withEvent);
+            if(this.IsCreatedGui == true)
+            {
+                this.properties.Gui.SetValue(this.Get());
+            }
+        }
+
         protected override void OnRegisted()
         {
             this.events = new PrefsGuiEvents(this);

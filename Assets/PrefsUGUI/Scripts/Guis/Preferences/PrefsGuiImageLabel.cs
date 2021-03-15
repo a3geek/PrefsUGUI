@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Preferences
 {
+    using Factories.Classes;
     using PrefsUGUI.Preferences.Abstracts;
 
     [Serializable]
@@ -32,7 +33,7 @@ namespace PrefsUGUI.Guis.Preferences
         public Texture GetImage()
             => this.rawImage.texture;
 
-        public virtual void SetGuiListeners(PrefsValueBase<string> prefs, IPrefsGuiEvents<string, PrefsGuiImageLabel> prefsEventer)
+        public virtual void SetGuiListeners(PrefsValueBase<string> prefs, IPrefsGuiEvents<string, PrefsGuiImageLabel> prefsEventer, AbstractHierarchy hierarchy)
         {
         }
     }

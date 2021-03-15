@@ -71,7 +71,7 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
             }
         }
 
-        protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, AbstractHierarchy hierarchy, PrefsGuiButton gui)
+        protected virtual void OnCreatedGuiButton(PrefsGuiButton gui)
         {
             this.properties.OnCreatedGui(gui, this.HierarchyName);
 

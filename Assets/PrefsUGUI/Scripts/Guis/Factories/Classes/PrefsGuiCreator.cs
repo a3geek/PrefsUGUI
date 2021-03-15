@@ -46,14 +46,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
         {
             var gui = Object.Instantiate(this.prefabs.GetGuiPrefab<ValType, GuiType>().Component, hierarchy.Content);
 
-            gui.SetGuiListeners(prefs, events);
-
-            void onPrefsValueChanged() => gui.SetValue(prefs.Get());
-            prefs.OnValueChanged += onPrefsValueChanged;
-
-            void OnDisposed() => hierarchy.OnDiscard -= prefs.Reload;
-            prefs.OnDisposed += OnDisposed;
-            hierarchy.OnDiscard += prefs.Reload;
+            gui.SetGuiListeners(prefs, events, hierarchy);
 
             var index = hierarchy.AddPrefs(prefs.PrefsId, gui, prefs.GuiSortOrder);
             gui.transform.SetSiblingIndex(index);

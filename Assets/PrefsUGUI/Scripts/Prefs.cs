@@ -22,19 +22,12 @@ namespace PrefsUGUI
         public static string AggregationName => PrefsParameters.AggregationName;
         public static string FileName => PrefsParameters.FileName;
 
-        private static bool WillQuit = false;
+        private static PrefsEditedEvents PrefsEditedEventer = new PrefsEditedEvents();
 
-
+        
         static Prefs()
         {
-            Application.quitting += () => WillQuit = true;
-            PrefsManager.OnAnyPrefsEditedInGui += prefs =>
-            {
-                if (WillQuit == false)
-                {
-                    OnPrefsEditedinGui(prefs);
-                }
-            };
+            PrefsManager.PrefsEditedEventer = PrefsEditedEventer;
         }
 
         public static void Save()
@@ -70,6 +63,29 @@ namespace PrefsUGUI
             {
                 PrefsManager.PrefsGuis.SetCanvasSize(width, height);
             }
+        }
+
+
+        private class PrefsEditedEvents : PrefsManager.IPrefsEditedEvents
+        {
+            private bool willQuit = false;
+
+
+            public PrefsEditedEvents()
+            {
+                Application.quitting += this.OnQuitting;
+            }
+
+            public void OnAnyPrefsEditedInGui(PrefsBase prefs)
+            {
+                if(this.willQuit == false)
+                {
+                    OnPrefsEditedinGui(prefs);
+                }
+            }
+
+            private void OnQuitting()
+                => this.willQuit = true;
         }
     }
 }

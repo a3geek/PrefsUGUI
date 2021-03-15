@@ -11,6 +11,7 @@ namespace PrefsUGUI.Managers
     using Classes;
     using Guis;
     using Preferences.Abstracts;
+    //using GuiHierarchy.Abstracts;
     using XmlStorage;
     using XmlStorage.Systems;
     using XmlStorage.Systems.Utilities;
@@ -33,18 +34,26 @@ namespace PrefsUGUI.Managers
 
         private Dictionary<string, PrefsBase> prefs = new Dictionary<string, PrefsBase>();
         private Dictionary<string, PrefsButton> buttons = new Dictionary<string, PrefsButton>();
+        //private Dictionary<string, AbstractGuiHierarchy> hierarchies = new Dictionary<string, AbstractHierarchy>();
 
 
         public void ReceivedEditSyncMessage(string message)
         {
             var baseMessage = new EditSyncBaseMessage(message);
-            if(this.prefs.TryGetValue(baseMessage.SaveKey, out var prefs) == true)
+            if(baseMessage.Method == EditSyncBaseMessage.MethodName)
             {
-                prefs.OnReceivedEditSyncMessage(message);
+                if(this.prefs.TryGetValue(baseMessage.SaveKey, out var prefs) == true)
+                {
+                    prefs.OnReceivedEditSyncMessage(message);
+                }
+                else if(this.buttons.TryGetValue(baseMessage.SaveKey, out var button) == true)
+                {
+                    button.ManualClick();
+                }
             }
-            else if(this.buttons.TryGetValue(baseMessage.SaveKey, out var button) == true)
+            else if(baseMessage.Method == EditSyncDisposeMessage.MethodName)
             {
-                button.ManualClick();
+
             }
         }
 
@@ -94,7 +103,7 @@ namespace PrefsUGUI.Managers
             if(Instance != null)
             {
                 instance = Instance;
-                return Instance.enabled && Instance.transfer != null;
+                return IsEnable(instance);
             }
             else if(Instance == null && IsTryedFindInstance == true)
             {
@@ -104,7 +113,10 @@ namespace PrefsUGUI.Managers
 
             instance = Instance = FindObjectOfType<EditSyncManager>();
             IsTryedFindInstance = true;
-            return true;
+            return IsEnable(instance);
         }
+
+        private static bool IsEnable(EditSyncManager instance)
+            => instance != null && instance.enabled == true && instance.transfer != null;
     }
 }

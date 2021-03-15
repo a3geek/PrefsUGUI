@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace PrefsUGUI.Managers
 {
-    using Commons;
-    using GuiHierarchies.Abstracts;
     using Guis;
-    using Guis.Factories;
-    using Guis.Factories.Classes;
     using Guis.Preferences;
     using Preferences.Abstracts;
     using AddCache = Commons.OrderableConcurrentCache<string, Action>;
     using RemoveCache = Commons.OrderableConcurrentCache<Guid, Action>;
-    using UnityObject = UnityEngine.Object;
 
     public static partial class PrefsManager
     {
+        public interface IPrefsEditedEvents
+        {
+            void OnAnyPrefsEditedInGui(PrefsBase prefs);
+        }
+
         private class CacheExecutor : PrefsGuis.ICacheExecutor, AddCache.ITaker, RemoveCache.ITaker
         {
             public AddCache AddPrefsCache = new AddCache();
@@ -39,20 +36,19 @@ namespace PrefsUGUI.Managers
                 => action?.Invoke();
         }
 
-
-        public static event Action<PrefsBase> OnAnyPrefsEditedInGui = delegate { };
+        public static IPrefsEditedEvents PrefsEditedEventer = null;
 
         private static CacheExecutor Executor = new CacheExecutor();
 
 
-        public static void AddGuiHierarchy<GuiType>(GuiHierarchy hierarchy, Action<PrefsCanvas, AbstractHierarchy, GuiType> onCreated)
+        public static void AddGuiHierarchy<GuiType>(GuiHierarchy hierarchy, Action<GuiType> onCreated)
             where GuiType : PrefsGuiButton
         {
             void AddGuiHierarchy() => PrefsGuis.AddHierarchy(hierarchy, onCreated);
             Executor.AddGuiHierarchiesCache.Add(hierarchy.FullHierarchy, AddGuiHierarchy);
         }
 
-        public static void AddLinkedGuiHierarchy<GuiType>(LinkedGuiHierarchy hierarchy, Action<PrefsCanvas, AbstractHierarchy, GuiType> onCreated)
+        public static void AddLinkedGuiHierarchy<GuiType>(LinkedGuiHierarchy hierarchy, Action<GuiType> onCreated)
             where GuiType : PrefsGuiButton
         {
             void AddGuiHierarchy() => PrefsGuis.AddHierarchy(hierarchy, onCreated);
@@ -75,9 +71,6 @@ namespace PrefsUGUI.Managers
             {
                 FastPrefsCache.Push(prefs);
             }
-
-            void OnPrefsEdited() => OnAnyPrefsEditedInGui(prefs);
-            prefs.OnEditedInGui += OnPrefsEdited;
         }
 
         public static void RemovePrefs(Guid prefsId)

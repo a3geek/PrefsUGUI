@@ -4,14 +4,13 @@ using UnityEngine.UI;
 
 namespace PrefsUGUI.Guis.Preferences
 {
+    using Factories.Classes;
     using PrefsUGUI.Preferences.Abstracts;
 
     [Serializable]
     public abstract class PrefsInputGuiBase<ValType, GuiType> : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         where GuiType : PrefsInputGuiBase<ValType, GuiType>
     {
-        //public event Action OnDefaultButtonClicked = delegate { };
-
         public abstract GuiType Component { get; }
 
         [SerializeField]
@@ -26,14 +25,8 @@ namespace PrefsUGUI.Guis.Preferences
         protected bool isUpdatingFields = false;
         protected ValType value = default;
         protected IPrefsGuiEvents<ValType, GuiType> prefsEvents = null;
-        //protected Func<ValType> defaultGetter = null;
-
-
-        //protected virtual void Awake()
-        //{
-        //    //void onDefaultButtonClicked() => this.OnDefaultButtonClicked.Invoke();
-        //    //this.defaultButton.onClick.AddListener(onDefaultButtonClicked);
-        //}
+        protected AbstractHierarchy hierarchy = null;
+        
 
         protected override void Reset()
         {
@@ -51,24 +44,20 @@ namespace PrefsUGUI.Guis.Preferences
             this.SetFields(false);
         }
 
-        public virtual void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> prefsEvents)
+        public virtual void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> prefsEvents, AbstractHierarchy hierarchy)
         {
-            //void onValueChanged() => prefs.Set(this.GetValue());
-            //void onDefaultButtonClicked() => prefs.ResetDefaultValue();
-
-            //this.OnValueChanged += onValueChanged;
-            //this.OnDefaultButtonClicked += onDefaultButtonClicked;
-
             this.prefsEvents = prefsEvents;
+            this.hierarchy = hierarchy;
+
+            this.hierarchy.OnDiscard += this.prefsEvents.OnClickedDiscardButton;
             this.defaultButton.onClick.AddListener(prefsEvents.OnClickedDefaultButton);
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            //this.OnDefaultButtonClicked = null;
+            this.hierarchy.OnDiscard -= this.prefsEvents.OnClickedDiscardButton;
             this.defaultButton.onClick.RemoveAllListeners();
-            //this.defaultGetter = null;
         }
 
         protected virtual void SetFields(bool withEvent = true)
@@ -84,7 +73,6 @@ namespace PrefsUGUI.Guis.Preferences
             if(withEvent == true)
             {
                 this.prefsEvents.OnEditedInGui(this.GetValue());
-                //this.FireOnValueChanged();
             }
 
             this.isUpdatingFields = false;

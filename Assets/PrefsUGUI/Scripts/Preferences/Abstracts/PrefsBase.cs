@@ -46,7 +46,6 @@ namespace PrefsUGUI.Preferences.Abstracts
 
         public abstract void ResetDefaultValue();
         public abstract void Reload();
-        public abstract void Reload(bool withEvent);
         public abstract void OnReceivedEditSyncMessage(string message);
 
         protected virtual void Regist()
@@ -64,7 +63,10 @@ namespace PrefsUGUI.Preferences.Abstracts
         }
 
         protected virtual void FireOnEditedInGui()
-            => this.OnEditedInGui();
+        {
+            this.OnEditedInGui();
+            PrefsManager.PrefsEditedEventer.OnAnyPrefsEditedInGui(this);
+        }
 
         protected virtual void FireOnValueChanged()
             => this.OnValueChanged();

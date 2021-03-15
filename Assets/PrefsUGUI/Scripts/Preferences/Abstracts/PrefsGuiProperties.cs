@@ -8,7 +8,7 @@ namespace PrefsUGUI.Preferences.Abstracts
     [Serializable]
     public class PrefsGuiProperties<GuiType> : IDisposable where GuiType : PrefsGuiBase
     {
-        protected event Action onCreatedGuiEvent = delegate { };
+        protected event Action OnCreatedGuiEvent = delegate { };
 
         public GuiType Gui => this.gui;
         public string GuiLabel => this.guiLabelPrefix + this.guiLabel + this.guiLabelSufix;
@@ -27,7 +27,7 @@ namespace PrefsUGUI.Preferences.Abstracts
                 }
                 else
                 {
-                    this.onCreatedGuiEvent += SetBottomMargin;
+                    this.OnCreatedGuiEvent += SetBottomMargin;
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace PrefsUGUI.Preferences.Abstracts
                 }
                 else
                 {
-                    this.onCreatedGuiEvent += SetTopMargin;
+                    this.OnCreatedGuiEvent += SetTopMargin;
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace PrefsUGUI.Preferences.Abstracts
                 }
                 else
                 {
-                    this.onCreatedGuiEvent += SetVisible;
+                    this.OnCreatedGuiEvent += SetVisible;
                 }
             }
         }
@@ -99,13 +99,13 @@ namespace PrefsUGUI.Preferences.Abstracts
         {
             this.gui = gui;
             this.guiLabel = guiLabel;
-            this.onCreatedGuiEvent();
+            this.OnCreatedGuiEvent();
         }
 
         public void Dispose()
         {
             this.gui = null;
-            this.onCreatedGuiEvent = null;
+            this.OnCreatedGuiEvent = null;
         }
 
         protected void UpdateLabel()
@@ -118,7 +118,7 @@ namespace PrefsUGUI.Preferences.Abstracts
             }
             else
             {
-                this.onCreatedGuiEvent += SetLabel;
+                this.OnCreatedGuiEvent += SetLabel;
             }
         }
     }
