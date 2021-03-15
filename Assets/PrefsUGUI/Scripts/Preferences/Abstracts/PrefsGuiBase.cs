@@ -98,6 +98,9 @@ namespace PrefsUGUI.Preferences.Abstracts
         protected virtual void AddPrefsToSyncManager()
             => EditSyncManager.AddPrefs(this);
 
+        protected virtual void RemovePrefsToSyncManager()
+            => EditSyncManager.RemovePrefs(this);
+
         protected override void DisposeInternal(bool disposing)
         {
             base.DisposeInternal(disposing);
@@ -107,6 +110,7 @@ namespace PrefsUGUI.Preferences.Abstracts
                 return;
             }
 
+            this.RemovePrefsToSyncManager();
             this.properties.Dispose();
             this.onCreatedGui = null;
         }

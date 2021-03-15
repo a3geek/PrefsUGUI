@@ -30,6 +30,9 @@ namespace PrefsUGUI
         protected override void AddPrefsToSyncManager()
             => EditSyncManager.AddPrefs(this);
 
+        protected override void RemovePrefsToSyncManager()
+            => EditSyncManager.RemovePrefs(this);
+
         protected override void OnCreatedGuiInternal(PrefsGuiButton gui)
         {
             gui.Initialize(this.GuiLabel, null);
