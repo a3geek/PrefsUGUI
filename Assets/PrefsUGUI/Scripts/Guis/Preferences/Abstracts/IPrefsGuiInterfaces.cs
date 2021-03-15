@@ -33,6 +33,6 @@ namespace PrefsUGUI.Guis.Preferences
 
         ValType GetValue();
         void SetValue(ValType value);
-        void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events, AbstractHierarchy hierarchy);
+        void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events, AbstractGuiHierarchy hierarchy);
     }
 }

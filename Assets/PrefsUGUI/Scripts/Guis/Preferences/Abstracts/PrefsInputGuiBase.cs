@@ -25,7 +25,7 @@ namespace PrefsUGUI.Guis.Preferences
         protected bool isUpdatingFields = false;
         protected ValType value = default;
         protected IPrefsGuiEvents<ValType, GuiType> prefsEvents = null;
-        protected AbstractHierarchy hierarchy = null;
+        protected AbstractGuiHierarchy hierarchy = null;
         
 
         protected override void Reset()
@@ -44,7 +44,7 @@ namespace PrefsUGUI.Guis.Preferences
             this.SetFields(false);
         }
 
-        public virtual void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> prefsEvents, AbstractHierarchy hierarchy)
+        public virtual void SetGuiListeners(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> prefsEvents, AbstractGuiHierarchy hierarchy)
         {
             this.prefsEvents = prefsEvents;
             this.hierarchy = hierarchy;

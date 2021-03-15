@@ -49,7 +49,7 @@ namespace PrefsUGUI.Preferences.Abstracts
 
 
         public PrefsGuiBase(
-            string key, ValType defaultValue = default, GuiHierarchy hierarchy = null, string guiLabel = null,
+            string key, ValType defaultValue = default, Hierarchy hierarchy = null, string guiLabel = null,
             Action<PrefsGuiBase<ValType, GuiType>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, defaultValue, hierarchy, guiLabel)

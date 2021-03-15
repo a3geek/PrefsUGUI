@@ -14,7 +14,7 @@ namespace PrefsUGUI
 
 
         public PrefsButton(
-            string key, UnityAction action, GuiHierarchy hierarchy = null,
+            string key, UnityAction action, Hierarchy hierarchy = null,
             string guiLabel = null, Action<PrefsGuiBase<UnityAction, PrefsGuiButton>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, action ?? delegate { }, hierarchy, guiLabel, onCreatedGui, sortOrder)

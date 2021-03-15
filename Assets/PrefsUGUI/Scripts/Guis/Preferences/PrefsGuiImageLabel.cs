@@ -33,7 +33,7 @@ namespace PrefsUGUI.Guis.Preferences
         public Texture GetImage()
             => this.rawImage.texture;
 
-        public virtual void SetGuiListeners(PrefsValueBase<string> prefs, IPrefsGuiEvents<string, PrefsGuiImageLabel> prefsEventer, AbstractHierarchy hierarchy)
+        public virtual void SetGuiListeners(PrefsValueBase<string> prefs, IPrefsGuiEvents<string, PrefsGuiImageLabel> prefsEventer, AbstractGuiHierarchy hierarchy)
         {
         }
     }

@@ -8,15 +8,15 @@ namespace PrefsUGUI.Guis.Factories.Classes
     using Guis.Preferences;
     using PrefsGuiBase = Preferences.PrefsGuiBase;
 
-    public class LinkedHierarchy : AbstractHierarchy
+    public class LinkedGuiHierarchy : AbstractGuiHierarchy
     {
         public override RectTransform Content => this.target.Content;
-        public override AbstractHierarchy Previous => this.target.Previous;
+        public override AbstractGuiHierarchy Previous => this.target.Previous;
 
-        protected AbstractHierarchy target = null;
+        protected AbstractGuiHierarchy target = null;
 
 
-        public LinkedHierarchy(Guid hierarchyId, string hierarchyName, AbstractHierarchy target)
+        public LinkedGuiHierarchy(Guid hierarchyId, string hierarchyName, AbstractGuiHierarchy target)
         {
             this.target = target;
             this.HierarchyId = hierarchyId;
@@ -26,13 +26,13 @@ namespace PrefsUGUI.Guis.Factories.Classes
         public override PrefsGuiButton GetNextButton(ref Guid hierarchyId)
             => this.target.GetNextButton(ref hierarchyId);
 
-        public override AbstractHierarchy GetNextHierarchy(ref Guid nextHierarchyId)
+        public override AbstractGuiHierarchy GetNextHierarchy(ref Guid nextHierarchyId)
             => this.target.GetNextHierarchy(ref nextHierarchyId);
 
-        public override int AddNextHierarchy(AbstractHierarchy nextHierarchy, PrefsGuiButton button, int sortOrder)
+        public override int AddNextHierarchy(AbstractGuiHierarchy nextHierarchy, PrefsGuiButton button, int sortOrder)
             => this.target.AddNextHierarchy(nextHierarchy, button, sortOrder);
 
-        public override bool TryRemoveNextHierarchy(AbstractHierarchy nextHierarchy, out PrefsGuiButton button)
+        public override bool TryRemoveNextHierarchy(AbstractGuiHierarchy nextHierarchy, out PrefsGuiButton button)
             => this.target.TryRemoveNextHierarchy(nextHierarchy, out button);
 
         public override int AddPrefs(Guid guid, PrefsGuiBase prefsGui, int sortOrder)

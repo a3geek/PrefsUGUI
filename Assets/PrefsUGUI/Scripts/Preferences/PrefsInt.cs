@@ -9,7 +9,7 @@ namespace PrefsUGUI
     public class PrefsInt : PrefsGuiBase<int, PrefsGuiNumericInteger>
     {
         public PrefsInt(
-            string key, int defaultValue = default, GuiHierarchy hierarchy = null,
+            string key, int defaultValue = default, Hierarchy hierarchy = null,
             string guiLabel = null, Action<PrefsGuiBase<int, PrefsGuiNumericInteger>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)

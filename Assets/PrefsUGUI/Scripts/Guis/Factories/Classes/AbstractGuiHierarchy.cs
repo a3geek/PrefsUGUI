@@ -8,17 +8,17 @@ namespace PrefsUGUI.Guis.Factories.Classes
     using Guis.Preferences;
     using PrefsGuiBase = Preferences.PrefsGuiBase;
 
-    public abstract class AbstractHierarchy : IDisposable
+    public abstract class AbstractGuiHierarchy : IDisposable
     {
         public event Action OnDiscard = delegate { };
 
         public virtual RectTransform Content { get; protected set; }
         public virtual string HierarchyName { get; protected set; }
         public virtual Guid HierarchyId { get; protected set; }
-        public virtual AbstractHierarchy Previous { get; protected set; }
+        public virtual AbstractGuiHierarchy Previous { get; protected set; }
         public virtual PrefsGuiButton GuiButton { get; protected set; }
 
-        private Dictionary<AbstractHierarchy, PrefsGuiButton> nextHierarchies = new Dictionary<AbstractHierarchy, PrefsGuiButton>();
+        private Dictionary<AbstractGuiHierarchy, PrefsGuiButton> nextHierarchies = new Dictionary<AbstractGuiHierarchy, PrefsGuiButton>();
         private MultistageSortedList<PrefsGuiButton> nextButtons = new MultistageSortedList<PrefsGuiButton>(
             (b1, b2) => string.Compare(b1.GetLabel(), b2.GetLabel())
         );
@@ -39,7 +39,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return null;
         }
 
-        public virtual AbstractHierarchy GetNextHierarchy(ref Guid nextHierarchyId)
+        public virtual AbstractGuiHierarchy GetNextHierarchy(ref Guid nextHierarchyId)
         {
             foreach(var hierarchy in this.nextHierarchies)
             {
@@ -52,7 +52,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return null;
         }
 
-        public virtual int AddNextHierarchy(AbstractHierarchy nextHierarchy, PrefsGuiButton button, int sortOrder)
+        public virtual int AddNextHierarchy(AbstractGuiHierarchy nextHierarchy, PrefsGuiButton button, int sortOrder)
         {
             button.gameObject.SetActive(false);
             nextHierarchy.GuiButton = button;
@@ -60,7 +60,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return this.nextButtons.Add(button, sortOrder);
         }
 
-        public virtual bool TryRemoveNextHierarchy(AbstractHierarchy nextHierarchy, out PrefsGuiButton button)
+        public virtual bool TryRemoveNextHierarchy(AbstractGuiHierarchy nextHierarchy, out PrefsGuiButton button)
         {
             if(this.nextHierarchies.TryGetValue(nextHierarchy, out button) == false)
             {

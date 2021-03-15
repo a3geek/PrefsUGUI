@@ -10,7 +10,7 @@ namespace PrefsUGUI
     public class PrefsVector4 : PrefsGuiBase<Vector4, PrefsGuiVector4>
     {
         public PrefsVector4(
-            string key, Vector4 defaultValue = default, GuiHierarchy hierarchy = null,
+            string key, Vector4 defaultValue = default, Hierarchy hierarchy = null,
             string guiLabel = null, Action<PrefsGuiBase<Vector4, PrefsGuiVector4>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)

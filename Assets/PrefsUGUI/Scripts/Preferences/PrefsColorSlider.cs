@@ -10,7 +10,7 @@ namespace PrefsUGUI
     public class PrefsColorSlider : PrefsGuiBase<Color, PrefsGuiColorSlider>
     {
         public PrefsColorSlider(
-            string key, Color defaultValue = default, GuiHierarchy hierarchy = null,
+            string key, Color defaultValue = default, Hierarchy hierarchy = null,
             string guiLabel = null, Action<PrefsGuiBase<Color, PrefsGuiColorSlider>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, defaultValue, hierarchy, guiLabel, onCreatedGui, sortOrder)

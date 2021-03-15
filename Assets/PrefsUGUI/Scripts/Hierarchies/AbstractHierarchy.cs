@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PrefsUGUI.GuiHierarchies.Abstracts
+namespace PrefsUGUI.Hierarchies.Abstracts
 {
     using Guis;
     using Guis.Factories;
@@ -14,20 +14,20 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
     using static Prefs;
 
     [Serializable]
-    public abstract class AbstractGuiHierarchy : IDisposable
+    public abstract class AbstractHierarchy : IDisposable
     {
         public const int DefaultSortOrder = 0;
 
         public event Action OnHierarchyClicked = delegate { };
 
         public virtual string HierarchyName => this.hierarchyName;
-        public virtual AbstractGuiHierarchy Parent => this.parent;
+        public virtual AbstractHierarchy Parent => this.parent;
         public virtual bool IsCreatedGui => this.properties.IsCreatedGui;
         public virtual HierarchyType HierarchyType => HierarchyType.Standard;
         public virtual Guid HierarchyId { get; protected set; } = Guid.Empty;
         public virtual string FullHierarchy { get; protected set; } = "";
         public virtual string SaveKeyPath { get; protected set; } = "";
-        public virtual IReadOnlyList<AbstractGuiHierarchy> Parents { get; protected set; } = new List<AbstractGuiHierarchy>();
+        public virtual IReadOnlyList<AbstractHierarchy> Parents { get; protected set; } = new List<AbstractHierarchy>();
         public virtual float BottomMargin
         {
             get => this.properties.BottomMargin;
@@ -54,7 +54,7 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
         [SerializeField]
         protected string hierarchyName = "";
         [SerializeField]
-        protected AbstractGuiHierarchy parent = null;
+        protected AbstractHierarchy parent = null;
 
         protected bool disposed = false;
         protected UnityAction changeGUI = null;
@@ -79,9 +79,9 @@ namespace PrefsUGUI.GuiHierarchies.Abstracts
             this.FireOnCreatedGui();
         }
         
-        protected virtual List<AbstractGuiHierarchy> GetParents()
+        protected virtual List<AbstractHierarchy> GetParents()
         {
-            var parents = new List<AbstractGuiHierarchy>();
+            var parents = new List<AbstractHierarchy>();
             var parent = this.Parent;
 
             while(parent != null)

@@ -9,16 +9,16 @@ namespace PrefsUGUI
     using Managers;
 
     [Serializable]
-    public class RemovableGuiHierarchy : GuiHierarchy
+    public class RemovableHierarchy : Hierarchy
     {
         public event Action OnRemoved = delegate { };
 
         public override HierarchyType HierarchyType => HierarchyType.Removable;
 
 
-        public RemovableGuiHierarchy(
+        public RemovableHierarchy(
             string hierarchyName, Action onRemoved = null, int sortOrder = DefaultSortOrder,
-            GuiHierarchy parent = null, Action<GuiHierarchy> onCreatedGui = null
+            Hierarchy parent = null, Action<Hierarchy> onCreatedGui = null
         )
             : base(hierarchyName, sortOrder, parent, onCreatedGui)
         {
@@ -31,7 +31,7 @@ namespace PrefsUGUI
         protected override void Regist()
             => PrefsManager.AddGuiHierarchy<PrefsGuiRemovableButton>(this, this.OnCreatedGuiButton);
 
-        protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, AbstractHierarchy hierarchy, PrefsGuiRemovableButton gui)
+        protected virtual void OnCreatedGuiButton(PrefsCanvas canvas, AbstractGuiHierarchy hierarchy, PrefsGuiRemovableButton gui)
         {
             this.properties.OnCreatedGui(gui, this.HierarchyName);
 

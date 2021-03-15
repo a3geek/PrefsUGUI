@@ -6,22 +6,22 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories.Classes
 {
-    using GuiHierarchies.Abstracts;
+    using Hierarchies.Abstracts;
     using Preferences;
     using Object = UnityEngine.Object;
 
-    public class HierarchiesStruct
+    public class GuiHierarchiesStruct
     {
-        public Hierarchy Top { get; } = null;
-        public AbstractHierarchy Current { get; private set; } = null;
+        public GuiHierarchy Top { get; } = null;
+        public AbstractGuiHierarchy Current { get; private set; } = null;
 
-        private List<AbstractHierarchy> hierarchies = new List<AbstractHierarchy>();
+        private List<AbstractGuiHierarchy> hierarchies = new List<AbstractGuiHierarchy>();
         private PrefsGuiCreator creator = null;
 
 
-        public HierarchiesStruct(RectTransform topContent, PrefsGuiCreator creator)
+        public GuiHierarchiesStruct(RectTransform topContent, PrefsGuiCreator creator)
         {
-            this.Top = new Hierarchy(Guid.NewGuid(), topContent, PrefsCanvas.TopHierarchyName);
+            this.Top = new GuiHierarchy(Guid.NewGuid(), topContent, PrefsCanvas.TopHierarchyName);
 
             this.creator = creator;
             this.hierarchies.Add(this.Top);
@@ -44,7 +44,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             }
         }
 
-        public bool GetOrCreateHierarchy(AbstractGuiHierarchy hierarchy, out AbstractHierarchy result, AbstractGuiHierarchy linkTarget = null)
+        public bool GetOrCreateHierarchy(AbstractHierarchy hierarchy, out AbstractGuiHierarchy result, AbstractHierarchy linkTarget = null)
         {
             if(hierarchy == null || string.IsNullOrEmpty(hierarchy.FullHierarchy) == true)
             {
@@ -56,10 +56,10 @@ namespace PrefsUGUI.Guis.Factories.Classes
                 return false;
             }
 
-            var currentHierarchy = (AbstractHierarchy)this.Top;
+            var currentHierarchy = (AbstractGuiHierarchy)this.Top;
             var parents = hierarchy?.Parents;
 
-            foreach(var parent in (parents ?? Enumerable.Empty<AbstractGuiHierarchy>()))
+            foreach(var parent in (parents ?? Enumerable.Empty<AbstractHierarchy>()))
             {
                 var hierarchyId = parent.HierarchyId;
                 this.GetOrCreateNextHierarchy(
@@ -73,7 +73,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             );
         }
 
-        public AbstractHierarchy RemoveHierarchy(ref Guid hierarchyId)
+        public AbstractGuiHierarchy RemoveHierarchy(ref Guid hierarchyId)
         {
             if(this.Top.HierarchyId == hierarchyId)
             {
@@ -108,7 +108,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return this.Top;
         }
 
-        public AbstractHierarchy ChangeGUI(AbstractHierarchy nextHierarchy)
+        public AbstractGuiHierarchy ChangeGUI(AbstractGuiHierarchy nextHierarchy)
         {
             this.Current?.SetActive(false);
 
@@ -118,13 +118,13 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return this.Current;
         }
 
-        private bool GetNextHierarchy(AbstractHierarchy current, ref Guid nextHierarchyId, out AbstractHierarchy hierarchy)
+        private bool GetNextHierarchy(AbstractGuiHierarchy current, ref Guid nextHierarchyId, out AbstractGuiHierarchy hierarchy)
         {
             hierarchy = current.GetNextHierarchy(ref nextHierarchyId);
             return hierarchy != null;
         }
 
-        public bool GetHierarchy(AbstractGuiHierarchy guiHierarchy, out AbstractHierarchy hierarchy)
+        public bool GetHierarchy(AbstractHierarchy guiHierarchy, out AbstractGuiHierarchy hierarchy)
         {
             for(var i = 0; guiHierarchy != null && i < this.hierarchies.Count; i++)
             {
@@ -140,7 +140,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
         }
 
         private bool GetOrCreateNextHierarchy(
-            AbstractHierarchy current, ref Guid nextHierarchyId, AbstractGuiHierarchy nextGui, int sortOrder, out AbstractHierarchy result, AbstractGuiHierarchy linkTarget = null
+            AbstractGuiHierarchy current, ref Guid nextHierarchyId, AbstractHierarchy nextGui, int sortOrder, out AbstractGuiHierarchy result, AbstractHierarchy linkTarget = null
         )
         {
             if(this.GetNextHierarchy(current, ref nextHierarchyId, out var hierarchy) == true)
@@ -151,8 +151,8 @@ namespace PrefsUGUI.Guis.Factories.Classes
 
             var isLinked = nextGui.HierarchyType == HierarchyType.Linked;
             hierarchy = isLinked && this.GetHierarchy(linkTarget, out var linkHierarchy) == true
-                ? (AbstractHierarchy)new LinkedHierarchy(nextHierarchyId, nextGui.HierarchyName, linkHierarchy)
-                : new Hierarchy(nextHierarchyId, this.creator.CreateContent(), nextGui.HierarchyName, current);
+                ? (AbstractGuiHierarchy)new LinkedGuiHierarchy(nextHierarchyId, nextGui.HierarchyName, linkHierarchy)
+                : new GuiHierarchy(nextHierarchyId, this.creator.CreateContent(), nextGui.HierarchyName, current);
             this.GetOrCreateButton(current, nextGui, hierarchy, sortOrder);
 
             this.hierarchies.Add(hierarchy);
@@ -160,14 +160,14 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return true;
         }
 
-        private bool GetNextButton(AbstractHierarchy current, AbstractGuiHierarchy nextGui, out PrefsGuiButton prefsButton)
+        private bool GetNextButton(AbstractGuiHierarchy current, AbstractHierarchy nextGui, out PrefsGuiButton prefsButton)
         {
             var id = nextGui.HierarchyId;
             prefsButton = current?.GetNextButton(ref id);
             return prefsButton != null;
         }
 
-        private PrefsGuiButton GetOrCreateButton(AbstractHierarchy current, AbstractGuiHierarchy nextGui, AbstractHierarchy next, int sortOrder)
+        private PrefsGuiButton GetOrCreateButton(AbstractGuiHierarchy current, AbstractHierarchy nextGui, AbstractGuiHierarchy next, int sortOrder)
             => this.GetNextButton(current, nextGui, out var button) == true
                 ? button : this.creator.CreateButton(current, nextGui, next, sortOrder);
     }

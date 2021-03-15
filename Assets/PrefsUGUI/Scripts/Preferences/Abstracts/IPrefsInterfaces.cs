@@ -14,7 +14,7 @@ namespace PrefsUGUI
         string Key { get; }
         string GuiLabel { get; }
         bool Unsave { get; }
-        GuiHierarchy GuiHierarchy { get; }
+        Hierarchy GuiHierarchy { get; }
         int GuiSortOrder { get; }
 
         void ResetDefaultValue();
@@ -52,7 +52,7 @@ namespace PrefsUGUI
         string Key { get; }
         string GuiLabel { get; }
         bool Unsave { get; set; }
-        GuiHierarchy GuiHierarchy { get; }
+        Hierarchy GuiHierarchy { get; }
         int GuiSortOrder { get; }
 
         void ResetDefaultValue();

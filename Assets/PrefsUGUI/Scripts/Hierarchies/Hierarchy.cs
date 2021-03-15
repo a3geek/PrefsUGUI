@@ -2,48 +2,44 @@
 
 namespace PrefsUGUI
 {
-    using GuiHierarchies.Abstracts;
-    using Guis;
+    using Hierarchies.Abstracts;
     using Guis.Preferences;
     using Managers;
     using static Prefs;
 
     [Serializable]
-    public class LinkedGuiHierarchy : AbstractGuiHierarchy
+    public class Hierarchy : AbstractHierarchy
     {
-        public virtual GuiHierarchy LinkTarget { get; protected set; }
-        public override HierarchyType HierarchyType => HierarchyType.Linked;
-
-        protected Action<LinkedGuiHierarchy> onCreatedGui = null;
+        protected Action<Hierarchy> onCreatedGui = null;
 
 
-        public LinkedGuiHierarchy(
-            string hierarchyName, GuiHierarchy linkTarget, int sortOrder = DefaultSortOrder, GuiHierarchy parent = null,
-            Action<LinkedGuiHierarchy> onCreatedGui = null
+        public Hierarchy(
+            string hierarchyName, int sortOrder = DefaultSortOrder, Hierarchy parent = null,
+            Action<Hierarchy> onCreatedGui = null
         )
         {
             this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);
             this.parent = parent;
-            this.LinkTarget = linkTarget;
             this.sortOrder = sortOrder;
-            this.onCreatedGui = onCreatedGui;
 
             this.HierarchyId = Guid.NewGuid();
             this.Parents = this.GetParents();
             this.FullHierarchy = this.GetFullHierarchy();
-            this.SaveKeyPath = this.LinkTarget.SaveKeyPath;
+            this.SaveKeyPath = this.FullHierarchy;
+
+            this.onCreatedGui = onCreatedGui;
 
             this.Regist();
         }
 
         protected override void Regist()
-            => PrefsManager.AddLinkedGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
+            => PrefsManager.AddGuiHierarchy<PrefsGuiButton>(this, this.OnCreatedGuiButton);
 
         protected override void FireOnCreatedGui()
             => this.onCreatedGui?.Invoke(this);
 
         #region IDisposable Support
-        ~LinkedGuiHierarchy()
+        ~Hierarchy()
         {
             this.Dispose(false);
         }

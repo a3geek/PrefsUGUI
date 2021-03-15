@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PrefsUGUI.Guis.Factories.Classes
 {
-    using GuiHierarchies.Abstracts;
+    using Hierarchies.Abstracts;
     using Guis.Preferences;
     using PrefsUGUI.Preferences.Abstracts;
     using Object = UnityEngine.Object;
@@ -28,7 +28,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return content;
         }
 
-        public PrefsGuiButton CreateButton(AbstractHierarchy current, AbstractGuiHierarchy hierarchy, AbstractHierarchy next, int sortOrder)
+        public PrefsGuiButton CreateButton(AbstractGuiHierarchy current, AbstractHierarchy hierarchy, AbstractGuiHierarchy next, int sortOrder)
         {
             var isRemovable = hierarchy.HierarchyType == HierarchyType.Removable;
             var button = Object.Instantiate(
@@ -41,7 +41,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return button;
         }
 
-        public GuiType CreatePrefsGui<ValType, GuiType>(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events, AbstractHierarchy hierarchy)
+        public GuiType CreatePrefsGui<ValType, GuiType>(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events, AbstractGuiHierarchy hierarchy)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             var gui = Object.Instantiate(this.prefabs.GetGuiPrefab<ValType, GuiType>().Component, hierarchy.Content);

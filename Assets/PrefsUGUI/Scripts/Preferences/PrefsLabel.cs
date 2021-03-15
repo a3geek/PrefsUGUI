@@ -9,7 +9,7 @@ namespace PrefsUGUI
     public class PrefsLabel : PrefsGuiBase<string, PrefsGuiLabel>
     {
         public PrefsLabel(
-            string key, string text, GuiHierarchy hierarchy = null,
+            string key, string text, Hierarchy hierarchy = null,
             string guiLabel = null, Action<PrefsGuiBase<string, PrefsGuiLabel>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui, sortOrder)

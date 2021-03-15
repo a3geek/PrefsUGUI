@@ -20,7 +20,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         public virtual string GuiLabel => this.guiLabel;
         public virtual bool Unsave { get; set; } = false;
         public virtual bool UnEditSync { get; set; } = false;
-        public virtual GuiHierarchy GuiHierarchy { get; protected set; } = null;
+        public virtual Hierarchy GuiHierarchy { get; protected set; } = null;
         public abstract bool IsCreatedGui { get; }
         public abstract int GuiSortOrder { get; protected set; }
 
@@ -33,7 +33,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         protected IPrefsStorageSetter storageSetter = null;
 
 
-        public PrefsBase(string key, GuiHierarchy hierarchy = null, string guiLabel = null)
+        public PrefsBase(string key, Hierarchy hierarchy = null, string guiLabel = null)
         {
             this.key = key;
             this.GuiHierarchy = hierarchy;

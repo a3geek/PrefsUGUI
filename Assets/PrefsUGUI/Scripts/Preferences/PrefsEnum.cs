@@ -9,7 +9,7 @@ namespace PrefsUGUI
     public class PrefsEnum<T> : PrefsGuiBase<int, PrefsGuiEnum> where T : Enum
     {
         public PrefsEnum(
-            string key, T defaultValue = default, GuiHierarchy hierarchy = null,
+            string key, T defaultValue = default, Hierarchy hierarchy = null,
             string guiLabel = null, Action<PrefsGuiBase<int, PrefsGuiEnum>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, Convert.ToInt32(defaultValue), hierarchy, guiLabel, onCreatedGui, sortOrder)

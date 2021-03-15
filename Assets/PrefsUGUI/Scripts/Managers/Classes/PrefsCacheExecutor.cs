@@ -41,14 +41,14 @@ namespace PrefsUGUI.Managers
         private static CacheExecutor Executor = new CacheExecutor();
 
 
-        public static void AddGuiHierarchy<GuiType>(GuiHierarchy hierarchy, Action<GuiType> onCreated)
+        public static void AddGuiHierarchy<GuiType>(Hierarchy hierarchy, Action<GuiType> onCreated)
             where GuiType : PrefsGuiButton
         {
             void AddGuiHierarchy() => PrefsGuis.AddHierarchy(hierarchy, onCreated);
             Executor.AddGuiHierarchiesCache.Add(hierarchy.FullHierarchy, AddGuiHierarchy);
         }
 
-        public static void AddLinkedGuiHierarchy<GuiType>(LinkedGuiHierarchy hierarchy, Action<GuiType> onCreated)
+        public static void AddLinkedGuiHierarchy<GuiType>(LinkedHierarchy hierarchy, Action<GuiType> onCreated)
             where GuiType : PrefsGuiButton
         {
             void AddGuiHierarchy() => PrefsGuis.AddHierarchy(hierarchy, onCreated);

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace PrefsUGUI.Guis.Factories
 {
     using Classes;
-    using GuiHierarchies.Abstracts;
+    using Hierarchies.Abstracts;
     using Guis.Preferences;
     using PrefsUGUI.Preferences.Abstracts;
 
@@ -30,7 +30,7 @@ namespace PrefsUGUI.Guis.Factories
         private PrefsGuiPrefabs prefabs = new PrefsGuiPrefabs();
 
         private PrefsGuiCreator creator = null;
-        private HierarchiesStruct structs = null;
+        private GuiHierarchiesStruct structs = null;
         private List<string> hierarchyTexts = new List<string>();
 
 
@@ -40,7 +40,7 @@ namespace PrefsUGUI.Guis.Factories
             this.links.Content.gameObject.SetActive(false);
 
             var topContent = this.creator.CreateContent();
-            this.structs = new HierarchiesStruct(topContent, this.creator);
+            this.structs = new GuiHierarchiesStruct(topContent, this.creator);
             this.OnHierarchyChanged(this.structs.Current);
 
             this.links.Close.onClick.AddListener(this.OnClickedCloseButton);
@@ -70,11 +70,11 @@ namespace PrefsUGUI.Guis.Factories
         public void RemovePrefs(ref Guid prefsId)
             => this.structs.RemovePrefs(ref prefsId);
 
-        public AbstractHierarchy GetOrAddHierarchy(GuiHierarchy hierarchy)
+        public AbstractGuiHierarchy GetOrAddHierarchy(Hierarchy hierarchy)
             => this.structs.GetOrCreateHierarchy(hierarchy, out var result) == true
                 ? this.OnAddedHierarchy(result) : result;
 
-        public AbstractHierarchy GetOrAddHierarchy(LinkedGuiHierarchy hierarchy)
+        public AbstractGuiHierarchy GetOrAddHierarchy(LinkedHierarchy hierarchy)
             => this.structs.GetOrCreateHierarchy(hierarchy, out var result, hierarchy.LinkTarget) == true
                 ? this.OnAddedHierarchy(result) : result;
 
@@ -87,13 +87,13 @@ namespace PrefsUGUI.Guis.Factories
             }
         }
 
-        private AbstractHierarchy OnAddedHierarchy(AbstractHierarchy hierarchy)
+        private AbstractGuiHierarchy OnAddedHierarchy(AbstractGuiHierarchy hierarchy)
         {
             hierarchy.GuiButton.OnClicked += () => this.ChangeGUI(hierarchy);
             return hierarchy;
         }
 
-        private void ChangeGUI(AbstractHierarchy nextHierarchy)
+        private void ChangeGUI(AbstractGuiHierarchy nextHierarchy)
         {
             this.hierarchyTexts.Add(nextHierarchy.HierarchyName);
             this.OnHierarchyChanged(this.structs.ChangeGUI(nextHierarchy));
@@ -114,7 +114,7 @@ namespace PrefsUGUI.Guis.Factories
             this.gameObject.SetActive(false);
         }
 
-        private void OnHierarchyChanged(AbstractHierarchy hierarchy)
+        private void OnHierarchyChanged(AbstractGuiHierarchy hierarchy)
         {
             this.links.Scroll.content = hierarchy.Content;
 
@@ -122,7 +122,7 @@ namespace PrefsUGUI.Guis.Factories
             this.SetButtonActive(isTop);
         }
 
-        private bool SetHierarchy(AbstractHierarchy hierarchy)
+        private bool SetHierarchy(AbstractGuiHierarchy hierarchy)
         {
             var hierarchyName = "";
             for(var i = 0; i < this.hierarchyTexts.Count; i++)

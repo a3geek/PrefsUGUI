@@ -23,7 +23,7 @@ namespace PrefsUGUI
 
 
         public PrefsImageLabel(
-            string key, string text, GuiHierarchy hierarchy = null,
+            string key, string text, Hierarchy hierarchy = null,
             string guiLabel = null, Action<PrefsGuiBase<string, PrefsGuiImageLabel>> onCreatedGui = null, int sortOrder = 0
         )
             : base(key, text ?? "", hierarchy, guiLabel, onCreatedGui, sortOrder)

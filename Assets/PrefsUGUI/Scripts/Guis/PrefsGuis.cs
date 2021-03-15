@@ -94,7 +94,7 @@ namespace PrefsUGUI.Guis
             this.Canvas.RemovePrefs(ref prefsId);
         }
 
-        public void AddHierarchy<GuiType>(GuiHierarchy guiHierarchy, Action<GuiType> onCreated)
+        public void AddHierarchy<GuiType>(Hierarchy guiHierarchy, Action<GuiType> onCreated)
              where GuiType : PrefsGuiButton
         {
             if(this.Canvas == null)
@@ -106,7 +106,7 @@ namespace PrefsUGUI.Guis
             onCreated((GuiType)hierarchy.GuiButton);
         }
 
-        public void AddHierarchy<GuiType>(LinkedGuiHierarchy guiHierarchy, Action<GuiType> onCreated)
+        public void AddHierarchy<GuiType>(LinkedHierarchy guiHierarchy, Action<GuiType> onCreated)
              where GuiType : PrefsGuiButton
         {
             if(this.Canvas == null)
