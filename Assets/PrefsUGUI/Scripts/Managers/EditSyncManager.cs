@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine.SceneManagement;
 
 namespace PrefsUGUI.Managers
 {
     using Classes;
-    using Guis;
-    using Preferences.Abstracts;
-    using XmlStorage;
-    using Hierarchies.Abstracts;
-    using XmlStorage.Systems;
-    using XmlStorage.Systems.Utilities;
-    using UnityObject = UnityEngine.Object;
 
     public interface ISyncTransfer
     {
@@ -32,91 +20,39 @@ namespace PrefsUGUI.Managers
         [SerializeField]
         private ISyncTransfer transfer = null;
 
-        private Dictionary<string, PrefsBase> prefs = new Dictionary<string, PrefsBase>();
-        private Dictionary<string, PrefsButton> buttons = new Dictionary<string, PrefsButton>();
-        private Dictionary<string, RemovableHierarchy> removableHierarchies = new Dictionary<string, RemovableHierarchy>();
+        private EditSyncSender sender = new EditSyncSender();
+        private Dictionary<string, IEditSyncElement> elements = new Dictionary<string, IEditSyncElement>();
 
-        
-        public void ReceivedEditSyncMessage(string message)
+
+        public bool ReceivedEditSyncMessage(string message)
         {
             var baseMessage = new EditSyncBaseMessage(message);
             if(baseMessage.Method == EditSyncBaseMessage.MethodName)
             {
-                if(this.prefs.TryGetValue(baseMessage.SaveKey, out var prefs) == true)
+                if(this.elements.TryGetValue(baseMessage.Key, out var element) == true)
                 {
-                    prefs.OnReceivedEditSyncMessage(message);
-                }
-                else if(this.buttons.TryGetValue(baseMessage.SaveKey, out var button) == true)
-                {
-                    button.ManualClick();
+                    element.OnReceivedEditSyncMessage(message);
+                    return true;
                 }
             }
-            else if(baseMessage.Method == EditSyncRemoveHierarchyMessage.MethodName)
-            {
-                if(this.removableHierarchies.TryGetValue(baseMessage.SaveKey, out var hierarchy) == true)
-                {
-                    hierarchy.ManualRemove();
-                }
-            }
+
+            return false;
         }
 
-        public static void AddPrefs<ValType>(PrefsValueBase<ValType> prefs)
-        {
-            if(AddPrefsInternal(prefs, out var instance) == true)
-            {
-                instance.prefs[prefs.SaveKey] = prefs;
-            }
-        }
-
-        public static void AddPrefs(PrefsButton prefs)
-        {
-            if(AddPrefsInternal(prefs, out var instance) == true)
-            {
-                instance.buttons[prefs.SaveKey] = prefs;
-            }
-        }
-
-        public static void AddRemovableHierarchy(RemovableHierarchy removableHierarchy)
+        public static bool AddElement(IEditSyncElement element)
         {
             if(TryGetInstance(out var instance) == false)
             {
-                return;
+                return false;
             }
 
-            instance.removableHierarchies[removableHierarchy.SaveKeyPath] = removableHierarchy;
-            removableHierarchy.OnRemoved +=
-                () => instance.transfer.Send(removableHierarchy.GetEditSyncRemoveHierarchyMessage().ToJson());
+            instance.elements[element.GetEditSyncKey()] = element;
+            element.RegistSendMessageEvent(instance.sender);
+            return true;
         }
 
-        public static void RemovePrefs<ValType>(PrefsValueBase<ValType> prefs)
-        {
-            if(TryGetInstance(out var instance) == false)
-            {
-                return;
-            }
-
-            instance.prefs.Remove(prefs.SaveKey);
-        }
-
-        public static void RemovePrefs(PrefsButton prefs)
-        {
-            if(TryGetInstance(out var instance) == false)
-            {
-                return;
-            }
-
-            instance.buttons.Remove(prefs.SaveKey);
-        }
-        
-        public static void RemoveRemovableHierarchy(RemovableHierarchy removableHierarchy)
-        {
-            if(TryGetInstance(out var instance) == false)
-            {
-                return;
-            }
-
-            instance.removableHierarchies.Remove(removableHierarchy.SaveKeyPath);
-        }
+        public static bool RemoveElement(IEditSyncElement element)
+            => TryGetInstance(out var instance) != false && instance.elements.Remove(element.GetEditSyncKey());
 
         public static void SetSyncTransfer(ISyncTransfer transfer)
         {
@@ -125,17 +61,6 @@ namespace PrefsUGUI.Managers
                 return;
             }
             instance.transfer = transfer;
-        }
-
-        private static bool AddPrefsInternal<ValType>(PrefsValueBase<ValType> prefs, out EditSyncManager instance)
-        {
-            if(TryGetInstance(out instance) == false)
-            {
-                return false;
-            }
-
-            prefs.OnEditedInGui += () => Instance.transfer.Send(prefs.GetEditSyncMessage().ToJson());
-            return true;
         }
 
         private static bool TryGetInstance(out EditSyncManager instance)
@@ -154,6 +79,20 @@ namespace PrefsUGUI.Managers
             instance = Instance = FindObjectOfType<EditSyncManager>();
             IsTryedFindInstance = true;
             return instance != null;
+        }
+
+
+        private class EditSyncSender : IEditSyncSender
+        {
+            public void Send(IEditSyncElement element)
+            {
+                if(TryGetInstance(out var instance) == false)
+                {
+                    return;
+                }
+
+                instance.transfer.Send(element.GetEditSyncMessage());
+            }
         }
     }
 }

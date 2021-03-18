@@ -17,12 +17,12 @@ namespace PrefsUGUI.Managers.Classes
         public const string MethodName = "EditSync";
 
         public string Method => this.method;
-        public string SaveKey => this.saveKey;
+        public string Key => this.key;
 
         [SerializeField]
         protected string method = "";
         [SerializeField]
-        protected string saveKey = "";
+        protected string key = "";
 
         protected string json = "";
 
@@ -55,43 +55,46 @@ namespace PrefsUGUI.Managers.Classes
     public class EditSyncMessage<T> : EditSyncBaseMessage
     {
         public T Value => this.value;
-
+        public PrefsType PrefsType => this.prefsType;
 
         [SerializeField]
         protected T value = default;
+        [SerializeField]
+        protected PrefsType prefsType = PrefsType.None;
 
 
         public EditSyncMessage(string json) : base(json)
         {
         }
 
-        public EditSyncMessage(string saveKey, T value) : base("")
+        public EditSyncMessage(string key, T value, PrefsType prefsType) : base("")
         {
             this.method = MethodName;
-            this.saveKey = saveKey;
+            this.key = key;
             this.value = value;
-        }
-    }
-
-    public class EditSyncRemoveHierarchyMessage : EditSyncBaseMessage
-    {
-        public new const string MethodName = "EditSyncRemoveHierarchy";
-
-        public PrefsType PrefsType => this.prefsType;
-
-        [SerializeField]
-        private PrefsType prefsType = PrefsType.RemovableHierarchy;
-
-
-        public EditSyncRemoveHierarchyMessage(string json) : base(json)
-        {
-        }
-
-        public EditSyncRemoveHierarchyMessage(string saveKey, PrefsType prefsType) : base("")
-        {
-            this.method = MethodName;
-            this.saveKey = saveKey;
             this.prefsType = prefsType;
         }
     }
+
+    //public class EditSyncRemoveHierarchyMessage : EditSyncBaseMessage
+    //{
+    //    public new const string MethodName = "EditSyncRemoveHierarchy";
+
+    //    public PrefsType PrefsType => this.prefsType;
+
+    //    [SerializeField]
+    //    private PrefsType prefsType = PrefsType.RemovableHierarchy;
+
+
+    //    public EditSyncRemoveHierarchyMessage(string json) : base(json)
+    //    {
+    //    }
+
+    //    public EditSyncRemoveHierarchyMessage(string saveKey, PrefsType prefsType) : base("")
+    //    {
+    //        this.method = MethodName;
+    //        this.saveKey = saveKey;
+    //        this.prefsType = prefsType;
+    //    }
+    //}
 }

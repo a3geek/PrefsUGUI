@@ -3,9 +3,9 @@ using UnityEngine.Events;
 
 namespace PrefsUGUI
 {
-    using Preferences.Abstracts;
     using Guis.Preferences;
-    using Managers;
+    using Managers.Classes;
+    using Preferences.Abstracts;
 
     [Serializable]
     public class PrefsButton : PrefsGuiBase<UnityAction, PrefsGuiButton>
@@ -27,11 +27,11 @@ namespace PrefsUGUI
         public override void Reload()
             => this.ResetDefaultValue();
 
-        protected override void AddPrefsToSyncManager()
-            => EditSyncManager.AddPrefs(this);
+        protected override PrefsType GetPrefsType()
+            => PrefsType.PrefsButton;
 
-        protected override void RemovePrefsToSyncManager()
-            => EditSyncManager.RemovePrefs(this);
+        protected override void OnReceivedEditSyncMessage(EditSyncElement.Message message)
+            => this.ManualClick();
 
         protected override void OnCreatedGuiInternal(PrefsGuiButton gui)
         {

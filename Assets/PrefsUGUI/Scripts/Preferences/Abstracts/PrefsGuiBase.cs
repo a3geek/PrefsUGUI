@@ -56,6 +56,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         {
             this.onCreatedGui = onCreatedGui;
             this.GuiSortOrder = sortOrder;
+            this.editSyncElement = new EditSyncElement(this);
         }
 
         public override void Set(ValType value)
@@ -96,10 +97,10 @@ namespace PrefsUGUI.Preferences.Abstracts
         }
 
         protected virtual void AddPrefsToSyncManager()
-            => EditSyncManager.AddPrefs(this);
+            => EditSyncManager.AddElement(this.editSyncElement);
 
         protected virtual void RemovePrefsToSyncManager()
-            => EditSyncManager.RemovePrefs(this);
+            => EditSyncManager.RemoveElement(this.editSyncElement);
 
         protected override void DisposeInternal(bool disposing)
         {

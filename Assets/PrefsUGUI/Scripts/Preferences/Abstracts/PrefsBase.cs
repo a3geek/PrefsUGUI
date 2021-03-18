@@ -46,7 +46,6 @@ namespace PrefsUGUI.Preferences.Abstracts
 
         public abstract void ResetDefaultValue();
         public abstract void Reload();
-        public abstract void OnReceivedEditSyncMessage(string message);
 
         protected virtual void Regist()
         {
