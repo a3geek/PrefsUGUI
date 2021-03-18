@@ -25,13 +25,15 @@ namespace PrefsUGUI.Managers
 
 
         public bool ReceivedEditSyncMessage(string message)
+            => this.ReceivedEditSyncMessage(new EditSyncBaseMessage(message));
+
+        public bool ReceivedEditSyncMessage(EditSyncBaseMessage baseMessage)
         {
-            var baseMessage = new EditSyncBaseMessage(message);
             if(baseMessage.Method == EditSyncBaseMessage.MethodName)
             {
                 if(this.elements.TryGetValue(baseMessage.Key, out var element) == true)
                 {
-                    element.OnReceivedEditSyncMessage(message);
+                    element.OnReceivedEditSyncMessage(baseMessage.ToJson());
                     return true;
                 }
             }
