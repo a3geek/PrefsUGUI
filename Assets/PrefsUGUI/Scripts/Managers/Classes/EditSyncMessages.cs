@@ -75,26 +75,4 @@ namespace PrefsUGUI.Managers.Classes
             this.prefsType = prefsType;
         }
     }
-
-    //public class EditSyncRemoveHierarchyMessage : EditSyncBaseMessage
-    //{
-    //    public new const string MethodName = "EditSyncRemoveHierarchy";
-
-    //    public PrefsType PrefsType => this.prefsType;
-
-    //    [SerializeField]
-    //    private PrefsType prefsType = PrefsType.RemovableHierarchy;
-
-
-    //    public EditSyncRemoveHierarchyMessage(string json) : base(json)
-    //    {
-    //    }
-
-    //    public EditSyncRemoveHierarchyMessage(string saveKey, PrefsType prefsType) : base("")
-    //    {
-    //        this.method = MethodName;
-    //        this.saveKey = saveKey;
-    //        this.prefsType = prefsType;
-    //    }
-    //}
 }
