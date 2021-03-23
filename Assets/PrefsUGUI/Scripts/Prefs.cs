@@ -20,6 +20,10 @@ namespace PrefsUGUI
             get => PrefsManager.PrefsParameters;
             set => PrefsManager.PrefsParameters = value;
         }
+        public static bool VisibleControllsGui
+        {
+            set => PrefsManager.VisibleControllsGui = value;
+        }
         public static string AggregationName => PrefsParameters.AggregationName;
         public static string FileName => PrefsParameters.FileName;
 

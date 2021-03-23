@@ -19,6 +19,15 @@ namespace PrefsUGUI.Guis.Factories
         public const string TopHierarchyText = "Hierarchy...";
 
         public RectTransform Panel => this.links.Panel;
+        public bool VisibleControllsGui
+        {
+            set
+            {
+                this.links.Close.gameObject.SetActive(value);
+                this.links.Discard.gameObject.SetActive(value);
+                this.links.Save.gameObject.SetActive(value);
+            }
+        }
 
         [SerializeField]
         private Color topHierarchyColor = Color.gray;

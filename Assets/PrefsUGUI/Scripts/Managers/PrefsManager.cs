@@ -21,6 +21,16 @@ namespace PrefsUGUI.Managers
                 InitializeInternal(value);
             }
         }
+        public static bool VisibleControllsGui
+        {
+            set
+            {
+                if(PrefsGuis != null && PrefsGuis.Canvas != null)
+                {
+                    PrefsGuis.Canvas.VisibleControllsGui = value;
+                }
+            }
+        }
         public static bool Inited { get; private set; } = false;
         public static PrefsGuis PrefsGuis { get; private set; } = null;
 
