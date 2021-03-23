@@ -58,6 +58,14 @@ namespace PrefsUGUI
             }
         }
 
+        public static void HideGUI()
+        {
+            if(PrefsManager.PrefsGuis != null)
+            {
+                PrefsManager.PrefsGuis.HideGUI();
+            }
+        }
+
         public static void NotifyWillSceneLoad()
             => PrefsManager.NotifyWillSceneLoad();
 
