@@ -69,6 +69,16 @@ namespace PrefsUGUI.Guis
             this.Canvas.gameObject.SetActive(true);
         }
 
+        public void HideGUI()
+        {
+            if(this.Canvas == null)
+            {
+                return;
+            }
+
+            this.Canvas.gameObject.SetActive(false);
+        }
+
         public void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
