@@ -21,6 +21,7 @@ namespace PrefsUGUI.Hierarchies.Abstracts
         public event Action OnHierarchyClicked = delegate { };
 
         public virtual string HierarchyName => this.hierarchyName;
+        public virtual string SaveKey => string.IsNullOrEmpty(this.saveKey) == true ? this.HierarchyName : this.saveKey;
         public virtual AbstractHierarchy Parent => this.parent;
         public virtual bool IsCreatedGui => this.properties.IsCreatedGui;
         public virtual HierarchyType HierarchyType => HierarchyType.Standard;
@@ -54,6 +55,8 @@ namespace PrefsUGUI.Hierarchies.Abstracts
         [SerializeField]
         protected string hierarchyName = "";
         [SerializeField]
+        protected string saveKey = "";
+        [SerializeField]
         protected AbstractHierarchy parent = null;
 
         protected bool disposed = false;
@@ -78,7 +81,7 @@ namespace PrefsUGUI.Hierarchies.Abstracts
             gui.Initialize(this.HierarchyName, this.FireOnHierarchyClicked);
             this.FireOnCreatedGui();
         }
-        
+
         protected virtual List<AbstractHierarchy> GetParents()
         {
             var parents = new List<AbstractHierarchy>();
@@ -99,10 +102,21 @@ namespace PrefsUGUI.Hierarchies.Abstracts
             var hierarchy = "";
             foreach(var parent in this.Parents)
             {
-                hierarchy += string.IsNullOrEmpty(parent?.HierarchyName) == true? "" : parent.HierarchyName + HierarchySeparator;
+                hierarchy += string.IsNullOrEmpty(parent?.HierarchyName) == true ? "" : parent.HierarchyName + HierarchySeparator;
             }
 
             return hierarchy + this.HierarchyName + HierarchySeparator;
+        }
+
+        protected virtual string GetFullSaveKeyPath()
+        {
+            var saveKeyPath = "";
+            foreach(var parent in this.Parents)
+            {
+                saveKeyPath += string.IsNullOrEmpty(parent?.SaveKey) == true ? "" : parent.SaveKey + HierarchySeparator;
+            }
+
+            return saveKeyPath + this.SaveKey + HierarchySeparator;
         }
 
         protected virtual void FireOnHierarchyClicked()

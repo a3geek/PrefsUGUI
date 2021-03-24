@@ -15,7 +15,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         public virtual event Action OnDisposed = delegate { };
 
         public virtual Guid PrefsId { get; } = Guid.Empty;
-        public virtual string SaveKey => (this.GuiHierarchy?.FullHierarchy ?? "") + this.key;
+        public virtual string SaveKey => (this.GuiHierarchy?.SaveKeyPath ?? "") + this.key;
         public virtual string Key => this.key;
         public virtual string GuiLabel => this.guiLabel;
         public virtual bool Unsave { get; set; } = false;

@@ -15,17 +15,18 @@ namespace PrefsUGUI
 
         public Hierarchy(
             string hierarchyName, int sortOrder = DefaultSortOrder, Hierarchy parent = null,
-            Action<Hierarchy> onCreatedGui = null
+            string saveKey = "", Action<Hierarchy> onCreatedGui = null
         )
         {
             this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);
+            this.saveKey = saveKey;
             this.parent = parent;
             this.sortOrder = sortOrder;
 
             this.HierarchyId = Guid.NewGuid();
             this.Parents = this.GetParents();
             this.FullHierarchy = this.GetFullHierarchy();
-            this.SaveKeyPath = this.FullHierarchy;
+            this.SaveKeyPath = this.GetFullSaveKeyPath();
 
             this.onCreatedGui = onCreatedGui;
 

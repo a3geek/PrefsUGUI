@@ -18,8 +18,8 @@ namespace PrefsUGUI
 
 
         public LinkedHierarchy(
-            string hierarchyName, Hierarchy linkTarget, int sortOrder = DefaultSortOrder, Hierarchy parent = null,
-            Action<LinkedHierarchy> onCreatedGui = null
+            string hierarchyName, Hierarchy linkTarget, int sortOrder = DefaultSortOrder,
+            Hierarchy parent = null, Action<LinkedHierarchy> onCreatedGui = null
         )
         {
             this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);

@@ -19,9 +19,9 @@ namespace PrefsUGUI
 
         public RemovableHierarchy(
             string hierarchyName, Action onRemoved = null, int sortOrder = DefaultSortOrder,
-            Hierarchy parent = null, Action<Hierarchy> onCreatedGui = null
+            Hierarchy parent = null, string saveKey = "", Action<Hierarchy> onCreatedGui = null
         )
-            : base(hierarchyName, sortOrder, parent, onCreatedGui)
+            : base(hierarchyName, sortOrder, parent, saveKey, onCreatedGui)
         {
             if (onRemoved != null)
             {
