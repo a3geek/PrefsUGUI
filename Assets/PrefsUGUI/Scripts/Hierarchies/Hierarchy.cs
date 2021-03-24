@@ -21,7 +21,7 @@ namespace PrefsUGUI
             this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);
             this.saveKey = saveKey;
             this.parent = parent;
-            this.sortOrder = sortOrder;
+            this.properties.GuiSortOrder = sortOrder;
 
             this.HierarchyId = Guid.NewGuid();
             this.Parents = this.GetParents();

@@ -51,8 +51,6 @@ namespace PrefsUGUI.Hierarchies.Abstracts
         }
 
         [SerializeField]
-        protected int sortOrder = 0;
-        [SerializeField]
         protected string hierarchyName = "";
         [SerializeField]
         protected string saveKey = "";
