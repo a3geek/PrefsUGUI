@@ -41,7 +41,7 @@ namespace PrefsUGUI.Guis.Factories.Classes
             return button;
         }
 
-        public GuiType CreatePrefsGui<ValType, GuiType>(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events, AbstractGuiHierarchy hierarchy)
+        public GuiType CreatePrefsGui<ValType, GuiType>(PrefsGuiBase<ValType, GuiType> prefs, IPrefsGuiEvents<ValType, GuiType> events, AbstractGuiHierarchy hierarchy)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             var gui = Object.Instantiate(this.prefabs.GetGuiPrefab<ValType, GuiType>().Component, hierarchy.Content);

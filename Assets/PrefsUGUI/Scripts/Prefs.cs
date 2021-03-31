@@ -2,6 +2,7 @@
 
 namespace PrefsUGUI
 {
+    using Hierarchies.Abstracts;
     using Managers;
     using Preferences.Abstracts;
     using UnityEngine;
@@ -13,7 +14,8 @@ namespace PrefsUGUI
         public const char HierarchySeparator = '/';
 
         public static event Action OnSaved = delegate { };
-        public static event Action<PrefsBase> OnAnyPrefsAdded = delegate { };
+        public static event Action<IPrefsCommon> OnPrefsAdded = delegate { };
+        public static event Action<AbstractHierarchy> OnHierarchyAdded = delegate { };
         public static event Action<PrefsBase> OnPrefsEditedinGui = delegate { };
 
         public static PrefsParameters PrefsParameters
@@ -30,7 +32,7 @@ namespace PrefsUGUI
 
         private static PrefsEditedEvents PrefsEditedEventer = new PrefsEditedEvents();
 
-        
+
         static Prefs()
         {
             PrefsManager.PrefsEditedEventer = PrefsEditedEventer;
@@ -53,7 +55,7 @@ namespace PrefsUGUI
 
         public static void ShowGUI()
         {
-            if (PrefsManager.PrefsGuis != null)
+            if(PrefsManager.PrefsGuis != null)
             {
                 PrefsManager.PrefsGuis.ShowGUI();
             }
@@ -75,7 +77,7 @@ namespace PrefsUGUI
 
         public static void SetCanvasSize(float width, float height)
         {
-            if (PrefsManager.PrefsGuis != null)
+            if(PrefsManager.PrefsGuis != null)
             {
                 PrefsManager.PrefsGuis.SetCanvasSize(width, height);
             }
@@ -99,6 +101,12 @@ namespace PrefsUGUI
                     OnPrefsEditedinGui(prefs);
                 }
             }
+
+            public void OnAnyPrefsAdded(IPrefsCommon prefs)
+                => OnPrefsAdded(prefs);
+
+            public void OnAnyHierarchyAdded(AbstractHierarchy hierarchy)
+                => OnHierarchyAdded(hierarchy);
 
             private void OnQuitting()
                 => this.willQuit = true;

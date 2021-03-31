@@ -5,6 +5,7 @@ namespace PrefsUGUI.Managers
 {
     using Guis;
     using Guis.Preferences;
+    using Hierarchies.Abstracts;
     using Preferences.Abstracts;
     using AddCache = Commons.OrderableConcurrentCache<string, Action>;
     using RemoveCache = Commons.OrderableConcurrentCache<Guid, Action>;
@@ -14,6 +15,8 @@ namespace PrefsUGUI.Managers
         public interface IPrefsEditedEvents
         {
             void OnAnyPrefsEditedInGui(PrefsBase prefs);
+            void OnAnyPrefsAdded(IPrefsCommon prefs);
+            void OnAnyHierarchyAdded(AbstractHierarchy hierarchy);
         }
 
         private class CacheExecutor : PrefsGuis.ICacheExecutor, AddCache.ITaker, RemoveCache.ITaker
@@ -61,7 +64,7 @@ namespace PrefsUGUI.Managers
             Executor.RemoveGuiHierarchiesCache.Add(hierarchyId, RemoveGuiHierarchy);
         }
 
-        public static void AddPrefs<ValType, GuiType>(PrefsValueBase<ValType> prefs, IPrefsGuiEvents<ValType, GuiType> events)
+        public static void AddPrefs<ValType, GuiType>(PrefsGuiBase<ValType, GuiType> prefs, IPrefsGuiEvents<ValType, GuiType> events)
             where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
         {
             void AddPrefs() => PrefsGuis.AddPrefs(prefs, events);
