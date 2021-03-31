@@ -18,6 +18,7 @@ namespace PrefsUGUI.Hierarchies.Abstracts
     {
         public const int DefaultSortOrder = 0;
 
+        public event Action OnDisposed = delegate { };
         public event Action OnHierarchyClicked = delegate { };
 
         public virtual string HierarchyName => this.hierarchyName;
@@ -142,11 +143,15 @@ namespace PrefsUGUI.Hierarchies.Abstracts
 
         protected virtual void DisposeInternal(bool disposing)
         {
+            this.OnDisposed();
+            PrefsManager.RemoveGuiHierarchy(this.HierarchyId);
+
             this.properties.Dispose();
             this.parent = null;
             this.changeGUI = null;
             this.OnHierarchyClicked = null;
-            PrefsManager.RemoveGuiHierarchy(this.HierarchyId);
+            this.OnDisposed = null;
+
             this.disposed = true;
         }
         #endregion

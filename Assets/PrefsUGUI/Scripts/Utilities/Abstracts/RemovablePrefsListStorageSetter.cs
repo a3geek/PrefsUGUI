@@ -8,7 +8,7 @@ namespace PrefsUGUI.Utilities
     using CustomExtensions.Csharp;
     using Managers.Classes;
 
-    public interface IReadOnlyRemovableGuiList<T> where T : IDisposable
+    public interface IRemovablePrefsList<T> where T : IDisposable
     {
         string SaveKey { get; }
         int Count { get; }

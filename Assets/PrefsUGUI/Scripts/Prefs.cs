@@ -13,6 +13,7 @@ namespace PrefsUGUI
         public const char HierarchySeparator = '/';
 
         public static event Action OnSaved = delegate { };
+        public static event Action<PrefsBase> OnAnyPrefsAdded = delegate { };
         public static event Action<PrefsBase> OnPrefsEditedinGui = delegate { };
 
         public static PrefsParameters PrefsParameters

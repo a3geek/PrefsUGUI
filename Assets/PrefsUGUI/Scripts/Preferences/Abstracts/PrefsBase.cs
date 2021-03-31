@@ -97,8 +97,8 @@ namespace PrefsUGUI.Preferences.Abstracts
 
         protected virtual void DisposeInternal(bool disposing)
         {
-            PrefsManager.RemovePrefs(this.PrefsId);
             this.OnDisposed();
+            PrefsManager.RemovePrefs(this.PrefsId);
 
             this.OnValueChanged = null;
             this.OnDisposed = null;

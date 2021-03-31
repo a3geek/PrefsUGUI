@@ -10,7 +10,7 @@ namespace PrefsUGUI.Utilities
     using PrefsUGUI.Managers;
     using XmlStorage;
 
-    public partial class RemovablePrefsList<T> : IReadOnlyRemovableGuiList<T>, IDisposable where T : IDisposable
+    public partial class RemovablePrefsList<T> : IRemovablePrefsList<T>, IDisposable where T : IDisposable
     {
         private static readonly string SaveKeyPrefix = "GuiIndexs-";
 
