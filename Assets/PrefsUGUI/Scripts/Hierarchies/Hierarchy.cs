@@ -17,8 +17,8 @@ namespace PrefsUGUI
             string hierarchyName, int sortOrder = DefaultSortOrder, Hierarchy parent = null,
             string saveKey = "", Action<Hierarchy> onCreatedGui = null
         )
+            : base(hierarchyName)
         {
-            this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);
             this.saveKey = saveKey;
             this.parent = parent;
             this.properties.GuiSortOrder = sortOrder;

@@ -21,8 +21,8 @@ namespace PrefsUGUI
             string hierarchyName, Hierarchy linkTarget, int sortOrder = DefaultSortOrder,
             Hierarchy parent = null, Action<LinkedHierarchy> onCreatedGui = null
         )
+            : base(hierarchyName)
         {
-            this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);
             this.parent = parent;
             this.LinkTarget = linkTarget;
             this.properties.GuiSortOrder = sortOrder;

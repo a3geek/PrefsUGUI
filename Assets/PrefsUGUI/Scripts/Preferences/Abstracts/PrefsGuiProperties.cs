@@ -11,7 +11,15 @@ namespace PrefsUGUI.Preferences.Abstracts
         protected event Action OnCreatedGuiEvent = delegate { };
 
         public GuiType Gui => this.gui;
-        public string GuiLabel => this.guiLabelPrefix + this.guiLabel + this.guiLabelSufix;
+        public string GuiLabel
+        {
+            get => this.guiLabelPrefix + this.guiLabel + this.guiLabelSufix;
+            set
+            {
+                this.guiLabel = value ?? this.guiLabel;
+                this.UpdateLabel();
+            }
+        }
         public string GuiLabelWithoutAffix => this.guiLabel;
         public bool IsCreatedGui => this.gui != null;
         public float BottomMargin
@@ -87,18 +95,23 @@ namespace PrefsUGUI.Preferences.Abstracts
 
 
         [SerializeField]
+        protected string guiLabel = "";
+        [SerializeField]
         protected string guiLabelPrefix = "";
         [SerializeField]
         protected string guiLabelSufix = "";
 
         protected GuiType gui = null;
-        protected string guiLabel = "";
 
 
-        public void OnCreatedGui(GuiType gui, string guiLabel)
+        public PrefsGuiProperties(string guiLabel)
+        {
+            this.guiLabel = guiLabel;
+        }
+
+        public void OnCreatedGui(GuiType gui)
         {
             this.gui = gui;
-            this.guiLabel = guiLabel;
             this.UpdateLabel();
             this.OnCreatedGuiEvent();
         }

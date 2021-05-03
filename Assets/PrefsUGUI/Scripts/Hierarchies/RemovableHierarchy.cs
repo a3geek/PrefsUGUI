@@ -39,7 +39,7 @@ namespace PrefsUGUI
 
         protected virtual void OnCreatedGuiButton(PrefsGuiRemovableButton gui)
         {
-            this.properties.OnCreatedGui(gui, this.HierarchyName);
+            this.properties.OnCreatedGui(gui);
 
             gui.Initialize(this.HierarchyName, this.FireOnHierarchyClicked, this.FireOnRemoved);
             EditSyncManager.AddElement(this.element);

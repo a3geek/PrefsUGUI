@@ -4,8 +4,8 @@ using UnityEngine;
 namespace PrefsUGUI.Preferences.Abstracts
 {
     using CustomExtensions.Csharp;
-    using Managers.Classes;
     using Managers;
+    using Managers.Classes;
 
     [Serializable]
     public abstract partial class PrefsBase : IDisposable
@@ -17,27 +17,24 @@ namespace PrefsUGUI.Preferences.Abstracts
         public virtual Guid PrefsId { get; } = Guid.Empty;
         public virtual string SaveKey => (this.GuiHierarchy?.SaveKeyPath ?? "") + this.key;
         public virtual string Key => this.key;
-        public virtual string GuiLabel => this.guiLabel;
         public virtual bool Unsave { get; set; } = false;
         public virtual bool UnEditSync { get; set; } = false;
         public virtual Hierarchy GuiHierarchy { get; protected set; } = null;
+        public abstract string GuiLabel { get; set; }
         public abstract bool IsCreatedGui { get; }
         public abstract int GuiSortOrder { get; protected set; }
 
         [SerializeField]
         protected string key = "";
-        [SerializeField]
-        protected string guiLabel = "";
 
         protected bool disposed = false;
         protected IPrefsStorageSetter storageSetter = null;
 
 
-        public PrefsBase(string key, Hierarchy hierarchy = null, string guiLabel = null)
+        public PrefsBase(string key, Hierarchy hierarchy = null)
         {
             this.key = key;
             this.GuiHierarchy = hierarchy;
-            this.guiLabel = guiLabel ?? key.ToLabelable();
             this.PrefsId = Guid.NewGuid();
             this.storageSetter = new StorageSetter(this);
 
@@ -87,7 +84,7 @@ namespace PrefsUGUI.Preferences.Abstracts
 
         protected void Dispose(bool disposing)
         {
-            if (this.disposed == true)
+            if(this.disposed == true)
             {
                 return;
             }

@@ -23,8 +23,8 @@ namespace PrefsUGUI.Preferences.Abstracts
         protected ValType value = default;
 
 
-        public PrefsValueBase(string key, ValType defaultValue = default, Hierarchy hierarchy = null, string guiLabel = null)
-            : base(key, hierarchy, guiLabel)
+        public PrefsValueBase(string key, ValType defaultValue = default, Hierarchy hierarchy = null)
+            : base(key, hierarchy)
         {
             this.value = defaultValue;
             this.defaultValue = defaultValue;

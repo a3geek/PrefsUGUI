@@ -60,8 +60,14 @@ namespace PrefsUGUI.Hierarchies.Abstracts
 
         protected bool disposed = false;
         protected UnityAction changeGUI = null;
-        protected PrefsGuiProperties<PrefsGuiButton> properties = new PrefsGuiProperties<PrefsGuiButton>();
+        protected PrefsGuiProperties<PrefsGuiButton> properties = null;
 
+
+        public AbstractHierarchy(string hierarchyName)
+        {
+            this.hierarchyName = hierarchyName.Replace(HierarchySeparator.ToString(), string.Empty);
+            this.properties = new PrefsGuiProperties<PrefsGuiButton>(this.HierarchyName);
+        }
 
         public virtual void Open(bool withClickedEvent = true)
         {
@@ -75,7 +81,7 @@ namespace PrefsUGUI.Hierarchies.Abstracts
 
         protected virtual void OnCreatedGuiButton(PrefsGuiButton gui)
         {
-            this.properties.OnCreatedGui(gui, this.HierarchyName);
+            this.properties.OnCreatedGui(gui);
 
             gui.Initialize(this.HierarchyName, this.FireOnHierarchyClicked);
             this.FireOnCreatedGui();

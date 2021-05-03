@@ -3,13 +3,18 @@ using UnityEngine;
 
 namespace PrefsUGUI.Preferences.Abstracts
 {
+    using CustomExtensions.Csharp;
     using Guis.Preferences;
     using Managers;
 
     public abstract partial class PrefsGuiBase<ValType, GuiType> : PrefsValueBase<ValType>, IReadOnlyPrefs<ValType>, IPrefsCommon
         where GuiType : PrefsGuiBase, IPrefsGuiConnector<ValType, GuiType>
     {
-        public override string GuiLabel => this.properties.GuiLabel;
+        public override string GuiLabel
+        {
+            get => this.properties.GuiLabel;
+            set => this.properties.GuiLabel = value;
+        }
         public virtual string GuiLabelWithoutAffix => this.properties.GuiLabelWithoutAffix;
         public override bool IsCreatedGui => this.properties.IsCreatedGui;
         public virtual float BottomMargin
@@ -43,7 +48,7 @@ namespace PrefsUGUI.Preferences.Abstracts
             protected set => this.properties.GuiSortOrder = value;
         }
 
-        protected PrefsGuiProperties<GuiType> properties = new PrefsGuiProperties<GuiType>();
+        protected PrefsGuiProperties<GuiType> properties = null;
         protected Action<PrefsGuiBase<ValType, GuiType>> onCreatedGui = null;
         protected PrefsGuiEvents events = null;
 
@@ -52,8 +57,9 @@ namespace PrefsUGUI.Preferences.Abstracts
             string key, ValType defaultValue = default, Hierarchy hierarchy = null, string guiLabel = null,
             Action<PrefsGuiBase<ValType, GuiType>> onCreatedGui = null, int sortOrder = 0
         )
-            : base(key, defaultValue, hierarchy, guiLabel)
+            : base(key, defaultValue, hierarchy)
         {
+            this.properties = new PrefsGuiProperties<GuiType>(guiLabel ?? key.ToLabelable());
             this.onCreatedGui = onCreatedGui;
             this.GuiSortOrder = sortOrder;
             this.editSyncElement = new EditSyncElement(this);
@@ -86,7 +92,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         protected virtual void OnCreatedGui(GuiType gui)
         {
             this.OnCreatedGuiInternal(gui);
-            this.properties.OnCreatedGui(gui, this.guiLabel);
+            this.properties.OnCreatedGui(gui);
 
             if(this.UnEditSync == false)
             {
@@ -106,7 +112,7 @@ namespace PrefsUGUI.Preferences.Abstracts
         {
             base.DisposeInternal(disposing);
 
-            if (this.disposed == true)
+            if(this.disposed == true)
             {
                 return;
             }
