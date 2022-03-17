@@ -88,11 +88,11 @@ namespace PrefsUGUI.Managers
         {
             public void Send(IEditSyncElement element)
             {
-                if(TryGetInstance(out var instance) == false)
+                if(TryGetInstance(out var instance) == false || instance.transfer == null)
                 {
                     return;
                 }
-
+                
                 instance.transfer.Send(element.GetEditSyncMessage());
             }
         }

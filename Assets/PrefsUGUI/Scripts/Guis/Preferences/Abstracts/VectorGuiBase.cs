@@ -16,7 +16,7 @@ namespace PrefsUGUI.Guis.Preferences
 
         protected abstract int ElementCount { get; }
         protected abstract InputField.ContentType ContentType { get; }
-        protected virtual InputField[] Fields { get; set; } = new InputField[0];
+        protected virtual InputField[] Fields { get; set; } = Array.Empty<InputField>();
 
         [SerializeField]
         protected NumericUpDownInput updown = new NumericUpDownInput();
@@ -30,16 +30,28 @@ namespace PrefsUGUI.Guis.Preferences
         protected InputField fieldW = null;
 
 
+        protected override void Awake()
+        {
+            if(this.Fields.Length == 0)
+            {
+                this.InitializeFields();
+            }
+
+            base.Awake();
+        }
+
         protected virtual void Update()
         {
             for (var i = 0; i < this.ElementCount; i++)
             {
-                if (this.updown.Update(this.Fields[i], out var delta) == true)
+                if(this.updown.Update(this.Fields[i], out var delta) == false)
                 {
-                    var vec = Vector4.zero;
-                    vec[i] = delta;
-                    this.OnInputValue(this.GetDeltaAddedValue(vec));
+                    continue;
                 }
+
+                var vec = Vector4.zero;
+                vec[i] = delta;
+                this.OnInputValue(this.GetDeltaAddedValue(vec));
             }
         }
 
@@ -64,10 +76,9 @@ namespace PrefsUGUI.Guis.Preferences
         {
             this.SetLabel(label);
 
-            this.Fields = new InputField[] { this.fieldX, this.fieldY, this.fieldZ, this.fieldW };
-            for (var i = 0; i < this.ElementCount; i++)
+            if(this.Fields.Length == 0)
             {
-                this.Fields[i].contentType = this.ContentType;
+                this.InitializeFields();
             }
 
             this.SetValue(initialValue);
@@ -118,6 +129,15 @@ namespace PrefsUGUI.Guis.Preferences
             }
 
             return field == null ? ZeroString : field.text;
+        }
+
+        protected virtual void InitializeFields()
+        {
+            this.Fields = new[] { this.fieldX, this.fieldY, this.fieldZ, this.fieldW };
+            for(var i = 0; i < this.ElementCount; i++)
+            {
+                this.Fields[i].contentType = this.ContentType;
+            }
         }
 
         protected abstract string GetElement(int index);
