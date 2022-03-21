@@ -17,17 +17,19 @@ namespace PrefsUGUI.Examples
         private List<(Hierarchy hierarchy, PrefsInt prefsInt)> hierarchies = new List<(Hierarchy hierarchy, PrefsInt prefsInt)>();
 
         [SerializeField]
-        private Texture2D prefsImage = null;
+        private Texture2D image = null;
         [SerializeField]
         private Test0 test0 = new Test0();
 
         private PrefsRect prefsRect = new PrefsRect("PrefsRect", new Rect(0.25f, 0.5f, 1f, 2f));
+        private PrefsImage prefsImage = new PrefsImage("PrefsImage", null, "Prefs Image");
 #pragma warning restore 0414
 
 
         private void Start()
         {
-            this.test0.PrefsImageLabel.Image = this.prefsImage;
+            this.test0.PrefsImageLabel.Image = this.image;
+            this.prefsImage.Image = this.image;
 
             Test1Gui.OnHierarchyClicked += () => Debug.Log("Test1Gui Clicked");
 
@@ -38,6 +40,12 @@ namespace PrefsUGUI.Examples
                 => Debug.Log(nameof(this.test0.PrefsBool) + " Changed : " + this.test0.PrefsBool.Get());
 
             Prefs.OnPrefsEditedinGui += prefs => Debug.Log("OnPrefsModified : " + prefs.GuiLabel);
+
+            Debug.Log(this.test1Ex1.PrefsSelector.SelectOption);
+            this.test1Ex1.PrefsSelector.OnValueChanged += () =>
+            {
+                Debug.Log(this.test1Ex1.PrefsSelector.SelectOption);
+            };
         }
 
         private void Update()

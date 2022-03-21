@@ -26,7 +26,8 @@ namespace PrefsUGUI.Guis.Factories.Classes
             new PrefsGuiPrefab(PrefsGuiType.PrefsGuiVector2Int), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiVector3),
             new PrefsGuiPrefab(PrefsGuiType.PrefsGuiVector3Int), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiVector4),
             new PrefsGuiPrefab(PrefsGuiType.PrefsGuiRect), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiButton),
-            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiLabel), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiImageLabel)
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiLabel), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiImageLabel),
+            new PrefsGuiPrefab(PrefsGuiType.PrefsGuiImage), new PrefsGuiPrefab(PrefsGuiType.PrefsGuiSelector),
         };
 
 

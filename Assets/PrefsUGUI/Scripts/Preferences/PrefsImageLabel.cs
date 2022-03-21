@@ -14,9 +14,15 @@ namespace PrefsUGUI
             get => this.properties.Gui == null ? null : this.properties.Gui.GetImage();
             set
             {
+                void SetImage() => this.properties.Gui.SetImage(value);
+
                 if (this.properties.Gui != null)
                 {
-                    this.properties.Gui.SetImage(value);
+                    SetImage();
+                }
+                else
+                {
+                    this.properties.OnCreatedGuiEvent += SetImage;
                 }
             }
         }

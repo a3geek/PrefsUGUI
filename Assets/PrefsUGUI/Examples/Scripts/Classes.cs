@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PrefsUGUI.Examples
@@ -66,6 +67,10 @@ namespace PrefsUGUI.Examples
 
         private class Test1Ex1
         {
+            public PrefsSelector PrefsSelector = new PrefsSelector("PrefsSelector", new List<string>()
+            {
+                "Test0", "Test1", "Test2"
+            }, 1, Test1Ex1Gui);
             public PrefsVector3 PrefsVector3 = new PrefsVector3("PrefsVector3", new Vector3(0.1f, 0.2f, 0.3f), Test1Ex1Gui);
             public PrefsVector3Int PrefsVector3Int = new PrefsVector3Int("PrefsVector3Int", new Vector3Int(10, 20, 30), Test1Ex1Gui);
             public PrefsVector4 PrefsVector4 = new PrefsVector4("PrefsVector4", new Vector4(-0.1f, -0.2f, 0.1f, 0.2f), Test1Ex1Gui);

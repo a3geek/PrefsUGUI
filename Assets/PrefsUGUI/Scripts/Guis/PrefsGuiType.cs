@@ -67,6 +67,12 @@ namespace PrefsUGUI.Guis
 
         [PrefsGuiComponentType(typeof(PrefsGuiImageLabel))]
         PrefsGuiImageLabel,
+
+        [PrefsGuiComponentType(typeof(PrefsGuiImage))]
+        PrefsGuiImage,
+
+        [PrefsGuiComponentType(typeof(PrefsGuiSelector))]
+        PrefsGuiSelector
     }
 
     public static class PrefsGuiTypeExtentions

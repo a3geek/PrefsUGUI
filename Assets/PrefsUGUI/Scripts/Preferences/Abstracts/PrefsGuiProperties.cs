@@ -8,7 +8,7 @@ namespace PrefsUGUI.Preferences.Abstracts
     [Serializable]
     public class PrefsGuiProperties<GuiType> : IDisposable where GuiType : PrefsGuiBase
     {
-        protected event Action OnCreatedGuiEvent = delegate { };
+        public event Action OnCreatedGuiEvent = delegate { };
 
         public GuiType Gui => this.gui;
         public string GuiLabel
