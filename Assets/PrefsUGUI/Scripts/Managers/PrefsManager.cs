@@ -42,6 +42,9 @@ namespace PrefsUGUI.Managers
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
+            // 特に意味はないがPrefsのstaticコンストラクタを走らせるために記述.
+            Prefs.VisibleControllsGui = true;
+
             PrefsGuis = UnityObject.FindObjectOfType<PrefsGuis>();
             if(PrefsGuis == null)
             {
