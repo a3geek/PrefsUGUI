@@ -9,6 +9,41 @@ namespace PrefsUGUI
     [Serializable]
     public class PrefsFloatSlider : PrefsGuiBase<float, PrefsGuiNumericSliderDecimal>
     {
+        public float Min
+        {
+            get => this.min;
+            set
+            {
+                void SetMin() => this.properties.Gui.MinValue = value;
+
+                if(this.properties.Gui != null)
+                {
+                    SetMin();
+                }
+                else
+                {
+                    this.properties.OnCreatedGuiEvent += SetMin;
+                }
+            }
+        }
+        public float Max
+        {
+            get => this.max;
+            set
+            {
+                void SetMax() => this.properties.Gui.MaxValue = value;
+
+                if(this.properties.Gui != null)
+                {
+                    SetMax();
+                }
+                else
+                {
+                    this.properties.OnCreatedGuiEvent += SetMax;
+                }
+            }
+        }
+
         [SerializeField]
         protected float min = 0f;
         [SerializeField]

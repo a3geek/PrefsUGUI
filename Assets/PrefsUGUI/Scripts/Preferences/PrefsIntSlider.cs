@@ -3,12 +3,47 @@ using UnityEngine;
 
 namespace PrefsUGUI
 {
-    using Preferences.Abstracts;
     using Guis.Preferences;
+    using Preferences.Abstracts;
 
     [Serializable]
     public class PrefsIntSlider : PrefsGuiBase<int, PrefsGuiNumericSliderInteger>
     {
+        public int Min
+        {
+            get => this.min;
+            set
+            {
+                void SetMin() => this.properties.Gui.MinValue = value;
+
+                if(this.properties.Gui != null)
+                {
+                    SetMin();
+                }
+                else
+                {
+                    this.properties.OnCreatedGuiEvent += SetMin;
+                }
+            }
+        }
+        public int Max
+        {
+            get => this.max;
+            set
+            {
+                void SetMax() => this.properties.Gui.MaxValue = value;
+
+                if(this.properties.Gui != null)
+                {
+                    SetMax();
+                }
+                else
+                {
+                    this.properties.OnCreatedGuiEvent += SetMax;
+                }
+            }
+        }
+
         [SerializeField]
         protected int min = 0;
         [SerializeField]
@@ -35,7 +70,7 @@ namespace PrefsUGUI
 
         protected override void OnCreatedGuiInternal(PrefsGuiNumericSliderInteger gui)
         {
-            if (this.min == this.max)
+            if(this.min == this.max)
             {
                 gui.Initialize(this.GuiLabel, this.Get());
             }

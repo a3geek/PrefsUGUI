@@ -8,8 +8,16 @@ namespace PrefsUGUI.Guis.Preferences
     public abstract class NumericSliderGuiBase<ValType, GuiType> : NumericGuiBase<ValType, GuiType>
         where GuiType : PrefsInputGuiBase<ValType, GuiType>
     {
-        public float MinValue => this.slider.minValue;
-        public float MaxValue => this.slider.maxValue;
+        public float MinValue
+        {
+            get => this.slider.minValue;
+            set => this.InitializeSlider(value, this.MaxValue);
+        }
+        public float MaxValue
+        {
+            get => this.slider.maxValue;
+            set => this.InitializeSlider(this.MinValue, value);
+        }
 
         [SerializeField]
         protected Slider slider = null;

@@ -81,6 +81,7 @@ namespace PrefsUGUI.Examples
             private static Test1Ex2 Instance = null;
 
             public PrefsRect PrefsRect = new PrefsRect("PrefsRect", new Rect(-1f, -2f, -3f, -4f), Test1Ex2Gui);
+            public PrefsFloatSlider PrefsFloatSlider = new PrefsFloatSlider("PrefsFloatSlider", 0, 10, 5, Test1Ex2Gui);
             public PrefsButton PrefsButton1 = new PrefsButton("PrefsButton1", OnButton1Clicked1, Test1Ex2Gui);
             public PrefsButton PrefsButton2 = new PrefsButton("PrefsButton2", null, Test1Ex2Gui);
             public PrefsButton PrefsButton3 = new PrefsButton("PrefsButton3", null, Test1Ex2Gui);
@@ -101,7 +102,7 @@ namespace PrefsUGUI.Examples
                 this.PrefsButton3.OnClicked += () =>
                 {
                     this.toggle = !this.toggle;
-                    if(toggle == true)
+                    if(this.toggle)
                     {
                         this.PrefsButton1.Set(OnButton1Clicked1);
                     }
@@ -109,6 +110,9 @@ namespace PrefsUGUI.Examples
                     {
                         this.PrefsButton1.Set(OnButton1Clicked2);
                     }
+
+                    this.PrefsFloatSlider.Max = this.toggle ? 10 : 3;
+                    Debug.Log(this.PrefsFloatSlider.Get());
                 };
                 this.PrefsButton3.OnEditedInGui += () => Debug.Log("OnEditedInGui : " + nameof(this.PrefsButton3));
             }
