@@ -9,5 +9,6 @@ namespace PrefsUGUI.Managers.Classes
     public interface IPrefsStorageSetter
     {
         void SetStorageValue();
+        void OnInitializedPrefs();
     }
 }

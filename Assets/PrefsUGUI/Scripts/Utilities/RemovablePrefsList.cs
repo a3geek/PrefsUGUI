@@ -20,6 +20,7 @@ namespace PrefsUGUI.Utilities
         public List<IItemBag<T>> ItemBags { get; private set; } = new List<IItemBag<T>>();
         public IReadOnlyPrefs<UnityAction> AddButton => this.addButton;
 
+        private int defaultNum = 0;
         private string saveKey = "";
         private Func<int, T> creator = null;
         private PrefsButton addButton = null;
@@ -39,10 +40,10 @@ namespace PrefsUGUI.Utilities
 
             PrefsManager.AddStorageSetter(this.SaveKey, this.storageSetter);
 
-            Storage.Get(this.SaveKey, Enumerable.Range(0, defaultNum).ToList(), Prefs.AggregationName)
-                .ForEach(idx => this.ItemBags.Add(new ItemBag(idx, this.creator(idx))));
+            this.defaultNum = defaultNum;
+            this.Reload();
 
-            addButton.OnClicked += this.Add;
+            this.addButton.OnClicked += this.Add;
         }
 
         public void SetCount(int count)
@@ -86,5 +87,9 @@ namespace PrefsUGUI.Utilities
 
         private void SetStorageValue()
             => Storage.Set(this.SaveKey, this.ItemBags.Select(tuple => tuple.Index).ToList());
+
+        private void Reload()
+            => Storage.Get(this.SaveKey, Enumerable.Range(0, defaultNum).ToList(), Prefs.AggregationName)
+                .ForEach(idx => this.ItemBags.Add(new ItemBag(idx, this.creator(idx))));
     }
 }

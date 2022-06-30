@@ -35,7 +35,6 @@ namespace PrefsUGUI.Managers
         public static PrefsGuis PrefsGuis { get; private set; } = null;
 
         private static ConcurrentDictionary<string, IPrefsStorageSetter> StorageSetters = new ConcurrentDictionary<string, IPrefsStorageSetter>();
-        private static ConcurrentStack<PrefsBase> FastPrefsCache = new ConcurrentStack<PrefsBase>();
         private static PrefsParameters PrefsParametersInternal = PrefsParameters.Empty;
 
 
@@ -59,8 +58,8 @@ namespace PrefsUGUI.Managers
             UnityObject.DontDestroyOnLoad(PrefsGuis);
             PrefsGuis.SetCacheExecutor(Executor);
 
-            InitializeInternal(UnityObject.FindObjectOfType<PrefsParametersEntity>() ?? PrefsParameters.Empty);
-            SceneManager.sceneLoaded += SceneLoaded;
+            var entity = UnityObject.FindObjectOfType<PrefsParametersEntity>();
+            InitializeInternal(entity != null ? entity : PrefsParameters.Empty);
 
             Executor.ExecuteCachedAction();
         }
@@ -98,21 +97,15 @@ namespace PrefsUGUI.Managers
                 PrefsParametersInternal = PrefsParameters.Default;
             }
 
-            while(FastPrefsCache.TryPop(out var prefs) == true)
-            {
-                prefs.Reload();
-            }
-
             Inited = true;
-        }
-
-        private static void SceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            if(mode == LoadSceneMode.Single)
+            if(PrefsGuis == null)
             {
-                InitializeInternal(
-                    UnityObject.FindObjectOfType<PrefsParametersEntity>() ?? PrefsParameters.Empty
-                );
+                return;
+            }
+            
+            foreach(var setter in StorageSetters)
+            {
+                setter.Value.OnInitializedPrefs();
             }
         }
     }

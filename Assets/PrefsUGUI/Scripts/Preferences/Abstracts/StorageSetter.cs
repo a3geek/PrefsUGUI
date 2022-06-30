@@ -21,6 +21,9 @@ namespace PrefsUGUI.Preferences.Abstracts
 
             public void SetStorageValue()
                 => this.prefs.SetStorageValue();
+
+            public void OnInitializedPrefs()
+                => this.prefs.Reload();
         }
     }
 }

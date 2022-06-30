@@ -68,6 +68,9 @@ namespace PrefsUGUI.Utilities
 
             public void SetStorageValue()
                 => this.parent.SetStorageValue();
+
+            public void OnInitializedPrefs()
+                => this.parent.Reload();
         }
     }
 }

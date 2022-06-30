@@ -69,11 +69,6 @@ namespace PrefsUGUI.Managers
         {
             void AddPrefs() => PrefsGuis.AddPrefs(prefs, events);
             Executor.AddPrefsCache.Add(prefs.SaveKey, AddPrefs);
-
-            if(Inited == false)
-            {
-                FastPrefsCache.Push(prefs);
-            }
         }
 
         public static void RemovePrefs(Guid prefsId)
