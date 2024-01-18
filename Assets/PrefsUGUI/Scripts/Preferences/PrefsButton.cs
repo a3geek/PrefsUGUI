@@ -19,6 +19,7 @@ namespace PrefsUGUI
         )
             : base(key, action ?? delegate { }, hierarchy, guiLabel, onCreatedGui, sortOrder)
         {
+            this.UnEditSync = true;
         }
 
         public virtual void ManualClick()
