@@ -7,7 +7,6 @@ namespace PrefsUGUI
     using Preferences.Abstracts;
     using UnityEngine;
     using XmlStorage;
-    using XmlStorageConsts = XmlStorage.Systems.XmlStorageConsts;
 
     public static class Prefs
     {
@@ -40,14 +39,13 @@ namespace PrefsUGUI
 
         public static void Save()
         {
-            var current = Storage.CurrentAggregationName;
+            var current = Storage.CurrentDataGroupName;
 
-            Storage.ChangeAggregation(AggregationName);
-            Storage.CurrentAggregation.FileName = FileName + XmlStorageConsts.Extension;
+            Storage.CurrentDataGroupName = AggregationName;
 
             PrefsManager.ExecuteStorageSetters();
 
-            Storage.ChangeAggregation(current);
+            Storage.CurrentDataGroupName = current;
             Storage.Save();
 
             OnSaved();

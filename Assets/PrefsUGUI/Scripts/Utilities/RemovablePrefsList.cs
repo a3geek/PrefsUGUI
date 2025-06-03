@@ -89,7 +89,9 @@ namespace PrefsUGUI.Utilities
             => Storage.Set(this.SaveKey, this.ItemBags.Select(tuple => tuple.Index).ToList());
 
         private void Reload()
-            => Storage.Get(this.SaveKey, Enumerable.Range(0, defaultNum).ToList(), Prefs.AggregationName)
+        {
+            Storage.Get(this.SaveKey, Enumerable.Range(0, defaultNum).ToList(), Prefs.AggregationName)
                 .ForEach(idx => this.ItemBags.Add(new ItemBag(idx, this.creator(idx))));
+        }
     }
 }

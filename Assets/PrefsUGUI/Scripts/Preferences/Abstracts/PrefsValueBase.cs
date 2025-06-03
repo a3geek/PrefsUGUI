@@ -85,6 +85,6 @@ namespace PrefsUGUI.Preferences.Abstracts
         }
 
         protected override void ValueSetToStorage()
-            => Storage.Set(typeof(ValType), this.SaveKey, this.Get(), Prefs.AggregationName);
+            => Storage.Set(this.SaveKey, this.Get(), Prefs.AggregationName);
     }
 }

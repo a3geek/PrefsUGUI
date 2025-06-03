@@ -1,0 +1,13 @@
+{
+  "name": "com.a3geek.prefsugui",
+  "displayName": "PrefsUGUI",
+  "version": "3.0.0",
+  "description": "Auto creation GUI elements by doing variable declaration.",
+  "unity": "2021.3",
+  "keywords": [
+    "uGUI"
+  ],
+  "author": {
+    "name": "a3geek"
+  }
+}
