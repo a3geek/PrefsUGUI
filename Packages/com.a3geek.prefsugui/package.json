@@ -9,5 +9,8 @@
   ],
   "author": {
     "name": "a3geek"
+  },
+  "dependencies": {
+    "com.a3geek.xmlstorage": "8.0.1"
   }
 }

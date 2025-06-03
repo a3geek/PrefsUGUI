@@ -4,7 +4,9 @@
       "version": "file:com.a3geek.prefsugui",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.a3geek.xmlstorage": "8.0.1"
+      }
     },
     "com.a3geek.xmlstorage": {
       "version": "https://github.com/a3geek/XmlStorage.git?path=Packages/com.a3geek.xmlstorage",

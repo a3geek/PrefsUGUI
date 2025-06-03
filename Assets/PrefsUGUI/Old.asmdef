@@ -1,14 +1,11 @@
 {
-    "name": "com.a3geek.prefsugui",
-    "rootNamespace": "PrefsUGUI",
+    "name": "Old",
+    "rootNamespace": "",
     "references": [
+        "GUID:57eca1f5beb8bb2439af12c81a1af93a",
         "GUID:8a28b3e3580f52545b3d0c6a47632578"
     ],
-    "includePlatforms": [
-        "Editor",
-        "WindowsStandalone32",
-        "WindowsStandalone64"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
