@@ -3,14 +3,16 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PrefsUGUI.CustomExtensions.Csharp
+namespace PrefsUGUI.CustomExtensions.CSharp
 {
     public static class EnumExtensions
     {
-        public static AttributeType GetAttribute<AttributeType>(this Enum enumKey)
-            where AttributeType : Attribute
-            => EnumAttributesCache<AttributeType>
-                .GetOrAdd(enumKey, e => enumKey.GetAttributes<AttributeType>()?.FirstOrDefault());
+        public static AttributeType GetAttribute<AttributeType>(this Enum enumKey) where AttributeType : Attribute
+        {
+            return EnumAttributeCache<AttributeType>.GetOrAdd(
+                enumKey, e => e.GetAttributes<AttributeType>().FirstOrDefault()
+            );
+        }
 
         private static IEnumerable<AttributeType> GetAttributes<AttributeType>(this Enum enumKey)
             where AttributeType : Attribute
@@ -18,17 +20,19 @@ namespace PrefsUGUI.CustomExtensions.Csharp
             var fieldInfo = enumKey.GetType().GetField(enumKey.ToString());
             var attributes = fieldInfo.GetCustomAttributes(typeof(AttributeType), false).Cast<AttributeType>();
 
-            return attributes ?? Enumerable.Empty<AttributeType>();
+            return attributes;
         }
 
-        private static class EnumAttributesCache<AttributeType> where AttributeType : Attribute
+
+        private static class EnumAttributeCache<AttributeType> where AttributeType : Attribute
         {
-            private static ConcurrentDictionary<Enum, AttributeType> Dictionary { get; }
-                = new ConcurrentDictionary<Enum, AttributeType>();
+            private static ConcurrentDictionary<Enum, AttributeType> Dictionary { get; } = new();
 
 
-            internal static AttributeType GetOrAdd(Enum enumKey, Func<Enum, AttributeType> valueFactory)
-                => Dictionary.GetOrAdd(enumKey, valueFactory);
+            public static AttributeType GetOrAdd(Enum enumKey, Func<Enum, AttributeType> factory)
+            {
+                return Dictionary.GetOrAdd(enumKey, factory);
+            }
         }
     }
 }

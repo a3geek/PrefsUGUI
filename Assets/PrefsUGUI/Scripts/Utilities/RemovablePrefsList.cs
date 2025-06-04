@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace PrefsUGUI.Utilities
 {
-    using CustomExtensions.Csharp;
+    using CustomExtensions.CSharp;
     using PrefsUGUI;
     using PrefsUGUI.Managers;
     using XmlStorage;

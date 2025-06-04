@@ -6,7 +6,7 @@ namespace PrefsUGUI.Guis
 {
     using System.Linq;
     using CustomExtensions.Attributes;
-    using CustomExtensions.Csharp;
+    using CustomExtensions.CSharp;
     using Guis.Preferences;
 
     public enum PrefsGuiType

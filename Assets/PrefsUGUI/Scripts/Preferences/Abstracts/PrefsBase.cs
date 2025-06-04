@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PrefsUGUI.Preferences.Abstracts
 {
-    using CustomExtensions.Csharp;
+    using CustomExtensions.CSharp;
     using Managers;
     using Managers.Classes;
 

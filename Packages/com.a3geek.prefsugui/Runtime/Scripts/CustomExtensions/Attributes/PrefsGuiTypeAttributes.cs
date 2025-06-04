@@ -2,7 +2,7 @@
 
 namespace PrefsUGUI.CustomExtensions.Attributes
 {
-    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Field)]
     public sealed class PrefsGuiComponentTypeAttribute : Attribute
     {
         public Type ComponentType { get; } = null;

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace PrefsUGUI.Utilities
 {
-    using CustomExtensions.Csharp;
+    using CustomExtensions.CSharp;
     using Managers.Classes;
 
     public interface IRemovablePrefsList<T> where T : IDisposable
@@ -36,7 +36,7 @@ namespace PrefsUGUI.Utilities
             }
         }
 
-        private class ItemBagListController : IListCreator<IItemBag<T>>, IListDestoryer<IItemBag<T>>
+        private class ItemBagListController : IListCreator<IItemBag<T>>, IListDestroyer<IItemBag<T>>
         {
             private RemovablePrefsList<T> parent = null;
 
